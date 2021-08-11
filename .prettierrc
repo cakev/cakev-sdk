@@ -1,0 +1,20 @@
+{
+	"semi": false,
+	"singleQuote": true,
+	"bracketSpacing": true,
+	"printWidth": 120,
+	"tabWidth": 4,
+	"useTabs": true,
+	"quoteProps": "as-needed",
+	"jsxSingleQuote": false,
+	"trailingComma": "all",
+	"jsxBracketSameLine": true,
+	"arrowParens": "avoid",
+	"endOfLine": "lf",
+	"embeddedLanguageFormatting": "auto",
+	"pugBracketSpacing": true,
+	"pugSingleQuote": false,
+	"pugAttributeSeparator": "always",
+	"pugClosingBracketPosition": "last-line",
+	"htmlWhitespaceSensitivity": "ignore"
+}

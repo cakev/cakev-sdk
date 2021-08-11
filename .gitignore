@@ -1,0 +1,50 @@
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
+*.dex
+
+# Generated files
+*/bin/
+*/gen/
+*/out/
+
+# Log Files
+*.log
+
+# Android Studio
+.navigation/
+captures/
+
+# idea
+*/.idea/
+.idea/
+*.iml
+*/*.iml
+
+# eclipse
+.project
+.factorypath
+.classpath
+.settings/
+target/
+logs/
+
+# web
+dist/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# others
+*/.DS_Store
+.DS_Store
+
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

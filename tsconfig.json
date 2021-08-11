@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"jsx": "preserve", // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
+		"importHelpers": true, // 从 tslib 导入辅助工具函数
+		"moduleResolution": "node",
+		"experimentalDecorators": true, // 启用装饰器
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true, // 允许从没有设置默认导出的模块中默认导入
+		"downlevelIteration": true, // 降级遍历器实现，如果目标源是es3/5，那么遍历器会有降级的实现
+		"noUnusedLocals": true, // 检查只声明、未使用的局部变量(只提示不报错)
+		"noUnusedParameters": true, // 检查未使用的函数参数(只提示不报错)
+		"sourceMap": false,
+		"removeComments": true,
+		"baseUrl": ".",
+		"typeRoots": ["./node_modules/@types/", "./node_modules/vue/types"], // 包含类型声明的文件列表
+		"strict": false,
+		"strictFunctionTypes": false,
+		"noImplicitAny": false, // 在表达式和声明上有隐含的 any类型时报错
+		"noImplicitThis": false, // 在"this"表达式上有隐含的 any类型时报错
+		"pretty": true, // 给错误和消息设置样式，使用颜色和上下文。
+		"types": ["webpack-env"],
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+	},
+	"include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "types/common.d.ts", "types/vue.d.ts"],
+	"exclude": ["node_modules"]
+}
