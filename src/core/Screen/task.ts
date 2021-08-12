@@ -1,10 +1,10 @@
-import Widget from '@/core/Widget'
+import WidgetTask from '@/core/Widget/task'
 
 export default class ScreenTask {
 	version = '1.1.0' // 大屏版本号
 	id: string // 大屏ID
 	name = '未命名' // 大屏名
-	widgets: { [key: string]: Widget } = {} // 大屏组件配置
+	widgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
 	widgetsLays = {} // 大屏组件嵌套规则，显示规则
 	type = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
 	avatar = '' // 大屏缩略图

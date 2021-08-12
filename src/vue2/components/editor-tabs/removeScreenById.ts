@@ -13,17 +13,17 @@ export default id => {
 		})
 			.then(() => {
 				Message({
-					type: 'info',
+					type: 'success',
 					message: '保存修改',
 				})
 				manager.screen.removeScreenById(id)
 			})
 			.catch(action => {
 				Message({
-					type: 'info',
+					type: 'warning',
 					message: action === 'cancel' ? '放弃保存并离开页面' : '停留在当前页面',
 				})
-				manager.screen.removeScreenById(id)
+				if (action === 'cancel') manager.screen.removeScreenById(id)
 			})
 	}
 }

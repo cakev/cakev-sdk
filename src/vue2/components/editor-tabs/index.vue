@@ -3,7 +3,7 @@ el-tabs(
 	editable,
 	type="card",
 	@tab-remove="removeScreenById",
-	:value="manager.screen.current && manager.screen.current.id",
+	:value="manager.screen.currentScreen && manager.screen.currentScreen.id",
 	@tab-add="createScreen",
 	@tab-click="selectScreenByIndex")
 	el-tab-pane(v-for="item in manager.screen.screenList", :key="item.id", :label="item.name", :name="item.id")

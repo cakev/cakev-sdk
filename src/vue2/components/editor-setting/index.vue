@@ -7,14 +7,14 @@ el-form(label-width="100px")
 			el-option(value="1024*768", label="web最小尺寸1024*768")
 			el-option(value="custom", label="自定义")
 	el-form-item
-		el-input(v-model="manager.screen.current.width", style="width: 120px")
+		el-input(v-model="manager.screen.currentScreen.width", style="width: 120px")
 			template(slot="append") W
-		el-input(v-model="manager.screen.current.height", style="width: 120px; margin-left: 10px;")
+		el-input(v-model="manager.screen.currentScreen.height", style="width: 120px; margin-left: 10px;")
 			template(slot="append") H
 	el-form-item(label="背景色")
-		el-color-picker(v-model="manager.screen.current.backgroundColor")
+		el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")
 	el-form-item(label="适配方式", style="width: 100%")
-		el-select(v-model="manager.screen.current.layoutMode")
+		el-select(v-model="manager.screen.currentScreen.layoutMode")
 			el-option(value="full-size", label="充满页面")
 			el-option(value="full-width", label="100%宽度")
 			el-option(value="full-height", label="100%高度")

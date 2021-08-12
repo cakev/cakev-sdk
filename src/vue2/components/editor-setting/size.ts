@@ -4,8 +4,8 @@ const manager: Manager = Manager.Instance()
 
 export default computed({
 	get: () => {
-		const width = manager.screen.current.width
-		const height = manager.screen.current.height
+		const width = manager.screen.currentScreen.width
+		const height = manager.screen.currentScreen.height
 		if (width !== 1920 && width !== 1366 && width !== 1024) {
 			return 'custom'
 		}
@@ -17,8 +17,8 @@ export default computed({
 	set: value => {
 		if (value !== 'custom') {
 			const [width, height] = value.split('*')
-			manager.screen.current.width = Number(width)
-			manager.screen.current.height = Number(height)
+			manager.screen.currentScreen.width = Number(width)
+			manager.screen.currentScreen.height = Number(height)
 		}
 	},
 })
