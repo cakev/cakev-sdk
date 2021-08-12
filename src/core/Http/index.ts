@@ -125,7 +125,7 @@ export default class Http extends Emitter {
 		delete this.loopPool[id]
 	}
 
-	/* 清空队列中的请求 */
+	// 清空队列中的请求 
 	public abortAll(): void {
 		this.waitPool = []
 		this.loopPool = {}

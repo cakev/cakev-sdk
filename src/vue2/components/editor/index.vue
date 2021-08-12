@@ -1,16 +1,14 @@
 <template lang="pug">
-el-container
+el-container.editor
 	el-header
 		editor-tabs
 	el-container
 		el-aside
 			editor-widgets-list
 		el-aside(width="150px")
-			editor-scene
-		el-main(v-if="manager.screen.currentScreen")
-			editor-content
-		el-main(v-if="!manager.screen.currentScreen")
-			el-empty
+			editor-scene(v-if="manager.screen.currentScreen")
+		el-main
+			editor-content(v-if="manager.screen.currentScreen")
 		el-aside(width="350px", v-if="manager.screen.currentScreen")
 			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
 			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
@@ -44,3 +42,8 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.editor {
+	height: 100%;
+}
+</style>

@@ -14,17 +14,21 @@ export default class Screen extends Factory<Screen> {
 	currentScene: SceneTask | null = null
 	sceneList: Array<SceneTask> = []
 
+	// 选择组件
 	selectWidgetById(id: string) {
 		this.currentWidgets = [...[this.currentScreen.widgets[id]]]
 	}
 
+	// 添加组件
 	pushWidget(widget: WidgetTask) {
 		this.currentScreen.widgets[widget.id] = widget
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
 		this.currentScreen.widgetsLays[widget.id] = new WidgetLayout({ id: widget.id, scene: this.currentScene.id })
+		this.currentScreen.widgetsLays = { ...this.currentScreen.widgetsLays }
 		this.selectWidgetById(widget.id)
 	}
 
+	// 校验是否修改过
 	checkChange(id) {
 		const now = md5(JSON.stringify(this.currentScreen))
 		let old
@@ -36,6 +40,7 @@ export default class Screen extends Factory<Screen> {
 		return old === now
 	}
 
+	// 删除大屏
 	removeScreenById(id) {
 		this.screenList.forEach((item, index) => {
 			if (item.id === id) {
@@ -53,10 +58,12 @@ export default class Screen extends Factory<Screen> {
 		})
 	}
 
+	// 选择大屏
 	selectScreenByIndex(index) {
 		this.currentScreen = this.screenList[index]
 	}
 
+	// 创建大屏
 	createScreen(id) {
 		const screen: ScreenTask = new ScreenTask(id)
 		this.screenMd5SchemaList.push(md5(JSON.stringify(screen)))
@@ -64,6 +71,18 @@ export default class Screen extends Factory<Screen> {
 		if (!this.currentScreen) this.currentScreen = screen
 	}
 
+	// 当前场景 按zIndex 排序后的序列
+	get sceneWidgetsBySortList(): Array<WidgetLayout> {
+		const list: Array<WidgetLayout> = Object.values(this.currentScreen.widgetsLays)
+		return list
+			.filter((item: WidgetLayout) => item.scene === this.currentScene.id)
+			.sort((a: WidgetLayout, b: WidgetLayout) => {
+				return b.zIndex - a.zIndex - 1
+			})
+	}
+	set sceneWidgetsBySortList(val) {}
+
+	// 选中场景
 	selectSceneById(id) {
 		let scene
 		this.sceneList.forEach(item => {
@@ -72,6 +91,7 @@ export default class Screen extends Factory<Screen> {
 		this.currentScene = scene
 	}
 
+	// 初始化场景
 	initScene() {
 		const scene = new SceneTask()
 		this.sceneList.push(scene)

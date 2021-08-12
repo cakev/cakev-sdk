@@ -1,8 +1,6 @@
-/**
- * 请求任务类
- */
 import HttpBase from './taskBase'
 import { Method } from 'axios'
+
 export default class HttpTask extends HttpBase {
 	static STATUS_WAITTING = 0 // 请求被创建未推送到任务列表
 	static STATUS_READY = 1 // 推送到任务列表

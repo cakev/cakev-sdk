@@ -1,6 +1,5 @@
 <template lang="pug">
-div
-	editor
+editor
 </template>
 <script lang="ts">
 import { onMounted, reactive, toRefs } from '@vue/composition-api'
