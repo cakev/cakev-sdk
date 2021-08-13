@@ -5,6 +5,8 @@ el-form(label-width="100px")
 			el-option(value="1920*1080", label="大屏推荐尺寸1920*1080")
 			el-option(value="1366*768", label="web最常见尺寸1366*768")
 			el-option(value="1024*768", label="web最小尺寸1024*768")
+			el-option(value="750*1334", label="iPhone6/7/8 750*1334")
+			el-option(value="828*1472", label="iPhone6/7/8 Plus 828*1472")
 			el-option(value="custom", label="自定义")
 	el-form-item
 		d-input(v-model="manager.screen.currentScreen.width", style="width: 120px")

@@ -3,7 +3,10 @@ const manager: Manager = Manager.Instance()
 
 export default context => {
 	const dom: HTMLElement = context.parent.$el
-	let zoom = ~~((dom.offsetWidth / manager.screen.currentScreen.width) * 100) / 100
+	let zoom
+	const zoomX = ~~((dom.offsetWidth / manager.screen.currentScreen.width) * 100) / 100
+	const zoomY = ~~((dom.offsetHeight / manager.screen.currentScreen.height) * 100) / 100
+	zoomX > zoomY ? (zoom = zoomY) : (zoom = zoomX)
 	if (zoom % 2 !== 0) zoom = zoom - 0.1
 	if (zoom < 0.2) {
 		zoom = 0.2

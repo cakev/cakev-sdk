@@ -6,10 +6,10 @@ export default computed({
 	get: () => {
 		const width = manager.screen.currentScreen.width
 		const height = manager.screen.currentScreen.height
-		if (width !== 1920 && width !== 1366 && width !== 1024) {
+		if (width !== 1920 && width !== 1366 && width !== 1024 && width !== 750 && width !== 828) {
 			return 'custom'
 		}
-		if (height !== 1080 && height !== 768) {
+		if (height !== 1080 && height !== 768 && height !== 1334 && height !== 1472) {
 			return 'custom'
 		}
 		return `${width}*${height}`

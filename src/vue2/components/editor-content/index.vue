@@ -22,7 +22,7 @@
 <script lang="ts">
 import drop from './drop'
 import Manager from '@/core/Manager'
-import { onMounted, reactive, toRefs } from '@vue/composition-api'
+import { onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import widgetEdit from '@/vue2/components/widget/edit.vue'
 import cancelSelectWidget from './cancelSelectWidget'
 import style from './style'
@@ -35,9 +35,18 @@ export default {
 	setup(props, context) {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
+		
 		onMounted(() => {
 			resetZoom(context)
 		})
+		
+		watch(
+			() => [manager.screen.currentScreen.width, manager.screen.currentScreen.height],
+			() => {
+				resetZoom(context)
+			},
+		)
+		
 		return {
 			...toRefs(state),
 			drop,
@@ -51,7 +60,7 @@ export default {
 .editor-content {
 	height: 100%;
 	transform-origin: 0 0 0;
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 	top: 0;
 	left: 0;
 }

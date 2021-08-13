@@ -12,10 +12,9 @@ el-container.editor
 		el-main.pos-r.editor-container
 			editor-content(v-if="manager.screen.currentScreen")
 		el-divider.divider(direction="vertical")
-		el-aside(width="390px", v-if="manager.screen.currentScreen")
-			el-main
-				widget-setting(v-if="manager.screen.currentWidgets.length === 1")
-				editor-setting(v-if="manager.screen.currentWidgets.length === 0")
+		el-aside(width="360px", v-if="manager.screen.currentScreen", style="padding-right: 10px")
+			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
+			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'
@@ -47,7 +46,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.editor-container{
+.editor-container {
 	background-color: #ddd;
 }
 .editor {
