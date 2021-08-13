@@ -3,18 +3,18 @@ el-tabs(tab-position="left")
     el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
         el-collapse
             el-collapse-item( v-for="child in item.children", :key="child.label", :index="child.label" :title="child.label")
-                div(
+                .cursor-pointer(
                     v-for="widget in child.children",
                     :key="item.type",
                     :draggable="manager.screen.currentScreen",
-                    @dragstart="dragstart($event, widget)")
+                    @dragstart="dragStart($event, widget)")
                     el-image(:src="widget.avatar")
                     span {{ widget.name }}
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
 import { reactive, toRefs } from '@vue/composition-api'
-import dragstart from './dragstart'
+import dragStart from './dragStart'
 import list from './list'
 
 export default {
@@ -23,7 +23,7 @@ export default {
 		const state = reactive({ list, manager })
 		return {
 			...toRefs(state),
-			dragstart,
+			dragStart,
 		}
 	},
 }

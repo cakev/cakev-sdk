@@ -4,6 +4,7 @@ import LogTask from '@/core/Log/task'
 import Log from '@/core/Log'
 import Http from '@/core/Http'
 import Screen from '@/core/Screen'
+import Temporary from '@/core/Temporary'
 import { Method } from 'axios'
 
 export default class Manager extends Factory<Manager> {
@@ -12,6 +13,7 @@ export default class Manager extends Factory<Manager> {
 		dataPath: res => res.data,
 	})
 	screen: Screen = Screen.Instance()
+	temporary: Temporary = Temporary.Instance()
 	log: Log = Log.Instance()
 
 	request(obj: {

@@ -16,7 +16,7 @@ export default class ScreenTask {
 	updateTime: string // 更新时间
 	width = 1920 // 大屏宽度
 	height = 1080 // 大屏高度
-	backgroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
+	backgroundColor = '#fff' // 大屏背景颜色
 	backgroundImage = '' // 大屏背景图片
 	mainScene: string | number // 大屏首屏场景
 	platform: string // 大屏平台类型 PC:PC

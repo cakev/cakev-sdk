@@ -36,8 +36,10 @@ li {
 .text-right {
 	text-align: right;
 }
-
-.pointer {
+.cursor-move{
+	cursor: move!important;
+}
+.cursor-pointer {
 	cursor: pointer !important;
 }
 

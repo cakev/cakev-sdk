@@ -1,10 +1,15 @@
-import WidgetTask from '@/core/Widget/task'
 import Manager from '@/core/Manager'
+import Widget from '@/core/Widget/task'
 const manager: Manager = Manager.Instance()
-export default (widget: WidgetTask) => {
+
+class item extends Widget {
+	readonly: boolean
+}
+
+export default (widget: item) => {
 	return {
-		top: widget.y + 'px',
-		left: widget.x + 'px',
+		top: (widget.readonly ? widget.y : 0) + 'px',
+		left: (widget.readonly ? widget.x : 0) + 'px',
 		width: widget.width + 'px',
 		height: widget.height + 'px',
 		backgroundColor: widget.backgroundColor,

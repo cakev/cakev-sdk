@@ -7,9 +7,9 @@ el-form(label-width="100px")
 			el-option(value="1024*768", label="web最小尺寸1024*768")
 			el-option(value="custom", label="自定义")
 	el-form-item
-		el-input(v-model="manager.screen.currentScreen.width", style="width: 120px")
+		d-input(v-model="manager.screen.currentScreen.width", style="width: 120px")
 			template(slot="append") W
-		el-input(v-model="manager.screen.currentScreen.height", style="width: 120px; margin-left: 10px;")
+		d-input(v-model="manager.screen.currentScreen.height", style="width: 120px; margin-left: 10px;")
 			template(slot="append") H
 	el-form-item(label="背景色")
 		el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")

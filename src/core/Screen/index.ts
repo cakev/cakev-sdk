@@ -13,6 +13,11 @@ export default class Screen extends Factory<Screen> {
 	screenMd5SchemaList: Array<string> = []
 	currentScene: SceneTask | null = null
 
+	// 取消选择组件
+	cancelSelectWidget() {
+		this.currentWidgets = []
+	}
+
 	// 选择组件
 	selectWidgetById(id: string) {
 		this.currentWidgets = [...[this.currentScreen.widgets[id]]]
