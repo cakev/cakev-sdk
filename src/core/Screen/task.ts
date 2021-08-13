@@ -1,9 +1,11 @@
 import WidgetTask from '@/core/Widget/task'
+import SceneTask from '@/core/Scene/task'
 
 export default class ScreenTask {
 	version = '1.1.0' // 大屏版本号
 	id: string // 大屏ID
 	name = '未命名' // 大屏名
+	scenes: { [key: string]: SceneTask } = {} // 场景
 	widgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
 	widgetsLays = {} // 大屏组件嵌套规则，显示规则
 	type = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
@@ -32,6 +34,6 @@ export default class ScreenTask {
 	marketComponents = [] // 大屏内组件市场的组件
 	constructor(id) {
 		this.id = id
-		
+		this.scenes = { '0': new SceneTask('0') }
 	}
 }

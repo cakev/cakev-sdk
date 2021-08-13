@@ -1,5 +1,5 @@
 <template lang="pug">
-	div line1
+	div pie1
 </template>
 <script lang="ts">
 export default {

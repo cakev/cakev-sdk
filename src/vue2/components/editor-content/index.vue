@@ -25,6 +25,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .editor-content {
-	height: 200px;
+	height: 100%
 }
 </style>

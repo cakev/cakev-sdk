@@ -1,14 +1,19 @@
 <template lang="pug">
 div
 	el-select(v-model="manager.screen.currentScene.id")
-		el-option(v-for="item in manager.screen.sceneList", :key="item.id", :label="item.name", :value="item.id")
+		el-option(
+			v-for="item in manager.screen.currentScreen.scenes",
+			:key="item.id",
+			:label="item.name",
+			:value="item.id")
 	div(v-if="manager.screen.sceneWidgetsBySortList.length")
 		draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
 			el-card(
 				shadow="hover",
 				v-for="item in manager.screen.sceneWidgetsBySortList",
-				@click="selectWidgetById(item.id)")
-				h2 {{ manager.screen.currentScreen.widgets[item.id].name }}
+				@click.native="selectWidgetById(item.id)")
+				el-image(:src="manager.screen.currentScreen.widgets[item.id].avatar")
+				span {{ manager.screen.currentScreen.widgets[item.id].name }}
 	el-empty(v-else)
 </template>
 <script lang="ts">

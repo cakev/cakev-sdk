@@ -1,17 +1,15 @@
 <template lang="pug">
-el-menu
-	el-submenu(v-for="item in list", :index="item.label", :key="item.label")
-		template(slot="title")
-			i(:class="item.icon")
-			span {{ item.label }}
-		el-menu-item(v-for="child in item.children", :key="child.label", :index="child.label") {{ child.label }}
-			el-menu-item(
-				v-for="widget in child.children",
-				:key="item.type",
-				:draggable="manager.screen.currentScreen",
-				@dragstart.native="dragstart($event, widget)")
-				el-image(:src="widget.avatar")
-				span {{ widget.name }}
+el-tabs(tab-position="left")
+    el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
+        el-collapse
+            el-collapse-item( v-for="child in item.children", :key="child.label", :index="child.label" :title="child.label")
+                div(
+                    v-for="widget in child.children",
+                    :key="item.type",
+                    :draggable="manager.screen.currentScreen",
+                    @dragstart="dragstart($event, widget)")
+                    el-image(:src="widget.avatar")
+                    span {{ widget.name }}
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'

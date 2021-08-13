@@ -5,10 +5,13 @@ el-container.editor
 	el-container
 		el-aside
 			editor-widgets-list
-		el-aside(width="150px")
+		el-divider.divider(direction="vertical")
+		el-aside(width="160px")
 			editor-scene(v-if="manager.screen.currentScreen")
+		el-divider.divider(direction="vertical")
 		el-main
 			editor-content(v-if="manager.screen.currentScreen")
+		el-divider.divider(direction="vertical")
 		el-aside(width="350px", v-if="manager.screen.currentScreen")
 			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
 			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
@@ -44,6 +47,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .editor {
+	height: 100%;
+}
+.divider {
 	height: 100%;
 }
 </style>
