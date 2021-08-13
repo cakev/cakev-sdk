@@ -8,10 +8,9 @@ div
 			:value="item.id")
 	div(v-if="manager.screen.sceneWidgetsBySortList.length")
 		draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
-			el-card.cursor-pointer(
-				shadow="hover",
+			.cursor-pointer.fn-flex.flex-column(
 				v-for="item in manager.screen.sceneWidgetsBySortList",
-				@click.native="selectWidgetById(item.id)")
+				@click="selectWidgetById(item.id)")
 				el-image(:src="manager.screen.currentScreen.widgets[item.id].avatar")
 				span {{ manager.screen.currentScreen.widgets[item.id].name }}
 	el-empty(v-else)

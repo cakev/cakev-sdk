@@ -11,8 +11,11 @@ export default context => {
 	if (zoom < 0.2) {
 		zoom = 0.2
 	}
+	zoom = +zoom.toFixed(2)
 	manager.temporary.zoom = zoom
 	const offsetX = (dom.offsetWidth - manager.screen.currentScreen.width * zoom) / 2
 	const offsetY = (dom.offsetHeight - manager.screen.currentScreen.height * zoom) / 2
+	manager.temporary.offsetX = offsetX
+	manager.temporary.offsetY = offsetY
 	context.refs['editor-content'].style.transform = `translate3d(${offsetX}px,${offsetY}px, 0) scale(${zoom})`
 }

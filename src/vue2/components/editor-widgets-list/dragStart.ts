@@ -1,3 +1,3 @@
 export default (e: DragEvent, widget) => {
-	e.dataTransfer.setData('widget-drag', JSON.stringify({ ...widget, startX: e.offsetX, startY: e.offsetY }))
+	e.dataTransfer.setData('widget-drag', JSON.stringify(widget))
 }

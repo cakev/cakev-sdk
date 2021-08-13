@@ -1,4 +1,4 @@
-import { Message, MessageBox } from 'element-ui'
+import { Notification, MessageBox } from 'element-ui'
 import Manager from '@/core/Manager'
 const manager: Manager = Manager.Instance()
 
@@ -12,14 +12,16 @@ export default id => {
 			cancelButtonText: '放弃修改',
 		})
 			.then(() => {
-				Message({
+				Notification({
+					title: '提示',
 					type: 'success',
 					message: '保存修改',
 				})
 				manager.screen.removeScreenById(id)
 			})
 			.catch(action => {
-				Message({
+				Notification({
+					title: '提示',
 					type: 'warning',
 					message: action === 'cancel' ? '放弃保存并离开页面' : '停留在当前页面',
 				})

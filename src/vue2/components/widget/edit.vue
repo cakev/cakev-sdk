@@ -4,12 +4,14 @@ vdr.cursor-move(
 	:y="$attrs.y",
 	:w="$attrs.width",
 	:h="$attrs.height",
+	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
 	:snap="true",
 	@click.native.stop="selectWidgetById($attrs.id)",
 	@refLineParams="refLineParams",
 	class-name-handle="vdr-handles",
 	@dragstop="dragStop",
+	@contextmenu.native.stop.prevent="contextmenu($event, $attrs.id)",
 	@resizestop="resizeStop")
 	div(slot="tl") 😀
 	div(slot="tm") 😀
@@ -22,6 +24,8 @@ vdr.cursor-move(
 	component.pos-a(:id="$attrs.id", :is="$attrs.type", v-bind="{ ...$attrs }", :style="style({ ...$attrs, ...$props })")
 </template>
 <script lang="ts">
+import { reactive, toRefs } from '@vue/composition-api'
+import Manager from '@/core/Manager'
 import style from './style'
 import selectWidgetById from './selectWidgetById'
 // @ts-ignore
@@ -30,8 +34,7 @@ import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
 import resizeStop from './resizeStop'
 import dragStop from './dragStop'
 import refLineParams from './refLineParams'
-import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import contextmenu from './contextmenu'
 
 export default {
 	components: { vdr },
@@ -44,7 +47,15 @@ export default {
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
-		return { ...toRefs(state), style, selectWidgetById, resizeStop, dragStop, refLineParams }
+		return {
+			...toRefs(state),
+			style,
+			selectWidgetById,
+			resizeStop,
+			dragStop,
+			refLineParams,
+			contextmenu,
+		}
 	},
 }
 </script>

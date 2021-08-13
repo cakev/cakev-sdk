@@ -1,10 +1,5 @@
 <template lang="pug">
-.editor-content.pos-a(
-	@drop="drop",
-	@dragover.prevent,
-	@click="cancelSelectWidget",
-	ref="editor-content",
-	:style="style(manager.screen.currentScreen)")
+.editor-content.pos-a(ref="editor-content", :style="style(manager.screen.currentScreen)")
 	widget-edit(
 		v-for="widget in manager.screen.currentScreen.widgets",
 		:key="widget.id",
@@ -20,13 +15,12 @@
 		:style="{ top: item.position, left: item.origin, width: item.lineLength }")
 </template>
 <script lang="ts">
-import drop from './drop'
 import Manager from '@/core/Manager'
 import { onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import widgetEdit from '@/vue2/components/widget/edit.vue'
-import cancelSelectWidget from './cancelSelectWidget'
 import style from './style'
 import resetZoom from './resetZoom'
+import zoomChange from './zoomChange'
 
 export default {
 	components: {
@@ -35,22 +29,27 @@ export default {
 	setup(props, context) {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
-		
+
 		onMounted(() => {
 			resetZoom(context)
 		})
-		
+
 		watch(
 			() => [manager.screen.currentScreen.width, manager.screen.currentScreen.height],
 			() => {
 				resetZoom(context)
 			},
 		)
-		
+
+		watch(
+			() => [manager.temporary.zoom],
+			() => {
+				zoomChange(context)
+			},
+		)
+
 		return {
 			...toRefs(state),
-			drop,
-			cancelSelectWidget,
 			style,
 		}
 	},

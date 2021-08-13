@@ -3,7 +3,7 @@ el-tabs(tab-position="left")
     el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
         el-collapse
             el-collapse-item( v-for="child in item.children", :key="child.label", :index="child.label" :title="child.label")
-                .cursor-pointer(
+                .cursor-pointer.fn-flex.flex-column(
                     v-for="widget in child.children",
                     :key="item.type",
                     :draggable="manager.screen.currentScreen",
