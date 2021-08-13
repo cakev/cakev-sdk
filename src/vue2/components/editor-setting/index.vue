@@ -9,9 +9,9 @@ el-form(label-width="100px")
 			el-option(value="828*1472", label="iPhone6/7/8 Plus 828*1472")
 			el-option(value="custom", label="自定义")
 	el-form-item
-		d-input(v-model="manager.screen.currentScreen.width", style="width: 100px")
+		d-input(v-model="manager.screen.currentScreen.width", style="width: 100px", format="number")
 			template(slot="append") W
-		d-input(v-model="manager.screen.currentScreen.height", style="width: 100px; margin-left: 10px;")
+		d-input(v-model="manager.screen.currentScreen.height", style="width: 100px; margin-left: 10px", format="number")
 			template(slot="append") H
 	el-form-item(label="背景色")
 		el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")

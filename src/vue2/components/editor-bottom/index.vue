@@ -36,6 +36,7 @@ export default {
 	width: 100%;
 	background-color: #fff;
 	align-items: center;
+	border-top: 1px solid #DCDFE6;
 	.icon-box {
 		margin-left: auto;
 		align-items: center;

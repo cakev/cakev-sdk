@@ -8,7 +8,7 @@ const md5 = require('md5')
 
 export default class Screen extends Factory<Screen> {
 	currentScreen: ScreenTask | null = null
-	currentWidgets: Array<WidgetTask> = []
+	currentWidgets: Array<string> = []
 	screenList: Array<ScreenTask> = []
 	screenMd5SchemaList: Array<string> = []
 	currentScene: SceneTask | null = null
@@ -20,7 +20,7 @@ export default class Screen extends Factory<Screen> {
 
 	// 选择组件
 	selectWidgetById(id: string) {
-		this.currentWidgets = [...[this.currentScreen.widgets[id]]]
+		this.currentWidgets = [...[id]]
 	}
 
 	// 添加组件
