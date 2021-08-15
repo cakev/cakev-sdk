@@ -29,3 +29,10 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+/deep/ {
+	.el-tabs__item {
+		user-select: none;
+	}
+}
+</style>

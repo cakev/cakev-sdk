@@ -1,15 +1,15 @@
 html,
 body {
-	margin: 0;
-	padding: 0;
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 ul,
 ol,
 li {
-	margin: 0;
 	padding: 0;
+	margin: 0;
 	list-style: none;
 }
 
@@ -36,9 +36,11 @@ li {
 .text-right {
 	text-align: right;
 }
-.cursor-move{
-	cursor: move!important;
+
+.cursor-move {
+	cursor: move !important;
 }
+
 .cursor-pointer {
 	cursor: pointer !important;
 }

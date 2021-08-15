@@ -4,7 +4,6 @@ component.pos-a(:id="$attrs.id", :is="$attrs.type", v-bind="{ ...$attrs }", :sty
 <script lang="ts">
 import style from './style'
 export default {
-	components: { vdr },
 	props: {
 		readonly: {
 			default: true,

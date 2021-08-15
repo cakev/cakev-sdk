@@ -61,18 +61,19 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep {
+/deep/ {
 	.vdr-handles {
 		position: absolute;
-		border: 1px solid black;
-		border-radius: 50%;
-		height: 14px;
+		box-sizing: border-box;
 		width: 14px;
+		height: 14px;
 		font-size: 1em;
 		line-height: 1em;
-		box-sizing: border-box;
+		border: 1px solid black;
+		border-radius: 50%;
 		transition: all 0.3s linear;
 	}
+
 	.vdr-handles-tr,
 	.vdr-handles-mr,
 	.vdr-handles-br,
@@ -85,27 +86,35 @@ export default {
 			transform: scale(1.4);
 		}
 	}
+
 	.vdr-handles-tr {
 		cursor: ne-resize !important;
 	}
+
 	.vdr-handles-mr {
 		cursor: e-resize !important;
 	}
+
 	.vdr-handles-br {
 		cursor: se-resize !important;
 	}
+
 	.vdr-handles-tm {
 		cursor: n-resize !important;
 	}
+
 	.vdr-handles-tl {
 		cursor: nw-resize !important;
 	}
+
 	.vdr-handles-ml {
 		cursor: w-resize !important;
 	}
+
 	.vdr-handles-bl {
 		cursor: sw-resize !important;
 	}
+
 	.vdr-handles-bm {
 		cursor: s-resize !important;
 	}

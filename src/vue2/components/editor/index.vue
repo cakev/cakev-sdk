@@ -9,7 +9,11 @@ el-container.editor
 		el-aside(width="160px")
 			editor-scene(v-if="manager.screen.currentScreen")
 		el-divider.divider(direction="vertical")
-		el-main.pos-r.editor-container(@drop.native="drop", @dragover.native.prevent, @click.native="click")
+		el-main.pos-r.editor-container(
+			@wheel.native="wheel",
+			@drop.native="drop",
+			@dragover.native.prevent,
+			@click.native="click")
 			editor-content(v-if="manager.screen.currentScreen")
 			editor-bottom(v-if="manager.screen.currentScreen")
 			widget-contextmenu(v-if="manager.temporary.widgetRightMenu")
@@ -31,6 +35,7 @@ import editorBottom from '@/vue2/components/editor-bottom/index.vue'
 import widgetContextmenu from '@/vue2/components/widget-contextmenu/index.vue'
 import drop from './drop'
 import click from './click'
+import wheel from './wheel'
 
 export default {
 	components: {
@@ -51,18 +56,21 @@ export default {
 			...toRefs(state),
 			drop,
 			click,
+			wheel,
 		}
 	},
 }
 </script>
 <style lang="scss" scoped>
 .editor-container {
-	background-color: #ddd;
 	overflow: hidden;
+	background-color: #ddd;
 }
+
 .editor {
 	height: 100%;
 }
+
 .divider {
 	height: 100%;
 	margin: 0;

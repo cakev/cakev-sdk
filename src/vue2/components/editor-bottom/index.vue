@@ -1,5 +1,7 @@
 <template lang="pug">
 .pos-a.editor-bottom.fn-flex.flex-row
+	.left-box
+		span {{ manager.screen.currentScene.name }}
 	.icon-box.fn-flex
 		i.el-icon-zoom-out.cursor-pointer(@click="zoomOut")
 		span.text-center {{ Math.round(manager.temporary.zoom * 100) }}%
@@ -32,22 +34,34 @@ export default {
 .editor-bottom {
 	bottom: 0;
 	left: 0;
-	height: 32px;
-	width: 100%;
-	background-color: #fff;
 	align-items: center;
-	border-top: 1px solid #DCDFE6;
+	width: 100%;
+	height: 32px;
+	background-color: #fff;
+	border-top: 1px solid #dcdfe6;
+
+	.left-box {
+		margin-left: 10px;
+
+		span {
+			font-size: 12px;
+			user-select: none;
+		}
+	}
+
 	.icon-box {
-		margin-left: auto;
 		align-items: center;
+		margin-left: auto;
+
 		i,
 		span {
 			margin-right: 10px;
 		}
+
 		span {
-			user-select: none;
-			font-size: 12px;
 			width: 30px;
+			font-size: 12px;
+			user-select: none;
 		}
 	}
 }

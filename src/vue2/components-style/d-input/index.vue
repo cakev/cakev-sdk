@@ -9,7 +9,7 @@ export default {
 	props: {
 		value: {},
 		format: {
-			type: 'string',
+			type: String,
 		},
 	},
 	setup(props, { emit }) {
@@ -24,7 +24,6 @@ export default {
 		watch(
 			() => state.currentVal,
 			val => {
-				console.log(props.format === 'number')
 				emit('input', props.format === 'number' ? Number(val) : val)
 			},
 		)
@@ -34,7 +33,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .d-input {
-	&::v-deep {
+	/deep/ {
 		.el-input-group__append {
 			padding: 0 10px;
 		}

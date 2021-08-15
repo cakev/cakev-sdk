@@ -3,7 +3,7 @@
 	router-view
 </template>
 <style lang="scss" scoped>
-#app{
+#app {
 	height: 100%;
 }
 </style>

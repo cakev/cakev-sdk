@@ -26,6 +26,7 @@ export default {
 	components: {
 		widgetEdit,
 	},
+	// @ts-ignore
 	setup(props, context) {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
@@ -57,10 +58,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .editor-content {
-	height: 100%;
-	transform-origin: 0 0 0;
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 	top: 0;
 	left: 0;
+	height: 100%;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	transform-origin: 0 0 0;
 }
 </style>
