@@ -8,7 +8,7 @@ vdr.cursor-move(
 	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
 	:snap="true",
-	@click.native="selectWidgetById($attrs.id)",
+	@mousedown.native.stop.prevent="selectWidgetById($attrs.id)",
 	@refLineParams="refLineParams",
 	class-name-handle="vdr-handles",
 	@dragstop="dragStop",

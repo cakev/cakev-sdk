@@ -11,7 +11,10 @@
 			},
 			className,
 		]"
-		@mousedown="elementMouseDown"
+		@click.stop.prevent
+		@mousedown.stop.prevent="elementDown"
+		@mousemove.stop.prevent="move"
+		@mouseup.stop.prevent="handleUp"
 	>
 		<div
 			v-for="handle in actualHandles"
@@ -287,21 +290,12 @@ export default {
 		this.height = this.h !== 'auto' ? this.h : height
 		this.right = this.parentWidth - this.width - this.left
 		this.bottom = this.parentHeight - this.height - this.top
-
 		this.settingAttribute()
-
-		addEvent(document.documentElement, 'mousedown', this.deselect)
-
 		addEvent(window, 'resize', this.checkParentSize)
 	},
 	beforeDestroy: function () {
-		removeEvent(document.documentElement, 'mousedown', this.deselect)
-		removeEvent(document.documentElement, 'mousemove', this.move)
-		removeEvent(document.documentElement, 'mouseup', this.handleUp)
-
 		removeEvent(window, 'resize', this.checkParentSize)
 	},
-
 	methods: {
 		// 重置边界和鼠标状态
 		resetBoundsAndMouseState() {
@@ -346,15 +340,9 @@ export default {
 
 			return [null, null]
 		},
-		elementMouseDown(e) {
-			this.elementDown(e)
-		},
 		// 元素按下
-		elementDown(e) {
-			if (e instanceof MouseEvent && e.which !== 1) {
-				return
-			}
-
+		elementDown(e: MouseEvent) {
+			if (e.buttons !== 1 || e.which !== 1) return
 			const target = e.target || e.srcElement
 
 			if (this.$el.contains(target)) {
@@ -395,9 +383,6 @@ export default {
 				if (this.parent) {
 					this.bounds = this.calcDragLimits()
 				}
-
-				addEvent(document.documentElement, 'mousemove', this.move)
-				addEvent(document.documentElement, 'mouseup', this.handleUp)
 			}
 		},
 		// 计算移动范围
@@ -430,8 +415,6 @@ export default {
 					this.$emit('deactivated')
 					this.$emit('update:active', false)
 				}
-
-				removeEvent(document.documentElement, 'mousemove', this.handleResize)
 			}
 
 			this.resetBoundsAndMouseState()
@@ -468,9 +451,6 @@ export default {
 			this.mouseClickPosition.h = this.height
 
 			this.bounds = this.calcResizeLimits()
-
-			addEvent(document.documentElement, 'mousemove', this.handleResize)
-			addEvent(document.documentElement, 'mouseup', this.handleUp)
 		},
 		// 计算调整大小范围
 		calcResizeLimits() {
@@ -723,7 +703,7 @@ export default {
 			this.height = height
 		},
 		// 从控制柄松开
-		async handleUp(e) {
+		async handleUp() {
 			this.handle = null
 
 			// 初始化辅助线数据
@@ -746,7 +726,6 @@ export default {
 				this.$emit('dragstop', this.left, this.top)
 			}
 			this.resetBoundsAndMouseState()
-			removeEvent(document.documentElement, 'mousemove', this.handleResize)
 		},
 		// 新增方法 ↓↓↓
 		// 设置属性

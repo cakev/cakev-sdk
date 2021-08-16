@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-content.pos-a(ref="editor-content", :style="style(manager.screen.currentScreen)")
+.editor-content.pos-a(ref="editor-content", :style="style")
 	widget-edit(
 		v-for="widget in manager.screen.currentScreen.widgets",
 		:key="widget.id",
@@ -20,7 +20,7 @@ import { onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import widgetEdit from '@/vue2/components/widget/edit.vue'
 import style from './style'
 import resetZoom from './resetZoom'
-import zoomChange from './zoomChange'
+import resetStyle from './resetStyle'
 
 export default {
 	components: {
@@ -43,9 +43,9 @@ export default {
 		)
 
 		watch(
-			() => [manager.temporary.zoom],
+			() => [manager.temporary.zoom, manager.temporary.offsetY, manager.temporary.offsetX],
 			() => {
-				zoomChange(context)
+				resetStyle(context)
 			},
 		)
 

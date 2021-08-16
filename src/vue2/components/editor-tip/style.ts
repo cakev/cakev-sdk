@@ -4,10 +4,11 @@ const manager: Manager = Manager.Instance()
 
 export default computed({
 	get: () => {
+		const offsetY = manager.temporary.offsetY + manager.screen.currentScreen.height * manager.temporary.zoom + 10
+		const offsetX = manager.temporary.offsetX
 		return {
-			backgroundColor: manager.screen.currentScreen.backgroundColor,
-			width: manager.screen.currentScreen.width + 'px',
-			height: manager.screen.currentScreen.height + 'px',
+			top: offsetY + 'px',
+			left: offsetX + 'px',
 		}
 	},
 	// @ts-ignore

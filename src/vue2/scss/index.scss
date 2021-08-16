@@ -36,7 +36,9 @@ li {
 .text-right {
 	text-align: right;
 }
-
+.cursor-nomral{
+	cursor: default!important;
+}
 .cursor-move {
 	cursor: move !important;
 }

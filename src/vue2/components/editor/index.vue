@@ -6,24 +6,29 @@ el-container.editor
 		el-aside
 			editor-widgets-list
 		el-divider.divider(direction="vertical")
-		el-aside(width="160px")
+		el-aside(width="240px")
 			editor-scene(v-if="manager.screen.currentScreen")
 		el-divider.divider(direction="vertical")
 		el-main.pos-r.editor-container(
-			@wheel.native="wheel",
+			:style="style",
+			@wheel.native.stop.prevent="wheel",
+			@mousedown.native.stop.prevent="mousedown",
+			@mouseup.native.stop.prevent="mouseup",
+			@mousemove.native.stop.prevent="mousemove",
 			@drop.native="drop",
 			@dragover.native.prevent,
 			@click.native="click")
 			editor-content(v-if="manager.screen.currentScreen")
+			editor-tip(v-if="manager.screen.currentScreen")
 			editor-bottom(v-if="manager.screen.currentScreen")
 			widget-contextmenu(v-if="manager.temporary.widgetRightMenu")
 		el-divider.divider(direction="vertical")
-		el-aside(width="320px", v-if="manager.screen.currentScreen", style="padding-right: 10px")
+		el-aside(width="320px", v-if="manager.screen.currentScreen", style="padding-right: 8px")
 			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
 			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, onMounted } from '@vue/composition-api'
 import Manager from '@/core/Manager'
 import editorSetting from '@/vue2/components/editor-setting/index.vue'
 import editorTabs from '@/vue2/components/editor-tabs/index.vue'
@@ -32,10 +37,17 @@ import editorContent from '@/vue2/components/editor-content/index.vue'
 import widgetSetting from '@/vue2/components/widget-setting/index.vue'
 import editorScene from '@/vue2/components/editor-scene/index.vue'
 import editorBottom from '@/vue2/components/editor-bottom/index.vue'
+import editorTip from '@/vue2/components/editor-tip/index.vue'
 import widgetContextmenu from '@/vue2/components/widget-contextmenu/index.vue'
 import drop from './drop'
 import click from './click'
 import wheel from './wheel'
+import keyup from './keyup'
+import keydown from './keydown'
+import style from './style'
+import mousedown from './mousedown'
+import mouseup from './mouseup'
+import mousemove from './mousemove'
 
 export default {
 	components: {
@@ -46,17 +58,29 @@ export default {
 		widgetSetting,
 		editorScene,
 		editorBottom,
+		editorTip,
 		widgetContextmenu,
+	},
+	beforeDestroy() {
+		document.removeEventListener('keyup', keyup)
+		document.removeEventListener('keyup', keydown)
 	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
-
+		onMounted(() => {
+			document.addEventListener('keyup', keyup)
+			document.addEventListener('keydown', keydown)
+		})
 		return {
 			...toRefs(state),
 			drop,
 			click,
 			wheel,
+			style,
+			mousedown,
+			mouseup,
+			mousemove,
 		}
 	},
 }

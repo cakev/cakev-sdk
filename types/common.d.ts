@@ -4,3 +4,4 @@ declare global {
 		manager: any
 	}
 }
+

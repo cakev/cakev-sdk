@@ -7,7 +7,6 @@ export default id => {
 		manager.screen.removeScreenById(id)
 	} else {
 		MessageBox.confirm('检测到未保存的内容，是否在离开页面前保存修改？', '确认信息', {
-			distinguishCancelAndClose: true,
 			confirmButtonText: '保存',
 			cancelButtonText: '放弃修改',
 		})

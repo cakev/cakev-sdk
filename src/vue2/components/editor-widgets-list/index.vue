@@ -1,6 +1,9 @@
 <template lang="pug">
 el-tabs(tab-position="left")
-	el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
+	el-tab-pane(v-for="item in list", :key="item.label")
+		template(slot="label")
+			i(:class="item.icon")
+			span {{ item.label }}
 		el-collapse
 			el-collapse-item(v-for="child in item.children", :key="child.label", :index="child.label", :title="child.label")
 				.cursor-pointer.fn-flex.flex-column(
@@ -8,7 +11,7 @@ el-tabs(tab-position="left")
 					:key="item.type",
 					:draggable="manager.screen.currentScreen",
 					@dragstart="dragStart($event, widget)")
-					el-image.widget-img(:src="widget.avatar")
+					d-img.widget-img(:src="widget.avatar")
 					span.widget-title {{ widget.name }}
 </template>
 <script lang="ts">
@@ -34,7 +37,7 @@ export default {
 	width: 120px;
 	user-select: none;
 }
-.widget-title{
+.widget-title {
 	width: 120px;
 	text-align: center;
 	user-select: none;
