@@ -8,11 +8,14 @@ div
 			:value="item.id")
 	div(v-if="manager.screen.sceneWidgetsBySortList.length")
 		draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
-			.cursor-pointer.fn-flex.flex-column(
-				v-for="item in manager.screen.sceneWidgetsBySortList",
-				@click="selectWidgetById(item.id)")
-				el-image(:src="manager.screen.currentScreen.widgets[item.id].avatar")
-				span {{ manager.screen.currentScreen.widgets[item.id].name }}
+			transition-group
+				.widget-box.cursor-pointer.fn-flex.flex-row(
+					:key="item.id"
+					v-for="item in manager.screen.sceneWidgetsBySortList",
+					:class="{ active: manager.screen.currentWidgets.includes(item.id) }",
+					@click="selectWidgetById(item.id)")
+					el-image.widget-img(:src="manager.screen.currentScreen.widgets[item.id].avatar")
+					span.widget-title {{ manager.screen.currentScreen.widgets[item.id].name }}
 	el-empty(v-else)
 </template>
 <script lang="ts">
@@ -38,3 +41,22 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.widget-box {
+	align-items: center;
+	height: 44px;
+	transition: all 0.3s;
+	&.active {
+		background: #409eff;
+	}
+}
+.widget-img {
+	height: 30px;
+	width: 60px;
+}
+.widget-title {
+	width: 100px;
+	text-align: center;
+	font-size: 12px;
+}
+</style>

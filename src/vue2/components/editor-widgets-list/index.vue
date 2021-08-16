@@ -1,15 +1,15 @@
 <template lang="pug">
 el-tabs(tab-position="left")
-    el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
-        el-collapse
-            el-collapse-item( v-for="child in item.children", :key="child.label", :index="child.label" :title="child.label")
-                .cursor-pointer.fn-flex.flex-column(
-                    v-for="widget in child.children",
-                    :key="item.type",
-                    :draggable="manager.screen.currentScreen",
-                    @dragstart="dragStart($event, widget)")
-                    el-image(:src="widget.avatar")
-                    span {{ widget.name }}
+	el-tab-pane(v-for="item in list", :label="item.label", :key="item.label")
+		el-collapse
+			el-collapse-item(v-for="child in item.children", :key="child.label", :index="child.label", :title="child.label")
+				.cursor-pointer.fn-flex.flex-column(
+					v-for="widget in child.children",
+					:key="item.type",
+					:draggable="manager.screen.currentScreen",
+					@dragstart="dragStart($event, widget)")
+					el-image.widget-img(:src="widget.avatar")
+					span.widget-title {{ widget.name }}
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
@@ -28,4 +28,15 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.widget-img {
+	height: 60px;
+	width: 120px;
+	user-select: none;
+}
+.widget-title{
+	width: 120px;
+	text-align: center;
+	user-select: none;
+}
+</style>

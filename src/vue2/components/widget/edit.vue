@@ -8,7 +8,7 @@ vdr.cursor-move(
 	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
 	:snap="true",
-	@click.native.stop="selectWidgetById($attrs.id)",
+	@click.native="selectWidgetById($attrs.id)",
 	@refLineParams="refLineParams",
 	class-name-handle="vdr-handles",
 	@dragstop="dragStop",
@@ -30,8 +30,8 @@ import Manager from '@/core/Manager'
 import style from './style'
 import selectWidgetById from './selectWidgetById'
 // @ts-ignore
-import vdr from 'vue-draggable-resizable-gorkys'
-import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
+import vdr from '@/vue2/components-style/d-vdr'
+import '@/vue2/components-style/d-vdr/index.css'
 import resizeStop from './resizeStop'
 import dragStop from './dragStop'
 import refLineParams from './refLineParams'
