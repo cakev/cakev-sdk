@@ -92,7 +92,7 @@ export default class Screen extends Factory<Screen> {
 
 	// 选中场景
 	selectSceneById(id) {
-		this.currentScene = this.currentScreen.scenes[id]
+		if (this.currentScreen.scenes[id]) this.currentScene = this.currentScreen.scenes[id]
 	}
 
 	// 创建场景

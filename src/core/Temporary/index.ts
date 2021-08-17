@@ -13,8 +13,15 @@ export default class Temporary extends Factory<Temporary> {
 	widgetRightMenu = false // 右键组件
 	widgetRightMenuX = 0
 	widgetRightMenuY = 0
-	
-	
+
+	scrollLeft(step = 10) {
+		this.offsetX -= step
+	}
+
+	scrollRight(step = 10) {
+		this.offsetX += step
+	}
+
 	scrollTop(step = 10) {
 		this.offsetY += step
 	}

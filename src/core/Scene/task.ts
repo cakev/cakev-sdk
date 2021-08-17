@@ -4,7 +4,7 @@ export default class SceneTask {
 
 	constructor(id?: string) {
 		if (id === '0') {
-			this.id = '0 '
+			this.id = '0'
 			this.name = '主场景'
 		} else {
 			const id = 's' + Math.random().toString(16).replace('.', '')

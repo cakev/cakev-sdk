@@ -2,26 +2,30 @@
 .editor-scene
 	.editor-scene-header.fn-flex.flex-row
 		.editor-scene-title 场景
-		.editor-scene-add.fn-flex.cursor-pointer
+		.editor-scene-add.fn-flex.cursor-pointer(@click="createScene")
 			i.el-icon-plus
-	ul.editor-scene-select
-		li.fn-flex.pos-r.cursor-nomral(
-			v-for="item in manager.screen.currentScreen.scenes",
-			:key="item.id",
-			:class="{ active: manager.screen.currentScene.id === item.id }")
-			i.el-icon-check.pos-a(v-if="manager.screen.currentScene.id === item.id")
-			span {{ item.name }}
-	div(v-if="manager.screen.sceneWidgetsBySortList.length")
-		draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
-			transition-group
-				.editor-scene-widget-box.cursor-nomral.fn-flex.flex-row.pos-r(
+	d-drag-content(style="height:calc(100% - 40px)")
+		template(slot="top")
+			ul.editor-scene-select
+				li.fn-flex.pos-r.cursor-nomral(
+					@click="selectSceneById(item.id)",
+					v-for="item in manager.screen.currentScreen.scenes",
 					:key="item.id",
-					v-for="item in manager.screen.sceneWidgetsBySortList",
-					:class="{ active: manager.screen.currentWidgets.includes(item.id) }",
-					@click="selectWidgetById(item.id)")
-					d-img.editor-scene-widget-img(:src="manager.screen.currentScreen.widgets[item.id].avatar")
-					span.editor-scene-widget-title.ellipsis {{ manager.screen.currentScreen.widgets[item.id].name }}
-	el-empty(v-else)
+					:class="{ active: manager.screen.currentScene.id === item.id }")
+					i.el-icon-check.pos-a(v-if="manager.screen.currentScene.id === item.id")
+					span {{ item.name }}
+		template(slot="bottom")
+			div(v-if="manager.screen.sceneWidgetsBySortList.length")
+				draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
+					transition-group
+						.editor-scene-widget-box.cursor-nomral.fn-flex.flex-row.pos-r(
+							:key="item.id",
+							v-for="item in manager.screen.sceneWidgetsBySortList",
+							:class="{ active: manager.screen.currentWidgets.includes(item.id) }",
+							@click="selectWidgetById(item.id)")
+							d-img.editor-scene-widget-img(:src="manager.screen.currentScreen.widgets[item.id].avatar")
+							span.editor-scene-widget-title.ellipsis {{ manager.screen.currentScreen.widgets[item.id].name }}
+			el-empty(v-else)
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
@@ -29,6 +33,8 @@ import { reactive, toRefs } from '@vue/composition-api'
 import draggable from 'vuedraggable'
 import sceneWidgetDragEnd from './sceneWidgetDragEnd'
 import selectWidgetById from './selectWidgetById'
+import createScene from './createScene'
+import selectSceneById from './selectSceneById'
 
 export default {
 	components: {
@@ -42,18 +48,22 @@ export default {
 			...toRefs(state),
 			sceneWidgetDragEnd,
 			selectWidgetById,
+			createScene,
+			selectSceneById,
 		}
 	},
 }
 </script>
 <style lang="scss" scoped>
+.editor-scene {
+	height: 100%;
+}
 .editor-scene-title {
 	margin-right: auto;
 }
 .editor-scene-select {
 	margin-right: auto;
 	padding: 4px 0;
-	border-bottom: 1px solid #e5e5e5;
 
 	li {
 		align-items: center;
