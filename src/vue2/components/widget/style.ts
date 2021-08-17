@@ -1,9 +1,8 @@
-import Manager from '@/core/Manager'
 import Widget from '@/core/Widget/task'
-const manager: Manager = Manager.Instance()
 
 class item extends Widget {
 	readonly: boolean
+	zIndex: number
 }
 
 export default (widget: item) => {
@@ -13,6 +12,6 @@ export default (widget: item) => {
 		width: widget.width + 'px',
 		height: widget.height + 'px',
 		backgroundColor: widget.backgroundColor,
-		zIndex: manager.screen.currentScreen.widgetsLays[widget.id].zIndex,
+		zIndex: widget.zIndex,
 	}
 }

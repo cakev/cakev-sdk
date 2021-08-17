@@ -5,8 +5,8 @@ const manager: Manager = Manager.Instance()
 export default computed({
 	get: () => {
 		return {
-			left: manager.temporary.widgetRightMenuX + 'px',
-			top: manager.temporary.widgetRightMenuY + 'px',
+			left: manager.temporary.sceneRightMenuX + 'px',
+			top: manager.temporary.sceneRightMenuY + 'px',
 		}
 	},
 	// @ts-ignore

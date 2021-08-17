@@ -1,4 +1,5 @@
 import WidgetTask from '@/core/Widget/task'
+import WidgetLayout from '@/core/Widget/layout'
 import SceneTask from '@/core/Scene/task'
 
 export default class ScreenTask {
@@ -7,7 +8,7 @@ export default class ScreenTask {
 	name = '未命名' // 大屏名
 	scenes: { [key: string]: SceneTask } = {} // 场景
 	widgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
-	widgetsLays = {} // 大屏组件嵌套规则，显示规则
+	widgetsLays: Array<WidgetLayout> = [] // 大屏组件嵌套规则，显示规则
 	type = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
 	avatar = '' // 大屏缩略图
 	layoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度

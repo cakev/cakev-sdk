@@ -1,5 +1,5 @@
 ﻿<template lang="pug">
-.d-drag-content.fn-flex.flex-column(@mousemove.stop.prevent="mousemove", @mouseup.stop.prevent="mouseup")
+.d-drag-content.fn-flex.flex-column(@mousemove.stop="mousemove", @mouseup.stop="mouseup")
 	.d-drag-content-top(ref="top", :style="{ height: `${topMinHeight}px` }")
 		slot(name="top")
 	.d-drag-content-line(@mousedown.stop.prevent="mousedown")
@@ -34,7 +34,13 @@ export default {
 				const diffY = e.clientY - state.startY
 				const topH = context.refs.top.offsetHeight
 				const bottomH = context.refs.bottom.offsetHeight
-				if (diffY + topH >= props.topMinHeight && bottomH - topH >= props.bottomMinHeight) {
+				if (topH + diffY < props.topMinHeight) {
+					context.refs.top.style.height = props.topMinHeight + 'px'
+					context.refs.bottom.style.height = `calc(100% - ${props.topMinHeight}px)`
+				} else if (bottomH - diffY < props.bottomMinHeight) {
+					context.refs.top.style.height = `calc(100% - ${props.bottomMinHeight}px)`
+					context.refs.bottom.style.height = props.bottomMinHeight + 'px'
+				} else {
 					context.refs.top.style.height = topH + diffY + 'px'
 					context.refs.bottom.style.height = bottomH - diffY + 'px'
 				}

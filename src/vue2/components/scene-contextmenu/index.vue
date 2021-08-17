@@ -3,16 +3,21 @@ d-contextmenu(:style="style", :list="list")
 </template>
 <script lang="ts">
 import style from './style'
-import Manager from '@/core/Manager'
 import { reactive, toRefs } from '@vue/composition-api'
+import Manager from '@/core/Manager'
 
 export default {
-	setup() {
+	props: {
+		editableScene: {
+			type: Function,
+		},
+	},
+	setup(props) {
 		const manager: Manager = Manager.Instance()
 		const list = [
 			{
-				label: '删除组件',
-				handler: () => manager.screen.removeWidget(),
+				label: '重命名场景',
+				handler: () => props.editableScene(manager.screen.currentScene.id),
 			},
 		]
 		const state = reactive({ list })

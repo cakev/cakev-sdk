@@ -1,9 +1,9 @@
 <template lang="pug">
 .editor-content.pos-a(ref="editor-content", :style="style")
 	widget-edit(
-		v-for="widget in manager.screen.currentScreen.widgets",
-		:key="widget.id",
-		v-bind="widget",
+		v-for="item in manager.screen.sceneWidgetsBySortList",
+		:key="item.id",
+		v-bind="{ ...manager.screen.currentScreen.widgets[item.id], zIndex: item.zIndex }",
 		:readonly="false")
 	span(
 		v-for="item in manager.temporary.vLine",

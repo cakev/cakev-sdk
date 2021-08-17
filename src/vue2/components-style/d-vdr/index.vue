@@ -13,8 +13,6 @@
 		]"
 		@click.stop.prevent
 		@mousedown.stop.prevent="elementDown"
-		@mousemove.stop.prevent="move"
-		@mouseup.stop.prevent="handleUp"
 	>
 		<div
 			v-for="handle in actualHandles"
@@ -294,6 +292,8 @@ export default {
 		addEvent(window, 'resize', this.checkParentSize)
 	},
 	beforeDestroy: function () {
+		removeEvent(document.documentElement, 'mousemove', this.move)
+		removeEvent(document.documentElement, 'mouseup', this.handleUp)
 		removeEvent(window, 'resize', this.checkParentSize)
 	},
 	methods: {
@@ -341,7 +341,7 @@ export default {
 			return [null, null]
 		},
 		// 元素按下
-		elementDown(e: MouseEvent) {
+		elementDown(e) {
 			if (e.buttons !== 1 || e.which !== 1) return
 			const target = e.target || e.srcElement
 
@@ -383,6 +383,9 @@ export default {
 				if (this.parent) {
 					this.bounds = this.calcDragLimits()
 				}
+
+				addEvent(document.documentElement, 'mousemove', this.move)
+				addEvent(document.documentElement, 'mouseup', this.handleUp)
 			}
 		},
 		// 计算移动范围
@@ -415,6 +418,8 @@ export default {
 					this.$emit('deactivated')
 					this.$emit('update:active', false)
 				}
+
+				removeEvent(document.documentElement, 'mousemove', this.handleResize)
 			}
 
 			this.resetBoundsAndMouseState()
@@ -451,6 +456,9 @@ export default {
 			this.mouseClickPosition.h = this.height
 
 			this.bounds = this.calcResizeLimits()
+
+			addEvent(document.documentElement, 'mousemove', this.handleResize)
+			addEvent(document.documentElement, 'mouseup', this.handleUp)
 		},
 		// 计算调整大小范围
 		calcResizeLimits() {
@@ -726,6 +734,7 @@ export default {
 				this.$emit('dragstop', this.left, this.top)
 			}
 			this.resetBoundsAndMouseState()
+			removeEvent(document.documentElement, 'mousemove', this.handleResize)
 		},
 		// 新增方法 ↓↓↓
 		// 设置属性

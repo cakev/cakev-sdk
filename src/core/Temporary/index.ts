@@ -10,6 +10,9 @@ export default class Temporary extends Factory<Temporary> {
 	editorContentDragging = false // 画布拖动中
 	editorContentStartX = 0
 	editorContentStartY = 0
+	sceneRightMenu = false // 右键场景
+	sceneRightMenuX = 0
+	sceneRightMenuY = 0
 	widgetRightMenu = false // 右键组件
 	widgetRightMenuX = 0
 	widgetRightMenuY = 0

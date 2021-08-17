@@ -48,6 +48,7 @@ export default {
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
+
 		return {
 			...toRefs(state),
 			style,

@@ -6,10 +6,17 @@ el-tabs(
 	:value="manager.screen.currentScreen && manager.screen.currentScreen.id",
 	@tab-add="createScreen",
 	@tab-click="selectScreenByIndex")
-	el-tab-pane(v-for="item in manager.screen.screenList", :key="item.id", :name="item.id")
+	el-tab-pane(v-for="(item, index) in manager.screen.screenList", :key="item.id", :name="item.id")
 		template(slot="label")
-			el-input(ref="input", v-model="item.name", v-show="editName", :autofocus="true", @blur="blur")
-			span(@dblclick="dblclick", v-show="!editName") {{ item.name }}
+			el-input(
+				ref="input",
+				v-model="item.name",
+				v-show="editName &&manager.screen.currentScreen &&  manager.screen.currentScreen.id===item.id",
+				:autofocus="true",
+				@blur="blur(index)")
+			span(
+				@dblclick="dblclick(index)",
+				v-show="!(editName&&manager.screen.currentScreen &&  manager.screen.currentScreen.id===item.id)") {{ item.name }}
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'
@@ -24,20 +31,19 @@ export default {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager, editName: false })
 
-		const dblclick = () => {
+		const dblclick = index => {
 			state.editName = true
-			console.log(context.refs['input'])
-			context.refs['input'][0].focus()
+			context.refs['input'][index].focus()
 			setTimeout(() => {
-				context.refs['input'][0].select()
+				context.refs['input'][index].select()
 			})
 		}
-		const blur = () => {
+		const blur = index => {
 			if (manager.screen.currentScreen.name.replace(/[\r\n]/g, '') === '') {
 				manager.screen.currentScreen.name = '未命名'
-				context.refs['input'][0].focus()
+				context.refs['input'][index].focus()
 				setTimeout(() => {
-					context.refs['input'][0].select()
+					context.refs['input'][index].select()
 				})
 			} else {
 				state.editName = false

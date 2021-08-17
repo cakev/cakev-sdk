@@ -23,13 +23,30 @@ export default class Screen extends Factory<Screen> {
 		this.currentWidgets = [...[id]]
 	}
 
+	removeWidget() {
+		const widget = this.currentScreen.widgets[this.currentWidgets[0]]
+		// todo 递归
+		this.currentScreen.widgetsLays.forEach((item, index) => {
+			if (item.id === widget.id) {
+				this.currentScreen.widgetsLays.splice(index, 1)
+			}
+		})
+		delete this.currentScreen.widgets[this.currentWidgets[0]]
+		this.currentWidgets = []
+		this.currentScreen.widgets = { ...this.currentScreen.widgets }
+	}
+
 	// 添加组件
 	pushWidget(widget: WidgetTask) {
 		this.currentScreen.widgets = { ...this.currentScreen.widgets, [widget.id]: widget }
-		this.currentScreen.widgetsLays = {
+		this.currentScreen.widgetsLays = [
 			...this.currentScreen.widgetsLays,
-			[widget.id]: new WidgetLayout({ id: widget.id, scene: this.currentScene.id }),
-		}
+			new WidgetLayout({
+				id: widget.id,
+				scene: this.currentScene.id,
+				zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
+			}),
+		]
 		this.selectWidgetById(widget.id)
 	}
 
@@ -74,15 +91,20 @@ export default class Screen extends Factory<Screen> {
 		const screen: ScreenTask = new ScreenTask(id)
 		this.screenMd5SchemaList.push(md5(JSON.stringify(screen)))
 		this.screenList.push(screen)
-		if (!this.currentScreen) this.currentScreen = screen
-		this.selectSceneById('0')
+		if (!this.currentScreen) {
+			this.currentScreen = screen
+			this.selectSceneById('0')
+		}
 	}
 
 	// 当前场景 按zIndex 排序后的序列
 	get sceneWidgetsBySortList(): Array<WidgetLayout> {
-		const list: Array<WidgetLayout> = Object.values(this.currentScreen.widgetsLays)
-		return list
-			.filter((item: WidgetLayout) => item.scene === this.currentScene.id)
+		return this.currentScreen.widgetsLays
+			.filter((item: WidgetLayout) =>
+				this.currentScene.id === '0'
+					? item.scene === this.currentScene.id
+					: item.scene === '0' || item.scene === this.currentScene.id,
+			)
 			.sort((a: WidgetLayout, b: WidgetLayout) => {
 				return b.zIndex - a.zIndex - 1
 			})
@@ -93,6 +115,7 @@ export default class Screen extends Factory<Screen> {
 	// 选中场景
 	selectSceneById(id) {
 		if (this.currentScreen.scenes[id]) this.currentScene = this.currentScreen.scenes[id]
+		this.cancelSelectWidget()
 	}
 
 	// 创建场景

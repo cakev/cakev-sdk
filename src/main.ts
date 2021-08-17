@@ -9,12 +9,16 @@ import VueCompositionAPI from '@vue/composition-api'
 import dInput from '@/vue2/components-style/d-input/index.vue'
 import dImg from '@/vue2/components-style/d-img/index.vue'
 import dDragContent from '@/vue2/components-style/d-drag-content/index.vue'
+import dContextmenu from '@/vue2/components-style/d-contextmenu/index.vue'
+import ClickOutside from 'vue-click-outside'
 
+Vue.directive('click-outside', ClickOutside)
 Vue.component('d-input', dInput)
 Vue.component('d-img', dImg)
 Vue.component('d-drag-content', dDragContent)
+Vue.component('d-contextmenu', dContextmenu)
 Vue.use(ElementUI)
-Vue.prototype.$ELEMENT = { size: 'mini', zIndex: 3000 }
+Vue.prototype.$ELEMENT = { size: 'mini', zIndex: 3000, labelPosition: 'left' }
 Vue.config.productionTip = false
 Vue.use(VueCompositionAPI)
 new Vue({

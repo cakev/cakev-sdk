@@ -11,16 +11,15 @@ el-container.editor
 		el-divider.divider(direction="vertical")
 		el-main.pos-r.editor-container(
 			:style="style",
-			@wheel.native.stop.prevent="wheel",
-			@mousedown.native.stop.prevent="mousedown",
-			@mouseup.native.stop.prevent="mouseup",
-			@mousemove.native.stop.prevent="mousemove",
+			@wheel.native.stop="wheel",
+			@mousedown.native.stop="mousedown",
+			@mouseup.native.stop="mouseup",
+			@mousemove.native.stop="mousemove",
 			@drop.native="drop",
 			@dragover.native.prevent,
 			@click.native="click")
 			editor-content(v-if="manager.screen.currentScreen")
 			editor-tip(v-if="manager.screen.currentScreen")
-			editor-bottom(v-if="manager.screen.currentScreen")
 			widget-contextmenu(v-if="manager.temporary.widgetRightMenu")
 		el-divider.divider(direction="vertical")
 		el-aside(width="320px", v-if="manager.screen.currentScreen", style="padding-right: 8px")
@@ -36,7 +35,6 @@ import editorWidgetsList from '@/vue2/components/editor-widgets-list/index.vue'
 import editorContent from '@/vue2/components/editor-content/index.vue'
 import widgetSetting from '@/vue2/components/widget-setting/index.vue'
 import editorScene from '@/vue2/components/editor-scene/index.vue'
-import editorBottom from '@/vue2/components/editor-bottom/index.vue'
 import editorTip from '@/vue2/components/editor-tip/index.vue'
 import widgetContextmenu from '@/vue2/components/widget-contextmenu/index.vue'
 import drop from './drop'
@@ -57,7 +55,6 @@ export default {
 		editorContent,
 		widgetSetting,
 		editorScene,
-		editorBottom,
 		editorTip,
 		widgetContextmenu,
 	},
