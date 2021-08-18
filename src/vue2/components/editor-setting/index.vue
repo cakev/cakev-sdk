@@ -18,6 +18,12 @@
 				el-option(value="full-size", label="充满页面")
 				el-option(value="full-width", label="100%宽度")
 				el-option(value="full-height", label="100%高度")
+		el-form-item(label="首场景", style="width: 100%")
+			el-select(v-model="manager.screen.currentScreen.mainScene")
+				el-option(
+					:value="item.id",
+					:label="item.name",
+					v-for="item in Object.values(manager.screen.currentScreen.scenes)")
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'

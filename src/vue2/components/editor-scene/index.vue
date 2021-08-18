@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-scene.pos-r
+.editor-scene.pos-r(@contextmenu.prevent)
 	.editor-scene-header.fn-flex.flex-row
 		.editor-scene-title 场景
 		.editor-scene-add.fn-flex.cursor-pointer(@click="createScene")
@@ -28,7 +28,7 @@
 							:key="item.id",
 							v-for="item in manager.screen.sceneWidgetsBySortList",
 							:class="{ active: manager.screen.currentWidgets.includes(item.id) }",
-							@click="selectWidgetById(item.id)")
+							@click="selectWidgetById($event,item.id)")
 							d-img.editor-scene-widget-img(:src="manager.screen.currentScreen.widgets[item.id].avatar")
 							span.editor-scene-widget-title.ellipsis {{ manager.screen.currentScreen.widgets[item.id].name }}
 			el-empty(v-else)

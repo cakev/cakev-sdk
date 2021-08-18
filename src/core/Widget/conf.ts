@@ -1,4 +1,5 @@
-import { Method } from 'axios'
+import WidgetAnimation from '@/core/Widget/animation'
+import WidgetApi from '@/core/Widget/api'
 
 export default class WidgetConfig {
 	name = '未知组件'
@@ -9,8 +10,8 @@ export default class WidgetConfig {
 	data: Array<any>
 	avatar = ''
 	backgroundColor: string | null = null
-	apiUrl: string
-	apiMethod: Method
+	animation: WidgetAnimation | null = null
+	api: WidgetApi | null = null
 
 	constructor(obj: {
 		type: string
@@ -21,17 +22,18 @@ export default class WidgetConfig {
 		data: Array<any>
 		avatar?: string
 		backgroundColor?: string | null
-		apiUrl?: string
-		apiMethod?: Method
+		animation?: WidgetAnimation | null
+		api?: WidgetApi | null
 	}) {
+		this.type = obj.type
+		this.name = obj.name
+		this.version = obj.version
 		this.width = obj.width
 		this.height = obj.height
 		this.data = obj.data
-		this.name = obj.name
-		this.version = obj.version
-		this.type = obj.type
 		if (obj.avatar) this.avatar = obj.avatar
-		if (obj.apiUrl) this.apiUrl = obj.apiUrl
-		if (obj.apiMethod) this.apiMethod = obj.apiMethod
+		if (obj.backgroundColor) this.backgroundColor = obj.backgroundColor
+		if (obj.animation) this.animation = obj.animation
+		if (obj.api) this.api = obj.api
 	}
 }

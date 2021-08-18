@@ -11,7 +11,7 @@
 			},
 			className,
 		]"
-		@click.stop.prevent
+		@click.stop.prevent="click"
 		@mousedown.stop.prevent="elementDown"
 	>
 		<div
@@ -29,6 +29,7 @@
 <script lang="ts">
 import { matchesSelectorToParentElements, getComputedSize, addEvent, removeEvent } from './dom'
 import { computeWidth, computeHeight, restrictToBounds, snapToGrid } from './fns'
+import selectWidgetById from './selectWidgetById'
 
 // 禁止用户选取
 const userSelectNone = {
@@ -42,6 +43,9 @@ const userSelectAuto = {
 export default {
 	replace: true,
 	props: {
+		id: {
+			type: String,
+		},
 		className: {
 			type: String,
 			default: 'vdr',
@@ -241,22 +245,17 @@ export default {
 			top: this.y,
 			right: null,
 			bottom: null,
-
 			width: null,
 			height: null,
 			widthTouched: false,
 			heightTouched: false,
 			aspectFactor: null,
-
 			parentWidth: null,
 			parentHeight: null,
-
 			minW: this.minWidth,
 			minH: this.minHeight,
-
 			maxW: this.maxWidth,
 			maxH: this.maxHeight,
-
 			handle: null,
 			enabled: this.active,
 			resizing: false,
@@ -340,11 +339,17 @@ export default {
 
 			return [null, null]
 		},
+		click(e){
+			if (e.buttons !== 1 || e.which !== 1) return
+			if (this.enabled) return
+			this.enabled = true
+			selectWidgetById(e, this.id)
+		},
 		// 元素按下
 		elementDown(e) {
 			if (e.buttons !== 1 || e.which !== 1) return
 			const target = e.target || e.srcElement
-
+			
 			if (this.$el.contains(target)) {
 				if (this.onDragStart(e) === false) {
 					return
@@ -359,12 +364,12 @@ export default {
 					return
 				}
 
-				if (!this.enabled) {
-					this.enabled = true
-
-					this.$emit('activated')
-					this.$emit('update:active', true)
-				}
+				// if (!this.enabled) {
+				// 	// this.enabled = true
+				//
+				// 	this.$emit('activated')
+				// 	this.$emit('update:active', true)
+				// }
 
 				if (this.draggable) {
 					this.dragging = true
@@ -731,7 +736,7 @@ export default {
 				this.dragging = false
 				await this.conflictCheck()
 				this.$emit('refLineParams', refLine)
-				this.$emit('dragstop', this.left, this.top)
+				// this.$emit('dragstop', this.left, this.top)
 			}
 			this.resetBoundsAndMouseState()
 			removeEvent(document.documentElement, 'mousemove', this.handleResize)

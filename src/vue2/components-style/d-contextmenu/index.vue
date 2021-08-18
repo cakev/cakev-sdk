@@ -1,6 +1,9 @@
 <template lang="pug">
 ul.d-contextmenu.pos-f.cursor-nomral.z-index-999
-	li.d-contextmenu-list.pos-r.fn-flex(v-for="item in list", :class="{ disabled: item.disabled }", @click.stop="click(item)")
+	li.d-contextmenu-list.pos-r.fn-flex(
+		v-for="item in list",
+		:class="{ disabled: item.disabled }",
+		@click.stop="click(item)")
 		span.ellipsis {{ item.label }}
 		i.el-icon-caret-right(v-if="item.children")
 		ul.d-contextmenu-child.pos-a(v-if="item.children")
@@ -28,6 +31,7 @@ export default {
 			if (!item.disabled) {
 				manager.temporary.sceneRightMenu = false
 				manager.temporary.widgetRightMenu = false
+				manager.temporary.widgetsRightMenu = false
 				typeof item.handler === 'function' && item.handler()
 			}
 		}
@@ -74,7 +78,7 @@ export default {
 		color: #8f8f8f;
 		background-color: transparent;
 	}
-	span{
+	span {
 		margin-right: auto;
 	}
 }

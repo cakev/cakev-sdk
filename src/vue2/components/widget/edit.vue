@@ -1,5 +1,6 @@
 <template lang="pug">
 vdr.cursor-move(
+	:id="$attrs.id",
 	:x="$attrs.x",
 	:y="$attrs.y",
 	:w="$attrs.width",
@@ -8,8 +9,8 @@ vdr.cursor-move(
 	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
 	:snap="true",
-	@mousedown.native.stop.prevent="selectWidgetById($attrs.id)",
 	@refLineParams="refLineParams",
+	v-click-outside="clickOutSide",
 	class-name-handle="vdr-handles",
 	@dragstop="dragStop",
 	@contextmenu.native.stop.prevent="contextmenu($event, $attrs.id)",
@@ -28,7 +29,6 @@ vdr.cursor-move(
 import { reactive, toRefs } from '@vue/composition-api'
 import Manager from '@/core/Manager'
 import style from './style'
-import selectWidgetById from './selectWidgetById'
 // @ts-ignore
 import vdr from '@/vue2/components-style/d-vdr'
 import '@/vue2/components-style/d-vdr/index.css'
@@ -36,6 +36,7 @@ import resizeStop from './resizeStop'
 import dragStop from './dragStop'
 import refLineParams from './refLineParams'
 import contextmenu from './contextmenu'
+import clickOutSide from './clickOutSide'
 
 export default {
 	components: { vdr },
@@ -52,11 +53,11 @@ export default {
 		return {
 			...toRefs(state),
 			style,
-			selectWidgetById,
 			resizeStop,
 			dragStop,
 			refLineParams,
 			contextmenu,
+			clickOutSide,
 		}
 	},
 }

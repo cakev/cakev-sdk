@@ -19,7 +19,7 @@ export default class ScreenTask {
 	height = 1080 // 大屏高度
 	backgroundColor = '#fff' // 大屏背景颜色
 	backgroundImage = '' // 大屏背景图片
-	mainScene: string | number // 大屏首屏场景
+	mainScene = '0' // 大屏首屏场景
 	platform: string // 大屏平台类型 PC:PC
 	domain: string // 大屏组件接口Domain
 	headers: string // 大屏组件接口Headers

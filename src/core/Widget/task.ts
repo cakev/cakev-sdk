@@ -1,5 +1,6 @@
 ﻿import WidgetConfig from '@/core/Widget/conf'
-import { Method } from 'axios'
+import WidgetAnimation from '@/core/Widget/animation'
+import WidgetApi from '@/core/Widget/api'
 
 export default class Widget extends WidgetConfig {
 	id: string
@@ -15,8 +16,8 @@ export default class Widget extends WidgetConfig {
 		data: Array<any>
 		avatar?: string
 		backgroundColor?: string | null
-		apiUrl?: string
-		apiMethod?: Method
+		animation?: WidgetAnimation | null
+		api?: WidgetApi | null
 		x?: number
 		y?: number
 	}) {

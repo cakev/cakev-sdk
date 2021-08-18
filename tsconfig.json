@@ -26,6 +26,7 @@
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "types/common.d.ts"],
+	"references": [{ "path": "types/**/*/ts", "prepend": true }],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.ts"],
 	"exclude": ["node_modules"]
 }

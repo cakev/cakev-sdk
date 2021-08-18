@@ -4,7 +4,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/vue2/scss/index.scss'
-import '@/vue2/scss/element.scss'
+import '@/vue2/scss/element-theme.scss'
 
 // @ts-ignore
 import VueCompositionAPI from '@vue/composition-api'

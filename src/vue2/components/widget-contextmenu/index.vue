@@ -2,9 +2,9 @@
 d-contextmenu(:style="style", :list="list")
 </template>
 <script lang="ts">
-import style from './style'
 import { reactive, toRefs } from '@vue/composition-api'
 import Manager from '@/core/Manager'
+import style from './style'
 import copyWidget from './copyWidget'
 import removeWidget from './removeWidget'
 import moveWidget from './moveWidget'
@@ -14,11 +14,11 @@ export default {
 		const manager: Manager = Manager.Instance()
 		const sceneList = Object.values(manager.screen.currentScreen.scenes)
 		const children = sceneList.map(item => {
-			const now: contextmenu = item
-			now.label = item.name
-			now.disabled = item.id === manager.screen.currentScene.id
-			now.handler = () => moveWidget(item.id)
-			return now
+			return {
+				label: item.name,
+				disabled: item.id === manager.screen.currentScene.id,
+				handler: () => moveWidget(item.id),
+			}
 		})
 		const list = [
 			{

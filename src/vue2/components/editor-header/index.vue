@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-header.fn-flex
+.editor-header.fn-flex(@contextmenu.prevent)
 	.editor-header-left
 	.editor-header-center.fn-flex.pos-r(v-click-outside="hideMenu")
 		el-input.editor-header.name.fn-flex(
@@ -9,87 +9,25 @@
 			:autofocus="true",
 			@blur="blur")
 		span(v-show="!editName", @dblclick="dblclick") {{ manager.screen.currentScreen.name }}
-		i.el-icon-arrow-down(@click="showMenu", v-show="!editName")
-		d-contextmenu.editor-header-contextmenu(v-if="show", :list="list")
+		i.el-icon-arrow-down(@click="showNameMenu", v-show="!editName")
+		d-contextmenu.editor-header-contextmenu(v-if="nameMenuState", :list="list")
 	.editor-header-right
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
 import { reactive, toRefs, onBeforeMount } from '@vue/composition-api'
 import createScreen from './createScreen'
-import selectScreenByIndex from './selectScreenByIndex'
-import { Notification } from 'element-ui'
+import dblclick from './dblclick'
+import showNameMenu from './showNameMenu'
+import blur from './blur'
 
 export default {
 	// @ts-ignore
 	setup(props, context) {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager, show: false, list: [], editName: false })
-
-		const dblclick = () => {
-			state.editName = true
-			context.refs['input'].focus()
-			setTimeout(() => {
-				context.refs['input'].select()
-			})
-		}
-		const blur = () => {
-			if (manager.screen.currentScreen.name.replace(/[\r\n]/g, '') === '') {
-				manager.screen.currentScreen.name = '未命名'
-				context.refs['input'].focus()
-				setTimeout(() => {
-					context.refs['input'].select()
-				})
-			} else {
-				state.editName = false
-			}
-		}
-
-		const showMenu = () => {
-			state.show = true
-			const children = manager.screen.screenList.map((item, index) => {
-				const now: contextmenu = item
-				now.label = item.name
-				now.disabled = item.id === manager.screen.currentScreen.id
-				now.handler = () => {
-					selectScreenByIndex(index)
-					state.show = false
-					Notification({
-						title: '切换大屏成功',
-						type: 'success',
-						message: `大屏名：${item.name}`,
-					})
-				}
-				return now
-			})
-			state.list = [
-				{
-					label: '重命名大屏',
-					handler: () => {
-						state.show = false
-						dblclick()
-					},
-				},
-				{
-					label: '切换大屏',
-					children,
-				},
-				{
-					label: '创建大屏',
-					handler: () => {
-						createScreen()
-						state.show = false
-						Notification({
-							title: '创建大屏成功',
-							type: 'success',
-							message: `大屏名：${manager.screen.currentScreen.name}`,
-						})
-					},
-				},
-			]
-		}
+		const state = reactive({ manager, nameMenuState: false, list: [], editName: false })
 		const hideMenu = () => {
-			state.show = false
+			state.nameMenuState = false
 		}
 		onBeforeMount(() => {
 			if (!manager.screen.currentScreen) {
@@ -98,10 +36,10 @@ export default {
 		})
 		return {
 			...toRefs(state),
-			showMenu,
+			showNameMenu: () => showNameMenu({ state, context }),
 			hideMenu,
-			blur,
-			dblclick,
+			blur: () => blur({ state, context }),
+			dblclick: () => dblclick({ state, context }),
 		}
 	},
 }

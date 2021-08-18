@@ -1,7 +1,9 @@
 import Manager from '@/core/Manager'
 const manager: Manager = Manager.Instance()
 
-export default (e: KeyboardEvent, id) => {
+export default (e: MouseEvent, id) => {
+	if (e.buttons !== 1 || e.which !== 1) return
+	console.log(manager.screen.currentWidgets)
 	if (e.shiftKey) {
 		manager.screen.selectWidgetById(id)
 	} else {

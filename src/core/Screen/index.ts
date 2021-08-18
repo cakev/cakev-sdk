@@ -13,6 +13,52 @@ export default class Screen extends Factory<Screen> {
 	screenMd5SchemaList: Array<string> = []
 	currentScene: SceneTask | null = null
 
+	// 拼合组件
+	makeGroup() {
+		let minLeft = null,
+			maxLeft = null,
+			width = 0,
+			height = 0,
+			minTop = null,
+			maxTop = null
+		this.currentWidgets.map(item => {
+			const m = this.currentScreen.widgets[item]
+			if (minLeft === null) {
+				minLeft = m.x
+			}
+			if (maxLeft === null) {
+				maxLeft = m.x
+				width = m.width
+			}
+			if (minTop === null) {
+				minTop = m.y
+			}
+			if (maxTop === null) {
+				maxTop = m.y
+				height = m.height
+			}
+			if (minLeft > m.x) {
+				minLeft = m.x
+			}
+			if (maxLeft + width < m.x + m.width) {
+				maxLeft = m.x
+				width = m.width
+			}
+			if (minTop > m.y) {
+				minTop = m.y
+			}
+			if (maxTop + height < m.y + m.height) {
+				maxTop = m.y
+				height = m.height
+			}
+		})
+		const x = minLeft
+		const y = minTop
+		width = width + maxLeft - minLeft
+		height = height + maxTop - minTop
+		console.log(x, y, width, height)
+	}
+
 	// 取消选择组件
 	cancelSelectWidget() {
 		this.currentWidgets = []
@@ -20,7 +66,7 @@ export default class Screen extends Factory<Screen> {
 
 	// 选择组件
 	selectWidgetById(id: string) {
-		this.currentWidgets = [...[id]]
+		this.currentWidgets = [...this.currentWidgets, id]
 	}
 
 	// 复制组件
@@ -63,6 +109,7 @@ export default class Screen extends Factory<Screen> {
 				zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
 			}),
 		]
+		this.cancelSelectWidget()
 		this.selectWidgetById(widget.id)
 	}
 

@@ -1,34 +1,40 @@
 <template lang="pug">
 .widget-setting
 	.widget-setting-header.fn-flex.flex-row
-		span 基础
-	el-form.widget-setting-form(label-width="80px", label-position="left")
-		el-form-item(label="位置")
-			d-input(v-model="currentWidget.x", style="width: 90px", format="number")
-				template(slot="append") X
-			d-input(v-model="currentWidget.y", style="width: 90px; margin-left: 8px", format="number")
-				template(slot="append") Y
-		el-form-item(label="宽高")
-			d-input(v-model="currentWidget.width", style="width: 90px", format="number")
-				template(slot="append") W
-			d-input(v-model="currentWidget.height", style="width: 90px; margin-left: 8px", format="number")
-				template(slot="append") H
-		el-form-item(label="背景色")
-			el-color-picker(v-model="currentWidget.backgroundColor")
+		span.cursor-nomral(
+			:class="{ active: index === activeIndex }",
+			@click="click(index)",
+			v-for="(item, index) in list") {{ item.label }}
+	component(:is="component")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, onMounted } from '@vue/composition-api'
 import Manager from '@/core/Manager'
 import currentWidget from './currentWidget'
+import base from './base.vue'
+import data from './data.vue'
+import interactive from './interactive.vue'
 
 export default {
 	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager })
-
+		const list = [
+			{ label: '基础', component: base },
+			{ label: '数据', component: data },
+			{ label: '交互', component: interactive },
+		]
+		const state = reactive({ manager, list, activeIndex: 0, component: null })
+		const click = index => {
+			state.activeIndex = index
+			state.component = list[index].component
+		}
+		onMounted(() => {
+			click(0)
+		})
 		return {
 			...toRefs(state),
 			currentWidget,
+			click,
 		}
 	},
 }
@@ -42,7 +48,15 @@ export default {
 	align-items: center;
 	height: 40px;
 	span {
-		font-weight: bold;
+		margin-right: 10px;
+		color: #b3b3b3;
+		&:hover {
+			color: #333;
+		}
+		&.active {
+			color: #333;
+			font-weight: bold;
+		}
 	}
 }
 .widget-setting-form {
