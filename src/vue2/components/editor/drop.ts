@@ -7,8 +7,8 @@ export default e => {
 	if (!drap) return
 	const widget = JSON.parse(drap)
 	const data = new WidgetTask({
-		offsetX: (e.layerX - manager.temporary.offsetX) / manager.temporary.zoom - widget.width / 2,
-		offsetY: (e.layerY - manager.temporary.offsetY) / manager.temporary.zoom - widget.height / 2,
+		x: (e.layerX - manager.temporary.offsetX) / manager.temporary.zoom - widget.width / 2,
+		y: (e.layerY - manager.temporary.offsetY) / manager.temporary.zoom - widget.height / 2,
 		...widget,
 	})
 	manager.screen.pushWidget(data)             

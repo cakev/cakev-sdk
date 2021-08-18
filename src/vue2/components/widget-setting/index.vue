@@ -6,9 +6,9 @@ el-form(label-width="100px")
 		d-input(v-model="currentWidget.y", style="width: 100px; margin-left: 10px", format="number")
 			template(slot="append") Y
 	el-form-item(label="宽高")
-		d-input(v-model="currentWidget.width", style="width: 100px")
+		d-input(v-model="currentWidget.width", style="width: 100px", format="number")
 			template(slot="append") W
-		d-input(v-model="currentWidget.height", style="width: 100px; margin-left: 10px")
+		d-input(v-model="currentWidget.height", style="width: 100px; margin-left: 10px", format="number")
 			template(slot="append") H
 	el-form-item(label="背景色")
 		el-color-picker(v-model="currentWidget.backgroundColor")

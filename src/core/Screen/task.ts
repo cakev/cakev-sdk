@@ -35,6 +35,6 @@ export default class ScreenTask {
 	marketComponents = [] // 大屏内组件市场的组件
 	constructor(id) {
 		this.id = id
-		this.scenes = { '0': new SceneTask('0') }
+		this.scenes = { '0': new SceneTask('0'), '-1': new SceneTask('-1') }
 	}
 }

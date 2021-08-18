@@ -8,23 +8,17 @@ export default id => {
 	} else {
 		MessageBox.confirm('检测到未保存的内容，是否在离开页面前保存修改？', '确认信息', {
 			confirmButtonText: '保存',
-			cancelButtonText: '放弃修改',
+			cancelButtonText: '再等等',
 		})
 			.then(() => {
+				// todo ajax
 				Notification({
 					title: '提示',
 					type: 'success',
-					message: '保存修改',
+					message: '保存',
 				})
 				manager.screen.removeScreenById(id)
 			})
-			.catch(action => {
-				Notification({
-					title: '提示',
-					type: 'warning',
-					message: action === 'cancel' ? '放弃保存并离开页面' : '停留在当前页面',
-				})
-				if (action === 'cancel') manager.screen.removeScreenById(id)
-			})
+			.catch(() => {})
 	}
 }

@@ -166,5 +166,6 @@ export default {
 	font-size: 12px;
 	margin-left: 10px;
 	flex: 1;
+	user-select: none;
 }
 </style>

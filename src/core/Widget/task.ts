@@ -14,12 +14,12 @@ export default class Widget extends WidgetConfig {
 		height: number
 		backgroundColor?: string | null
 		data: Array<any>
-		offsetX?: number
-		offsetY?: number
+		x?: number
+		y?: number
 	}) {
 		super(obj)
 		this.id = 'w' + Math.random().toString(16).replace('.', '')
-		this.x = obj.offsetX
-		this.y = obj.offsetY
+		this.x = obj.x
+		this.y = obj.y
 	}
 }

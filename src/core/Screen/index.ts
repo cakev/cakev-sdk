@@ -23,16 +23,32 @@ export default class Screen extends Factory<Screen> {
 		this.currentWidgets = [...[id]]
 	}
 
+	// 复制组件
+	copyWidget() {
+		const widget: WidgetTask = this.currentScreen.widgets[this.currentWidgets[0]]
+		const newWidget: WidgetTask = new WidgetTask({ ...widget })
+		this.pushWidget(newWidget)
+	}
+
+	// 删除组件
 	removeWidget() {
 		const widget = this.currentScreen.widgets[this.currentWidgets[0]]
-		// todo 递归
-		this.currentScreen.widgetsLays.forEach((item, index) => {
-			if (item.id === widget.id) {
-				this.currentScreen.widgetsLays.splice(index, 1)
-			}
-		})
-		delete this.currentScreen.widgets[this.currentWidgets[0]]
-		this.currentWidgets = []
+		//todo 递归
+		if (this.currentScene.id === '-1') {
+			this.currentScreen.widgetsLays.forEach((item, index) => {
+				if (item.id === widget.id) {
+					this.currentScreen.widgetsLays.splice(index, 1)
+				}
+			})
+			delete this.currentScreen.widgets[this.currentWidgets[0]]
+		} else {
+			this.currentScreen.widgetsLays.forEach(item => {
+				if (item.id === widget.id) {
+					item.scene = '-1'
+				}
+			})
+		}
+		this.cancelSelectWidget()
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
 	}
 
@@ -101,7 +117,7 @@ export default class Screen extends Factory<Screen> {
 	get sceneWidgetsBySortList(): Array<WidgetLayout> {
 		return this.currentScreen.widgetsLays
 			.filter((item: WidgetLayout) =>
-				this.currentScene.id === '0'
+				this.currentScene.id === '0' || this.currentScene.id === '-1'
 					? item.scene === this.currentScene.id
 					: item.scene === '0' || item.scene === this.currentScene.id,
 			)
@@ -123,6 +139,38 @@ export default class Screen extends Factory<Screen> {
 		const scene: SceneTask = new SceneTask()
 		this.currentScreen.scenes = { ...this.currentScreen.scenes, [scene.id]: scene }
 		this.selectSceneById(scene.id)
+	}
+
+	// 清空场景
+	clearScene() {
+		if (this.sceneWidgetsBySortList.length <= 0) return
+		if (this.currentScene.id === '-1') {
+			for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
+				const item = this.currentScreen.widgetsLays[i]
+				if (item.scene === this.currentScene.id) {
+					delete this.currentScreen.widgets[item.id]
+					this.currentScreen.widgetsLays.splice(i, 1)
+					i--
+				}
+			}
+		} else {
+			this.currentScreen.widgetsLays.forEach(item => {
+				if (item.scene === this.currentScene.id) {
+					item.scene = '-1'
+				}
+			})
+		}
+		this.cancelSelectWidget()
+		this.currentScreen.widgets = { ...this.currentScreen.widgets }
+		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays]
+	}
+
+	// 删除场景
+	removeScene() {
+		this.clearScene()
+		delete this.currentScreen.scenes[this.currentScene.id]
+		this.currentScreen.scenes = { ...this.currentScreen.scenes }
+		this.selectSceneById('-1')
 	}
 
 	constructor() {
