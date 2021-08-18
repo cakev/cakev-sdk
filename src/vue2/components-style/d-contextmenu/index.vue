@@ -44,40 +44,52 @@ export default {
 <style lang="scss" scoped>
 .d-contextmenu {
 	width: 200px;
-	box-shadow: 0 5px 17px rgba(0, 0, 0, 0.2), 0 2px 7px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #000,
-		0 0 0 0.5px rgba(0, 0, 0, 0.1);
-	background-color: #222;
 	padding: 8px 0;
-	border-radius: 2px;
 	color: #fff;
-}
-.d-contextmenu-child {
-	display: none;
-	left: 100%;
-	top: 2px;
-	min-width: 100px;
 	background-color: #222;
-	padding: 8px 0;
 	border-radius: 2px;
-	box-shadow: 0 5px 17px rgba(0, 0, 0, 0.2), 0 2px 7px rgba(0, 0, 0, 0.15), inset 0 0 0 0.5px #000,
+	box-shadow:
+		0 5px 17px rgba(0, 0, 0, 0.2),
+		0 2px 7px rgba(0, 0, 0, 0.15),
+		inset 0 0 0 0.5px #000,
 		0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
+
+.d-contextmenu-child {
+	top: 2px;
+	left: 100%;
+	display: none;
+	min-width: 100px;
+	padding: 8px 0;
+	background-color: #222;
+	border-radius: 2px;
+	box-shadow:
+		0 5px 17px rgba(0, 0, 0, 0.2),
+		0 2px 7px rgba(0, 0, 0, 0.15),
+		inset 0 0 0 0.5px #000,
+		0 0 0 0.5px rgba(0, 0, 0, 0.1);
+}
+
 .d-contextmenu-list,
 .d-contextmenu-child-list {
-	line-height: 24px;
-	font-size: 12px;
-	padding: 0 16px;
 	align-items: center;
+	padding: 0 16px;
+	font-size: 12px;
+	line-height: 24px;
+
 	&:hover {
 		background-color: #409eff;
+
 		.d-contextmenu-child {
 			display: block;
 		}
 	}
+
 	&.disabled {
 		color: #8f8f8f;
 		background-color: transparent;
 	}
+
 	span {
 		margin-right: auto;
 	}

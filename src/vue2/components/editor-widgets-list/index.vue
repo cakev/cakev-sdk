@@ -33,9 +33,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .widget-img {
-	height: 60px;
 	width: 120px;
+	height: 60px;
 }
+
 .widget-title {
 	width: 120px;
 	text-align: center;

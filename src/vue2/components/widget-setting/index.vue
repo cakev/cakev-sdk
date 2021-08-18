@@ -43,22 +43,27 @@ export default {
 .widget-setting {
 	font-size: 12px;
 }
+
 .widget-setting-header {
-	padding: 4px 16px;
 	align-items: center;
 	height: 40px;
+	padding: 4px 16px;
+
 	span {
 		margin-right: 10px;
 		color: #b3b3b3;
+
 		&:hover {
 			color: #333;
 		}
+
 		&.active {
-			color: #333;
 			font-weight: bold;
+			color: #333;
 		}
 	}
 }
+
 .widget-setting-form {
 	padding: 0 16px;
 }

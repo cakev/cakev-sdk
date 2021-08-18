@@ -98,76 +98,91 @@ export default {
 <style lang="scss" scoped>
 .editor-scene {
 	height: 100%;
-	user-select: none;
 	font-size: 12px;
+	user-select: none;
 }
+
 .editor-scene-title {
 	margin-right: auto;
 	font-weight: bold;
 }
+
 .editor-scene-select {
-	margin-right: auto;
 	padding: 4px 0;
+	margin-right: auto;
 
 	li {
 		align-items: center;
-		line-height: 32px;
 		padding: 0 8px;
+		line-height: 32px;
+
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.06);
 		}
+
 		&.active {
 			font-weight: bold;
 		}
+
 		i {
 			font-weight: bold;
 		}
+
 		.el-input,
 		span {
 			padding-left: 24px;
 		}
 	}
 }
+
 .editor-scene-add {
-	color: #333;
-	border-radius: 3px;
-	width: 32px;
-	height: 32px;
 	align-items: center;
 	justify-content: center;
+	width: 32px;
+	height: 32px;
+	color: #333;
+	border-radius: 3px;
+
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.06);
 	}
 }
+
 .editor-scene-header {
-	padding: 4px 8px;
 	align-items: center;
+	padding: 4px 8px;
+
 	i {
 		font-size: 16px;
 	}
 }
+
 .editor-scene-widget-box {
 	align-items: center;
 	height: 44px;
-	transition: all 0.3s;
 	padding: 0 10px;
 	color: #333;
 	border: 1px solid transparent;
+	transition: all 0.3s;
+
 	&:hover {
 		border-color: #409eff;
 	}
+
 	&.active {
-		border-color: transparent;
 		background-color: #daebf7;
+		border-color: transparent;
 	}
 }
+
 .editor-scene-widget-img {
-	height: 30px;
 	width: 60px;
+	height: 30px;
 }
+
 .editor-scene-widget-title {
-	text-align: center;
-	margin-left: 10px;
 	flex: 1;
+	margin-left: 10px;
+	text-align: center;
 }
 </style>

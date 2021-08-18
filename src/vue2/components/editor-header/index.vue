@@ -47,32 +47,37 @@ export default {
 <style lang="scss" scoped>
 .editor-header.name {
 	align-items: center;
+
 	/deep/ {
 		input {
+			height: 20px;
+			font-size: 14px;
+			line-height: 20px;
+			color: #fff;
+			text-align: center;
 			background-color: transparent;
 			border: none;
-			color: #fff;
-			font-size: 14px;
-			text-align: center;
-			line-height: 20px;
-			height: 20px;
 		}
 	}
 }
+
 .editor-header-contextmenu {
 	top: 48px;
 }
+
 .editor-header {
-	background-color: #2c2c2c;
 	height: 48px;
 	user-select: none;
+	background-color: #2c2c2c;
 }
+
 .editor-header-center {
 	flex: 1;
 	align-items: center;
 	justify-content: center;
-	color: #fff;
 	font-size: 14px;
+	color: #fff;
+
 	i {
 		padding: 0 4px;
 	}

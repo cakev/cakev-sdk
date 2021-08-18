@@ -11,7 +11,7 @@
 			},
 			className,
 		]"
-		@click.stop.prevent="click"
+		@click.stop.prevent="click($event)"
 		@mousedown.stop.prevent="elementDown"
 	>
 		<div
@@ -46,41 +46,9 @@ export default {
 		id: {
 			type: String,
 		},
-		className: {
-			type: String,
-			default: 'vdr',
-		},
-		classNameDraggable: {
-			type: String,
-			default: 'draggable',
-		},
-		classNameResizable: {
-			type: String,
-			default: 'resizable',
-		},
-		classNameDragging: {
-			type: String,
-			default: 'dragging',
-		},
-		classNameResizing: {
-			type: String,
-			default: 'resizing',
-		},
-		classNameActive: {
-			type: String,
-			default: 'active',
-		},
-		classNameHandle: {
-			type: String,
-			default: 'handle',
-		},
 		disableUserSelect: {
 			type: Boolean,
 			default: true,
-		},
-		enableNativeDrag: {
-			type: Boolean,
-			default: false,
 		},
 		preventDeactivation: {
 			type: Boolean,
@@ -186,22 +154,6 @@ export default {
 			type: [Boolean, String],
 			default: false,
 		},
-		onDragStart: {
-			type: Function,
-			default: () => true,
-		},
-		onDrag: {
-			type: Function,
-			default: () => true,
-		},
-		onResizeStart: {
-			type: Function,
-			default: () => true,
-		},
-		onResize: {
-			type: Function,
-			default: () => true,
-		},
 		// 冲突检测
 		isConflictCheck: {
 			type: Boolean,
@@ -241,6 +193,13 @@ export default {
 
 	data: function () {
 		return {
+			className: 'vdr',
+			classNameDraggable: 'draggable',
+			classNameResizable: 'resizable',
+			classNameDragging: 'dragging',
+			classNameResizing: 'resizing',
+			classNameActive: 'active',
+			classNameHandle: 'handle',
 			left: this.x,
 			top: this.y,
 			right: null,
@@ -264,7 +223,7 @@ export default {
 		}
 	},
 
-	created: function () {
+	created() {
 		if (this.maxWidth && this.minWidth > this.maxWidth)
 			console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
 		if (this.maxWidth && this.minHeight > this.maxHeight)
@@ -272,11 +231,7 @@ export default {
 
 		this.resetBoundsAndMouseState()
 	},
-	mounted: function () {
-		if (!this.enableNativeDrag) {
-			this.$el.ondragstart = () => false
-		}
-
+	mounted() {
 		const [parentWidth, parentHeight] = this.getParentSize()
 
 		this.parentWidth = parentWidth
@@ -290,7 +245,7 @@ export default {
 		this.settingAttribute()
 		addEvent(window, 'resize', this.checkParentSize)
 	},
-	beforeDestroy: function () {
+	beforeDestroy() {
 		removeEvent(document.documentElement, 'mousemove', this.move)
 		removeEvent(document.documentElement, 'mouseup', this.handleUp)
 		removeEvent(window, 'resize', this.checkParentSize)
@@ -339,22 +294,17 @@ export default {
 
 			return [null, null]
 		},
-		click(e){
-			if (e.buttons !== 1 || e.which !== 1) return
+		click(e) {
 			if (this.enabled) return
 			this.enabled = true
 			selectWidgetById(e, this.id)
 		},
 		// 元素按下
 		elementDown(e) {
-			if (e.buttons !== 1 || e.which !== 1) return
+			console.log(e)
+			// if (e.buttons !== 1 || e.which !== 1) return
 			const target = e.target || e.srcElement
-			
 			if (this.$el.contains(target)) {
-				if (this.onDragStart(e) === false) {
-					return
-				}
-
 				if (
 					(this.dragHandle && !matchesSelectorToParentElements(target, this.dragHandle, this.$el)) ||
 					(this.dragCancel && matchesSelectorToParentElements(target, this.dragCancel, this.$el))
@@ -432,10 +382,6 @@ export default {
 		// 控制柄按下
 		handleDown(handle, e) {
 			if (e instanceof MouseEvent && e.which !== 1) {
-				return
-			}
-
-			if (this.onResizeStart(handle, e) === false) {
 				return
 			}
 
@@ -592,9 +538,6 @@ export default {
 
 			const left = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
 			const top = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
-			if (this.onDrag(left, top) === false) {
-				return
-			}
 			const right = restrictToBounds(mouseClickPosition.right + deltaX, bounds.minRight, bounds.maxRight)
 			const bottom = restrictToBounds(mouseClickPosition.bottom + deltaY, bounds.minBottom, bounds.maxBottom)
 			this.left = left
@@ -668,9 +611,6 @@ export default {
 
 			const width = computeWidth(this.parentWidth, left, right)
 			const height = computeHeight(this.parentHeight, top, bottom)
-			if (this.onResize(this.handle, left, top, width, height) === false) {
-				return
-			}
 			this.left = left
 			this.top = top
 			this.right = right
@@ -1188,3 +1128,109 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.vdr {
+	position: absolute;
+	box-sizing: border-box;
+	touch-action: none;
+	border: 1px dashed #d6d6d6;
+}
+
+.handle {
+	position: absolute;
+	box-sizing: border-box;
+	width: 14px;
+	height: 14px;
+	font-size: 1em;
+	line-height: 1em;
+	border: 1px solid black;
+	border-radius: 50%;
+	transition: all 0.3s linear;
+}
+
+.handle-tl {
+	top: -5px;
+	left: -5px;
+	cursor: nw-resize;
+}
+
+.handle-tm {
+	top: -5px;
+	left: calc(50% - 4px);
+	cursor: n-resize;
+}
+
+.handle-tr {
+	top: -5px;
+	right: -5px;
+	cursor: ne-resize;
+}
+
+.handle-ml {
+	top: calc(50% - 4px);
+	left: -5px;
+	cursor: w-resize;
+}
+
+.handle-mr {
+	top: calc(50% - 4px);
+	right: -5px;
+	cursor: e-resize;
+}
+
+.handle-bl {
+	bottom: -5px;
+	left: -5px;
+	cursor: sw-resize;
+}
+
+.handle-bm {
+	bottom: -5px;
+	left: calc(50% - 4px);
+	cursor: s-resize;
+}
+
+.handle-br {
+	right: -5px;
+	bottom: -5px;
+	cursor: se-resize;
+}
+
+.handle-tr,
+.handle-mr,
+.handle-br,
+.handle-tm,
+.handle-tl,
+.handle-ml,
+.handle-bl,
+.handle-bm {
+	&:hover {
+		transform: scale(1.4);
+	}
+}
+
+.ref-line {
+	position: absolute;
+	z-index: 9999;
+	background-color: rgb(255, 0, 204);
+}
+
+.v-line {
+	width: 1px;
+}
+
+.h-line {
+	height: 1px;
+}
+
+@media only screen and (max-width: 768px) {
+	[class*='handle-']::before {
+		position: absolute;
+		top: -10px;
+		right: -10px;
+		bottom: -10px;
+		left: -10px;
+		content: '';
+	}
+}
+</style>

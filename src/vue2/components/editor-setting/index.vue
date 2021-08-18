@@ -47,14 +47,17 @@ export default {
 .editor-setting {
 	font-size: 12px;
 }
+
 .editor-setting-header {
-	padding: 4px 16px;
 	align-items: center;
 	height: 40px;
+	padding: 4px 16px;
+
 	span {
 		font-weight: bold;
 	}
 }
+
 .editor-setting-form {
 	padding: 0 16px;
 }

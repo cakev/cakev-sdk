@@ -19,11 +19,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .editor-content-tip {
-	bottom: -30px;
 	right: 0;
+	bottom: -30px;
+	height: 12px;
 	font-size: 12px;
 	line-height: 12px;
-	height: 12px;
 	color: #999;
 }
 </style>

@@ -6,11 +6,11 @@ el-image(v-bind="$attrs", v-on="$listeners")
 <style lang="scss" scoped>
 /deep/ {
 	.d-img-error {
-		width: 100%;
-		height: 100%;
 		align-items: center;
 		justify-content: center;
-		background-color: rgba(0,0,0,0.2);
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.2);
 	}
 }
 </style>

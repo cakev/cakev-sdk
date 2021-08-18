@@ -59,33 +59,39 @@ export default {
 <style lang="scss" scoped>
 .d-drag-content-top,
 .d-drag-content-bottom {
-	overflow-y: auto;
 	overflow-x: hidden;
+	overflow-y: auto;
 	overscroll-behavior: contain;
+
 	&::-webkit-scrollbar {
 		display: none;
 	}
+
 	&::-webkit-scrollbar {
-		-webkit-appearance: none;
 		width: 7px;
 		margin-right: 4px;
+		-webkit-appearance: none;
 	}
+
 	&::-webkit-scrollbar {
 		width: 0 !important;
 	}
+
 	&::-webkit-scrollbar-thumb {
-		border-radius: 4px;
 		background-color: hsla(0, 0%, 100%, 0.4);
+		border-radius: 4px;
 		box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
 	}
 }
+
 .d-drag-content {
-	height: 100%;
 	width: 100%;
+	height: 100%;
 }
+
 .d-drag-content-line {
+	padding: 4px 0;
 	cursor: ns-resize;
 	border-bottom: 1px solid #e5e5e5;
-	padding: 4px 0;
 }
 </style>
