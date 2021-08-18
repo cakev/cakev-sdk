@@ -98,9 +98,12 @@ export default {
 <style lang="scss" scoped>
 .editor-scene {
 	height: 100%;
+	user-select: none;
+	font-size: 12px;
 }
 .editor-scene-title {
 	margin-right: auto;
+	font-weight: bold;
 }
 .editor-scene-select {
 	margin-right: auto;
@@ -118,12 +121,10 @@ export default {
 		}
 		i {
 			font-weight: bold;
-			font-size: 12px;
 		}
 		.el-input,
 		span {
 			padding-left: 24px;
-			font-size: 14px;
 		}
 	}
 }
@@ -141,6 +142,9 @@ export default {
 .editor-scene-header {
 	padding: 4px 8px;
 	align-items: center;
+	i {
+		font-size: 16px;
+	}
 }
 .editor-scene-widget-box {
 	align-items: center;
@@ -163,9 +167,7 @@ export default {
 }
 .editor-scene-widget-title {
 	text-align: center;
-	font-size: 12px;
 	margin-left: 10px;
 	flex: 1;
-	user-select: none;
 }
 </style>

@@ -6,7 +6,7 @@ export default () => {
 	manager.screen.copyWidget()
 	const name = manager.screen.currentScreen.widgets[manager.screen.currentWidgets[0]].name
 	Notification({
-		title: '完成复制组件',
+		title: '复制组件成功',
 		type: 'success',
 		message: `组件名：${name}`,
 	})

@@ -1,35 +1,34 @@
 <template lang="pug">
-el-form(label-width="100px")
-	el-form-item(label="屏幕大小")
-		el-select(v-model="size", style="width: 100%")
-			el-option(value="1920*1080", label="大屏推荐尺寸1920*1080")
-			el-option(value="1366*768", label="web最常见尺寸1366*768")
-			el-option(value="1024*768", label="web最小尺寸1024*768")
-			el-option(value="750*1334", label="iPhone6/7/8 750*1334")
-			el-option(value="828*1472", label="iPhone6/7/8 Plus 828*1472")
-			el-option(value="custom", label="自定义")
-	el-form-item
-		d-input(v-model="manager.screen.currentScreen.width", style="width: 100px", format="number")
-			template(slot="append") W
-		d-input(v-model="manager.screen.currentScreen.height", style="width: 100px; margin-left: 10px", format="number")
-			template(slot="append") H
-	el-form-item(label="背景色")
-		el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")
-	el-form-item(label="适配方式", style="width: 100%")
-		el-select(v-model="manager.screen.currentScreen.layoutMode")
-			el-option(value="full-size", label="充满页面")
-			el-option(value="full-width", label="100%宽度")
-			el-option(value="full-height", label="100%高度")
+.editor-setting
+	.editor-setting-header.fn-flex.flex-row
+		span 设计
+	el-form.editor-setting-form(label-width="80px", label-position="left")
+		el-form-item(label="屏幕大小")
+			el-select(v-model="size", style="width: 100%")
+				el-option(v-for="item in list", :key="item.value", :value="item.value", :label="item.label")
+		el-form-item
+			d-input(v-model="manager.screen.currentScreen.width", style="width: 90px", format="number")
+				template(slot="append") W
+			d-input(v-model="manager.screen.currentScreen.height", style="width: 90px; margin-left: 8px", format="number")
+				template(slot="append") H
+		el-form-item(label="背景色")
+			el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")
+		el-form-item(label="适配方式", style="width: 100%")
+			el-select(v-model="manager.screen.currentScreen.layoutMode")
+				el-option(value="full-size", label="充满页面")
+				el-option(value="full-width", label="100%宽度")
+				el-option(value="full-height", label="100%高度")
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'
 import Manager from '@/core/Manager'
 import size from './size'
+import list from './list'
 
 export default {
 	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager })
+		const state = reactive({ list, manager })
 
 		return {
 			...toRefs(state),
@@ -38,3 +37,19 @@ export default {
 	},
 }
 </script>
+<style lang="scss" scoped>
+.editor-setting {
+	font-size: 12px;
+}
+.editor-setting-header {
+	padding: 4px 16px;
+	align-items: center;
+	height: 40px;
+	span {
+		font-weight: bold;
+	}
+}
+.editor-setting-form {
+	padding: 0 16px;
+}
+</style>

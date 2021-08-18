@@ -1,3 +1,5 @@
+import { Method } from 'axios'
+
 export default class WidgetConfig {
 	name = '未知组件'
 	version = '1.0.0'
@@ -7,16 +9,20 @@ export default class WidgetConfig {
 	data: Array<any>
 	avatar = ''
 	backgroundColor: string | null = null
-	
+	apiUrl: string
+	apiMethod: Method
+
 	constructor(obj: {
-		avatar?: string
 		type: string
 		name: string
 		version: string
 		width: number
 		height: number
-		backgroundColor?: string | null
 		data: Array<any>
+		avatar?: string
+		backgroundColor?: string | null
+		apiUrl?: string
+		apiMethod?: Method
 	}) {
 		this.width = obj.width
 		this.height = obj.height
@@ -25,6 +31,7 @@ export default class WidgetConfig {
 		this.version = obj.version
 		this.type = obj.type
 		if (obj.avatar) this.avatar = obj.avatar
-		if (obj.backgroundColor) this.backgroundColor = obj.backgroundColor
+		if (obj.apiUrl) this.apiUrl = obj.apiUrl
+		if (obj.apiMethod) this.apiMethod = obj.apiMethod
 	}
 }

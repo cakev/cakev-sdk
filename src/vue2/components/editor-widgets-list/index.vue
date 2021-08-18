@@ -35,11 +35,9 @@ export default {
 .widget-img {
 	height: 60px;
 	width: 120px;
-	user-select: none;
 }
 .widget-title {
 	width: 120px;
 	text-align: center;
-	user-select: none;
 }
 </style>

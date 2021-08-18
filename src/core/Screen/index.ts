@@ -26,7 +26,7 @@ export default class Screen extends Factory<Screen> {
 	// 复制组件
 	copyWidget() {
 		const widget: WidgetTask = this.currentScreen.widgets[this.currentWidgets[0]]
-		const newWidget: WidgetTask = new WidgetTask({ ...widget })
+		const newWidget: WidgetTask = new WidgetTask({ ...widget, name: `${widget.name}副本` })
 		this.pushWidget(newWidget)
 	}
 
@@ -106,7 +106,7 @@ export default class Screen extends Factory<Screen> {
 	createScreen(id) {
 		const screen: ScreenTask = new ScreenTask(id)
 		this.screenMd5SchemaList.push(md5(JSON.stringify(screen)))
-		this.screenList.push(screen)
+		this.screenList = [...this.screenList, screen]
 		if (!this.currentScreen) {
 			this.currentScreen = screen
 			this.selectSceneById('0')

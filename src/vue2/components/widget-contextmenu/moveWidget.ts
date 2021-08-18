@@ -11,7 +11,7 @@ export default id => {
 			item.scene = id
 			manager.screen.cancelSelectWidget()
 			Notification({
-				title: '完成移动组件',
+				title: '移动组件成功',
 				type: 'success',
 				dangerouslyUseHTMLString: true,
 				message: `组件名：${name}<br/>移动前场景名：${oldName}<br/>移动后场景名：${newName}`,

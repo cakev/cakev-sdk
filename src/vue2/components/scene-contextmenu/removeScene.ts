@@ -9,7 +9,7 @@ export default () => {
 	}).then(() => {
 		const name = manager.screen.currentScene.name
 		Notification({
-			title: '完成删除场景',
+			title: '删除场景成功',
 			type: 'success',
 			message: `场景名：${name}`,
 		})

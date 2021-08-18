@@ -14,7 +14,7 @@ export default () => {
 		const message =
 			manager.screen.currentScene.id === '-1' ? '场景名：回收站' : `场景名：${manager.screen.currentScene.name}`
 		Notification({
-			title: '完成清空场景',
+			title: '清空场景成功',
 			type: 'success',
 			message: message,
 		})

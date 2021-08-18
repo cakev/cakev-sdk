@@ -1,19 +1,22 @@
 ﻿import WidgetConfig from '@/core/Widget/conf'
+import { Method } from 'axios'
 
 export default class Widget extends WidgetConfig {
 	id: string
 	x: number
 	y: number
-	
+
 	constructor(obj: {
-		avatar?: string
 		type: string
 		name: string
 		version: string
 		width: number
 		height: number
-		backgroundColor?: string | null
 		data: Array<any>
+		avatar?: string
+		backgroundColor?: string | null
+		apiUrl?: string
+		apiMethod?: Method
 		x?: number
 		y?: number
 	}) {

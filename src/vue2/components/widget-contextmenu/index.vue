@@ -14,10 +14,11 @@ export default {
 		const manager: Manager = Manager.Instance()
 		const sceneList = Object.values(manager.screen.currentScreen.scenes)
 		const children = sceneList.map(item => {
-			item.label = item.name
-			item.disabled = item.id === manager.screen.currentScene.id
-			item.handler = () => moveWidget(item.id)
-			return item
+			const now: contextmenu = item
+			now.label = item.name
+			now.disabled = item.id === manager.screen.currentScene.id
+			now.handler = () => moveWidget(item.id)
+			return now
 		})
 		const list = [
 			{

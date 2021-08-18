@@ -1005,9 +1005,9 @@ export default {
 			return stick => {
 				if (!this.handleInfo.switch) return { display: this.enabled ? 'block' : 'none' }
 
-				const size = (this.handleInfo.size / this.scaleRatio).toFixed(2)
-				const offset = (this.handleInfo.offset / this.scaleRatio).toFixed(2)
-				const center = (size / 2).toFixed(2)
+				const size = Number((this.handleInfo.size / this.scaleRatio).toFixed(2))
+				const offset = Number((this.handleInfo.offset / this.scaleRatio).toFixed(2))
+				const center = Number((size / 2).toFixed(2))
 
 				const styleMap = {
 					tl: {
@@ -1050,6 +1050,7 @@ export default {
 					left: styleMap[stick].left,
 					right: styleMap[stick].right,
 					bottom: styleMap[stick].bottom,
+					display: 'none',
 				}
 				stickStyle.display = this.enabled ? 'block' : 'none'
 				return stickStyle

@@ -1,7 +1,6 @@
 <template lang="pug">
-el-container.editor
-	el-header
-		editor-tabs
+el-container.editor.fn-flex.flex-column
+	editor-header
 	el-container
 		el-aside
 			editor-widgets-list
@@ -22,7 +21,7 @@ el-container.editor
 			editor-tip(v-if="manager.screen.currentScreen")
 			widget-contextmenu(v-if="manager.temporary.widgetRightMenu")
 		el-divider.divider(direction="vertical")
-		el-aside(width="320px", v-if="manager.screen.currentScreen", style="padding-right: 8px")
+		el-aside(width="300px", v-if="manager.screen.currentScreen")
 			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
 			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
 </template>
@@ -30,7 +29,7 @@ el-container.editor
 import { reactive, toRefs, onMounted } from '@vue/composition-api'
 import Manager from '@/core/Manager'
 import editorSetting from '@/vue2/components/editor-setting/index.vue'
-import editorTabs from '@/vue2/components/editor-tabs/index.vue'
+import editorHeader from '@/vue2/components/editor-header/index.vue'
 import editorWidgetsList from '@/vue2/components/editor-widgets-list/index.vue'
 import editorContent from '@/vue2/components/editor-content/index.vue'
 import widgetSetting from '@/vue2/components/widget-setting/index.vue'
@@ -50,7 +49,7 @@ import mousemove from './mousemove'
 export default {
 	components: {
 		editorSetting,
-		editorTabs,
+		editorHeader,
 		editorWidgetsList,
 		editorContent,
 		widgetSetting,

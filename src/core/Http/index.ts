@@ -20,10 +20,6 @@ export default class Http extends Emitter {
 	static POOL_UPDATE = 'pool_update'
 	static POOL_STOP = 'pool_stop'
 
-	// todo
-	// 报错捕获是否抛出，node服务增加字段，默认false
-	// private httpErrorDebugger = false
-
 	private timer: any = null
 	constructor(obj) {
 		super()
