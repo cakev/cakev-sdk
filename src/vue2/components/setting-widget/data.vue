@@ -1,6 +1,6 @@
 <template lang="pug">
-	el-form.widget-setting-form(label-width="80px", label-position="left")
-		
+el-form.setting-widget-form(label-width="80px", label-position="left")
+	
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'

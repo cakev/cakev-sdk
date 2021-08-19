@@ -1,8 +1,8 @@
 import Manager from '@/core/Manager'
-import WidgetLayout from '@/core/Widget/layout'
+import WidgetLayer from '@/core/Widget/layer'
 const manager: Manager = Manager.Instance()
 
-export default (e: PointerEvent, widget: WidgetLayout) => {
+export default (e: PointerEvent, widget: WidgetLayer) => {
 	if (manager.screen.currentWidgets.length <= 1) {
 		manager.screen.cancelSelectWidget()
 		manager.screen.selectWidgetById(widget.id)

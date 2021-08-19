@@ -1,5 +1,9 @@
+const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 const needReport = false
+const resolve = dir => {
+	return path.join(__dirname, dir)
+}
 
 module.exports = {
 	assetsDir: './',
@@ -21,18 +25,18 @@ module.exports = {
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
 	},
 	chainWebpack: config => {
-		// config.module.rule('svg').exclude.add(resolve('src/vue2/icons')).end()
-		// config.module
-		// 	.rule('icons')
-		// 	.test(/\.svg$/)
-		// 	.include.add(resolve('src/vue2/icons'))
-		// 	.end()
-		// 	.use('svg-sprite-loader')
-		// 	.loader('svg-sprite-loader')
-		// 	.options({
-		// 		symbolId: 'icon-[name]',
-		// 	})
-		// 	.end()
+		config.module.rule('svg').exclude.add(resolve('src/icon')).end()
+		config.module
+			.rule('icons')
+			.test(/\.svg$/)
+			.include.add(resolve('src/icon'))
+			.end()
+			.use('svg-sprite-loader')
+			.loader('svg-sprite-loader')
+			.options({
+				symbolId: 'dorring-[name]',
+			})
+			.end()
 		if (isProduction) {
 			if (needReport) {
 				config

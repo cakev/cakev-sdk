@@ -19,25 +19,25 @@ el-container.editor.fn-flex.flex-column(@contextmenu.native.prevent)
 			@click.native="click")
 			editor-content(v-if="manager.screen.currentScreen")
 			editor-tip(v-if="manager.screen.currentScreen")
-			widget-contextmenu(v-if="manager.temporary.widgetRightMenu")
-			widgets-contextmenu(v-if="manager.temporary.widgetsRightMenu")
+			contextmenu-widget(v-if="manager.temporary.widgetRightMenu")
+			contextmenu-widgets(v-if="manager.temporary.widgetsRightMenu")
 		el-divider.divider(direction="vertical")
 		el-aside(width="300px", v-if="manager.screen.currentScreen")
-			widget-setting(v-if="manager.screen.currentWidgets.length === 1")
-			editor-setting(v-if="manager.screen.currentWidgets.length === 0")
+			setting-widget(v-if="manager.screen.currentWidgets.length === 1")
+			setting-editor(v-if="manager.screen.currentWidgets.length === 0")
 </template>
 <script lang="ts">
 import { reactive, toRefs, onMounted } from '@vue/composition-api'
 import Manager from '@/core/Manager'
-import editorSetting from '@/vue2/components/editor-setting/index.vue'
+import settingEditor from '@/vue2/components/setting-editor/index.vue'
 import editorHeader from '@/vue2/components/editor-header/index.vue'
 import editorWidgetsList from '@/vue2/components/editor-widgets-list/index.vue'
 import editorContent from '@/vue2/components/editor-content/index.vue'
-import widgetSetting from '@/vue2/components/widget-setting/index.vue'
+import settingWidget from '@/vue2/components/setting-widget/index.vue'
 import editorScene from '@/vue2/components/editor-scene/index.vue'
 import editorTip from '@/vue2/components/editor-tip/index.vue'
-import widgetContextmenu from '@/vue2/components/widget-contextmenu/index.vue'
-import widgetsContextmenu from '@/vue2/components/widgets-contextmenu/index.vue'
+import contextmenuWidget from '@/vue2/components/contextmenu-widget/index.vue'
+import contextmenuWidgets from '@/vue2/components/contextmenu-widgets/index.vue'
 import drop from './drop'
 import click from './click'
 import wheel from './wheel'
@@ -50,15 +50,15 @@ import mousemove from './mousemove'
 
 export default {
 	components: {
-		editorSetting,
+		settingEditor,
 		editorHeader,
 		editorWidgetsList,
 		editorContent,
-		widgetSetting,
+		settingWidget,
 		editorScene,
 		editorTip,
-		widgetContextmenu,
-		widgetsContextmenu,
+		contextmenuWidget,
+		contextmenuWidgets,
 	},
 	beforeDestroy() {
 		document.removeEventListener('keyup', keyup)

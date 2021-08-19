@@ -9,7 +9,7 @@
 			:autofocus="true",
 			@blur="blur")
 		span(v-show="!editName", @dblclick="dblclick") {{ manager.screen.currentScreen.name }}
-		i.el-icon-arrow-down(@click="showNameMenu", v-show="!editName")
+		d-svg(type="el-icon-arrow-down", @click="showNameMenu", v-show="!editName")
 		d-contextmenu.editor-header-contextmenu(v-if="nameMenuState", :list="list")
 	.editor-header-right
 </template>
@@ -67,7 +67,6 @@ export default {
 
 .editor-header {
 	height: 48px;
-	user-select: none;
 	background-color: #2c2c2c;
 }
 

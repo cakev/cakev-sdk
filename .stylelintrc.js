@@ -2,6 +2,7 @@ module.exports = {
 	extends: [
 		'stylelint-config-standard',
 		'stylelint-config-recess-order', // 检查属性顺序
+		'stylelint-config-prettier',
 	],
 	plugins: ['stylelint-scss'],
 	rules: {

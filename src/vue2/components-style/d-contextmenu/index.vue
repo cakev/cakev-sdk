@@ -5,7 +5,7 @@ ul.d-contextmenu.pos-f.cursor-nomral.z-index-999
 		:class="{ disabled: item.disabled }",
 		@click.stop="click(item)")
 		span.ellipsis {{ item.label }}
-		i.el-icon-caret-right(v-if="item.children")
+		d-svg(type="el-icon-caret-right", v-if="item.children")
 		ul.d-contextmenu-child.pos-a(v-if="item.children")
 			li.d-contextmenu-child-list(
 				v-for="child in item.children",
@@ -74,7 +74,6 @@ export default {
 .d-contextmenu-child-list {
 	align-items: center;
 	padding: 0 16px;
-	font-size: 12px;
 	line-height: 24px;
 
 	&:hover {

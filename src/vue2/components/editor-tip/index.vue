@@ -22,7 +22,6 @@ export default {
 	right: 0;
 	bottom: -30px;
 	height: 12px;
-	font-size: 12px;
 	line-height: 12px;
 	color: #999;
 }

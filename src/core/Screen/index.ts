@@ -2,8 +2,7 @@ import Factory from '@/core/Base/factory'
 import ScreenTask from '@/core/Screen/task'
 import SceneTask from '@/core/Scene/task'
 import WidgetTask from '@/core/Widget/task'
-import WidgetLayout from '@/core/Widget/layout'
-import WidgetAnimation from '@/core/Widget/animation'
+import WidgetLayer from '@/core/Widget/layer'
 
 const md5 = require('md5')
 
@@ -13,6 +12,15 @@ export default class Screen extends Factory<Screen> {
 	screenList: Array<ScreenTask> = []
 	screenMd5SchemaList: Array<string> = []
 	currentScene: SceneTask | null = null
+
+	// 解锁/锁定组件
+	changeLock() {
+		this.currentScreen.widgetsLayers.forEach(item => {
+			if (item.id === this.currentWidgets[0]) {
+				item.lock = !item.lock
+			}
+		})
+	}
 
 	// 拼合组件
 	makeGroup() {
@@ -67,26 +75,25 @@ export default class Screen extends Factory<Screen> {
 
 	// 添加分组组件
 	pushWidgetGroup(obj: { x: number; y: number; width: number; height: number }) {
-		const animation = new WidgetAnimation()
-		const widget = new WidgetTask({ ...obj, name: '分组', group: true, animation })
+		const widget = new WidgetTask({ ...obj, name: '分组', group: true })
 		const children = []
 		const currentWidgets = this.currentWidgets
 		this.cancelSelectWidget()
-		for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
-			if (currentWidgets.includes(this.currentScreen.widgetsLays[i].id)) {
-				children.push(this.currentScreen.widgetsLays[i])
-				this.currentScreen.widgetsLays.splice(i, 1)
+		for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
+			if (currentWidgets.includes(this.currentScreen.widgetsLayers[i].id)) {
+				children.push(this.currentScreen.widgetsLayers[i])
+				this.currentScreen.widgetsLayers.splice(i, 1)
 				i--
 			}
 		}
-		const layout = new WidgetLayout({
+		const layer = new WidgetLayer({
 			id: widget.id,
 			scene: this.currentScene.id,
 			children,
 			group: true,
 			zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
 		})
-		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays, layout]
+		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers, layer]
 		this.currentScreen.widgets = { ...this.currentScreen.widgets, [widget.id]: widget }
 		this.selectWidgetById(widget.id)
 	}
@@ -97,15 +104,15 @@ export default class Screen extends Factory<Screen> {
 		delete this.currentScreen.widgets[this.currentWidgets[0]]
 		this.cancelSelectWidget()
 		let children = []
-		for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
-			if (this.currentScreen.widgetsLays[i].id === id) {
-				children = this.currentScreen.widgetsLays[i].children
-				this.currentScreen.widgetsLays.splice(i, 1)
+		for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
+			if (this.currentScreen.widgetsLayers[i].id === id) {
+				children = this.currentScreen.widgetsLayers[i].children
+				this.currentScreen.widgetsLayers.splice(i, 1)
 				i--
 			}
 		}
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
-		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays, ...children]
+		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers, ...children]
 	}
 
 	// 取消选择组件
@@ -130,14 +137,14 @@ export default class Screen extends Factory<Screen> {
 		const widget = this.currentScreen.widgets[this.currentWidgets[0]]
 		//todo 递归
 		if (this.currentScene.id === '-1') {
-			this.currentScreen.widgetsLays.forEach((item, index) => {
+			this.currentScreen.widgetsLayers.forEach((item, index) => {
 				if (item.id === widget.id) {
-					this.currentScreen.widgetsLays.splice(index, 1)
+					this.currentScreen.widgetsLayers.splice(index, 1)
 				}
 			})
 			delete this.currentScreen.widgets[this.currentWidgets[0]]
 		} else {
-			this.currentScreen.widgetsLays.forEach(item => {
+			this.currentScreen.widgetsLayers.forEach(item => {
 				if (item.id === widget.id) {
 					item.scene = '-1'
 				}
@@ -150,9 +157,9 @@ export default class Screen extends Factory<Screen> {
 	// 添加组件
 	pushWidget(widget: WidgetTask) {
 		this.currentScreen.widgets = { ...this.currentScreen.widgets, [widget.id]: widget }
-		this.currentScreen.widgetsLays = [
-			...this.currentScreen.widgetsLays,
-			new WidgetLayout({
+		this.currentScreen.widgetsLayers = [
+			...this.currentScreen.widgetsLayers,
+			new WidgetLayer({
 				id: widget.id,
 				scene: this.currentScene.id,
 				zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
@@ -210,14 +217,14 @@ export default class Screen extends Factory<Screen> {
 	}
 
 	// 当前场景 按zIndex 排序后的序列
-	get sceneWidgetsBySortList(): Array<WidgetLayout> {
-		return this.currentScreen.widgetsLays
-			.filter((item: WidgetLayout) =>
+	get sceneWidgetsBySortList(): Array<WidgetLayer> {
+		return this.currentScreen.widgetsLayers
+			.filter((item: WidgetLayer) =>
 				this.currentScene.id === '0' || this.currentScene.id === '-1'
 					? item.scene === this.currentScene.id
 					: item.scene === '0' || item.scene === this.currentScene.id,
 			)
-			.sort((a: WidgetLayout, b: WidgetLayout) => {
+			.sort((a: WidgetLayer, b: WidgetLayer) => {
 				return b.zIndex - a.zIndex - 1
 			})
 	}
@@ -241,16 +248,16 @@ export default class Screen extends Factory<Screen> {
 	clearScene() {
 		if (this.sceneWidgetsBySortList.length <= 0) return
 		if (this.currentScene.id === '-1') {
-			for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
-				const item = this.currentScreen.widgetsLays[i]
+			for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
+				const item = this.currentScreen.widgetsLayers[i]
 				if (item.scene === this.currentScene.id) {
 					delete this.currentScreen.widgets[item.id]
-					this.currentScreen.widgetsLays.splice(i, 1)
+					this.currentScreen.widgetsLayers.splice(i, 1)
 					i--
 				}
 			}
 		} else {
-			this.currentScreen.widgetsLays.forEach(item => {
+			this.currentScreen.widgetsLayers.forEach(item => {
 				if (item.scene === this.currentScene.id) {
 					item.scene = '-1'
 				}
@@ -258,7 +265,7 @@ export default class Screen extends Factory<Screen> {
 		}
 		this.cancelSelectWidget()
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
-		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays]
+		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers]
 	}
 
 	// 删除场景

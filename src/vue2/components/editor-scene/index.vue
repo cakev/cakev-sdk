@@ -1,10 +1,9 @@
 <template lang="pug">
 .editor-scene.pos-r
-	.editor-scene-header.fn-flex.flex-row
-		.editor-scene-title 场景
+	d-titles(:list="[{ label: '场景' }]", :left="true")
 		.editor-scene-add.fn-flex.cursor-pointer(@click="createScene")
-			i.el-icon-plus
-	scene-contextmenu(v-if="manager.temporary.sceneRightMenu", :editableScene="editableScene")
+			d-svg(type="el-icon-plus", :size="16")
+	contextmenu-scene(v-if="manager.temporary.sceneRightMenu", :editableScene="editableScene")
 	d-drag-content(style="height: calc(100% - 40px)")
 		template(slot="top")
 			ul.editor-scene-select
@@ -17,29 +16,21 @@
 					:key="item.id",
 					:class="{ active: manager.screen.currentScene.id === item.id }")
 					template
-						i.el-icon-check.pos-a(v-if="manager.screen.currentScene.id === item.id")
+						d-svg.pos-a(type="el-icon-check", v-if="manager.screen.currentScene.id === item.id")
 						el-input(:ref="item.id", v-model="item.name", v-show="editScene[item.id]", @blur="blurScene(item.id)")
 						span(v-show="!editScene[item.id]") {{ item.name }}
 		template(slot="bottom")
 			div(v-if="manager.screen.sceneWidgetsBySortList.length")
-				draggable(v-model="manager.screen.sceneWidgetsBySortList", @change="sceneWidgetDragEnd")
-					transition-group
-						.editor-scene-widget-box.cursor-nomral.fn-flex.flex-row.pos-r(
-							:key="item.id",
-							v-for="item in manager.screen.sceneWidgetsBySortList",
-							:class="{ active: manager.screen.currentWidgets.includes(item.id) }",
-							@click="selectWidgetById($event,item.id)")
-							d-img.editor-scene-widget-img(:src="manager.screen.currentScreen.widgets[item.id].avatar")
-							span.editor-scene-widget-title.ellipsis {{ manager.screen.currentScreen.widgets[item.id].name }}
+				draggable(v-model="manager.screen.sceneWidgetsBySortList", :animation="300", @change="sceneWidgetDragEnd")
+					dorring-widget-layer(v-bind="item", :key="item.id", v-for="item in manager.screen.sceneWidgetsBySortList")
 			el-empty(v-else)
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
 import { reactive, toRefs } from '@vue/composition-api'
 import draggable from 'vuedraggable'
-import sceneContextmenu from '@/vue2/components/scene-contextmenu/index.vue'
+import contextmenuScene from '@/vue2/components/contextmenu-scene/index.vue'
 import sceneWidgetDragEnd from './sceneWidgetDragEnd'
-import selectWidgetById from './selectWidgetById'
 import createScene from './createScene'
 import selectSceneById from './selectSceneById'
 import clickOutSide from './clickOutSide'
@@ -47,7 +38,7 @@ import clickOutSide from './clickOutSide'
 export default {
 	components: {
 		draggable,
-		sceneContextmenu,
+		contextmenuScene,
 	},
 	// @ts-ignore
 	setup(props, context) {
@@ -84,7 +75,6 @@ export default {
 		return {
 			...toRefs(state),
 			sceneWidgetDragEnd,
-			selectWidgetById,
 			createScene,
 			selectSceneById,
 			editableScene,
@@ -96,24 +86,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.editor-scene {
-	height: 100%;
-	font-size: 12px;
-	user-select: none;
-}
-
-.editor-scene-title {
-	margin-right: auto;
-	font-weight: bold;
-}
-
 .editor-scene-select {
 	padding: 4px 0;
 	margin-right: auto;
 
 	li {
 		align-items: center;
-		padding: 0 8px;
+		padding: 0 16px;
 		line-height: 32px;
 
 		&:hover {
@@ -140,49 +119,12 @@ export default {
 	justify-content: center;
 	width: 32px;
 	height: 32px;
+	margin-left: auto;
 	color: #333;
 	border-radius: 3px;
 
 	&:hover {
 		background-color: rgba(0, 0, 0, 0.06);
 	}
-}
-
-.editor-scene-header {
-	align-items: center;
-	padding: 4px 8px;
-
-	i {
-		font-size: 16px;
-	}
-}
-
-.editor-scene-widget-box {
-	align-items: center;
-	height: 44px;
-	padding: 0 10px;
-	color: #333;
-	border: 1px solid transparent;
-	transition: all 0.3s;
-
-	&:hover {
-		border-color: #409eff;
-	}
-
-	&.active {
-		background-color: #daebf7;
-		border-color: transparent;
-	}
-}
-
-.editor-scene-widget-img {
-	width: 60px;
-	height: 30px;
-}
-
-.editor-scene-widget-title {
-	flex: 1;
-	margin-left: 10px;
-	text-align: center;
 }
 </style>

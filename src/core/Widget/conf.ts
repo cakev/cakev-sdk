@@ -10,7 +10,7 @@ export default class WidgetConfig {
 	data: Array<any> = []
 	avatar = ''
 	backgroundColor: string | null = null
-	animation: WidgetAnimation | null = null
+	animation: WidgetAnimation = new WidgetAnimation()
 	api: WidgetApi | null = null
 
 	constructor(obj: {

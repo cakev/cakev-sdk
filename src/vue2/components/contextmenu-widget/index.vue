@@ -9,6 +9,7 @@ import copyWidget from './copyWidget'
 import removeWidget from './removeWidget'
 import moveWidget from './moveWidget'
 import cancelGroup from './cancelGroup'
+import lockWidget from './lockWidget'
 
 export default {
 	setup() {
@@ -38,6 +39,10 @@ export default {
 				handler: copyWidget,
 			},
 			...group,
+			{
+				label: '锁定/解锁',
+				handler: lockWidget,
+			},
 			{
 				label: '删除组件',
 				handler: removeWidget,

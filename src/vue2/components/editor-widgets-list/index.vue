@@ -2,7 +2,7 @@
 el-tabs(tab-position="left")
 	el-tab-pane(v-for="item in list", :key="item.label")
 		template(slot="label")
-			i(:class="item.icon")
+			d-svg(:type="item.icon")
 			span {{ item.label }}
 		el-collapse
 			el-collapse-item(v-for="child in item.children", :key="child.label", :index="child.label", :title="child.label")
