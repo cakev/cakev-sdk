@@ -300,9 +300,7 @@ export default {
 			selectWidgetById(e, this.id)
 		},
 		// 元素按下
-		elementDown(e) {
-			console.log(e)
-			// if (e.buttons !== 1 || e.which !== 1) return
+		elementDown(e: MouseEvent) {
 			const target = e.target || e.srcElement
 			if (this.$el.contains(target)) {
 				if (
@@ -325,8 +323,8 @@ export default {
 					this.dragging = true
 				}
 
-				this.mouseClickPosition.mouseX = e.touches ? e.touches[0].pageX : e.pageX
-				this.mouseClickPosition.mouseY = e.touches ? e.touches[0].pageY : e.pageY
+				this.mouseClickPosition.mouseX = e.pageX
+				this.mouseClickPosition.mouseY = e.pageY
 
 				this.mouseClickPosition.left = this.left
 				this.mouseClickPosition.right = this.right

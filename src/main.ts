@@ -12,9 +12,15 @@ import dInput from '@/vue2/components-style/d-input/index.vue'
 import dImg from '@/vue2/components-style/d-img/index.vue'
 import dDragContent from '@/vue2/components-style/d-drag-content/index.vue'
 import dContextmenu from '@/vue2/components-style/d-contextmenu/index.vue'
+import group from '@/vue2/components/widget/group.vue'
+import normal from '@/vue2/components/widget/normal.vue'
+import widget from '@/vue2/components/widget/index.vue'
 import ClickOutside from 'vue-click-outside'
 
 Vue.directive('click-outside', ClickOutside)
+Vue.component('dorring-widget-group', group)
+Vue.component('dorring-widget', widget)
+Vue.component('dorring-widget-normal', normal)
 Vue.component('d-input', dInput)
 Vue.component('d-img', dImg)
 Vue.component('d-drag-content', dDragContent)

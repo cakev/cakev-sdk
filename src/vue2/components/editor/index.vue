@@ -1,5 +1,5 @@
 <template lang="pug">
-el-container.editor.fn-flex.flex-column
+el-container.editor.fn-flex.flex-column(@contextmenu.native.prevent)
 	editor-header
 	el-container
 		el-aside

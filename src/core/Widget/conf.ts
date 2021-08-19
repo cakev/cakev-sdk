@@ -7,30 +7,30 @@ export default class WidgetConfig {
 	type: string
 	width = 100
 	height = 100
-	data: Array<any>
+	data: Array<any> = []
 	avatar = ''
 	backgroundColor: string | null = null
 	animation: WidgetAnimation | null = null
 	api: WidgetApi | null = null
 
 	constructor(obj: {
-		type: string
 		name: string
-		version: string
 		width: number
 		height: number
-		data: Array<any>
+		data?: Array<any>
+		version?: string
+		type?: string
 		avatar?: string
 		backgroundColor?: string | null
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
 	}) {
-		this.type = obj.type
 		this.name = obj.name
-		this.version = obj.version
 		this.width = obj.width
 		this.height = obj.height
-		this.data = obj.data
+		if (obj.data) this.data = obj.data
+		if (obj.type) this.type = obj.type
+		if (obj.version) this.version = obj.version
 		if (obj.avatar) this.avatar = obj.avatar
 		if (obj.backgroundColor) this.backgroundColor = obj.backgroundColor
 		if (obj.animation) this.animation = obj.animation

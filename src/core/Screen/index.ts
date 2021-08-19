@@ -3,6 +3,7 @@ import ScreenTask from '@/core/Screen/task'
 import SceneTask from '@/core/Scene/task'
 import WidgetTask from '@/core/Widget/task'
 import WidgetLayout from '@/core/Widget/layout'
+import WidgetAnimation from '@/core/Widget/animation'
 
 const md5 = require('md5')
 
@@ -56,7 +57,55 @@ export default class Screen extends Factory<Screen> {
 		const y = minTop
 		width = width + maxLeft - minLeft
 		height = height + maxTop - minTop
-		console.log(x, y, width, height)
+		this.pushWidgetGroup({
+			x,
+			y,
+			width,
+			height,
+		})
+	}
+
+	// 添加分组组件
+	pushWidgetGroup(obj: { x: number; y: number; width: number; height: number }) {
+		const animation = new WidgetAnimation()
+		const widget = new WidgetTask({ ...obj, name: '分组', group: true, animation })
+		const children = []
+		const currentWidgets = this.currentWidgets
+		this.cancelSelectWidget()
+		for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
+			if (currentWidgets.includes(this.currentScreen.widgetsLays[i].id)) {
+				children.push(this.currentScreen.widgetsLays[i])
+				this.currentScreen.widgetsLays.splice(i, 1)
+				i--
+			}
+		}
+		const layout = new WidgetLayout({
+			id: widget.id,
+			scene: this.currentScene.id,
+			children,
+			group: true,
+			zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
+		})
+		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays, layout]
+		this.currentScreen.widgets = { ...this.currentScreen.widgets, [widget.id]: widget }
+		this.selectWidgetById(widget.id)
+	}
+
+	// 取消拼合
+	cancelGroup() {
+		const id = this.currentWidgets[0]
+		delete this.currentScreen.widgets[this.currentWidgets[0]]
+		this.cancelSelectWidget()
+		let children = []
+		for (let i = 0; i < this.currentScreen.widgetsLays.length; i++) {
+			if (this.currentScreen.widgetsLays[i].id === id) {
+				children = this.currentScreen.widgetsLays[i].children
+				this.currentScreen.widgetsLays.splice(i, 1)
+				i--
+			}
+		}
+		this.currentScreen.widgets = { ...this.currentScreen.widgets }
+		this.currentScreen.widgetsLays = [...this.currentScreen.widgetsLays, ...children]
 	}
 
 	// 取消选择组件

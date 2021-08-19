@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-scene.pos-r(@contextmenu.prevent)
+.editor-scene.pos-r
 	.editor-scene-header.fn-flex.flex-row
 		.editor-scene-title 场景
 		.editor-scene-add.fn-flex.cursor-pointer(@click="createScene")

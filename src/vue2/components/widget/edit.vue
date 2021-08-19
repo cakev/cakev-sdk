@@ -12,7 +12,7 @@ vdr.cursor-move(
 	@refLineParams="refLineParams",
 	v-click-outside="clickOutSide",
 	@dragstop="dragStop",
-	@contextmenu.native.stop.prevent="contextmenu($event, $attrs.id)",
+	@contextmenu.native.stop.prevent="contextmenu($event, $attrs)",
 	@resizestop="resizeStop")
 	div(slot="tl") 😀
 	div(slot="tm") 😀
@@ -22,7 +22,7 @@ vdr.cursor-move(
 	div(slot="bm") 😀
 	div(slot="bl") 😀
 	div(slot="ml") 😀
-	component.pos-a(:id="$attrs.id", :is="$attrs.type", v-bind="{ ...$attrs }", :style="style({ ...$attrs, ...$props })")
+	dorring-widget(v-bind="{ ...manager.screen.currentScreen.widgets[$attrs.id], ...$attrs, ...$props }")
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'

@@ -6,24 +6,27 @@ export default class Widget extends WidgetConfig {
 	id: string
 	x: number
 	y: number
+	group = false
 
 	constructor(obj: {
-		type: string
 		name: string
-		version: string
 		width: number
 		height: number
-		data: Array<any>
+		data?: Array<any>
+		version?: string
+		type?: string
 		avatar?: string
 		backgroundColor?: string | null
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
-		x?: number
-		y?: number
+		group?: boolean
+		x: number
+		y: number
 	}) {
 		super(obj)
 		this.id = 'w' + Math.random().toString(16).replace('.', '')
 		this.x = obj.x
 		this.y = obj.y
+		if (obj.group) this.group = obj.group
 	}
 }

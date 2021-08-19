@@ -4,12 +4,14 @@ export default class WidgetLayout {
 	lock = false
 	scene: string
 	id: string
-	temporary?: boolean
+	children: Array<WidgetLayout> = []
+	group = false
 
-	constructor(obj: { zIndex: number; scene: string; id: string; temporary?: boolean }) {
+	constructor(obj: { zIndex: number; scene: string; id: string; children?: Array<WidgetLayout>; group?: boolean }) {
 		this.zIndex = obj.zIndex
 		this.scene = obj.scene
 		this.id = obj.id
-		this.temporary = obj.temporary || false
+		if (obj.children) this.children = obj.children
+		if (obj.group) this.group = obj.group
 	}
 }

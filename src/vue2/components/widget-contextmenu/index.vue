@@ -8,6 +8,7 @@ import style from './style'
 import copyWidget from './copyWidget'
 import removeWidget from './removeWidget'
 import moveWidget from './moveWidget'
+import cancelGroup from './cancelGroup'
 
 export default {
 	setup() {
@@ -20,6 +21,13 @@ export default {
 				handler: () => moveWidget(item.id),
 			}
 		})
+		const group = []
+		if (manager.screen.currentScreen.widgets[manager.screen.currentWidgets[0]].group) {
+			group.push({
+				label: '取消拼合',
+				handler: cancelGroup,
+			})
+		}
 		const list = [
 			{
 				label: '移动组件',
@@ -29,12 +37,13 @@ export default {
 				label: '复制组件',
 				handler: copyWidget,
 			},
+			...group,
 			{
 				label: '删除组件',
 				handler: removeWidget,
 			},
 		]
-		const state = reactive({ list })
+		const state = reactive({ manager, list })
 		return {
 			...toRefs(state),
 			style,

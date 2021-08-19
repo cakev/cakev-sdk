@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-header.fn-flex(@contextmenu.prevent)
+.editor-header.fn-flex
 	.editor-header-left
 	.editor-header-center.fn-flex.pos-r(v-click-outside="hideMenu")
 		el-input.editor-header.name.fn-flex(

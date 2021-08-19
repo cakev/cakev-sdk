@@ -3,7 +3,7 @@
 	widget-edit(
 		v-for="item in manager.screen.sceneWidgetsBySortList",
 		:key="item.id",
-		v-bind="{ ...manager.screen.currentScreen.widgets[item.id], zIndex: item.zIndex }",
+		v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
 		:readonly="false")
 	span(
 		v-for="item in manager.temporary.vLine",
