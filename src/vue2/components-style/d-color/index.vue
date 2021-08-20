@@ -1,4 +1,4 @@
-<template lang="pug">
+﻿<template lang="pug">
 .d-color.pos-r.fn-flex.flex-row(v-click-outside="hide")
 	.d-clock-block.pos-r(:style="{ backgroundColor: currentVal }", @click="show")
 		.d-color-alpha-right.pos-a(v-if="alpha || !currentVal")
@@ -25,7 +25,9 @@ export default {
 		},
 	},
 	setup(props, { emit }) {
-		const state = reactive({ alpha: false, picker: false, currentVal: props.value })
+		let alpha = false
+		if (props.value) alpha = eval(props.value.replace('rgba', '')) < 1
+		const state = reactive({ alpha, picker: false, currentVal: props.value })
 		const show = () => {
 			state.picker = !state.picker
 		}

@@ -2,7 +2,7 @@
 .editor-content.pos-a(ref="editor-content", :style="style")
 	template(v-for="item in manager.screen.sceneWidgetsBySortList")
 		widget-edit(
-			v-if="!item.hide",
+			v-if="!manager.screen.currentScreen.widgets[item.id].hide",
 			:key="item.id",
 			v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
 			:readonly="false")

@@ -7,7 +7,9 @@ export default class Widget extends WidgetConfig {
 	x: number
 	y: number
 	group = false
-
+	hide = false
+	lock = false
+	
 	constructor(obj: {
 		name: string
 		width: number

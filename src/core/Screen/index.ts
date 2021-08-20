@@ -15,11 +15,9 @@ export default class Screen extends Factory<Screen> {
 
 	// 解锁/锁定组件
 	changeLock() {
-		this.currentScreen.widgetsLayers.forEach(item => {
-			if (item.id === this.currentWidgets[0]) {
-				item.lock = !item.lock
-			}
-		})
+		this.currentScreen.widgets[this.currentWidgets[0]].lock =
+			!this.currentScreen.widgets[this.currentWidgets[0]].lock
+		this.currentScreen.widgets = { ...this.currentScreen.widgets }
 	}
 
 	// 拼合组件

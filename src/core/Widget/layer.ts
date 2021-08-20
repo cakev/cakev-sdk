@@ -1,7 +1,5 @@
 export default class WidgetLayer {
 	zIndex = 10
-	hide = false
-	lock = false
 	scene: string
 	id: string
 	children: Array<WidgetLayer> = []

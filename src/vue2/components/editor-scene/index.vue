@@ -22,7 +22,7 @@
 			div(v-if="manager.screen.sceneWidgetsBySortList.length")
 				draggable(v-model="manager.screen.sceneWidgetsBySortList", :animation="300", @change="sceneWidgetDragEnd")
 					dorring-widget-layer(
-						v-bind="item",
+						v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
 						:key="item.id",
 						:index="index",
 						v-for="(item, index) in manager.screen.sceneWidgetsBySortList")

@@ -3,13 +3,14 @@
 	:key="$attrs.id",
 	:class="{ active: manager.screen.currentWidgets.includes($attrs.id), hide: $attrs.hide, lock: $attrs.lock }",
 	@click="selectWidgetById($event, $attrs.id)")
+	slot
 	d-img.widget-layer-img(:src="manager.screen.currentScreen.widgets[$attrs.id].avatar")
 	span.ellipsis {{ manager.screen.currentScreen.widgets[$attrs.id].name }}
 	.icon-box.pos-a.fn-flex
-		d-svg.icon.icon-lock(type="lock", v-if="$attrs.lock", @click="unlock($attrs)")
-		d-svg.icon(type="unlock", v-if="!$attrs.lock", @click="lock($attrs)")
-		d-svg.icon(type="see-open", v-if="!$attrs.hide", @click="hide($attrs)")
-		d-svg.icon.icon-see-close(type="see-close", v-if="$attrs.hide", @click="show($attrs)")
+		d-svg.icon.icon-lock(type="lock", v-if="lockable && $attrs.lock", @click="unlock($attrs.id)")
+		d-svg.icon(type="unlock", v-if="lockable && !$attrs.lock", @click="lock($attrs.id)")
+		d-svg.icon(type="see-open", v-if="!$attrs.hide", @click="hide($attrs.id)")
+		d-svg.icon.icon-see-close(type="see-close", v-if="$attrs.hide", @click="show($attrs.id)")
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
@@ -17,21 +18,31 @@ import { reactive, toRefs } from '@vue/composition-api'
 import selectWidgetById from './selectWidgetById'
 
 export default {
+	props: {
+		lockable: {
+			type: Boolean,
+			default: true,
+		},
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
 
-		const hide = obj => {
-			manager.screen.sceneWidgetsBySortList[obj.index].hide = true
+		const hide = id => {
+			manager.screen.currentScreen.widgets[id].hide = true
+			manager.screen.currentScreen.widgets = { ...manager.screen.currentScreen.widgets }
 		}
-		const show = obj => {
-			manager.screen.sceneWidgetsBySortList[obj.index].hide = false
+		const show = id => {
+			manager.screen.currentScreen.widgets[id].hide = false
+			manager.screen.currentScreen.widgets = { ...manager.screen.currentScreen.widgets }
 		}
-		const unlock = obj => {
-			manager.screen.sceneWidgetsBySortList[obj.index].lock = false
+		const unlock = id => {
+			manager.screen.currentScreen.widgets[id].lock = false
+			manager.screen.currentScreen.widgets = { ...manager.screen.currentScreen.widgets }
 		}
-		const lock = obj => {
-			manager.screen.sceneWidgetsBySortList[obj.index].lock = true
+		const lock = id => {
+			manager.screen.currentScreen.widgets[id].lock = true
+			manager.screen.currentScreen.widgets = { ...manager.screen.currentScreen.widgets }
 		}
 		return {
 			...toRefs(state),
@@ -51,6 +62,7 @@ export default {
 	padding: 0 10px;
 	color: #333;
 	border: 1px solid transparent;
+	flex: 1;
 
 	&:hover {
 		border-color: #409eff;

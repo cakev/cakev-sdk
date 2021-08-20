@@ -9,7 +9,7 @@ export default class WidgetConfig {
 	height = 100
 	data: Array<any> = []
 	avatar = ''
-	backgroundColor: string | null = null
+	backgroundColor: string = 'rgba(255,255,255,0)'
 	animation: WidgetAnimation = new WidgetAnimation()
 	api: WidgetApi | null = null
 
