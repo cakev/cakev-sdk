@@ -5,7 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/vue2/scss/index.scss'
 import '@/vue2/scss/element-theme.scss'
-
+import './icon'
 // @ts-ignore
 import VueCompositionAPI from '@vue/composition-api'
 import dInput from '@/vue2/components-style/d-input/index.vue'

@@ -22,7 +22,11 @@
 		template(slot="bottom")
 			div(v-if="manager.screen.sceneWidgetsBySortList.length")
 				draggable(v-model="manager.screen.sceneWidgetsBySortList", :animation="300", @change="sceneWidgetDragEnd")
-					dorring-widget-layer(v-bind="item", :key="item.id", v-for="item in manager.screen.sceneWidgetsBySortList")
+					dorring-widget-layer(
+						v-bind="item",
+						:key="item.id",
+						:index="index",
+						v-for="(item, index) in manager.screen.sceneWidgetsBySortList")
 			el-empty(v-else)
 </template>
 <script lang="ts">

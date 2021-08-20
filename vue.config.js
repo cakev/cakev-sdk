@@ -25,9 +25,9 @@ module.exports = {
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
 	},
 	chainWebpack: config => {
-		config.module.rule('svg').exclude.add(resolve('src/icon')).end()
+		config.module.rules.delete('svg')
 		config.module
-			.rule('icons')
+			.rule('svg-smart')
 			.test(/\.svg$/)
 			.include.add(resolve('src/icon'))
 			.end()

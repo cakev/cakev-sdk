@@ -1,10 +1,11 @@
 <template lang="pug">
 .editor-content.pos-a(ref="editor-content", :style="style")
-	widget-edit(
-		v-for="item in manager.screen.sceneWidgetsBySortList",
-		:key="item.id",
-		v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
-		:readonly="false")
+	template(v-for="item in manager.screen.sceneWidgetsBySortList")
+		widget-edit(
+			v-if="!item.hide",
+			:key="item.id",
+			v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
+			:readonly="false")
 	span(
 		v-for="item in manager.temporary.vLine",
 		v-show="item.display",

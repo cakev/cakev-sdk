@@ -5,6 +5,7 @@ vdr.cursor-move(
 	:y="$attrs.y",
 	:w="$attrs.width",
 	:h="$attrs.height",
+	:draggable="!$attrs.lock",
 	:active="manager.screen.currentWidgets.includes($attrs.id)",
 	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
