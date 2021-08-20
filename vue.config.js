@@ -1,9 +1,11 @@
 const path = require('path')
+const webpack = require('webpack')
 const isProduction = process.env.NODE_ENV === 'production'
 const needReport = false
 const resolve = dir => {
 	return path.join(__dirname, dir)
 }
+const pkg = require('./package.json')
 
 module.exports = {
 	assetsDir: './',
@@ -18,11 +20,16 @@ module.exports = {
 		disableHostCheck: true,
 	},
 	css: {
-		extract: true,
+		extract: process.env.VUE_APP_BUILD_MODE === 'NPM',
 		sourceMap: false,
 	},
 	configureWebpack: config => {
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
+		config.plugins.push(
+			new webpack.DefinePlugin({
+				'process.env.version': JSON.stringify(pkg.version),
+			}),
+		)
 	},
 	chainWebpack: config => {
 		config.module.rules.delete('svg')

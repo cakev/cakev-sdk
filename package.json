@@ -1,14 +1,25 @@
 {
-	"name": "dorring",
-	"version": "1.0.0",
-	"description": "util",
-	"main": "dist/index.js",
+	"name": "@dorring/sdk",
+	"version": "0.0.1",
+	"main": "dist/dorring.umd.min.js",
 	"keywords": [
-		"util"
+		"typescript",
+		"vue",
+		"scss",
+		"element-ui",
+		"dragger",
+		"dorring"
+	],
+	"files": [
+		"dist/dorring.css",
+		"dist/dorring.umd.min.js",
+		"dist/fonts",
+		"types"
 	],
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"commit": "git add .&&git cz",
+		"build": "vue-cli-service build --target lib --dest dist src/build/index.ts --name dorring",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
 	"dependencies": {

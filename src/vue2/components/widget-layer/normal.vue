@@ -57,12 +57,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .widget-layer-box {
+	flex: 1;
 	align-items: center;
 	height: 44px;
 	padding: 0 10px;
 	color: #333;
 	border: 1px solid transparent;
-	flex: 1;
 
 	&:hover {
 		border-color: #409eff;
@@ -88,9 +88,9 @@ export default {
 	}
 	span {
 		flex: 1;
+		padding-right: 38px;
 		margin-left: 10px;
 		text-align: center;
-		padding-right: 38px;
 	}
 }
 .icon-box {

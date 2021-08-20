@@ -26,8 +26,8 @@ export default {
 <style lang="scss" scoped>
 .widget-layer-group-icon {
 	left: -8px;
-	height: 100%;
 	align-items: center;
+	height: 100%;
 }
 .icon-right {
 	&.active {

@@ -10,7 +10,7 @@ export default class Screen extends Factory<Screen> {
 	currentScreen: ScreenTask | null = null
 	currentWidgets: Array<string> = []
 	screenList: Array<ScreenTask> = []
-	screenMd5SchemaList: Array<string> = []
+	screenMd5SchemaList: Array<string> = [] // md5文件指纹判别是否修改了大屏
 	currentScene: SceneTask | null = null
 
 	// 解锁/锁定组件

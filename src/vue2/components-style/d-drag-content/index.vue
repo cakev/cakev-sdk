@@ -65,16 +65,9 @@ export default {
 
 	&::-webkit-scrollbar {
 		display: none;
-	}
-
-	&::-webkit-scrollbar {
-		width: 7px;
+		width: 0 !important;
 		margin-right: 4px;
 		-webkit-appearance: none;
-	}
-
-	&::-webkit-scrollbar {
-		width: 0 !important;
 	}
 
 	&::-webkit-scrollbar-thumb {

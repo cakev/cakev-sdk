@@ -15,7 +15,7 @@ export default {
 		const state = reactive({ manager })
 
 		onMounted(() => {
-			window.manager = state.manager
+			window.dorring = state.manager
 		})
 
 		return {
