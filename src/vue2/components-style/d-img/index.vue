@@ -1,7 +1,7 @@
 <template lang="pug">
 el-image(v-bind="$attrs", v-on="$listeners")
 	.d-img-error.fn-flex(slot="error")
-		d-svg(type="el-icon-picture-outline")
+		span Dorring
 </template>
 <style lang="scss" scoped>
 /deep/ {

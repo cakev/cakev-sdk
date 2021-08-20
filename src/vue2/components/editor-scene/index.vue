@@ -1,8 +1,7 @@
 <template lang="pug">
 .editor-scene.pos-r
 	d-titles(:list="[{ label: '场景' }]", :left="true")
-		.editor-scene-add.fn-flex.cursor-pointer(@click="createScene")
-			d-svg(type="el-icon-plus", :size="16")
+		d-icon(type="el-icon-plus", @click="createScene")
 	contextmenu-scene(v-if="manager.temporary.sceneRightMenu", :editableScene="editableScene")
 	d-drag-content(style="height: calc(100% - 40px)")
 		template(slot="top")
@@ -115,20 +114,6 @@ export default {
 		span {
 			padding-left: 24px;
 		}
-	}
-}
-
-.editor-scene-add {
-	align-items: center;
-	justify-content: center;
-	width: 32px;
-	height: 32px;
-	margin-left: auto;
-	color: #333;
-	border-radius: 3px;
-
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.06);
 	}
 }
 </style>

@@ -19,7 +19,7 @@ div
 			d-titles(:list="[{ label: '背景' }]")
 		template(slot="content")
 			el-form-item(label="背景色")
-				el-color-picker(v-model="currentWidget.backgroundColor")
+				d-color(v-model="currentWidget.backgroundColor")
 </template>
 <script lang="ts">
 import { reactive, toRefs } from '@vue/composition-api'

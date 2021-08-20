@@ -11,6 +11,8 @@ import VueCompositionAPI from '@vue/composition-api'
 import dInput from '@/vue2/components-style/d-input/index.vue'
 import dImg from '@/vue2/components-style/d-img/index.vue'
 import dSvg from '@/vue2/components-style/d-svg/index.vue'
+import dIcon from '@/vue2/components-style/d-icon/index.vue'
+import dColor from '@/vue2/components-style/d-color/index.vue'
 import dTitles from '@/vue2/components-style/d-titles/index.vue'
 import dDragContent from '@/vue2/components-style/d-drag-content/index.vue'
 import dContextmenu from '@/vue2/components-style/d-contextmenu/index.vue'
@@ -34,6 +36,8 @@ Vue.component('dorring-widget-layer-normal', layerNormal)
 Vue.component('d-input', dInput)
 Vue.component('d-img', dImg)
 Vue.component('d-svg', dSvg)
+Vue.component('d-icon', dIcon)
+Vue.component('d-color', dColor)
 Vue.component('d-titles', dTitles)
 Vue.component('d-drag-content', dDragContent)
 Vue.component('d-setting-container', dSettingContainer)

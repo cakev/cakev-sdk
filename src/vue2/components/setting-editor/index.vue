@@ -18,7 +18,7 @@
 			d-titles(:list="[{ label: '背景' }]")
 		template(slot="content")
 			el-form-item(label="背景色")
-				el-color-picker(v-model="manager.screen.currentScreen.backgroundColor")
+				d-color(v-model="manager.screen.currentScreen.backgroundColor")
 	d-setting-container
 		template(slot="title")
 			d-titles(:list="[{ label: '其他' }]")
