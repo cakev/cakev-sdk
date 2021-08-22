@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { onMounted, reactive, toRefs } from '@vue/composition-api'
+import { onMounted, reactive, toRefs } from 'vue'
 
 export default {
 	props: {

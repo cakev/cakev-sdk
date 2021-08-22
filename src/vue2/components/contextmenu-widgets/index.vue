@@ -2,11 +2,12 @@
 d-contextmenu(:style="style", :list="list")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import style from './style'
 import makeGroup from './makeGroup'
 
-export default {
+export default defineComponent({
+	name: 'contextmenu-widgets',
 	setup() {
 		const list = [
 			{
@@ -21,5 +22,5 @@ export default {
 			makeGroup,
 		}
 	},
-}
+})
 </script>

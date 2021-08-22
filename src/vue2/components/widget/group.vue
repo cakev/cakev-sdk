@@ -11,7 +11,7 @@
 import style from './style'
 import styleGroup from './styleGroup'
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs } from 'vue'
 export default {
 	props: {
 		readonly: {

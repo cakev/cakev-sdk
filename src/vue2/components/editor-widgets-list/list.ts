@@ -1,5 +1,5 @@
-const lineContext = require.context('../../../widgets/base/line', true, /conf\.ts/)
-const pieContext = require.context('../../../widgets/base/pie', true, /conf\.ts/)
+const lineContext = require.context('../../../vue2-widgets/base/line', true, /conf\.ts/)
+const pieContext = require.context('../../../vue2-widgets/base/pie', true, /conf\.ts/)
 let line = [],
 	pie = []
 lineContext.keys().forEach(name => {
@@ -8,6 +8,7 @@ lineContext.keys().forEach(name => {
 pieContext.keys().forEach(name => {
 	pie.push(pieContext(name).default)
 })
+
 export default [
 	{
 		label: '常规',

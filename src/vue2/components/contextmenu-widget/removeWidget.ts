@@ -1,18 +1,21 @@
-import { Notification, MessageBox } from 'element-ui'
+import { ElNotification, ElMessageBox } from 'element-plus'
+import { reactive } from 'vue'
 import Manager from '@/core/Manager'
+
 const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
 
 export default () => {
-	MessageBox.confirm('删除当前组件？', '确认信息', {
+	ElMessageBox.confirm('删除当前组件？', '确认信息', {
 		confirmButtonText: '确认',
 		cancelButtonText: '放弃',
 	}).then(() => {
-		const name = manager.screen.currentScreen.widgets[manager.screen.currentWidgets[0]].name
-		Notification({
+		const name = state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].name
+		ElNotification({
 			title: '删除组件成功',
 			type: 'success',
 			message: `组件名：${name}`,
 		})
-		manager.screen.removeWidget()
+		state.manager.screen.removeWidget()
 	})
 }

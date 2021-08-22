@@ -1,28 +1,31 @@
+import { reactive } from 'vue'
 import Manager from '@/core/Manager'
-const manager: Manager = Manager.Instance()
 
-export default e => {
+const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
+
+export default (e ) => {
 	if (e.ctrlKey) {
 		if (e.wheelDeltaY !== 0) {
 			if (e.wheelDeltaY > 0) {
-				manager.temporary.zoomIn()
+				state.manager.temporary.zoomIn()
 			} else {
-				manager.temporary.zoomOut()
+				state.manager.temporary.zoomOut()
 			}
 		}
 	} else {
 		if (e.wheelDeltaY !== 0) {
 			if (e.wheelDeltaY > 0) {
-				manager.temporary.scrollTop()
+				state.manager.temporary.scrollTop()
 			} else {
-				manager.temporary.scrollBottom()
+				state.manager.temporary.scrollBottom()
 			}
 		}
 		if (e.wheelDeltaX !== 0) {
 			if (e.wheelDeltaX > 0) {
-				manager.temporary.scrollRight()
+				state.manager.temporary.scrollRight()
 			} else {
-				manager.temporary.scrollLeft()
+				state.manager.temporary.scrollLeft()
 			}
 		}
 	}

@@ -3,12 +3,13 @@ d-contextmenu(:style="style", :list="list")
 </template>
 <script lang="ts">
 import style from './style'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import removeScene from './removeScene'
 import clearScene from './clearScene'
 
-export default {
+export default defineComponent({
+	name: 'contextmenu-scene',
 	props: {
 		editableScene: {
 			type: Function,
@@ -38,5 +39,5 @@ export default {
 			style,
 		}
 	},
-}
+})
 </script>

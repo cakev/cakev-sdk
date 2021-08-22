@@ -1,14 +1,12 @@
-import { computed } from '@vue/composition-api'
+import { computed, reactive } from 'vue'
 import Manager from '@/core/Manager'
-const manager: Manager = Manager.Instance()
 
-export default computed({
-	get: () => {
-		return {
-			left: manager.temporary.widgetRightMenuX + 'px',
-			top: manager.temporary.widgetRightMenuY + 'px',
-		}
-	},
-	// @ts-ignore
-	set: value => {},
+const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
+
+export default computed(() => {
+	return {
+		left: state.manager.temporary.widgetRightMenuX + 'px',
+		top: state.manager.temporary.widgetRightMenuY + 'px',
+	}
 })

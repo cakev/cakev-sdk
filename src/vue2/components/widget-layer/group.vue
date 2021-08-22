@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs } from 'vue'
 
 export default {
 	setup() {

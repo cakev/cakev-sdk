@@ -2,11 +2,11 @@
 editor
 </template>
 <script lang="ts">
-import { onMounted, reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import editor from '@/vue2/components/editor/index.vue'
 
-export default {
+export default defineComponent({
 	components: {
 		editor,
 	},
@@ -14,13 +14,9 @@ export default {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
 
-		onMounted(() => {
-			window.dorring = state.manager
-		})
-
 		return {
 			...toRefs(state),
 		}
 	},
-}
+})
 </script>

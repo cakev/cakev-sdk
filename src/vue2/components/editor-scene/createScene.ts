@@ -1,6 +1,9 @@
+import { reactive } from 'vue'
 import Manager from '@/core/Manager'
-const manager: Manager = Manager.Instance()
 
-export default ()=>{
-	manager.screen.createScene()
+const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
+
+export default () => {
+	state.manager.screen.createScene()
 }

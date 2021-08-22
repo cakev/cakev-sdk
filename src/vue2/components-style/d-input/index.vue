@@ -1,21 +1,25 @@
 <template lang="pug">
-el-input.d-input(v-bind="$attrs", v-on="$listeners", v-model="currentVal")
-	template(slot="append") {{ $slots.append[0].text }}
+el-input.d-input(v-bind="$attrs", v-model="currentVal")
+	template(#append) {{ append }}
 </template>
 <script lang="ts">
-import { reactive, toRefs, watch } from '@vue/composition-api'
+import { reactive, toRefs, watch, defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
+	name: 'dorring-input',
 	props: {
-		value: {},
+		modelValue: {},
 		format: {
+			type: String,
+		},
+		append: {
 			type: String,
 		},
 	},
 	setup(props, { emit }) {
-		const state = reactive({ currentVal: props.value })
+		const state = reactive({ currentVal: props.modelValue })
 		watch(
-			() => props.value,
+			() => props.modelValue,
 			val => {
 				state.currentVal = val
 			},
@@ -24,12 +28,12 @@ export default {
 		watch(
 			() => state.currentVal,
 			val => {
-				emit('input', props.format === 'number' ? Number(val) : val)
+				emit('update:modelValue', props.format === 'number' ? Number(val) : val)
 			},
 		)
 		return { ...toRefs(state) }
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .d-input {

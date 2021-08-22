@@ -1,4 +1,4 @@
-import { computed } from '@vue/composition-api'
+import { computed } from 'vue'
 import Manager from '@/core/Manager'
 const manager: Manager = Manager.Instance()
 

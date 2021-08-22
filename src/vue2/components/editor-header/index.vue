@@ -1,11 +1,11 @@
 <template lang="pug">
 .editor-header.fn-flex
 	.editor-header-left
-	.editor-header-center.fn-flex.pos-r(v-click-outside="hideMenu")
+	.editor-header-center.fn-flex.pos-r(v-clickout="hideMenu")
 		el-input.editor-header.name.fn-flex(
-			ref="input",
+			:ref="el => (dom['input'] = el)",
 			v-model="manager.screen.currentScreen.name",
-			v-show="editName",
+			v-if="editName",
 			:autofocus="true",
 			@blur="blur")
 		span(v-show="!editName", @dblclick="dblclick") {{ manager.screen.currentScreen.name }}
@@ -15,17 +15,17 @@
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { reactive, toRefs, onBeforeMount } from '@vue/composition-api'
+import { reactive, toRefs, onBeforeMount, defineComponent } from 'vue'
 import createScreen from './createScreen'
 import dblclick from './dblclick'
 import showNameMenu from './showNameMenu'
 import blur from './blur'
 
-export default {
-	// @ts-ignore
-	setup(props, context) {
+export default defineComponent({
+	name: 'editor-header',
+	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager, nameMenuState: false, list: [], editName: false })
+		const state = reactive({ dom: {}, manager, nameMenuState: false, list: [], editName: false })
 		const hideMenu = () => {
 			state.nameMenuState = false
 		}
@@ -36,13 +36,13 @@ export default {
 		})
 		return {
 			...toRefs(state),
-			showNameMenu: () => showNameMenu({ state, context }),
+			showNameMenu: () => showNameMenu(state),
 			hideMenu,
-			blur: () => blur({ state, context }),
-			dblclick: () => dblclick({ state, context }),
+			blur: () => blur(state),
+			dblclick: () => dblclick(state),
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .editor-header.name {

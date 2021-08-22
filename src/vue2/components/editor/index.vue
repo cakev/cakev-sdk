@@ -1,5 +1,5 @@
 <template lang="pug">
-el-container.editor.fn-flex.flex-column(@contextmenu.native.prevent)
+el-container.editor.fn-flex.flex-column(@contextmenu.prevent)
 	editor-header
 	el-container
 		el-aside
@@ -10,13 +10,13 @@ el-container.editor.fn-flex.flex-column(@contextmenu.native.prevent)
 		el-divider.divider(direction="vertical")
 		el-main.pos-r.editor-container(
 			:style="style",
-			@wheel.native.stop.prevent="wheel",
-			@mousedown.native.stop="mousedown",
-			@mouseup.native.stop="mouseup",
-			@mousemove.native.stop="mousemove",
-			@drop.native="drop",
-			@dragover.native.prevent,
-			@click.native="click")
+			@wheel.stop.prevent="wheel",
+			@mousedown.stop="mousedown",
+			@mouseup.stop="mouseup",
+			@mousemove.stop="mousemove",
+			@drop="drop",
+			@dragover.prevent,
+			@click="click")
 			editor-content(v-if="manager.screen.currentScreen")
 			editor-tip(v-if="manager.screen.currentScreen")
 			contextmenu-widget(v-if="manager.temporary.widgetRightMenu")
@@ -27,7 +27,7 @@ el-container.editor.fn-flex.flex-column(@contextmenu.native.prevent)
 			setting-editor(v-if="manager.screen.currentWidgets.length === 0")
 </template>
 <script lang="ts">
-import { reactive, toRefs, onMounted } from '@vue/composition-api'
+import { reactive, toRefs, onMounted, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import settingEditor from '@/vue2/components/setting-editor/index.vue'
 import editorHeader from '@/vue2/components/editor-header/index.vue'
@@ -48,7 +48,8 @@ import mousedown from './mousedown'
 import mouseup from './mouseup'
 import mousemove from './mousemove'
 
-export default {
+export default defineComponent({
+	name: 'editor',
 	components: {
 		settingEditor,
 		editorHeader,
@@ -82,7 +83,7 @@ export default {
 			mousemove,
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .editor-container {

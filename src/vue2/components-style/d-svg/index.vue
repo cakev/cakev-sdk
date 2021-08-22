@@ -1,10 +1,10 @@
 <template lang="pug">
-i(:class="type" v-if="isExternal", :style="{ fontSize: `${size}px` }", v-on="$listeners")
-svg.d-svg(v-else, aria-hidden="true", v-on="$listeners", :style="{ width: `${size}px`, height: `${size}px` }")
+i(:class="type" v-if="isExternal", :style="{ fontSize: `${size}px` }")
+svg.d-svg(v-else, aria-hidden="true", :style="{ width: `${size}px`, height: `${size}px` }")
 	use(:xlink:href="`#dorring-${type}`")
 </template>
 <script lang="ts">
-import { computed } from '@vue/composition-api'
+import { computed } from 'vue'
 
 export default {
 	props: {

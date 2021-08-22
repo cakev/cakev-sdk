@@ -3,10 +3,11 @@
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import style from './style'
 
-export default {
+export default defineComponent({
+	name: 'editor-tip',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
@@ -15,7 +16,7 @@ export default {
 			style,
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .editor-content-tip {

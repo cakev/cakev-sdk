@@ -1,13 +1,13 @@
 ﻿<template lang="pug">
 .d-drag-content.fn-flex.flex-column(@mousemove.stop="mousemove", @mouseup.stop="mouseup")
-	.d-drag-content-top(ref="top", :style="{ height: `${topMinHeight}px` }")
+	.d-drag-content-top(:ref="el => (dom['top'] = el)", :style="{ height: `${topMinHeight}px` }")
 		slot(name="top")
 	.d-drag-content-line(@mousedown.stop.prevent="mousedown")
-	.d-drag-content-bottom(ref="bottom", :style="{ height: `calc(100% - ${topMinHeight + 9}px)` }")
+	.d-drag-content-bottom(:ref="el => (dom['bottom'] = el)", :style="{ height: `calc(100% - ${topMinHeight + 9}px)` }")
 		slot(name="bottom")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs } from 'vue'
 export default {
 	props: {
 		topMinHeight: {
@@ -19,8 +19,8 @@ export default {
 			type: Number,
 		},
 	},
-	setup(props, context) {
-		const state = reactive({ drag: false, startX: 0, startY: 0 })
+	setup(props) {
+		const state = reactive({ dom: {}, drag: false, startX: 0, startY: 0 })
 		const mousedown = (e: MouseEvent) => {
 			state.drag = true
 			state.startY = e.clientY
@@ -32,17 +32,17 @@ export default {
 		const mousemove = (e: MouseEvent) => {
 			if (state.drag) {
 				const diffY = e.clientY - state.startY
-				const topH = context.refs.top.offsetHeight
-				const bottomH = context.refs.bottom.offsetHeight
+				const topH = state.dom['top'].offsetHeight
+				const bottomH = state.dom['bottom'].offsetHeight
 				if (topH + diffY < props.topMinHeight) {
-					context.refs.top.style.height = props.topMinHeight + 'px'
-					context.refs.bottom.style.height = `calc(100% - ${props.topMinHeight}px)`
+					state.dom['top'].style.height = props.topMinHeight + 'px'
+					state.dom['bottom'].style.height = `calc(100% - ${props.topMinHeight}px)`
 				} else if (bottomH - diffY < props.bottomMinHeight) {
-					context.refs.top.style.height = `calc(100% - ${props.bottomMinHeight}px)`
-					context.refs.bottom.style.height = props.bottomMinHeight + 'px'
+					state.dom['top'].style.height = `calc(100% - ${props.bottomMinHeight}px)`
+					state.dom['bottom'].style.height = props.bottomMinHeight + 'px'
 				} else {
-					context.refs.top.style.height = topH + diffY + 'px'
-					context.refs.bottom.style.height = bottomH - diffY + 'px'
+					state.dom['top'].style.height = topH + diffY + 'px'
+					state.dom['bottom'].style.height = bottomH - diffY + 'px'
 				}
 				state.startY = e.clientY
 			}

@@ -2,7 +2,7 @@
 d-contextmenu(:style="style", :list="list")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import style from './style'
 import copyWidget from './copyWidget'
@@ -11,7 +11,8 @@ import moveWidget from './moveWidget'
 import cancelGroup from './cancelGroup'
 import lockWidget from './lockWidget'
 
-export default {
+export default defineComponent({
+	name: 'contextmenu-widget',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const sceneList = Object.values(manager.screen.currentScreen.scenes)
@@ -54,5 +55,5 @@ export default {
 			style,
 		}
 	},
-}
+})
 </script>

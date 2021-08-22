@@ -1,11 +1,14 @@
+import { reactive } from 'vue'
 import Manager from '@/core/Manager'
 
 const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
+
 export default id => {
-	manager.screen.currentScreen.widgetsLayers.forEach(item => {
-		if (item.id === manager.screen.currentWidgets[0]) {
+	state.manager.screen.currentScreen.widgetsLayers.forEach(item => {
+		if (item.id === state.manager.screen.currentWidgets[0]) {
 			item.scene = id
-			manager.screen.cancelSelectWidget()
+			state.manager.screen.cancelSelectWidget()
 		}
 	})
 }

@@ -4,7 +4,7 @@
 	component(:is="component")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
 import base from './base.vue'
 import data from './data.vue'

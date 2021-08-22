@@ -24,6 +24,7 @@ module.exports = {
 		sourceMap: false,
 	},
 	configureWebpack: config => {
+		config.output.libraryExport = 'default'
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
 		config.plugins.push(
 			new webpack.DefinePlugin({

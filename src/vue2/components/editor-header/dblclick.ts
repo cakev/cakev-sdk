@@ -1,7 +1,7 @@
-export default ({ state, context }) => {
-	state.editName = true
-	context.refs['input'].focus()
+export default data => {
+	data.editName = true
 	setTimeout(() => {
-		context.refs['input'].select()
+		data.dom['input'].focus()
+		data.dom['input'].select()
 	})
 }

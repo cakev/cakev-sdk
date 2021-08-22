@@ -1,14 +1,17 @@
+import { reactive } from 'vue'
 import Manager from '@/core/Manager'
 
 const manager: Manager = Manager.Instance()
-export default ({ state, context }) => {
-	if (manager.screen.currentScreen.name.replace(/[\r\n]/g, '') === '') {
-		manager.screen.currentScreen.name = '未命名'
-		context.refs['input'].focus()
+const state = reactive({ manager })
+
+export default data => {
+	if (state.manager.screen.currentScreen.name.replace(/[\r\n]/g, '') === '') {
+		state.manager.screen.currentScreen.name = '未命名'
+		data.dom['input'].focus()
 		setTimeout(() => {
-			context.refs['input'].select()
+			data.dom['input'].select()
 		})
 	} else {
-		state.editName = false
+		data.editName = false
 	}
 }

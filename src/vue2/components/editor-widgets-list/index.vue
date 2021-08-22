@@ -16,11 +16,11 @@ el-tabs(tab-position="left")
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import dragStart from './dragStart'
 import list from './list'
 
-export default {
+export default defineComponent({
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ list, manager })
@@ -29,7 +29,7 @@ export default {
 			dragStart,
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .widget-img {

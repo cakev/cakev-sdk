@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-content.pos-a(ref="editor-content", :style="style")
+.editor-content.pos-a(:ref="el => (dom['editorContent'] = el)", :style="style")
 	template(v-for="item in manager.screen.sceneWidgetsBySortList")
 		widget-edit(
 			v-if="!manager.screen.currentScreen.widgets[item.id].hide",
@@ -17,45 +17,52 @@
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { onMounted, reactive, toRefs, watch } from '@vue/composition-api'
+import { onMounted, reactive, toRefs, watch, defineComponent, computed } from 'vue'
 import widgetEdit from '@/vue2/components/widget/edit.vue'
-import style from './style'
 import resetZoom from './resetZoom'
 import resetStyle from './resetStyle'
 
-export default {
+export default defineComponent({
+	name: 'editor-content',
 	components: {
 		widgetEdit,
 	},
-	// @ts-ignore
-	setup(props, context) {
+	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager })
+		const state = reactive({ dom: {}, manager })
 
 		onMounted(() => {
-			resetZoom(context)
+			resetZoom(state)
 		})
 
 		watch(
-			() => [manager.screen.currentScreen.width, manager.screen.currentScreen.height],
+			() => [state.manager.screen.currentScreen.width, state.manager.screen.currentScreen.height],
 			() => {
-				resetZoom(context)
+				resetZoom(state)
 			},
 		)
 
 		watch(
-			() => [manager.temporary.zoom, manager.temporary.offsetY, manager.temporary.offsetX],
+			() => [state.manager.temporary.zoom, state.manager.temporary.offsetY, state.manager.temporary.offsetX],
 			() => {
-				resetStyle(context)
+				resetStyle(state)
 			},
 		)
+
+		const style = computed(() => {
+			return {
+				backgroundColor: state.manager.screen.currentScreen.backgroundColor,
+				width: state.manager.screen.currentScreen.width + 'px',
+				height: state.manager.screen.currentScreen.height + 'px',
+			}
+		})
 
 		return {
 			...toRefs(state),
 			style,
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .editor-content {

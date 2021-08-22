@@ -1,5 +1,5 @@
 <template lang="pug">
-el-image(v-bind="$attrs", v-on="$listeners")
+el-image(v-bind="$attrs")
 	.d-img-error.fn-flex(slot="error")
 		span Dorring
 </template>

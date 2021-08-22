@@ -1,20 +1,23 @@
-import selectScreenByIndex from '@/vue2/components/editor-header/selectScreenByIndex'
-import { Notification } from 'element-ui'
+import { ElNotification } from 'element-plus'
+import { reactive } from 'vue'
+import Manager from '@/core/Manager'
 import dblclick from '@/vue2/components/editor-header/dblclick'
 import createScreen from '@/vue2/components/editor-header/createScreen'
-import Manager from '@/core/Manager'
+import selectScreenByIndex from '@/vue2/components/editor-header/selectScreenByIndex'
 
 const manager: Manager = Manager.Instance()
-export default ({ state, context }) => {
-	state.nameMenuState = true
-	const children = manager.screen.screenList.map((item, index) => {
+const state = reactive({ manager })
+
+export default data => {
+	data.nameMenuState = true
+	const children = state.manager.screen.screenList.map((item, index) => {
 		return {
 			label: item.name,
-			disabled: item.id === manager.screen.currentScreen.id,
+			disabled: item.id === state.manager.screen.currentScreen.id,
 			handler: () => {
 				selectScreenByIndex(index)
-				state.nameMenuState = false
-				Notification({
+				data.nameMenuState = false
+				ElNotification({
 					title: '切换大屏成功',
 					type: 'success',
 					message: `大屏名：${item.name}`,
@@ -22,12 +25,12 @@ export default ({ state, context }) => {
 			},
 		}
 	})
-	state.list = [
+	data.list = [
 		{
 			label: '重命名大屏',
 			handler: () => {
-				state.nameMenuState = false
-				dblclick({ state, context })
+				data.nameMenuState = false
+				dblclick(data)
 			},
 		},
 		{
@@ -38,11 +41,11 @@ export default ({ state, context }) => {
 			label: '创建大屏',
 			handler: () => {
 				createScreen()
-				state.nameMenuState = false
-				Notification({
+				data.nameMenuState = false
+				ElNotification({
 					title: '创建大屏成功',
 					type: 'success',
-					message: `大屏名：${manager.screen.currentScreen.name}`,
+					message: `大屏名：${state.manager.screen.currentScreen.name}`,
 				})
 			},
 		},

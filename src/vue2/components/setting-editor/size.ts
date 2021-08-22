@@ -1,11 +1,13 @@
-import { computed } from '@vue/composition-api'
+import { computed, reactive } from 'vue'
 import Manager from '@/core/Manager'
+
 const manager: Manager = Manager.Instance()
+const state = reactive({ manager })
 
 export default computed({
 	get: () => {
-		const width = manager.screen.currentScreen.width
-		const height = manager.screen.currentScreen.height
+		const width = state.manager.screen.currentScreen.width
+		const height = state.manager.screen.currentScreen.height
 		if (width !== 1920 && width !== 1366 && width !== 1024 && width !== 750 && width !== 828) {
 			return 'custom'
 		}
@@ -17,8 +19,8 @@ export default computed({
 	set: value => {
 		if (value !== 'custom') {
 			const [width, height] = value.split('*')
-			manager.screen.currentScreen.width = Number(width)
-			manager.screen.currentScreen.height = Number(height)
+			state.manager.screen.currentScreen.width = Number(width)
+			state.manager.screen.currentScreen.height = Number(height)
 		}
 	},
 })

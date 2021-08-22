@@ -35,6 +35,7 @@ module.exports = {
 			true,
 			{
 				ignorePseudoElements: ['v-deep'],
+				ignorePseudoClasses: ['deep'],
 			},
 		],
 		'no-descending-specificity': null,

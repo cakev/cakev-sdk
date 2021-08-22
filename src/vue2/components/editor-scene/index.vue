@@ -10,83 +10,59 @@
 					@click="selectSceneById(item.id)",
 					@dblclick="editableScene(item.id)",
 					@contextmenu.stop.prevent="contextmenu($event, item.id)",
-					v-click-outside="clickOutSide",
-					v-for="(item, index) in Object.values(manager.screen.currentScreen.scenes)",
+					v-clickout="clickOutSide",
+					v-for="(item) in Object.values(manager.screen.currentScreen.scenes)",
 					:key="item.id",
 					:class="{ active: manager.screen.currentScene.id === item.id }")
 					template
 						d-svg.pos-a(type="el-icon-check", v-if="manager.screen.currentScene.id === item.id")
-						el-input(:ref="item.id", v-model="item.name", v-show="editScene[item.id]", @blur="blurScene(item.id)")
+						el-input(:ref="el=>dom[item.id]=el", v-model="item.name", v-show="editScene[item.id]", @blur="blurScene(item.id)")
 						span(v-show="!editScene[item.id]") {{ item.name }}
 		template(slot="bottom")
 			div(v-if="manager.screen.sceneWidgetsBySortList.length")
 				draggable(v-model="manager.screen.sceneWidgetsBySortList", :animation="300", @change="sceneWidgetDragEnd")
-					dorring-widget-layer(
-						v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
-						:key="item.id",
-						:index="index",
-						v-for="(item, index) in manager.screen.sceneWidgetsBySortList")
+					template(#item="{element,index}")
+						dorring-widget-layer(
+							v-bind="{ ...element, ...manager.screen.currentScreen.widgets[element.id] }",
+							:key="item.id",
+							:index="index",)
 			el-empty(v-else)
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from '@vue/composition-api'
+import { reactive, toRefs, defineComponent } from 'vue'
 import draggable from 'vuedraggable'
 import contextmenuScene from '@/vue2/components/contextmenu-scene/index.vue'
 import sceneWidgetDragEnd from './sceneWidgetDragEnd'
 import createScene from './createScene'
 import selectSceneById from './selectSceneById'
 import clickOutSide from './clickOutSide'
+import editableScene from './editableScene'
+import blurScene from './blurScene'
+import contextmenu from './contextmenu'
 
-export default {
+export default defineComponent({
+	name: 'editor-scene',
 	components: {
 		draggable,
 		contextmenuScene,
 	},
-	// @ts-ignore
-	setup(props, context) {
+	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ editScene: {}, manager })
-		const contextmenu = (e: MouseEvent, id) => {
-			if (!state.editScene[id]) {
-				selectSceneById(id)
-				manager.temporary.sceneRightMenu = true
-				manager.temporary.sceneRightMenuX = e.clientX
-				manager.temporary.sceneRightMenuY = e.clientY
-			}
-		}
-		const editableScene = id => {
-			state.editScene[id] = true
-			state.editScene = { ...state.editScene }
-			context.refs[id][0].focus()
-			setTimeout(() => {
-				context.refs[id][0].select()
-			})
-		}
-		const blurScene = id => {
-			if (manager.screen.currentScene.name.replace(/[\r\n]/g, '') === '') {
-				manager.screen.currentScene.name = '未命名场景'
-				context.refs[id][0].focus()
-				setTimeout(() => {
-					context.refs[id][0].select()
-				})
-			} else {
-				state.editScene[id] = false
-			}
-		}
+		const state = reactive({ dom: {}, editScene: {}, manager })
 
 		return {
 			...toRefs(state),
 			sceneWidgetDragEnd,
 			createScene,
 			selectSceneById,
-			editableScene,
-			blurScene,
-			contextmenu,
+			editableScene: id => editableScene(id, state),
+			blurScene: id => blurScene(id, state),
+			contextmenu: (e, id) => contextmenu(e, id, state),
 			clickOutSide,
 		}
 	},
-}
+})
 </script>
 <style lang="scss" scoped>
 .editor-scene-select {
