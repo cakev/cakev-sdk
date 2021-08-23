@@ -20,6 +20,12 @@ export default class Temporary extends Factory<Temporary> {
 	widgetsRightMenuX = 0
 	widgetsRightMenuY = 0
 
+	clearRightMenu() {
+		this.widgetRightMenu = false
+		this.widgetsRightMenu = false
+		this.sceneRightMenu = false
+	}
+
 	scrollLeft(step = 10) {
 		this.offsetX -= step
 	}

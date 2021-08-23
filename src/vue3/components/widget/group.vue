@@ -1,7 +1,7 @@
 <template lang="pug">
 .pos-a(:style="style({ ...$attrs, ...$props })")
 	.pos-a(:style="styleGroup($attrs)")
-		template(v-for="item in $attrs.children")
+		template(v-for="item in $attrs.widgets")
 			dorring-widget(
 				:key="item.id",
 				v-if="!manager.screen.currentScreen.widgets[item.id].hide",
@@ -11,8 +11,10 @@
 import style from './style'
 import styleGroup from './styleGroup'
 import Manager from '@/core/Manager'
-import { reactive, toRefs } from 'vue'
-export default {
+import { reactive, toRefs, defineComponent } from 'vue'
+
+export default defineComponent({
+	name: 'dorring-widget-group',
 	props: {
 		readonly: {
 			default: true,
@@ -28,5 +30,5 @@ export default {
 			styleGroup,
 		}
 	},
-}
+})
 </script>

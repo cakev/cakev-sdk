@@ -1,14 +1,14 @@
 ﻿// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export class Singleton<T> {
+	private static instance: any = null
 	static Instance<T>(obj?: any): T {
-		if (!window.dorring) window.dorring = { instance: {} }
-		if (!window.dorring.instance[this.name]) {
+		if (this.instance == null) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			window.dorring.instance[this.name] = new this(obj)
+			this.instance = new this(obj)
 		}
-		return window.dorring.instance[this.name]
+		return this.instance
 	}
 }
 

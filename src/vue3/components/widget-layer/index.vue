@@ -4,6 +4,7 @@ dorring-widget-layer-normal(v-else, v-bind="$attrs")
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 export default defineComponent({
 	name: 'dorring-widget-layer',
 })

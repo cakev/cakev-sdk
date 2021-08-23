@@ -1,9 +1,12 @@
 <template lang="pug">
-component.pos-a(:id="$attrs.id", :is="$attrs.type", v-bind="{ ...$attrs }", :style="style({ ...$attrs, ...$props })")
+component.pos-a(:id="$attrs.id", :is="$attrs.type", :style="style({ ...$attrs, ...$props })")
 </template>
 <script lang="ts">
 import style from './style'
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+	name: 'dorring-widget-normal',
 	props: {
 		readonly: {
 			default: true,
@@ -13,5 +16,5 @@ export default {
 	setup() {
 		return { style }
 	},
-}
+})
 </script>

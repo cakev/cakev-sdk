@@ -5,6 +5,6 @@ const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
 export default () => {
-	state.manager.temporary.widgetRightMenu = false
+	state.manager.temporary.clearRightMenu()
 	state.manager.screen.cancelSelectWidget()
 }

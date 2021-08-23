@@ -7,9 +7,8 @@ const state = reactive({ manager })
 
 export default (e: PointerEvent, widget: WidgetLayer) => {
 	if (state.manager.screen.currentWidgets.length <= 1) {
-		state.manager.screen.cancelSelectWidget()
-		state.manager.screen.selectWidgetById(widget.id)
-		state.manager.temporary.widgetRightMenu = false
+		state.manager.screen.selectOneWidget(widget.id)
+		state.manager.temporary.clearRightMenu()
 		setTimeout(() => {
 			state.manager.temporary.widgetRightMenu = true
 		})
@@ -17,7 +16,7 @@ export default (e: PointerEvent, widget: WidgetLayer) => {
 		state.manager.temporary.widgetRightMenuY = e.clientY
 	}
 	if (state.manager.screen.currentWidgets.length > 1) {
-		state.manager.temporary.widgetsRightMenu = false
+		state.manager.temporary.clearRightMenu()
 		setTimeout(() => {
 			state.manager.temporary.widgetsRightMenu = true
 		})

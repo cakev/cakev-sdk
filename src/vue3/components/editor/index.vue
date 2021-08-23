@@ -27,7 +27,7 @@ el-container.editor.fn-flex.flex-column(@contextmenu.prevent)
 			setting-editor(v-if="manager.screen.currentWidgets.length === 0")
 </template>
 <script lang="ts">
-import { reactive, toRefs, onMounted, defineComponent } from 'vue'
+import { reactive, toRefs, onMounted, defineComponent, onBeforeUnmount } from 'vue'
 import Manager from '@/core/Manager'
 import settingEditor from '@/vue3/components/setting-editor/index.vue'
 import editorHeader from '@/vue3/components/editor-header/index.vue'
@@ -38,6 +38,7 @@ import editorScene from '@/vue3/components/editor-scene/index.vue'
 import editorTip from '@/vue3/components/editor-tip/index.vue'
 import contextmenuWidget from '@/vue3/components/contextmenu-widget/index.vue'
 import contextmenuWidgets from '@/vue3/components/contextmenu-widgets/index.vue'
+import { on, off } from '@/vue3/utils/dom'
 import drop from './drop'
 import click from './click'
 import wheel from './wheel'
@@ -61,16 +62,16 @@ export default defineComponent({
 		contextmenuWidget,
 		contextmenuWidgets,
 	},
-	beforeDestroy() {
-		document.removeEventListener('keyup', keyup)
-		document.removeEventListener('keyup', keydown)
-	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
 		onMounted(() => {
-			document.addEventListener('keyup', keyup)
-			document.addEventListener('keydown', keydown)
+			on(document, 'keyup', keyup)
+			on(document, 'keydown', keydown)
+		})
+		onBeforeUnmount(() => {
+			off(document, 'keyup', keyup)
+			off(document, 'keyup', keydown)
 		})
 		return {
 			...toRefs(state),

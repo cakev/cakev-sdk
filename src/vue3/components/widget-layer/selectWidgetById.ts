@@ -8,7 +8,6 @@ export default (e: KeyboardEvent, id) => {
 	if (e.shiftKey) {
 		state.manager.screen.selectWidgetById(id)
 	} else {
-		state.manager.screen.cancelSelectWidget()
-		state.manager.screen.selectWidgetById(id)
+		state.manager.screen.selectOneWidget(id)
 	}
 }

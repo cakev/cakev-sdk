@@ -74,12 +74,12 @@ export default class Screen extends Factory<Screen> {
 	// 添加分组组件
 	pushWidgetGroup(obj: { x: number; y: number; width: number; height: number }) {
 		const widget = new WidgetTask({ ...obj, name: '分组', group: true })
-		const children = []
+		const widgets = []
 		const currentWidgets = this.currentWidgets
 		this.cancelSelectWidget()
 		for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
 			if (currentWidgets.includes(this.currentScreen.widgetsLayers[i].id)) {
-				children.push(this.currentScreen.widgetsLayers[i])
+				widgets.push(this.currentScreen.widgetsLayers[i])
 				this.currentScreen.widgetsLayers.splice(i, 1)
 				i--
 			}
@@ -87,7 +87,7 @@ export default class Screen extends Factory<Screen> {
 		const layer = new WidgetLayer({
 			id: widget.id,
 			scene: this.currentScene.id,
-			children,
+			widgets,
 			group: true,
 			zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
 		})
@@ -101,16 +101,16 @@ export default class Screen extends Factory<Screen> {
 		const id = this.currentWidgets[0]
 		delete this.currentScreen.widgets[this.currentWidgets[0]]
 		this.cancelSelectWidget()
-		let children = []
+		let widgets = []
 		for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
 			if (this.currentScreen.widgetsLayers[i].id === id) {
-				children = this.currentScreen.widgetsLayers[i].children
+				widgets = this.currentScreen.widgetsLayers[i].widgets
 				this.currentScreen.widgetsLayers.splice(i, 1)
 				i--
 			}
 		}
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
-		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers, ...children]
+		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers, ...widgets]
 	}
 
 	// 取消选择组件
@@ -121,6 +121,11 @@ export default class Screen extends Factory<Screen> {
 	// 选择组件
 	selectWidgetById(id: string) {
 		this.currentWidgets = [...this.currentWidgets, id]
+	}
+
+	// 选中一个组件
+	selectOneWidget(id: string) {
+		this.currentWidgets = [...[id]]
 	}
 
 	// 复制组件
@@ -163,8 +168,7 @@ export default class Screen extends Factory<Screen> {
 				zIndex: this.sceneWidgetsBySortList[0] ? this.sceneWidgetsBySortList[0].zIndex + 1 : 10,
 			}),
 		]
-		this.cancelSelectWidget()
-		this.selectWidgetById(widget.id)
+		this.selectOneWidget(widget.id)
 	}
 
 	// 校验是否修改过
