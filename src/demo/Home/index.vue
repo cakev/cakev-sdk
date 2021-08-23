@@ -4,7 +4,7 @@ editor
 <script lang="ts">
 import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
-import editor from '@/vue2/components/editor/index.vue'
+import editor from '@/vue3/components/editor/index.vue'
 
 export default defineComponent({
 	components: {
