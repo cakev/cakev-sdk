@@ -1,8 +1,8 @@
 <template lang="pug">
-div(
+.vdr.pos-a(
 	:style="style",
 	:ref="el => (dom['vdr'] = el)",
-	:class="{ classNameActive: enabled, classNameDragging: dragging, classNameResizing: resizing, classNameDraggable: draggable, classNameResizable: resizable, className }",
+	:class="{ classNameActive: enabled, classNameDragging: dragging, classNameResizing: resizing, classNameDraggable: draggable, classNameResizable: resizable }",
 	@click.stop,
 	@mousedown.stop.prevent="mouseDown")
 	template(v-for="handle in handles")
@@ -17,17 +17,17 @@ div(
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, onBeforeUnmount, watch, computed } from 'vue'
-import { off, getStyle } from '@/vue3/utils/dom'
+import { off, getStyle, on } from '@/vue3/utils/dom'
 import { restrictToBounds, snapToGrid } from './fns'
 import resetBoundsAndMouseState from './resetBoundsAndMouseState'
 import changeWidth from './changeWidth'
 import changeHeight from './changeHeight'
-import mouseUp from './mouseUp'
+import _mouseUp from './mouseUp'
 import styleHandle from './styleHandle'
 import handleDown from './handleDown'
-import mouseDown from './mouseDown'
+import _mouseDown from './mouseDown'
 import settingAttribute from './settingAttribute'
-import mouseMove from './mouseMove'
+import _mouseMove from './mouseMove'
 import props from './props'
 
 // 禁止用户选取
@@ -75,10 +75,10 @@ export default defineComponent({
 				minBottom: null,
 				maxBottom: null,
 			},
-			mouseDown: e => mouseDown(e, state, props),
-			mouseMove: e => mouseMove(e, state, emit),
-			mouseUp: () => mouseUp(state, emit),
 		})
+		const mouseDown = e => _mouseDown(e, state, props)
+		const mouseMove = e => _mouseMove(e, state, props, emit)
+		const mouseUp = () => _mouseUp(state, emit)
 		onMounted(() => {
 			if (props.maxWidth && props.minWidth > props.maxWidth)
 				console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
@@ -93,10 +93,12 @@ export default defineComponent({
 			state.right = -state.width - state.left
 			state.bottom = -state.height - state.top
 			settingAttribute(state)
+			on(document.documentElement, 'mousemove', mouseMove)
+			on(document.documentElement, 'mouseup', mouseUp)
 		})
 		onBeforeUnmount(() => {
-			off(document.documentElement, 'mousemove', state.mouseMove)
-			off(document.documentElement, 'mouseup', state.mouseUp)
+			off(document.documentElement, 'mousemove', mouseMove)
+			off(document.documentElement, 'mouseup', mouseUp)
 		})
 
 		watch(
@@ -120,7 +122,7 @@ export default defineComponent({
 				if (state.resizing || state.dragging) {
 					return
 				}
-				const [deltaX, _] = snapToGrid(props.grid, val, state.top, props.scale)
+				const [deltaX, _] = snapToGrid(val, state.top, props.scale)
 				const left = restrictToBounds(deltaX, state.bounds.minLeft, state.bounds.maxLeft)
 				state.left = left
 				state.right = state.parentWidth - state.width - left
@@ -133,7 +135,7 @@ export default defineComponent({
 				if (state.resizing || state.dragging) {
 					return
 				}
-				const [_, deltaY] = snapToGrid(props.grid, state.left, val, props.scale)
+				const [_, deltaY] = snapToGrid(state.left, val, props.scale)
 				const top = restrictToBounds(deltaY, state.bounds.minTop, state.bounds.maxTop)
 				state.top = top
 				state.bottom = state.parentHeight - state.height - top
@@ -212,36 +214,16 @@ export default defineComponent({
 			styleHandle: handle => styleHandle(handle, state, props),
 			handleDown: (e, handle) => handleDown(e, handle, state),
 			style,
+			mouseDown,
 		}
 	},
-	// 取消
-	// deselect(e) {
-	// 	const target = e.target || e.srcElement
-	// 	const regex = new RegExp(this.className + '-([trmbl]{2})', '')
-	//
-	// 	if (!this.$el.contains(target) && !regex.test(target.className)) {
-	// 		if (this.enabled && !this.preventDeactivation) {
-	// 			this.enabled = false
-	//
-	// 			emit('deactivated')
-	// 			emit('update:active', false)
-	// 		}
-	//
-	// 		off(document.documentElement, 'mousemove', e=>handleResize(e,state))
-	// 	}
-	//
-	// 	this.resetBoundsAndMouseState()
-	// },
 })
 </script>
 <style lang="scss" scoped>
 .vdr {
-	position: absolute;
-	box-sizing: border-box;
-	touch-action: none;
-	border: 1px dashed #d6d6d6;
+	top: 0;
+	left: 0;
 }
-
 .handle {
 	position: absolute;
 	box-sizing: border-box;

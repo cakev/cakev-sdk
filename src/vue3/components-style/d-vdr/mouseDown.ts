@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-import { on } from '@/vue3/utils/dom'
 import Manager from '@/core/Manager'
 
 const manager: Manager = Manager.Instance()
@@ -25,8 +24,7 @@ export default (e: MouseEvent, data, props) => {
 		data.mouseClickPosition.bottom = data.bottom
 		data.mouseClickPosition.w = data.width
 		data.mouseClickPosition.h = data.height
-		on(document.documentElement, 'mousemove', data.mouseMove)
-		on(document.documentElement, 'mouseup', data.mouseUp)
+		
 	}
 	if (e.buttons === 2) {
 		e.stopPropagation()

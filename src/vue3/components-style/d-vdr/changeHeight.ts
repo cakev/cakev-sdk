@@ -1,7 +1,7 @@
 import { computeHeight, computeWidth, restrictToBounds, snapToGrid } from '@/vue3/components-style/d-vdr/fns'
 
 export default (val, data) => {
-	const [_, newHeight] = snapToGrid(data.grid, 0, val, data.scale)
+	const [_, newHeight] = snapToGrid(0, val, data.scale)
 	let bottom = restrictToBounds(
 		data.parentHeight - newHeight - data.top,
 		data.bounds.minBottom,

@@ -1,7 +1,7 @@
 import { computeHeight, computeWidth, restrictToBounds, snapToGrid } from '@/vue3/components-style/d-vdr/fns'
 
 export default (val, data) => {
-	const [newWidth, _] = snapToGrid(data.grid, val, 0, data.scale)
+	const [newWidth, _] = snapToGrid(val, 0, data.scale)
 	let right = restrictToBounds(data.parentWidth - newWidth - data.left, data.bounds.minRight, data.bounds.maxRight)
 	let bottom = data.bottom
 	if (data.lockAspectRatio) {

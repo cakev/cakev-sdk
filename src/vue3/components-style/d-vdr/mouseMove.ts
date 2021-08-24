@@ -2,7 +2,7 @@ import { computeHeight, computeWidth, restrictToBounds, snapToGrid } from './fns
 import snapCheck from './snapCheck'
 
 // 控制柄移动
-const handleResize = (e, data, emit) => {
+const handleResize = (e, data, props, emit) => {
 	let left = data.left
 	let top = data.top
 	let right = data.right
@@ -20,7 +20,7 @@ const handleResize = (e, data, emit) => {
 	if (!data.heightTouched && tmpDeltaY) {
 		data.heightTouched = true
 	}
-	const [deltaX, deltaY] = snapToGrid(data.grid, tmpDeltaX, tmpDeltaY, data.scaleRatio)
+	const [deltaX, deltaY] = snapToGrid(tmpDeltaX, tmpDeltaY, props.scaleRatio)
 	const resizingOnX = Boolean(data.handle) && (data.handle.includes('l') || data.handle.includes('r'))
 	const resizingOnY = Boolean(data.handle) && (data.handle.includes('t') || data.handle.includes('b'))
 
@@ -60,16 +60,15 @@ const handleResize = (e, data, emit) => {
 }
 
 // 元素移动
-const handleDrag = async (e, data, emit) => {
-	const axis = data.axis
-	const grid = data.grid
+const handleDrag = async (e, data, props, emit) => {
+	const axis = props.axis
 	const bounds = data.bounds
 	const mouseClickPosition = data.mouseClickPosition
 
 	const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
 	const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
 
-	const [deltaX, deltaY] = snapToGrid(grid, tmpDeltaX, tmpDeltaY, data.scaleRatio)
+	const [deltaX, deltaY] = snapToGrid(tmpDeltaX, tmpDeltaY, props.scaleRatio)
 
 	const left = restrictToBounds(mouseClickPosition.left - deltaX, bounds.minLeft, bounds.maxLeft)
 	const top = restrictToBounds(mouseClickPosition.top - deltaY, bounds.minTop, bounds.maxTop)
@@ -79,16 +78,15 @@ const handleDrag = async (e, data, emit) => {
 	data.top = top
 	data.right = right
 	data.bottom = bottom
-
 	await snapCheck(data, emit)
 	emit('dragging', data.left, data.top)
 }
 
 // 移动
-export default (e, data, emit) => {
+export default (e, data, props, emit) => {
 	if (data.resizing) {
-		handleResize(e, data, emit)
+		handleResize(e, data, props, emit)
 	} else if (data.dragging) {
-		handleDrag(e, data, emit)
+		handleDrag(e, data, props, emit)
 	}
 }

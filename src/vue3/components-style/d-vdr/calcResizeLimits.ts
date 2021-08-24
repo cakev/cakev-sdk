@@ -6,7 +6,6 @@ export default data => {
 	let maxH = data.maxH
 
 	const aspectFactor = data.aspectFactor
-	const [gridX, gridY] = data.grid
 	const width = data.width
 	const height = data.height
 	const left = data.left
@@ -31,9 +30,6 @@ export default data => {
 		}
 	}
 
-	maxW = maxW - (maxW % gridX)
-	maxH = maxH - (maxH % gridY)
-
 	const limits = {
 		minLeft: null,
 		maxLeft: null,
@@ -46,13 +42,13 @@ export default data => {
 	}
 
 	limits.minLeft = null
-	limits.maxLeft = left + Math.floor((width - minW) / gridX) * gridX
+	limits.maxLeft = left + Math.floor(width - minW)
 	limits.minTop = null
-	limits.maxTop = top + Math.floor((height - minH) / gridY) * gridY
+	limits.maxTop = top + Math.floor(height - minH)
 	limits.minRight = null
-	limits.maxRight = right + Math.floor((width - minW) / gridX) * gridX
+	limits.maxRight = right + Math.floor(width - minW)
 	limits.minBottom = null
-	limits.maxBottom = bottom + Math.floor((height - minH) / gridY) * gridY
+	limits.maxBottom = bottom + Math.floor(height - minH)
 
 	if (maxW) {
 		limits.minLeft = -(right + maxW)

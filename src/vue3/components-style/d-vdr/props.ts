@@ -2,10 +2,6 @@ export default {
 	id: {
 		type: String,
 	},
-	className: {
-		type: String,
-		default: 'vdr',
-	},
 	classNameDraggable: {
 		type: String,
 		default: 'draggable',
@@ -110,10 +106,6 @@ export default {
 		type: String,
 		default: 'both',
 		validator: (val: string) => ['x', 'y', 'both'].includes(val),
-	},
-	grid: {
-		type: Array,
-		default: () => [1, 1],
 	},
 	// 冲突检测
 	isConflictCheck: {

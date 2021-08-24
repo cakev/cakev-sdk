@@ -2,9 +2,9 @@ export function isFunction(func: Function): boolean {
 	return typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]'
 }
 
-export function snapToGrid(grid: [number, number], pendingX: number, pendingY: number, scale = 1): [number, number] {
-	const x = Math.round(pendingX / scale / grid[0]) * grid[0]
-	const y = Math.round(pendingY / scale / grid[1]) * grid[1]
+export function snapToGrid(pendingX: number, pendingY: number, scale = 1): [number, number] {
+	const x = Math.round(pendingX / scale)
+	const y = Math.round(pendingY / scale)
 	return [x, y]
 }
 

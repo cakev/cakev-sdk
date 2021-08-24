@@ -1,5 +1,4 @@
 import calcResizeLimits from './calcResizeLimits'
-import { on } from '@/vue3/utils/dom'
 
 // 控制柄按下
 export default (e, handle, data) => {
@@ -29,7 +28,4 @@ export default (e, handle, data) => {
 	data.mouseClickPosition.h = data.height
 
 	data.bounds = calcResizeLimits(data)
-
-	on(document.documentElement, 'mousemove', data.mouseMove)
-	on(document.documentElement, 'mouseup', data.mouseUp)
 }

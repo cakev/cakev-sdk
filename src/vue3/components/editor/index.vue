@@ -13,7 +13,7 @@ el-container.editor.fn-flex.flex-column(@contextmenu.prevent)
 			@wheel.stop.prevent="wheel",
 			@mousedown="mousedown",
 			@mouseup="mouseup",
-			@mousemove.stop="mousemove",
+			@mousemove="mousemove",
 			@drop="drop",
 			@dragover.prevent,
 			@click="click")

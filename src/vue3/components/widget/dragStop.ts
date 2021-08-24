@@ -11,6 +11,7 @@ export default (left: number, top: number) => {
 		if (widget) {
 			widget.x = left
 			widget.y = top
+			state.manager.screen.currentScreen.widgets = { ...state.manager.screen.currentScreen.widgets }
 		}
 	}
 }
