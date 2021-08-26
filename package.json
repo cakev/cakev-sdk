@@ -18,7 +18,7 @@
 	],
 	"scripts": {
 		"serve": "vue-cli-service serve",
-		"commit": "git add .&&node ./node_modules/cz-customizable/standalone.js",
+		"commit": "git add .&&git-cz",
 		"build": "vue-cli-service build --target lib --dest dist src/build/index.ts --name dorring",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
@@ -57,7 +57,6 @@
 		"commitizen": "^4.2.3",
 		"commitlint-config-cz": "^0.13.2",
 		"cz-conventional-changelog": "^3.3.0",
-		"cz-customizable": "^6.3.0",
 		"eslint": "^6.7.2",
 		"eslint-plugin-flowtype": "^5.4.0",
 		"eslint-plugin-import": "^2.22.1",
@@ -95,13 +94,9 @@
 	},
 	"config": {
 		"commitizen": {
-			"path": "node_modules/cz-customizable"
-		},
-		"cz-customizable": {
-			"config": ".cz-config.js"
+			"path": "git-cz"
 		}
 	},
-	"_customHasUsedEsStandard": true,
 	"lint-staged": {
 		"*.{js,ts,css,vue,scss}": "prettier  --plugin-search-dir ./node_modules --config .prettierrc --write"
 	}
