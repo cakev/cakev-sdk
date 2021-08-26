@@ -12,7 +12,7 @@
 	"arrowParens": "avoid",
 	"endOfLine": "lf",
 	"embeddedLanguageFormatting": "auto",
-	"pugBracketSpacing": true,
+	"pugBracketSpacing": "true",
 	"pugSingleQuote": false,
 	"pugAttributeSeparator": "always",
 	"pugClosingBracketPosition": "last-line",
