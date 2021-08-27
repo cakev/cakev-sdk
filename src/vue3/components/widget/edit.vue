@@ -8,12 +8,7 @@ vdr(
 	:draggable="!$attrs.lock && manager.screen.currentWidgets.includes($attrs.id) && !manager.temporary.editorContentDrag",
 	:active="manager.screen.currentWidgets.includes($attrs.id)",
 	:z="style({ ...$attrs, ...$props }).zIndex",
-	:scale-ratio="manager.temporary.zoom",
-	:snap="true",
-	@refLineParams="refLineParams",
-	@dragstop="dragStop",
-	@contextmenu.stop.prevent="contextmenu($event, $attrs)",
-	@resizestop="resizeStop")
+	:scale-ratio="manager.temporary.zoom",)
 	dorring-widget(v-bind="{ ...manager.screen.currentScreen.widgets[$attrs.id], ...$attrs, ...$props }")
 </template>
 <script lang="ts">
@@ -21,11 +16,6 @@ import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import vdr from '@/vue3/components-style/d-vdr/index.vue'
 import style from './style'
-import resizeStop from './resizeStop'
-import dragStop from './dragStop'
-import refLineParams from './refLineParams'
-import contextmenu from './contextmenu'
-import clickOutSide from './clickOutSide'
 
 export default defineComponent({
 	name: 'dorring-widget-edit',
@@ -43,11 +33,6 @@ export default defineComponent({
 		return {
 			...toRefs(state),
 			style,
-			resizeStop,
-			dragStop,
-			refLineParams,
-			contextmenu,
-			clickOutSide,
 		}
 	},
 })

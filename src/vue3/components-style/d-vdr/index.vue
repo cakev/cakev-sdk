@@ -2,8 +2,9 @@
 .vdr.pos-a(
 	:style="style",
 	:ref="el => (dom['vdr'] = el)",
-	:class="{ 'vdr-active': enabled, 'vdr-dragging': dragging, 'vdr-resizing': resizing, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
+	:class="{ 'vdr-active': enabled, 'vdr-resizing': resizing, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
 	@click.stop,
+	@contextmenu.stop.prevent="contextmenu($event)",
 	@mousedown.capture="mouseDown")
 	.vdr-line.pos-a
 		.vdr-line-top.pos-a(:style="{ height: `${returnRatio}px` }")
@@ -28,13 +29,17 @@ import styleHandle from './styleHandle'
 import handleDown from './handleDown'
 import _mouseDown from './mouseDown'
 import _mouseMove from './mouseMove'
+import contextmenu from './contextmenu'
 import props from './props'
+import Manager from '@/core/Manager'
 
 export default defineComponent({
 	name: 'dorring-vdr',
 	props,
-	setup(props: any, { emit }) {
+	setup(props) {
+		const manager: Manager = Manager.Instance()
 		const state = reactive({
+			manager,
 			handles: ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
 			dom: {},
 			left: props.x,
@@ -45,13 +50,10 @@ export default defineComponent({
 			handle: '',
 			enabled: props.active,
 			resizing: false,
-			dragging: false,
-			clientX: 0,
-			clientY: 0,
 		})
 		const mouseDown = e => _mouseDown(e, state, props)
-		const mouseMove = e => _mouseMove(e, state, props, emit)
-		const mouseUp = () => _mouseUp(state, emit)
+		const mouseMove = e => _mouseMove(e, state, props)
+		const mouseUp = () => _mouseUp(state, props)
 		onMounted(() => {
 			on(document.documentElement, 'mousemove', mouseMove)
 			on(document.documentElement, 'mouseup', mouseUp)
@@ -71,7 +73,7 @@ export default defineComponent({
 		watch(
 			() => [props.x, props.y, props.w, props.h],
 			(val: Array<number>) => {
-				if (state.resizing || state.dragging) {
+				if (state.resizing || state.manager.screen.currentWidgetDragging[props.id]) {
 					return
 				}
 				state.left = val[0]
@@ -108,6 +110,7 @@ export default defineComponent({
 			style,
 			mouseDown,
 			returnRatio,
+			contextmenu: e => contextmenu(e, props.id),
 		}
 	},
 })

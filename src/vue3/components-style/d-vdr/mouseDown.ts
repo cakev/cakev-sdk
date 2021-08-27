@@ -6,20 +6,26 @@ const state = reactive({ manager })
 
 // 元素按下
 export default (e, data, props) => {
+	console.log(1)
 	if (e.buttons === 1) {
 		if (props.draggable) {
-			data.dragging = true
+			if (state.manager.screen.currentWidgets.length > 1) {
+				state.manager.screen.currentWidgets.forEach(item => {
+					state.manager.screen.currentWidgetDragging[item] = true
+				})
+			} else {
+				state.manager.screen.currentWidgetDragging[props.id] = true
+			}
 		}
 		if (!data.enabled) {
-			data.enabled = true
 			if (e.shiftKey) {
 				state.manager.screen.selectWidgetById(props.id)
 			} else {
 				state.manager.screen.selectOneWidget(props.id)
 			}
 		}
-		data.clientX = e.clientX
-		data.clientY = e.clientY
+		state.manager.temporary.widgetDragClientX = e.clientX
+		state.manager.temporary.widgetDragClientY = e.clientY
 	}
 	if (e.buttons === 2) {
 		e.stopPropagation()

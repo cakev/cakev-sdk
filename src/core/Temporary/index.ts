@@ -1,8 +1,6 @@
 import Factory from '@/core/Base/factory'
 
 export default class Temporary extends Factory<Temporary> {
-	vLine = [] // 参考线
-	hLine = []
 	zoom = 1 // 放大缩小比例
 	offsetX = 0 // 画布偏移量
 	offsetY = 0
@@ -10,7 +8,7 @@ export default class Temporary extends Factory<Temporary> {
 	editorContentDragging = false // 画布拖动中
 	editorContentStartX = 0
 	editorContentStartY = 0
-	editorContentClientX = 0
+	editorContentClientX = 0 // 判断 mouseup 是否 mousemove 了
 	editorContentClientY = 0
 	sceneRightMenu = false // 右键场景
 	sceneRightMenuX = 0
@@ -21,7 +19,8 @@ export default class Temporary extends Factory<Temporary> {
 	widgetsRightMenu = false // 右键多个组件
 	widgetsRightMenuX = 0
 	widgetsRightMenuY = 0
-	draggable: {} // 拖动参数
+	widgetDragClientX = 0
+	widgetDragClientY = 0
 
 	clearRightMenu() {
 		this.widgetRightMenu = false
@@ -55,10 +54,7 @@ export default class Temporary extends Factory<Temporary> {
 		}
 	}
 
-	clear() {
-		this.vLine = []
-		this.hLine = []
-	}
+	clear() {}
 
 	constructor() {
 		super()

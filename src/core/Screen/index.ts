@@ -12,6 +12,7 @@ export default class Screen extends Factory<Screen> {
 	screenList: Array<ScreenTask> = []
 	screenMd5SchemaList: Array<string> = [] // md5文件指纹判别是否修改了大屏
 	currentScene: SceneTask | null = null
+	currentWidgetDragging: { [key: string]: boolean } = {} // 拖动参数
 
 	// 解锁/锁定组件
 	changeLock() {
@@ -116,6 +117,7 @@ export default class Screen extends Factory<Screen> {
 	// 取消选择组件
 	cancelSelectWidget() {
 		this.currentWidgets = []
+		this.currentWidgetDragging = {}
 	}
 
 	// 选择组件

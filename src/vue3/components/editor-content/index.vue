@@ -6,14 +6,6 @@
 			:key="item.id",
 			v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }",
 			:readonly="false")
-	span(
-		v-for="item in manager.temporary.vLine",
-		v-show="item.display",
-		:style="{ left: item.position, top: item.origin, height: item.lineLength }")
-	span(
-		v-for="item in manager.temporary.hLine",
-		v-show="item.display",
-		:style="{ top: item.position, left: item.origin, width: item.lineLength }")
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'

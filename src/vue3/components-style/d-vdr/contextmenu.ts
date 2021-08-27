@@ -1,13 +1,12 @@
 import { reactive } from 'vue'
 import Manager from '@/core/Manager'
-import WidgetLayer from '@/core/Widget/layer'
 
 const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
-export default (e: PointerEvent, widget: WidgetLayer) => {
+export default (e: PointerEvent, id: string) => {
 	if (state.manager.screen.currentWidgets.length <= 1) {
-		state.manager.screen.selectOneWidget(widget.id)
+		state.manager.screen.selectOneWidget(id)
 		state.manager.temporary.clearRightMenu()
 		setTimeout(() => {
 			state.manager.temporary.widgetRightMenu = true
