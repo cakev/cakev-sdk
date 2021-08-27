@@ -71,14 +71,6 @@ export default {
 		type: Number,
 		default: 'auto',
 	},
-	handles: {
-		type: Array,
-		default: () => ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
-		validator: (val: Array<string>) => {
-			const s = new Set(['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'])
-			return new Set(val.filter(h => s.has(h))).size === val.length
-		},
-	},
 	// 缩放比例
 	scaleRatio: {
 		type: Number,

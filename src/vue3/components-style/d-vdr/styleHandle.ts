@@ -1,7 +1,7 @@
 export default (handle, data, props) => {
-	const size = Number((props.handleInfo.size / props.scaleRatio).toFixed(2))
-	const offset = Number((props.handleInfo.offset / props.scaleRatio).toFixed(2))
-	const center = Number((size / 2).toFixed(2))
+	const size = props.handleInfo.size / props.scaleRatio
+	const offset = props.handleInfo.offset / props.scaleRatio
+	const center = size / 2
 
 	const styleMap = {
 		tl: {
@@ -40,6 +40,7 @@ export default (handle, data, props) => {
 	const handleStyle = {
 		width: `${size}px`,
 		height: `${size}px`,
+		borderWidth: `${1 / props.scaleRatio}px`,
 		top: styleMap[handle].top,
 		left: styleMap[handle].left,
 		right: styleMap[handle].right,

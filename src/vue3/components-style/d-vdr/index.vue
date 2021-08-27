@@ -30,6 +30,7 @@ export default defineComponent({
 	props,
 	setup(props: any, { emit }) {
 		const state = reactive({
+			handles: ['tl', 'tm', 'tr', 'mr', 'br', 'bm', 'bl', 'ml'],
 			dom: {},
 			left: props.x,
 			top: props.y,
@@ -81,8 +82,6 @@ export default defineComponent({
 			val => {
 				if (val) {
 					state.aspectFactor = state.width / state.height
-				} else {
-					state.aspectFactor = undefined
 				}
 			},
 		)
@@ -112,12 +111,9 @@ export default defineComponent({
 .handle {
 	position: absolute;
 	box-sizing: border-box;
-	width: 14px;
-	height: 14px;
 	font-size: 1em;
 	line-height: 1em;
-	border: 1px solid black;
-	border-radius: 50%;
+	border: 1px solid var(--el-color-primary);
 	transition: all 0.3s linear;
 }
 
@@ -167,18 +163,5 @@ export default defineComponent({
 	right: -5px;
 	bottom: -5px;
 	cursor: se-resize;
-}
-
-.handle-tr,
-.handle-mr,
-.handle-br,
-.handle-tm,
-.handle-tl,
-.handle-ml,
-.handle-bl,
-.handle-bm {
-	&:hover {
-		transform: scale(1.4);
-	}
 }
 </style>

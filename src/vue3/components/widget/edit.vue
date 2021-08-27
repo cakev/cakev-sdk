@@ -1,11 +1,11 @@
 <template lang="pug">
-vdr.cursor-move(
+vdr(
 	:id="$attrs.id",
 	:x="$attrs.x",
 	:y="$attrs.y",
 	:w="$attrs.width",
 	:h="$attrs.height",
-	:draggable="!$attrs.lock",
+	:draggable="!$attrs.lock && manager.screen.currentWidgets.includes($attrs.id) && !manager.temporary.editorContentDrag",
 	:active="manager.screen.currentWidgets.includes($attrs.id)",
 	:z="style({ ...$attrs, ...$props }).zIndex",
 	:scale-ratio="manager.temporary.zoom",
@@ -14,14 +14,6 @@ vdr.cursor-move(
 	@dragstop="dragStop",
 	@contextmenu.stop.prevent="contextmenu($event, $attrs)",
 	@resizestop="resizeStop")
-	template(#tl) 😀
-	template(#tm) 😀
-	template(#tr) 😀
-	template(#mr) 😀
-	template(#br) 😀
-	template(#bm) 😀
-	template(#bl) 😀
-	template(#ml) 😀
 	dorring-widget(v-bind="{ ...manager.screen.currentScreen.widgets[$attrs.id], ...$attrs, ...$props }")
 </template>
 <script lang="ts">

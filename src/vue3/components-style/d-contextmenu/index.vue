@@ -73,7 +73,7 @@ export default defineComponent({
 	line-height: 24px;
 
 	&:hover {
-		background-color: #409eff;
+		background-color: var(--el-color-primary);
 
 		.d-contextmenu-child {
 			display: block;
