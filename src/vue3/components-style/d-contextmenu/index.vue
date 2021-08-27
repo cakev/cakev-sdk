@@ -15,7 +15,7 @@ ul.d-contextmenu.pos-f.cursor-nomral.z-index-999
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 
 export default defineComponent({
 	name: 'dorring-contextmenu',
@@ -29,11 +29,12 @@ export default defineComponent({
 	},
 	setup() {
 		const manager: Manager = Manager.Instance()
+		const state = reactive({ manager })
 		const click = item => {
 			if (!item.disabled) {
-				manager.temporary.sceneRightMenu = false
-				manager.temporary.widgetRightMenu = false
-				manager.temporary.widgetsRightMenu = false
+				state.manager.temporary.sceneRightMenu = false
+				state.manager.temporary.widgetRightMenu = false
+				state.manager.temporary.widgetsRightMenu = false
 				typeof item.handler === 'function' && item.handler()
 			}
 		}
