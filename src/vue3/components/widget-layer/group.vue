@@ -4,7 +4,7 @@
 		.widget-layer-group-icon.pos-r.fn-flex(@click.stop="active = !active")
 			d-svg.icon-right(type="el-icon-caret-right", :class="{ active }")
 	.widget-layer-list(v-if="active")
-		dorring-widget-layer(:lockable="false", v-bind="item", v-for="item in $attrs.widgets")
+		dorring-widget-layer(:lockable="false", v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }", v-for="item in $attrs.widgets")
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'

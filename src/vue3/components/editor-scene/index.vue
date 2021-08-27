@@ -21,7 +21,7 @@
 				draggable(v-model="manager.screen.sceneWidgetsBySortList", :animation="300", @change="sceneWidgetDragEnd" item-key="id")
 					template(#item="{element,index}")
 						dorring-widget-layer(
-							v-bind="element",
+							v-bind="{ ...element, ...manager.screen.currentScreen.widgets[element.id] }",
 							:index="index",)
 			el-empty(v-else)
 </template>
