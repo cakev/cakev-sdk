@@ -2,10 +2,9 @@
 .vdr.pos-a(
 	:style="style",
 	:ref="el => (dom['vdr'] = el)",
-	:class="{ 'vdr-active': enabled, 'vdr-resizing': resizing, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
-	@click.stop,
+	:class="{ 'vdr-active': enabled, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
 	@contextmenu.stop.prevent="contextmenu($event)",
-	@mousedown.capture="mouseDown")
+	@mousedown.stop.prevent="mouseDown")
 	.vdr-line.pos-a
 		.vdr-line-top.pos-a(:style="{ height: `${returnRatio}px` }")
 		.vdr-line-bottom.pos-a(:style="{ height: `${returnRatio}px` }")
@@ -53,7 +52,7 @@ export default defineComponent({
 		})
 		const mouseDown = e => _mouseDown(e, state, props)
 		const mouseMove = e => _mouseMove(e, state, props)
-		const mouseUp = () => _mouseUp(state, props)
+		const mouseUp = e => _mouseUp(e, state, props)
 		onMounted(() => {
 			on(document.documentElement, 'mousemove', mouseMove)
 			on(document.documentElement, 'mouseup', mouseUp)
@@ -107,10 +106,10 @@ export default defineComponent({
 			...toRefs(state),
 			styleHandle: handle => styleHandle(handle, state, props),
 			handleDown: (e, handle) => handleDown(e, handle, state),
-			style,
 			mouseDown,
-			returnRatio,
 			contextmenu: e => contextmenu(e, props.id),
+			style,
+			returnRatio,
 		}
 	},
 })

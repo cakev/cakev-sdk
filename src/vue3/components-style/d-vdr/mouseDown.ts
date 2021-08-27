@@ -6,8 +6,8 @@ const state = reactive({ manager })
 
 // 元素按下
 export default (e, data, props) => {
-	console.log(1)
 	if (e.buttons === 1) {
+		state.manager.temporary.clearRightMenu()
 		if (props.draggable) {
 			if (state.manager.screen.currentWidgets.length > 1) {
 				state.manager.screen.currentWidgets.forEach(item => {

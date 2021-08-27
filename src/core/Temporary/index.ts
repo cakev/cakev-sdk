@@ -54,8 +54,6 @@ export default class Temporary extends Factory<Temporary> {
 		}
 	}
 
-	clear() {}
-
 	constructor() {
 		super()
 	}

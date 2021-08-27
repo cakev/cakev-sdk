@@ -17,7 +17,6 @@ const handleResize = (e, data, props) => {
 	} else if (data.handle.includes('t')) {
 		top = top + diffY
 	}
-
 	if (data.handle.includes('r')) {
 		right = right + diffX
 	} else if (data.handle.includes('l')) {
@@ -37,13 +36,14 @@ const handleDrag = (e, data, props) => {
 	const diffY = Math.round((e.clientY - state.manager.temporary.widgetDragClientY) / props.scaleRatio)
 	data.left = data.left + diffX
 	data.top = data.top + diffY
-	state.manager.temporary.widgetDragClientX = e.clientX
-	state.manager.temporary.widgetDragClientY = e.clientY
+	setTimeout(() => {
+		state.manager.temporary.widgetDragClientX = e.clientX
+		state.manager.temporary.widgetDragClientY = e.clientY
+	})
 }
 
 // 移动
 export default (e, data, props) => {
-	console.log(data.resizing, state.manager.screen.currentWidgetDragging[props.id], props.id)
 	if (data.resizing) {
 		handleResize(e, data, props)
 	} else if (state.manager.screen.currentWidgetDragging[props.id]) {

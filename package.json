@@ -6,9 +6,10 @@
 		"typescript",
 		"vue",
 		"scss",
-		"element-plus",
 		"dragger",
-		"dorring"
+		"dorring",
+		"element-plus",
+		"vue3"
 	],
 	"files": [
 		"dist/dorring.css",
