@@ -10,7 +10,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-drag-content',
+	name: 'd-drag-content',
 	props: {
 		topMinHeight: {
 			default: 100,

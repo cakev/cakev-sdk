@@ -1,11 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
+const pkg = require('./package.json')
+
 const isProduction = process.env.NODE_ENV === 'production'
 const needReport = false
 const resolve = dir => {
 	return path.join(__dirname, dir)
 }
-const pkg = require('./package.json')
 
 module.exports = {
 	assetsDir: './',

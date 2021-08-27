@@ -7,7 +7,7 @@ svg.d-svg(v-else, aria-hidden="true", :style="{ width: `${size}px`, height: `${s
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-svg',
+	name: 'd-svg',
 	props: {
 		type: {
 			type: String,

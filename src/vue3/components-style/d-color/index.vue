@@ -7,7 +7,7 @@
 import { reactive, toRefs, watch, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-color',
+	name: 'd-color',
 	props: {
 		modelValue: {
 			type: String,

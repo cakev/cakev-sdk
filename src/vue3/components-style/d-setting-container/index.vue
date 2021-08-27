@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-	name: 'dorring-setting-container',
+	name: 'd-setting-container',
 })
 </script>
 <style lang="scss" scoped>

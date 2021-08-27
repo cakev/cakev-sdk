@@ -7,7 +7,7 @@ el-image(v-bind="$attrs")
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-	name: 'dorring-img',
+	name: 'd-img',
 })
 </script>
 <style lang="scss" scoped>

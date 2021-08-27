@@ -18,7 +18,7 @@ import Manager from '@/core/Manager'
 import { defineComponent, reactive } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-contextmenu',
+	name: 'd-contextmenu',
 	props: {
 		list: {
 			type: Array,

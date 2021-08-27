@@ -21,6 +21,7 @@ import dragStart from './dragStart'
 import list from './list'
 
 export default defineComponent({
+	name: 'editor-widgets-list',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ list, manager })

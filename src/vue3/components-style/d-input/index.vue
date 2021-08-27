@@ -6,7 +6,7 @@ el-input.d-input(v-bind="$attrs", v-model="currentVal")
 import { reactive, toRefs, watch, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-input',
+	name: 'd-input',
 	props: {
 		modelValue: {},
 		format: {

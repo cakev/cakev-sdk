@@ -6,7 +6,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-icon',
+	name: 'd-icon',
 	props: {
 		type: {
 			type: String,

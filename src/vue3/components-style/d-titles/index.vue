@@ -11,7 +11,7 @@ import Manager from '@/core/Manager'
 import { onMounted, reactive, toRefs, defineComponent } from 'vue'
 
 export default defineComponent({
-	name: 'dorring-titles',
+	name: 'd-titles',
 	props: {
 		list: {
 			type: Array,

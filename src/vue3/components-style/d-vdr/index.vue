@@ -33,7 +33,7 @@ import props from './props'
 import Manager from '@/core/Manager'
 
 export default defineComponent({
-	name: 'dorring-vdr',
+	name: 'd-vdr',
 	props,
 	setup(props) {
 		const manager: Manager = Manager.Instance()
