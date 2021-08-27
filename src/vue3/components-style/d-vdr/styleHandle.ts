@@ -1,6 +1,6 @@
 export default (handle, data, props) => {
-	const size = props.handleInfo.size / props.scaleRatio
-	const offset = props.handleInfo.offset / props.scaleRatio
+	const size = 16 / props.scaleRatio
+	const offset = -8 / props.scaleRatio
 	const center = size / 2
 
 	const styleMap = {

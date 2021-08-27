@@ -2,17 +2,22 @@
 .vdr.pos-a(
 	:style="style",
 	:ref="el => (dom['vdr'] = el)",
-	:class="{ classNameActive: enabled, classNameDragging: dragging, classNameResizing: resizing, classNameDraggable: draggable, classNameResizable: resizable }",
+	:class="{ 'vdr-active': enabled, 'vdr-dragging': dragging, 'vdr-resizing': resizing, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
 	@click.stop,
 	@mousedown.capture="mouseDown")
+	.vdr-line.pos-a
+		.vdr-line-top.pos-a(:style="{ height: `${returnRatio}px` }")
+		.vdr-line-bottom.pos-a(:style="{ height: `${returnRatio}px` }")
+		.vdr-line-left.pos-a(:style="{ width: `${returnRatio}px` }")
+		.vdr-line-right.pos-a(:style="{ width: `${returnRatio}px` }")
 	template(v-for="handle in handles")
-		div(
+		.vdr-handle.circle(
 			:key="handle",
 			v-if="resizable && enabled",
-			:class="[classNameHandle, classNameHandle + '-' + handle]",
+			:class="['vdr-handle-' + handle]",
 			:style="styleHandle(handle)",
 			@mousedown.stop.prevent="handleDown($event, handle)")
-			slot(:name="handle")
+			span(:style="{ borderWidth: `${returnRatio}px` }")
 	slot
 </template>
 <script lang="ts">
@@ -60,7 +65,6 @@ export default defineComponent({
 			() => props.active,
 			(val: boolean) => {
 				state.enabled = val
-				val ? emit('activated') : emit('deactivated')
 			},
 		)
 
@@ -93,12 +97,17 @@ export default defineComponent({
 				zIndex: props.z,
 			}
 		})
+		const returnRatio = computed(() => {
+			return props.scaleRatio < 1 ? 1 / props.scaleRatio : 1
+		})
+
 		return {
 			...toRefs(state),
 			styleHandle: handle => styleHandle(handle, state, props),
 			handleDown: (e, handle) => handleDown(e, handle, state),
 			style,
 			mouseDown,
+			returnRatio,
 		}
 	},
 })
@@ -107,61 +116,117 @@ export default defineComponent({
 .vdr {
 	top: 0;
 	left: 0;
+	&.vdr-active,
+	&:hover {
+		.vdr-line-top,
+		.vdr-line-bottom,
+		.vdr-line-left,
+		.vdr-line-right {
+			background-color: var(--el-color-primary);
+		}
+	}
 }
-.handle {
+.vdr-handle {
 	position: absolute;
-	box-sizing: border-box;
-	font-size: 1em;
-	line-height: 1em;
-	border: 1px solid var(--el-color-primary);
-	transition: all 0.3s linear;
+	span {
+		width: 50%;
+		height: 50%;
+		position: absolute;
+		left: 25%;
+		background-color: #fff;
+		top: 25%;
+		border: 1px solid var(--el-color-primary);
+	}
 }
 
-.handle-tl {
-	top: -5px;
-	left: -5px;
+.vdr-handle-tl {
 	cursor: nw-resize;
 }
 
-.handle-tm {
-	top: -5px;
-	left: calc(50% - 4px);
+.vdr-handle-tm {
 	cursor: n-resize;
+	width: 70% !important;
+	left: 15% !important;
+	span {
+		border: none;
+		background-color: transparent;
+	}
 }
 
-.handle-tr {
-	top: -5px;
-	right: -5px;
+.vdr-handle-tr {
 	cursor: ne-resize;
 }
 
-.handle-ml {
-	top: calc(50% - 4px);
-	left: -5px;
+.vdr-handle-ml {
 	cursor: w-resize;
+	height: 70% !important;
+	top: 15% !important;
+	span {
+		border: none;
+		background-color: transparent;
+	}
 }
 
-.handle-mr {
-	top: calc(50% - 4px);
-	right: -5px;
+.vdr-handle-mr {
 	cursor: e-resize;
+	height: 70% !important;
+	top: 15% !important;
+	span {
+		border: none;
+		background-color: transparent;
+	}
 }
 
-.handle-bl {
-	bottom: -5px;
-	left: -5px;
+.vdr-handle-bl {
 	cursor: sw-resize;
 }
 
-.handle-bm {
-	bottom: -5px;
-	left: calc(50% - 4px);
+.vdr-handle-bm {
 	cursor: s-resize;
+	width: 70% !important;
+	left: 15% !important;
+	span {
+		border: none;
+		background-color: transparent;
+	}
 }
 
-.handle-br {
-	right: -5px;
-	bottom: -5px;
+.vdr-handle-br {
 	cursor: se-resize;
+}
+
+.vdr-line {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.vdr-line-top {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+}
+
+.vdr-line-bottom {
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+}
+
+.vdr-line-left {
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 100%;
+}
+
+.vdr-line-right {
+	top: 0;
+	right: 0;
+	width: 1px;
+	height: 100%;
 }
 </style>

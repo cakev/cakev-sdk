@@ -4,4 +4,5 @@ export default (e, handle, data) => {
 	data.resizing = true
 	data.clientX = e.clientX
 	data.clientY = e.clientY
+	console.log(1)
 }

@@ -2,30 +2,6 @@ export default {
 	id: {
 		type: String,
 	},
-	classNameDraggable: {
-		type: String,
-		default: 'draggable',
-	},
-	classNameResizable: {
-		type: String,
-		default: 'resizable',
-	},
-	classNameDragging: {
-		type: String,
-		default: 'dragging',
-	},
-	classNameResizing: {
-		type: String,
-		default: 'resizing',
-	},
-	classNameActive: {
-		type: String,
-		default: 'active',
-	},
-	classNameHandle: {
-		type: String,
-		default: 'handle',
-	},
 	disableUserSelect: {
 		type: Boolean,
 		default: true,
@@ -76,16 +52,5 @@ export default {
 		type: Number,
 		default: 1,
 		validator: val => typeof val === 'number',
-	},
-	// handle是否缩放
-	handleInfo: {
-		type: Object,
-		default: () => {
-			return {
-				size: 8,
-				offset: -5,
-				switch: true,
-			}
-		},
 	},
 }

@@ -4,8 +4,8 @@ const handleResize = (e, data, props, emit) => {
 	let top = data.top
 	let right = data.left + data.width
 	let bottom = data.top + data.height
-	const diffX = (e.clientX - data.clientX) / props.scaleRatio
-	const diffY = (e.clientY - data.clientY) / props.scaleRatio
+	const diffX = Math.round((e.clientX - data.clientX) / props.scaleRatio)
+	const diffY = Math.round((e.clientY - data.clientY) / props.scaleRatio)
 	if (data.handle.includes('b')) {
 		bottom = bottom + diffY
 	} else if (data.handle.includes('t')) {
@@ -28,8 +28,8 @@ const handleResize = (e, data, props, emit) => {
 
 // 元素移动
 const handleDrag = (e, data, props, emit) => {
-	const diffX = (e.clientX - data.clientX) / props.scaleRatio
-	const diffY = (e.clientY - data.clientY) / props.scaleRatio
+	const diffX = Math.round((e.clientX - data.clientX) / props.scaleRatio)
+	const diffY = Math.round((e.clientY - data.clientY) / props.scaleRatio)
 	data.left = data.left + diffX
 	data.top = data.top + diffY
 	data.clientX = e.clientX
