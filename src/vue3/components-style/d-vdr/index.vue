@@ -18,8 +18,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, onBeforeUnmount, watch, computed } from 'vue'
 import { off, on } from '@/vue3/utils/dom'
-import changeWidth from './changeWidth'
-import changeHeight from './changeHeight'
 import _mouseUp from './mouseUp'
 import styleHandle from './styleHandle'
 import handleDown from './handleDown'
@@ -35,25 +33,15 @@ export default defineComponent({
 			dom: {},
 			left: props.x,
 			top: props.y,
-			right: props.x - props.w,
-			bottom: props.y - props.h,
 			width: props.w,
 			height: props.h,
-			widthTouched: false,
-			heightTouched: false,
 			aspectFactor: props.w / props.h,
 			handle: '',
 			enabled: props.active,
 			resizing: false,
 			dragging: false,
-			mouseClickPosition: {
-				mouseX: 0,
-				mouseY: 0,
-				x: 0,
-				y: 0,
-				w: 0,
-				h: 0,
-			},
+			clientX: 0,
+			clientY: 0,
 		})
 		const mouseDown = e => _mouseDown(e, state, props)
 		const mouseMove = e => _mouseMove(e, state, props, emit)
@@ -76,26 +64,15 @@ export default defineComponent({
 		)
 
 		watch(
-			() => [props.x, props.y],
+			() => [props.x, props.y, props.w, props.h],
 			(val: Array<number>) => {
 				if (state.resizing || state.dragging) {
 					return
 				}
 				state.left = val[0]
-				state.right = val[0] - state.width
 				state.top = val[1]
-				state.bottom = val[1] - state.height
-			},
-		)
-
-		watch(
-			() => [props.w, props.h],
-			(val: Array<number>) => {
-				if (state.resizing || state.dragging) {
-					return
-				}
-				changeWidth(val[0], state)
-				changeHeight(val[1], state)
+				state.width = val[2]
+				state.height = val[3]
 			},
 		)
 
@@ -112,9 +89,8 @@ export default defineComponent({
 		const style = computed(() => {
 			return {
 				transform: `translate3d(${state.left}px, ${state.top}px, 0)`,
-				width: props.w === 'auto' ? (!state.widthTouched ? 'auto' : state.width + 'px') : state.width + 'px',
-				height:
-					props.h === 'auto' ? (!state.heightTouched ? 'auto' : state.height + 'px') : state.height + 'px',
+				width: state.width + 'px',
+				height: state.height + 'px',
 				zIndex: props.z,
 			}
 		})
@@ -203,31 +179,6 @@ export default defineComponent({
 .handle-bm {
 	&:hover {
 		transform: scale(1.4);
-	}
-}
-
-.ref-line {
-	position: absolute;
-	z-index: 9999;
-	background-color: rgb(255, 0, 204);
-}
-
-.v-line {
-	width: 1px;
-}
-
-.h-line {
-	height: 1px;
-}
-
-@media only screen and (max-width: 768px) {
-	[class*='handle-']::before {
-		position: absolute;
-		top: -10px;
-		right: -10px;
-		bottom: -10px;
-		left: -10px;
-		content: '';
 	}
 }
 </style>

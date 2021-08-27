@@ -5,7 +5,7 @@ const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
 // 元素按下
-export default (e: MouseEvent, data, props) => {
+export default (e, data, props) => {
 	if (e.buttons === 1) {
 		if (props.draggable) {
 			data.dragging = true
@@ -18,14 +18,8 @@ export default (e: MouseEvent, data, props) => {
 				state.manager.screen.selectOneWidget(props.id)
 			}
 		}
-		data.mouseClickPosition.mouseX = e.pageX
-		data.mouseClickPosition.mouseY = e.pageY
-		data.mouseClickPosition.left = data.left
-		data.mouseClickPosition.right = data.right
-		data.mouseClickPosition.top = data.top
-		data.mouseClickPosition.bottom = data.bottom
-		data.mouseClickPosition.w = data.width
-		data.mouseClickPosition.h = data.height
+		data.clientX = e.clientX
+		data.clientY = e.clientY
 	}
 	if (e.buttons === 2) {
 		e.stopPropagation()

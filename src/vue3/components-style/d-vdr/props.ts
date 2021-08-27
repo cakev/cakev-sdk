@@ -79,11 +79,6 @@ export default {
 			return new Set(val.filter(h => s.has(h))).size === val.length
 		},
 	},
-	axis: {
-		type: String,
-		default: 'both',
-		validator: (val: string) => ['x', 'y', 'both'].includes(val),
-	},
 	// 缩放比例
 	scaleRatio: {
 		type: Number,

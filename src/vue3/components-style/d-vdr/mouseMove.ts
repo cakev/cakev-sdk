@@ -1,74 +1,39 @@
 // 控制柄移动
-const handleResize = (e: MouseEvent, data, props, emit) => {
+const handleResize = (e, data, props, emit) => {
 	let left = data.left
 	let top = data.top
-	let right = data.right
-	let bottom = data.bottom
-
-	const mouseClickPosition = data.mouseClickPosition
-	const aspectFactor = data.aspectFactor
-
-	const tmpDeltaX = mouseClickPosition.mouseX - e.pageX
-	const tmpDeltaY = mouseClickPosition.mouseY - e.pageY
-
-	if (!data.widthTouched && tmpDeltaX) {
-		data.widthTouched = true
-	}
-	if (!data.heightTouched && tmpDeltaY) {
-		data.heightTouched = true
-	}
-	const deltaX = Math.round(tmpDeltaX / props.scaleRatio)
-	const deltaY = Math.round(tmpDeltaY / props.scaleRatio)
-	const resizingOnX = Boolean(data.handle) && (data.handle.includes('l') || data.handle.includes('r'))
-	const resizingOnY = Boolean(data.handle) && (data.handle.includes('t') || data.handle.includes('b'))
+	let right = data.left + data.width
+	let bottom = data.top + data.height
+	const diffX = (e.clientX - data.clientX) / props.scaleRatio
+	const diffY = (e.clientY - data.clientY) / props.scaleRatio
 	if (data.handle.includes('b')) {
-		bottom = mouseClickPosition.bottom + deltaY
-		if (data.lockAspectRatio && resizingOnY) {
-			right = data.right - (data.bottom - bottom) * aspectFactor
-		}
+		bottom = bottom + diffY
 	} else if (data.handle.includes('t')) {
-		top = mouseClickPosition.top - deltaY
-		if (data.lockAspectRatio && resizingOnY) {
-			left = data.left - (data.top - top) * aspectFactor
-		}
+		top = top + diffY
 	}
 
 	if (data.handle.includes('r')) {
-		right = mouseClickPosition.right + deltaX
-		if (data.lockAspectRatio && resizingOnX) {
-			bottom = data.bottom - (data.right - right) / aspectFactor
-		}
+		right = right + diffX
 	} else if (data.handle.includes('l')) {
-		left = mouseClickPosition.left - deltaX
-		if (data.lockAspectRatio && resizingOnX) {
-			top = data.top - (data.left - left) / aspectFactor
-		}
+		left = left + diffX
 	}
 	data.left = left
 	data.top = top
-	data.right = right
-	data.bottom = bottom
 	data.width = right - left
 	data.height = bottom - top
+	data.clientX = e.clientX
+	data.clientY = e.clientY
 	emit('resizing', data.left, data.top, data.width, data.height)
 }
 
 // 元素移动
-const handleDrag = (e: MouseEvent, data, props, emit) => {
-	const axis = props.axis
-	const mouseClickPosition = data.mouseClickPosition
-	const tmpDeltaX = axis && axis !== 'y' ? mouseClickPosition.mouseX - e.pageX : 0
-	const tmpDeltaY = axis && axis !== 'x' ? mouseClickPosition.mouseY - e.pageY : 0
-	const deltaX = Math.round(tmpDeltaX / props.scaleRatio)
-	const deltaY = Math.round(tmpDeltaY / props.scaleRatio)
-	const left = mouseClickPosition.left - deltaX
-	const top = mouseClickPosition.top - deltaY
-	const right = mouseClickPosition.right + deltaX
-	const bottom = mouseClickPosition.bottom + deltaY
-	data.left = left
-	data.top = top
-	data.right = right
-	data.bottom = bottom
+const handleDrag = (e, data, props, emit) => {
+	const diffX = (e.clientX - data.clientX) / props.scaleRatio
+	const diffY = (e.clientY - data.clientY) / props.scaleRatio
+	data.left = data.left + diffX
+	data.top = data.top + diffY
+	data.clientX = e.clientX
+	data.clientY = e.clientY
 	emit('dragging', data.left, data.top)
 }
 
