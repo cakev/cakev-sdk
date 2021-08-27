@@ -4,7 +4,7 @@ import Manager from '@/core/Manager'
 const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
-export default (e ) => {
+export default e => {
 	if (e.ctrlKey) {
 		if (e.wheelDeltaY !== 0) {
 			if (e.wheelDeltaY > 0) {

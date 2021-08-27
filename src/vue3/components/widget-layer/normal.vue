@@ -2,7 +2,7 @@
 .widget-layer-box.cursor-nomral.fn-flex.flex-row.pos-r(
 	:key="$attrs.id",
 	:class="{ active: manager.screen.currentWidgets.includes($attrs.id), hide: $attrs.hide, lock: $attrs.lock }",
-	@click="selectWidgetById($event, $attrs.id)")
+	@click.left="selectWidgetById($event, $attrs.id)")
 	slot
 	d-img.widget-layer-img(:src="manager.screen.currentScreen.widgets[$attrs.id].avatar")
 	span.ellipsis {{ manager.screen.currentScreen.widgets[$attrs.id].name }}

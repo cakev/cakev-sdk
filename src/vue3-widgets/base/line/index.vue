@@ -1,10 +1,15 @@
 <template lang="pug">
-.line1 line1
+widget-base.line1(v-bind="$attrs") line1
 </template>
 <script lang="ts">
+import widgetBase from '@/vue3/widget/base'
 import { defineComponent } from 'vue'
+
 export default defineComponent({
 	name: 'dorring-line-1',
+	components: {
+		widgetBase,
+	},
 })
 </script>
 <style lang="scss" scoped>

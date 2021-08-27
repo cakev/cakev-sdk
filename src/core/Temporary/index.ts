@@ -19,6 +19,7 @@ export default class Temporary extends Factory<Temporary> {
 	widgetsRightMenu = false // 右键多个组件
 	widgetsRightMenuX = 0
 	widgetsRightMenuY = 0
+	draggable: {} // 拖动参数
 
 	clearRightMenu() {
 		this.widgetRightMenu = false

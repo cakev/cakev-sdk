@@ -1,27 +1,14 @@
-import conflictCheck from './conflictCheck'
-import resetBoundsAndMouseState from './resetBoundsAndMouseState'
-
 // 从控制柄松开
 export default async (data, emit) => {
-	data.handle = null
-	// 初始化辅助线数据
-	const temArr = new Array(3).fill({ display: false, position: '', origin: '', lineLength: '' })
-	const refLine = { vLine: [], hLine: [] }
-	for (let i in refLine) {
-		refLine[i] = JSON.parse(JSON.stringify(temArr))
-	}
-
+	data.handle = ''
 	if (data.resizing) {
 		data.resizing = false
-		await conflictCheck(data)
-		emit('refLineParams', refLine)
+		console.log(data.left, data.top, data.width, data.height)
 		emit('resizestop', data.left, data.top, data.width, data.height)
+		data.mouseClickPosition = { mouseX: 0, mouseY: 0, x: 0, y: 0, w: 0, h: 0 }
 	}
 	if (data.dragging) {
 		data.dragging = false
-		await conflictCheck(data)
-		emit('refLineParams', refLine)
 		emit('dragstop', data.left, data.top)
 	}
-	resetBoundsAndMouseState(data)
 }

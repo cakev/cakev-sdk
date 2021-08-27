@@ -1,7 +1,7 @@
 <template lang="pug">
 el-tabs(tab-position="left")
 	el-tab-pane(v-for="item in list", :key="item.label")
-		template(slot="label")
+		template(#label)
 			d-svg(:type="item.icon")
 			span {{ item.label }}
 		el-collapse

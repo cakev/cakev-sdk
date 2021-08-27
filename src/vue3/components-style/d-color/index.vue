@@ -43,17 +43,15 @@ export default defineComponent({
 <style lang="scss" scoped>
 .d-color {
 	align-items: center;
-	&::v-deep {
-		.bee-color-wrap {
-			width: 16px;
-			height: 16px;
-			margin-right: 8px;
-			border: 1px solid #e5e5e5;
-			box-shadow: none;
-			&.transparent {
-				.current-color {
-					background-color: transparent !important;
-				}
+	&::v-deep(.bee-color-wrap) {
+		width: 16px;
+		height: 16px;
+		margin-right: 8px;
+		border: 1px solid #e5e5e5;
+		box-shadow: none;
+		&.transparent {
+			.current-color {
+				background-color: transparent !important;
 			}
 		}
 	}

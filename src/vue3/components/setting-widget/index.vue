@@ -1,31 +1,31 @@
 <template lang="pug">
 .setting-widget
 	d-titles(:list="list", :left="true", @change="init", @init="init")
-	component(:is="component")
+	component(:is="state.componentId")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
-import Manager from '@/core/Manager'
-import base from './base.vue'
-import data from './data.vue'
-import interactive from './interactive.vue'
+import { ref, shallowRef, defineComponent } from 'vue'
+import sBase from './base.vue'
+import sData from './data.vue'
+import sInteractive from './interactive.vue'
 
-export default {
+export default defineComponent({
+	name: 'setting-widget',
 	setup() {
-		const manager: Manager = Manager.Instance()
 		const list = [
-			{ label: '基础', component: base },
-			{ label: '数据', component: data },
-			{ label: '交互', component: interactive },
+			{ label: '基础', component: sBase },
+			{ label: '数据', component: sData },
+			{ label: '交互', component: sInteractive },
 		]
-		const state = reactive({ manager, list, component: null })
+		const state = shallowRef({ componentId: sBase })
 		const init = index => {
-			state.component = list[index].component
+			state.value = { componentId: list[index].component }
 		}
 		return {
-			...toRefs(state),
+			state,
+			list: ref(list),
 			init,
 		}
 	},
-}
+})
 </script>

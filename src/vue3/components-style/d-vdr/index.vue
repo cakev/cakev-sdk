@@ -4,7 +4,7 @@
 	:ref="el => (dom['vdr'] = el)",
 	:class="{ classNameActive: enabled, classNameDragging: dragging, classNameResizing: resizing, classNameDraggable: draggable, classNameResizable: resizable }",
 	@click.stop,
-	@mousedown.stop.prevent="mouseDown")
+	@mousedown.capture="mouseDown")
 	template(v-for="handle in handles")
 		div(
 			:key="handle",
@@ -17,27 +17,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, onBeforeUnmount, watch, computed } from 'vue'
-import { off, getStyle, on } from '@/vue3/utils/dom'
-import { restrictToBounds, snapToGrid } from './fns'
-import resetBoundsAndMouseState from './resetBoundsAndMouseState'
+import { off, on } from '@/vue3/utils/dom'
 import changeWidth from './changeWidth'
 import changeHeight from './changeHeight'
 import _mouseUp from './mouseUp'
 import styleHandle from './styleHandle'
 import handleDown from './handleDown'
 import _mouseDown from './mouseDown'
-import settingAttribute from './settingAttribute'
 import _mouseMove from './mouseMove'
 import props from './props'
-
-// 禁止用户选取
-const userSelectNone = {
-	userSelect: 'none',
-}
-// 用户选中自动
-const userSelectAuto = {
-	userSelect: 'auto',
-}
 
 export default defineComponent({
 	name: 'dorring-vdr',
@@ -47,52 +35,30 @@ export default defineComponent({
 			dom: {},
 			left: props.x,
 			top: props.y,
-			right: null,
-			bottom: null,
-			width: null,
-			height: null,
+			right: props.x - props.w,
+			bottom: props.y - props.h,
+			width: props.w,
+			height: props.h,
 			widthTouched: false,
 			heightTouched: false,
-			aspectFactor: null,
-			parentWidth: null,
-			parentHeight: null,
-			minW: props.minWidth,
-			minH: props.minHeight,
-			maxW: props.maxWidth,
-			maxH: props.maxHeight,
-			handle: null,
+			aspectFactor: props.w / props.h,
+			handle: '',
 			enabled: props.active,
 			resizing: false,
 			dragging: false,
-			zIndex: props.z,
-			bounds: {
-				minLeft: null,
-				maxLeft: null,
-				minRight: null,
-				maxRight: null,
-				minTop: null,
-				maxTop: null,
-				minBottom: null,
-				maxBottom: null,
+			mouseClickPosition: {
+				mouseX: 0,
+				mouseY: 0,
+				x: 0,
+				y: 0,
+				w: 0,
+				h: 0,
 			},
 		})
 		const mouseDown = e => _mouseDown(e, state, props)
 		const mouseMove = e => _mouseMove(e, state, props, emit)
 		const mouseUp = () => _mouseUp(state, emit)
 		onMounted(() => {
-			if (props.maxWidth && props.minWidth > props.maxWidth)
-				console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
-			if (props.maxWidth && props.minHeight > props.maxHeight)
-				console.warn('[Vdr warn]: Invalid prop: minHeight cannot be greater than maxHeight')
-			resetBoundsAndMouseState(state)
-			const width = getStyle(state.dom['vdr'], 'width')
-			const height = getStyle(state.dom['vdr'], 'height')
-			state.aspectFactor = (props.w !== 'auto' ? props.w : width) / (props.h !== 'auto' ? props.h : height)
-			state.width = props.w !== 'auto' ? props.w : width
-			state.height = props.h !== 'auto' ? props.h : height
-			state.right = -state.width - state.left
-			state.bottom = -state.height - state.top
-			settingAttribute(state)
 			on(document.documentElement, 'mousemove', mouseMove)
 			on(document.documentElement, 'mouseup', mouseUp)
 		})
@@ -110,54 +76,26 @@ export default defineComponent({
 		)
 
 		watch(
-			() => props.z,
-			(val: string | number) => {
-				val >= 0 || val === 'auto' ? (state.zIndex = val) : void 0
+			() => [props.x, props.y],
+			(val: Array<number>) => {
+				if (state.resizing || state.dragging) {
+					return
+				}
+				state.left = val[0]
+				state.right = val[0] - state.width
+				state.top = val[1]
+				state.bottom = val[1] - state.height
 			},
 		)
 
 		watch(
-			() => props.x,
-			(val: number) => {
+			() => [props.w, props.h],
+			(val: Array<number>) => {
 				if (state.resizing || state.dragging) {
 					return
 				}
-				const [deltaX, _] = snapToGrid(val, state.top, props.scale)
-				const left = restrictToBounds(deltaX, state.bounds.minLeft, state.bounds.maxLeft)
-				state.left = left
-				state.right = state.parentWidth - state.width - left
-			},
-		)
-
-		watch(
-			() => props.y,
-			(val: number) => {
-				if (state.resizing || state.dragging) {
-					return
-				}
-				const [_, deltaY] = snapToGrid(state.left, val, props.scale)
-				const top = restrictToBounds(deltaY, state.bounds.minTop, state.bounds.maxTop)
-				state.top = top
-				state.bottom = state.parentHeight - state.height - top
-			},
-		)
-
-		watch(
-			() => props.w,
-			val => {
-				if (state.resizing || state.dragging) {
-					return
-				}
-				changeWidth(val, state)
-			},
-		)
-		watch(
-			() => props.h,
-			val => {
-				if (state.resizing || state.dragging) {
-					return
-				}
-				changeHeight(val, state)
+				changeWidth(val[0], state)
+				changeHeight(val[1], state)
 			},
 		)
 
@@ -171,42 +109,13 @@ export default defineComponent({
 				}
 			},
 		)
-		watch(
-			() => props.minWidth,
-			(val: number) => {
-				if (val > 0 && val <= state.width) {
-					state.minW = val
-				}
-			},
-		)
-		watch(
-			() => props.minHeight,
-			(val: number) => {
-				if (val > 0 && val <= state.height) {
-					state.minH = val
-				}
-			},
-		)
-		watch(
-			() => props.maxWidth,
-			val => {
-				state.maxW = val
-			},
-		)
-		watch(
-			() => props.maxHeight,
-			val => {
-				state.maxH = val
-			},
-		)
 		const style = computed(() => {
 			return {
 				transform: `translate3d(${state.left}px, ${state.top}px, 0)`,
 				width: props.w === 'auto' ? (!state.widthTouched ? 'auto' : state.width + 'px') : state.width + 'px',
 				height:
 					props.h === 'auto' ? (!state.heightTouched ? 'auto' : state.height + 'px') : state.height + 'px',
-				zIndex: state.zIndex,
-				...(state.dragging && props.disableUserSelect ? userSelectNone : userSelectAuto),
+				zIndex: props.z,
 			}
 		})
 		return {

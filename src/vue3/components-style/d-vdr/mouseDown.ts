@@ -10,11 +10,13 @@ export default (e: MouseEvent, data, props) => {
 		if (props.draggable) {
 			data.dragging = true
 		}
-		data.enabled = true
-		if (e.shiftKey) {
-			state.manager.screen.selectWidgetById(props.id)
-		} else {
-			state.manager.screen.selectOneWidget(props.id)
+		if (!data.enabled) {
+			data.enabled = true
+			if (e.shiftKey) {
+				state.manager.screen.selectWidgetById(props.id)
+			} else {
+				state.manager.screen.selectOneWidget(props.id)
+			}
 		}
 		data.mouseClickPosition.mouseX = e.pageX
 		data.mouseClickPosition.mouseY = e.pageY
@@ -24,11 +26,9 @@ export default (e: MouseEvent, data, props) => {
 		data.mouseClickPosition.bottom = data.bottom
 		data.mouseClickPosition.w = data.width
 		data.mouseClickPosition.h = data.height
-		
 	}
 	if (e.buttons === 2) {
 		e.stopPropagation()
 		e.preventDefault()
 	}
-	
 }

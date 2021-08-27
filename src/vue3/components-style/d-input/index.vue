@@ -37,10 +37,8 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .d-input {
-	/deep/ {
-		.el-input-group__append {
-			padding: 0 10px;
-		}
+	&::v-deep(.el-input-group__append) {
+		padding: 0 10px;
 	}
 }
 </style>

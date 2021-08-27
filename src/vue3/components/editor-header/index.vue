@@ -52,16 +52,14 @@ export default defineComponent({
 .editor-header.name {
 	align-items: center;
 
-	/deep/ {
-		input {
-			height: 20px;
-			font-size: 14px;
-			line-height: 20px;
-			color: #fff;
-			text-align: center;
-			background-color: transparent;
-			border: none;
-		}
+	&::v-deep(input) {
+		height: 20px;
+		font-size: 14px;
+		line-height: 20px;
+		color: #fff;
+		text-align: center;
+		background-color: transparent;
+		border: none;
 	}
 }
 
@@ -79,7 +77,7 @@ export default defineComponent({
 	align-items: center;
 	justify-content: center;
 	color: #fff;
-	span{
+	span {
 		font-size: 14px;
 	}
 	i {

@@ -5,9 +5,8 @@ import vue3Widgets from './vue3-widgets'
 import 'element-plus/lib/theme-chalk/index.css'
 import '@/vue3/scss/index.scss'
 import '@/vue3/scss/element-theme.scss'
+import '@/vue3/scss/dorring.scss'
 import '@/icon'
-import colorPicker from 'vue3-colorpicker'
-import 'vue3-colorpicker/bundle.css'
 import ElementPlus from 'element-plus'
 import dInput from '@/vue3/components-style/d-input/index.vue'
 import dImg from '@/vue3/components-style/d-img/index.vue'
@@ -44,7 +43,6 @@ app.component('d-setting-container', dSettingContainer)
 app.component('d-contextmenu', dContextmenu)
 app.use(ElementPlus, { size: 'mini', zIndex: 3000, labelPosition: 'left' })
 app.use(vue3Widgets)
-app.use(colorPicker)
 
 app.use(router)
 app.mount('#app')

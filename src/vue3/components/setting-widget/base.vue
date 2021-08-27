@@ -18,11 +18,12 @@ div
 				d-color(v-model="currentWidget.backgroundColor")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
 import currentWidget from './currentWidget'
 
-export default {
+export default defineComponent({
+	name: 'setting-widget-base',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
@@ -32,5 +33,5 @@ export default {
 			currentWidget,
 		}
 	},
-}
+})
 </script>

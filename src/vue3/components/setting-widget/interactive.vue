@@ -14,12 +14,13 @@ d-setting-container
 			d-input(v-model="currentWidget.animation.delay", format="number", append="ms")
 </template>
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
 import currentWidget from './currentWidget'
 import animation from '@/config/animation'
 
-export default {
+export default defineComponent({
+	name: 'setting-widget-interactive',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
@@ -30,5 +31,5 @@ export default {
 			animation,
 		}
 	},
-}
+})
 </script>
