@@ -3,7 +3,6 @@ import Task from './task'
 
 export default class Http extends Emitter {
 	errorJudge: null | Function = null
-	dataPath: null | Function = null
 	limit = 1
 	//时间loop任务队列
 	private loopPool: { [key: string]: Task } = {}
@@ -24,7 +23,6 @@ export default class Http extends Emitter {
 	constructor(obj) {
 		super()
 		if (typeof obj.errorJudge === 'function') this.errorJudge = obj.errorJudge
-		if (typeof obj.dataPath === 'function') this.dataPath = obj.dataPath
 	}
 
 	init(): void {}
@@ -36,7 +34,7 @@ export default class Http extends Emitter {
 	// }
 
 	pushOne(task: Task, id?: string): void {
-		if (task.loopTime > 0) {
+		if (task.loop && task.loopTime > 0) {
 			this.loopPool[id] = task
 			this.startInterval()
 		}
@@ -46,7 +44,7 @@ export default class Http extends Emitter {
 	private push2Wait(task: Task) {
 		this.waitPool.push(task)
 		// this.sortTask()
-		task.status = Task.STATUS_WAITTING
+		task.status = Task.STATUS_WAITING
 		this.emit(Http.POOL_ADD)
 		if (!this.loading) {
 			this.emit(Http.POOL_START)
@@ -75,6 +73,26 @@ export default class Http extends Emitter {
 		}, 1000)
 	}
 
+	private usePath = (path: string, data, callback?: Function) => {
+		const keys = path ? path.split('.') : []
+		if (!path) {
+			return data
+		}
+		while (keys.length) {
+			const key = keys.shift()
+			if (!key) {
+				typeof callback === 'function' && callback(`数据源查找路径 ${path} 无效！`)
+				break
+			}
+			data = data[key]
+			if (data === undefined) {
+				typeof callback === 'function' && callback(`数据源查找路径 ${path}，在 ${key} 处未引用到有效数据！`)
+				break
+			}
+		}
+		return data
+	}
+
 	private run() {
 		this.loading = true
 		if (this.waitPool.length > 0) {
@@ -90,7 +108,7 @@ export default class Http extends Emitter {
 				result.forEach((res, index) => {
 					const t: Task = this.currentPool[index]
 					if (res.status === 'rejected') {
-						if (t.loopTime === 0) {
+						if (!t.loop || t.loopTime === 0) {
 							this.retry(t, res)
 						}
 					} else {
@@ -100,10 +118,13 @@ export default class Http extends Emitter {
 								this.retry(t, res)
 							} else {
 								let data = res.value
-								if (this.dataPath) {
-									data = this.dataPath(res.value)
+								if (t.path) {
+									data = this.usePath(t.path, res.value)
 								}
 								t.status = Task.STATUS_FINISH
+								if (!(data instanceof Array)) {
+									data = [data]
+								}
 								t.thenCb(data)
 							}
 						}
@@ -121,7 +142,7 @@ export default class Http extends Emitter {
 		delete this.loopPool[id]
 	}
 
-	// 清空队列中的请求 
+	// 清空队列中的请求
 	public abortAll(): void {
 		this.waitPool = []
 		this.loopPool = {}

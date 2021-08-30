@@ -1,9 +1,9 @@
-import { h, onMounted } from 'vue'
+import { h, onMounted, watch } from 'vue'
 import props from './props'
+import request from './request'
 
 export default {
 	props,
-	// @ts-ignore
 	setup(props, context) {
 		// const state = reactive({
 		// 	count: 0,
@@ -12,6 +12,14 @@ export default {
 		onMounted(() => {
 			context.emit('mounted')
 		})
+
+		watch(
+			() => props.api,
+			() => {
+				request({ ...props.api, id: props.id })
+			},
+			{ deep: true },
+		)
 
 		return () =>
 			h(

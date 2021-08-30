@@ -29,14 +29,16 @@ div(v-if="currentWidget.api")
 					el-option(value="UNLINK", label="UNLINK")
 			el-form-item(label="参数")
 				d-input(v-model="currentWidget.api.params")
+			el-form-item(label="路径")
+				d-input(v-model="currentWidget.api.path")
 			el-form-item
-				el-button 测试接口
+				el-button(@click="test") 测试接口
 	d-setting-container
 		template(#title)
 			d-titles(:list="[{ label: '数据内容' }]")
 		template(#content)
 			el-form-item(:label="currentWidget.api.url?'接口数据':'模拟数据'")
-				d-input(v-model="currentWidget.api.params")
+				d-input(v-model="currentWidget.data")
 			el-form-item(label="数据过滤器" v-if="currentWidget.api.url")
 				d-input(v-model="currentWidget.api.params")
 	d-setting-container(v-if="currentWidget.api.url")
@@ -53,13 +55,23 @@ import { defineComponent, reactive, toRefs, computed } from 'vue'
 import Manager from '@/core/Manager'
 import WidgetApi from '@/core/Widget/api'
 import currentWidget from './currentWidget'
+import request from '@/vue3/widget/request'
+import { Method } from 'axios'
 
 export default defineComponent({
 	name: 'setting-widget-data',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
-		const createApi = (obj?: { url?: string }) => {
+		const createApi = (obj?: {
+			method?: Method
+			url: string
+			params?: any
+			loop?: boolean
+			loopTime?: number
+			headers?: any
+			path?: string
+		}) => {
 			state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api = new WidgetApi(obj)
 			state.manager.screen.currentScreen.widgets = { ...state.manager.screen.currentScreen.widgets }
 		}
@@ -82,10 +94,18 @@ export default defineComponent({
 			},
 		})
 
+		const test = () => {
+			request({
+				id: state.manager.screen.currentWidgets[0],
+				...state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api,
+			})
+		}
+
 		return {
 			...toRefs(state),
 			currentWidget,
 			api,
+			test,
 		}
 	},
 })

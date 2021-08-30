@@ -1,8 +1,8 @@
-import HttpBase from './taskBase'
+import WidgetApi from '@/core/Widget/api'
 import { Method } from 'axios'
 
-export default class HttpTask extends HttpBase {
-	static STATUS_WAITTING = 0 // 请求被创建未推送到任务列表
+export default class HttpTask extends WidgetApi {
+	static STATUS_WAITING = 0 // 请求被创建未推送到任务列表
 	static STATUS_READY = 1 // 推送到任务列表
 	static STATUS_LOADING = 2 // 移出任务列表，开始请求
 	static STATUS_RETRY = 3 // 错误重连
@@ -17,16 +17,20 @@ export default class HttpTask extends HttpBase {
 	weight = 0 // 请求权重
 
 	status: number
-
-	loopTime = 0 //定时刷新 单位 ms
 	lastTime = 0 //上一次请求返回时间
 
 	public thenCb: Function
 	public catchCB: Function
-	constructor(obj: { method?: Method; url: string; params?: any; loopTime?: number; headers?: any }) {
+	constructor(obj?: {
+		method?: Method
+		url: string
+		params?: any
+		loop?: boolean
+		loopTime?: number
+		headers?: any
+	}) {
 		super(obj)
-		this.loopTime = obj.loopTime || 0
-		this.status = HttpTask.STATUS_WAITTING
+		this.status = HttpTask.STATUS_WAITING
 		this.errorCount = 0
 	}
 
