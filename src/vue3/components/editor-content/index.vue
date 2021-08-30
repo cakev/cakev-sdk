@@ -1,5 +1,5 @@
 <template lang="pug">
-.editor-content.pos-a(:ref="el => (dom['editorContent'] = el)", :style="style")
+.editor-content.pos-a#editor-content(:style="style")
 	template(v-for="item in manager.screen.sceneWidgetsBySortList")
 		widget-edit(
 			v-if="!manager.screen.currentScreen.widgets[item.id].hide",
@@ -21,23 +21,23 @@ export default defineComponent({
 	},
 	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ dom: {}, manager })
+		const state = reactive({ manager })
 
 		onMounted(() => {
-			resetZoom(state)
+			resetZoom()
 		})
 
 		watch(
 			() => [state.manager.screen.currentScreen.width, state.manager.screen.currentScreen.height],
 			() => {
-				resetZoom(state)
+				resetZoom()
 			},
 		)
 
 		watch(
 			() => [state.manager.temporary.zoom, state.manager.temporary.offsetY, state.manager.temporary.offsetX],
 			() => {
-				resetStyle(state)
+				resetStyle()
 			},
 		)
 

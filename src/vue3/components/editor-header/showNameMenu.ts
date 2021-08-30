@@ -9,6 +9,7 @@ const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
 export default data => {
+	data.zoomMenuState = false
 	data.nameMenuState = true
 	const children = state.manager.screen.screenList.map((item, index) => {
 		return {
@@ -25,7 +26,7 @@ export default data => {
 			},
 		}
 	})
-	data.list = [
+	data.nameList = [
 		{
 			label: '重命名大屏',
 			handler: () => {

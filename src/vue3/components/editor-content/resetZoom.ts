@@ -4,8 +4,8 @@ import Manager from '@/core/Manager'
 const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
-export default (data) => {
-	const pDom: HTMLElement = data.dom['editorContent'].parentElement
+export default () => {
+	const pDom: HTMLElement = document.getElementById('editor-content').parentElement
 	let zoom
 	const zoomX = ~~((pDom.offsetWidth / state.manager.screen.currentScreen.width) * 100) / 100
 	const zoomY = ~~((pDom.offsetHeight / state.manager.screen.currentScreen.height) * 100) / 100
@@ -20,5 +20,7 @@ export default (data) => {
 	const offsetY = (pDom.offsetHeight - state.manager.screen.currentScreen.height * zoom) / 2
 	state.manager.temporary.offsetX = offsetX
 	state.manager.temporary.offsetY = offsetY
-	data.dom['editorContent'].style.transform = `translate3d(${offsetX}px,${offsetY}px, 0) scale(${zoom})`
+	document.getElementById(
+		'editor-content',
+	).style.transform = `translate3d(${offsetX}px,${offsetY}px, 0) scale(${zoom})`
 }

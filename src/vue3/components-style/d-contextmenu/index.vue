@@ -1,17 +1,20 @@
 <template lang="pug">
-ul.d-contextmenu.pos-f.cursor-nomral.z-index-999
-	li.d-contextmenu-list.pos-r.fn-flex(
-		v-for="item in list",
-		:class="{ disabled: item.disabled }",
-		@click.stop="click(item)")
-		span.ellipsis {{ item.label }}
-		d-svg(type="el-icon-caret-right", v-if="item.children")
-		ul.d-contextmenu-child.pos-a(v-if="item.children")
-			li.d-contextmenu-child-list(
-				v-for="child in item.children",
-				:class="{ disabled: child.disabled }",
-				@click.stop="click(child)")
-				span.ellipsis {{ child.label }}
+.d-contextmenu.pos-f.cursor-nomral.z-index-999
+	slot(name="header")
+	ul.d-contextmenu-list
+		li.d-contextmenu-item.pos-r.fn-flex(
+			v-for="item in list",
+			:class="{ disabled: item.disabled }",
+			@click.stop="click(item)")
+			span.ellipsis {{ item.label }}
+			d-svg(type="el-icon-caret-right", v-if="item.children")
+			ul.d-contextmenu-child.pos-a(v-if="item.children")
+				li.d-contextmenu-child-list(
+					v-for="child in item.children",
+					:class="{ disabled: child.disabled }",
+					@click.stop="click(child)")
+					span.ellipsis {{ child.label }}
+	slot(name="bottom")
 </template>
 <script lang="ts">
 import Manager from '@/core/Manager'
@@ -35,6 +38,7 @@ export default defineComponent({
 				state.manager.temporary.sceneRightMenu = false
 				state.manager.temporary.widgetRightMenu = false
 				state.manager.temporary.widgetsRightMenu = false
+				console.log(item.handler)
 				typeof item.handler === 'function' && item.handler()
 			}
 		}
@@ -45,7 +49,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-.d-contextmenu {
+.d-contextmenu-list {
 	width: 200px;
 	padding: 8px 0;
 	color: #fff;
@@ -67,7 +71,7 @@ export default defineComponent({
 		0 0 0 0.5px rgba(0, 0, 0, 0.1);
 }
 
-.d-contextmenu-list,
+.d-contextmenu-item,
 .d-contextmenu-child-list {
 	align-items: center;
 	padding: 0 16px;
