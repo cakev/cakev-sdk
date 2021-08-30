@@ -16,12 +16,7 @@ el-main.pos-r.editor-container(
 <script lang="ts">
 import { reactive, toRefs, defineComponent, onMounted, onBeforeUnmount } from 'vue'
 import Manager from '@/core/Manager'
-import settingEditor from '@/vue3/components/setting-editor/index.vue'
-import editorHeader from '@/vue3/components/editor-header/index.vue'
-import editorWidgetsList from '@/vue3/components/editor-widgets-list/index.vue'
 import editorContent from '@/vue3/components/editor-content/index.vue'
-import settingWidget from '@/vue3/components/setting-widget/index.vue'
-import editorScene from '@/vue3/components/editor-scene/index.vue'
 import editorTip from '@/vue3/components/editor-tip/index.vue'
 import contextmenuWidget from '@/vue3/components/contextmenu-widget/index.vue'
 import contextmenuWidgets from '@/vue3/components/contextmenu-widgets/index.vue'
@@ -34,12 +29,7 @@ import mousemove from './mousemove'
 export default defineComponent({
 	name: 'editor',
 	components: {
-		settingEditor,
-		editorHeader,
-		editorWidgetsList,
 		editorContent,
-		settingWidget,
-		editorScene,
 		editorTip,
 		contextmenuWidget,
 		contextmenuWidgets,

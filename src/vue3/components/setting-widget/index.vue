@@ -1,7 +1,6 @@
 <template lang="pug">
-.setting-widget
-	d-titles(:list="list", :left="true", @change="init", @init="init")
-	component(:is="state.componentId")
+d-titles(:list="list", :left="true", @change="init", @init="init")
+component(:is="state.componentId")
 </template>
 <script lang="ts">
 import { ref, shallowRef, defineComponent } from 'vue'
@@ -17,7 +16,7 @@ export default defineComponent({
 			{ label: '数据', component: sData },
 			{ label: '交互', component: sInteractive },
 		]
-		const state = shallowRef({ componentId: sBase })
+		const state = shallowRef({ componentId: null })
 		const init = index => {
 			state.value = { componentId: list[index].component }
 		}

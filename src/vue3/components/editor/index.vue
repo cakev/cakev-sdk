@@ -2,8 +2,6 @@
 el-container.editor.fn-flex.flex-column(@contextmenu.prevent @click="click")
 	editor-header
 	el-container
-		el-aside
-			editor-widgets-list
 		el-divider.divider(direction="vertical")
 		el-aside(width="240px")
 			editor-scene(v-if="manager.screen.currentScreen")
@@ -20,7 +18,6 @@ import Manager from '@/core/Manager'
 import editorMain from '@/vue3/components/editor-main/index.vue'
 import settingEditor from '@/vue3/components/setting-editor/index.vue'
 import editorHeader from '@/vue3/components/editor-header/index.vue'
-import editorWidgetsList from '@/vue3/components/editor-widgets-list/index.vue'
 import settingWidget from '@/vue3/components/setting-widget/index.vue'
 import editorScene from '@/vue3/components/editor-scene/index.vue'
 
@@ -29,7 +26,6 @@ export default defineComponent({
 	components: {
 		settingEditor,
 		editorHeader,
-		editorWidgetsList,
 		settingWidget,
 		editorScene,
 		editorMain,

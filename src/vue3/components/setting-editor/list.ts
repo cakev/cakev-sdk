@@ -1,4 +1,4 @@
-const lineContext = require.context('../../../vue3-widgets/base/line', true, /conf\.ts/)
+﻿const lineContext = require.context('../../../vue3-widgets/base/line', true, /conf\.ts/)
 const pieContext = require.context('../../../vue3-widgets/base/pie', true, /conf\.ts/)
 let line = [],
 	pie = []
@@ -11,11 +11,13 @@ pieContext.keys().forEach(name => {
 
 export default [
 	{
-		label: '常规',
+		label: '柱形图',
 		icon: 'el-icon-pie-chart',
-		children: [
-			{ label: '柱形图', children: line },
-			{ label: '饼图', children: pie },
-		],
+		children: line,
+	},
+	{
+		label: '扇形图',
+		icon: 'el-icon-pie-chart',
+		children: pie,
 	},
 ]
