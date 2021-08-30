@@ -5,12 +5,12 @@ d-setting-container
 	template(#content)
 		el-form-item(label="开启")
 			el-checkbox(v-model="currentWidget.animation.enable")
-		el-form-item(label="形式")
-			el-select(v-model="currentWidget.animation.enter", style="width: 100%")
+		el-form-item(label="形式" v-if="currentWidget.animation.enable")
+			el-select(v-model="currentWidget.animation.enter")
 				el-option(v-for="item in animation", :key="item.value", :value="item.value", :label="item.label")
-		el-form-item(label="时长")
+		el-form-item(label="时长" v-if="currentWidget.animation.enable")
 			d-input(v-model="currentWidget.animation.duration", format="number", append="ms")
-		el-form-item(label="延迟")
+		el-form-item(label="延迟" v-if="currentWidget.animation.enable")
 			d-input(v-model="currentWidget.animation.delay", format="number", append="ms")
 </template>
 <script lang="ts">

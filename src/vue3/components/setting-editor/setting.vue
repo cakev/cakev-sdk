@@ -4,7 +4,7 @@ d-setting-container
 		d-titles(:list="[{ label: '尺寸' }]")
 	template(#content)
 		el-form-item(label="屏幕大小")
-			el-select(v-model="size", style="width: 100%")
+			el-select(v-model="size")
 				el-option(v-for="item in screenSize", :key="item.value", :value="item.value", :label="item.label")
 		el-form-item
 			d-input(v-model="manager.screen.currentScreen.width", style="width: 90px", format="number", append="W")

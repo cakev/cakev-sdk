@@ -1,6 +1,6 @@
 <template lang="pug">
 el-input.d-input(v-bind="$attrs", v-model="currentVal")
-	template(#append) {{ append }}
+	template(#append v-if="append") {{ append }}
 </template>
 <script lang="ts">
 import { reactive, toRefs, watch, defineComponent } from 'vue'
