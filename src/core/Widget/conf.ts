@@ -10,6 +10,10 @@ export default class WidgetConfig {
 	data: Array<any> = []
 	avatar = ''
 	backgroundColor: string = 'rgba(255,255,255,0)'
+	color: string = 'rgba(51,51,51,1)'
+	textAlign: 'left' | 'right' | 'center' = 'left'
+	fontSize = 16
+	lineHeight = 32
 	animation: WidgetAnimation = new WidgetAnimation()
 	api: WidgetApi | null = null
 
@@ -22,6 +26,10 @@ export default class WidgetConfig {
 		type?: string
 		avatar?: string
 		backgroundColor?: string | null
+		color?: string | null
+		fontSize?: number
+		lineHeight?: number
+		textAlign?: 'left' | 'right' | 'center'
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
 	}) {
@@ -33,6 +41,10 @@ export default class WidgetConfig {
 		if (obj.version) this.version = obj.version
 		if (obj.avatar) this.avatar = obj.avatar
 		if (obj.backgroundColor) this.backgroundColor = obj.backgroundColor
+		if (obj.color) this.color = obj.color
+		if (obj.fontSize) this.fontSize = obj.fontSize
+		if (obj.lineHeight) this.lineHeight = obj.lineHeight
+		if (obj.textAlign) this.textAlign = obj.textAlign
 		if (obj.animation) this.animation = obj.animation
 		if (obj.api) this.api = obj.api
 	}

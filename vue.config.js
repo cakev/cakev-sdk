@@ -34,7 +34,7 @@ module.exports = {
 		)
 	},
 	chainWebpack: config => {
-		config.module.rules.delete('svg')
+		// config.module.rules.delete('svg')
 		config.module
 			.rule('svg-smart')
 			.test(/\.svg$/)

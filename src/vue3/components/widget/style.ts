@@ -12,6 +12,10 @@ export default (widget: item) => {
 		width: widget.width + 'px',
 		height: widget.height + 'px',
 		backgroundColor: widget.backgroundColor,
+		color: widget.color,
+		fontSize: widget.fontSize + 'px',
+		lineHeight: widget.lineHeight + 'px',
+		textAlign: widget.textAlign,
 		zIndex: widget.zIndex,
 	}
 }

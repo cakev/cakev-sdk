@@ -13,8 +13,22 @@ d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '背景' }]")
 	template(#content)
-		el-form-item(label="背景色")
+		el-form-item(label="色值")
 			d-color(v-model="currentWidget.backgroundColor")
+d-setting-container
+	template(#title)
+		d-titles(:list="[{ label: '字体' }]")
+	template(#content)
+		el-form-item(label="基础")
+			d-input(v-model="currentWidget.fontSize", style="width: 90px" format="number", append="大小")
+			d-input(v-model="currentWidget.lineHeight", style="width: 90px; margin-left: 8px", format="number", append="行高")
+		el-form-item(label="色值")
+			d-color(v-model="currentWidget.color")
+		el-form-item(label="对齐方式")
+			el-select(v-model="currentWidget.textAlign")
+				el-option(value="left", label="左对齐")
+				el-option(value="center", label="居中对齐")
+				el-option(value="right", label="右对齐")
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'

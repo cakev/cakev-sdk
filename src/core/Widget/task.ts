@@ -9,7 +9,7 @@ export default class Widget extends WidgetConfig {
 	group = false
 	hide = false
 	lock = false
-	
+
 	constructor(obj: {
 		name: string
 		width: number
@@ -19,6 +19,10 @@ export default class Widget extends WidgetConfig {
 		type?: string
 		avatar?: string
 		backgroundColor?: string | null
+		color?: string | null
+		fontSize?: number
+		lineHeight?: number
+		textAlign?: 'left' | 'right' | 'center'
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
 		group?: boolean

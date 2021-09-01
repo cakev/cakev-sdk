@@ -1,14 +1,14 @@
 <template lang="pug">
 d-setting-container
 	template(#title)
-		d-titles(:list="[{ label: '数据请求' }]")
+		d-titles(:list="[{ label: '数据类型' }]")
 	template(#content)
-		el-form-item(label="数据类型")
+		el-form-item(label="常用类型")
 			el-select(v-model="api")
 				el-option(value="no", label="无")
 				el-option(value="static", label="静态数据")
 				el-option(value="api", label="API接口")
-div(v-if="currentWidget.api")
+template(v-if="currentWidget.api")
 	d-setting-container(v-if="currentWidget.api.url")
 		template(#title)
 			d-titles(:list="[{ label: 'API配置' }]")
@@ -33,14 +33,6 @@ div(v-if="currentWidget.api")
 				d-input(v-model="currentWidget.api.path")
 			el-form-item
 				el-button(@click="test") 测试接口
-	d-setting-container
-		template(#title)
-			d-titles(:list="[{ label: '数据内容' }]")
-		template(#content)
-			el-form-item(:label="currentWidget.api.url?'接口数据':'模拟数据'")
-				d-input(v-model="currentWidget.data")
-			el-form-item(label="数据过滤器" v-if="currentWidget.api.url")
-				d-input(v-model="currentWidget.api.params")
 	d-setting-container(v-if="currentWidget.api.url")
 		template(#title)
 			d-titles(:list="[{ label: '自动更新' }]")
@@ -49,6 +41,14 @@ div(v-if="currentWidget.api")
 				el-checkbox(v-model="currentWidget.api.loop")
 			el-form-item(label="时长")
 				d-input(v-model="currentWidget.api.loopTime", format="number", append="ms")
+d-setting-container
+	template(#title)
+		d-titles(:list="[{ label: '数据内容' }]")
+	template(#content)
+		el-form-item(:label="currentWidget.api&&currentWidget.api.url?'接口数据':'静态数据'")
+			d-code(v-model="currentWidget.data")
+		el-form-item(label="数据过滤器" v-if="currentWidget.api&&currentWidget.api.url")
+			d-input(v-model="currentWidget.api.params")
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs, computed } from 'vue'
@@ -82,6 +82,10 @@ export default defineComponent({
 					if (state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api.url) {
 						return 'api'
 					}
+					return 'static'
+				} else if (
+					state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].data.length
+				) {
 					return 'static'
 				}
 				return 'no'

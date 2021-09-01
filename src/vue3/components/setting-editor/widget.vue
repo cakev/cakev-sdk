@@ -1,6 +1,9 @@
 <template lang="pug">
 el-collapse.setting-editor-widget
-	el-collapse-item(v-for="child in list", :key="child.label", :index="child.label", :title="child.label")
+	el-collapse-item(v-for="child in list", :key="child.label", :index="child.label")
+		template(#title)
+			d-svg(:type="child.icon" :size="16")
+			span(:style="{marginLeft:'8px'}") {{child.label}}
 		.cursor-pointer.fn-flex.flex-column(
 			v-for="widget in child.children",
 			:draggable="true",
