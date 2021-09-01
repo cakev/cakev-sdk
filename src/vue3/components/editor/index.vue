@@ -1,7 +1,7 @@
 <template lang="pug">
 el-container.editor.fn-flex.flex-column(@contextmenu.prevent @click="click")
 	editor-header
-	el-container
+	el-container(style="height:calc(100vh - 48px)")
 		el-divider.divider(direction="vertical")
 		el-aside(width="240px")
 			editor-scene(v-if="manager.screen.currentScreen")

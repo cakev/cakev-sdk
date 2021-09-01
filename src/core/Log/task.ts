@@ -12,10 +12,12 @@ export default class LogTask {
 		this.date = new Date()
 		if (res.reason) {
 			const request: XMLHttpRequest = res.reason.request
-			this.httpResponseURL = request.responseURL
-			this.httpStatus = request.status
-			this.errorMessage = res.reason.message
-			this.httpResponseText = request.responseText
+			if (request) {
+				this.httpResponseURL = request.responseURL
+				this.httpStatus = request.status
+				this.errorMessage = res.reason.message
+				this.httpResponseText = request.responseText
+			}
 		}
 		if (res.errorMessage) {
 			this.errorMessage = res.errorMessage

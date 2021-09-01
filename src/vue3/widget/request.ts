@@ -16,6 +16,7 @@ export default (obj: {
 	loopTime?: number
 	headers?: any
 }) => {
+	if (!obj.url) return
 	let id = obj.id
 	if (!id) id = String(+new Date())
 	state.manager.http.pushOne(

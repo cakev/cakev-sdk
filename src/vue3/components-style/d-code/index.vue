@@ -1,24 +1,32 @@
 <template lang="pug">
-.d-code(:id="id")
+v-ace-editor(v-model:value="currentVal"
+	lang="json"
+	theme="chrome"
+	style="height: 300px")
 </template>
 <script lang="ts">
-import { onMounted, reactive, defineComponent, toRefs, ComponentPublicInstance, getCurrentInstance } from 'vue'
-import JsonEditor from './jsoneditor.min'
-import './jsoneditor.min.css'
+import { reactive, defineComponent, toRefs, computed } from 'vue'
+import { VAceEditor } from 'vue3-ace-editor'
+import ace from 'ace-builds'
+ace.config.set(
+	'basePath',
+	'https://cdn.jsdelivr.net/npm/ace-builds@' + require('ace-builds').version + '/src-noconflict/',
+)
 
 export default defineComponent({
 	name: 'd-code',
+	components: {
+		VAceEditor,
+	},
 	props: {
 		modelValue: {
-			type: Array,
+			type: [Array, Object],
 			default() {
 				return []
 			},
 		},
 	},
-	// @ts-ignore
-	setup(props, { emit }) {
-		const root = getCurrentInstance()?.root.proxy as ComponentPublicInstance
+	setup(props: any, { emit }) {
 		const state = reactive({
 			error: false,
 			mode: 'tree',
@@ -30,60 +38,23 @@ export default defineComponent({
 			internalChange: false,
 		})
 
-		const expandAll = () => {
-			if (state.expandedModes.includes(state.editor.getMode())) {
-				;(state.editor as any).expandAll()
-			}
-		}
-
-		// watch(
-		// 	() => props.modelValue,
-		// 	val => {
-		// 		if (!state.internalChange) {
-		// 			state.json = val
-		// 			setEditor(val)
-		// 			state.error = false
-		// 			expandAll()
-		// 		}
-		// 	},
-		// 	{ immediate: true, deep: true },
-		// )
-
-		onMounted(() => {
-			const options = {
-				mode: state.mode,
-				modes: state.modes,
-				onChange() {
-					try {
-						const json = state.editor.get()
-						state.json = json
-						state.error = false
-						emit('json-change', json)
-						state.internalChange = true
-						emit('input', json)
-						root.$nextTick(function () {
-							state.internalChange = false
-						})
-					} catch (e) {
-						state.error = true
-						emit('has-error', e)
-					}
-				},
-				onModeChange() {
-					expandAll()
-				},
-			}
-			state.editor = new JsonEditor(document.getElementById(state.id), options, state.json)
+		const currentVal = computed({
+			get: () => {
+				return JSON.stringify(props.modelValue)
+			},
+			set: val => {
+				try {
+					emit('update:modelValue', JSON.parse(val))
+				} catch (e) {
+					// console.log(e)
+				}
+			},
 		})
 
 		return {
 			...toRefs(state),
+			currentVal,
 		}
 	},
 })
 </script>
-<style lang="scss" scoped>
-.d-code {
-	min-height: 150px;
-}
-</style>

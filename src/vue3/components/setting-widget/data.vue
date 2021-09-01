@@ -27,76 +27,45 @@ template(v-if="currentWidget.api")
 					el-option(value="PURGE", label="PURGE")
 					el-option(value="LINK", label="LINK")
 					el-option(value="UNLINK", label="UNLINK")
-			el-form-item(label="参数")
-				d-input(v-model="currentWidget.api.params")
 			el-form-item(label="路径")
 				d-input(v-model="currentWidget.api.path")
 			el-form-item
 				el-button(@click="test") 测试接口
 	d-setting-container(v-if="currentWidget.api.url")
 		template(#title)
+			d-titles(:list="[{ label: '请求参数' }]")
+		template(#content)
+			el-form-item(labelWidth="0px")
+				d-code(v-model="currentWidget.api.params")
+	d-setting-container(v-if="currentWidget.api.url")
+		template(#title)
 			d-titles(:list="[{ label: '自动更新' }]")
 		template(#content)
 			el-form-item(label="开启")
 				el-checkbox(v-model="currentWidget.api.loop")
-			el-form-item(label="时长")
+			el-form-item(label="时长" v-if="currentWidget.api.loop")
 				d-input(v-model="currentWidget.api.loopTime", format="number", append="ms")
-d-setting-container
+d-setting-container(v-if="currentWidget.data.length")
 	template(#title)
 		d-titles(:list="[{ label: '数据内容' }]")
 	template(#content)
-		el-form-item(:label="currentWidget.api&&currentWidget.api.url?'接口数据':'静态数据'")
+		el-form-item(labelWidth="0px")
 			d-code(v-model="currentWidget.data")
 		el-form-item(label="数据过滤器" v-if="currentWidget.api&&currentWidget.api.url")
-			d-input(v-model="currentWidget.api.params")
+			d-input
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, computed } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
-import WidgetApi from '@/core/Widget/api'
 import currentWidget from './currentWidget'
 import request from '@/vue3/widget/request'
-import { Method } from 'axios'
+import api from './api'
 
 export default defineComponent({
 	name: 'setting-widget-data',
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })
-		const createApi = (obj?: {
-			method?: Method
-			url: string
-			params?: any
-			loop?: boolean
-			loopTime?: number
-			headers?: any
-			path?: string
-		}) => {
-			state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api = new WidgetApi(obj)
-			state.manager.screen.currentScreen.widgets = { ...state.manager.screen.currentScreen.widgets }
-		}
-
-		const api = computed({
-			get: () => {
-				if (state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api) {
-					if (state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api.url) {
-						return 'api'
-					}
-					return 'static'
-				} else if (
-					state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].data.length
-				) {
-					return 'static'
-				}
-				return 'no'
-			},
-			set: val => {
-				if (val === 'no')
-					delete state.manager.screen.currentScreen.widgets[state.manager.screen.currentWidgets[0]].api
-				if (val === 'static') createApi()
-				if (val === 'api') createApi({ url: '/example' })
-			},
-		})
 
 		const test = () => {
 			request({

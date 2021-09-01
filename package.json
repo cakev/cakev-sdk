@@ -33,6 +33,7 @@
 		"vue": "^3.2.6",
 		"vue-loader": "^16.5.0",
 		"vue-router": "^4.0.11",
+		"vue3-ace-editor": "^2.0.2",
 		"vuedraggable": "^4.0.3"
 	},
 	"devDependencies": {

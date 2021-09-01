@@ -1,6 +1,8 @@
 <template lang="pug">
-d-titles(:list="list", :left="true", @change="init", @init="init")
-component(:is="state.componentId")
+.fn-flex.flex-column(style="height:100%")
+	d-titles(:list="list", :left="true", @change="init", @init="init")
+	.setting-widget
+		component(:is="state.componentId")
 </template>
 <script lang="ts">
 import { ref, shallowRef, defineComponent } from 'vue'
@@ -28,3 +30,12 @@ export default defineComponent({
 	},
 })
 </script>
+<style lang="scss" scoped>
+.setting-widget {
+	flex: 1;
+	overflow-y: auto;
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+}
+</style>

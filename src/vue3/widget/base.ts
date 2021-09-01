@@ -16,7 +16,7 @@ export default {
 		watch(
 			() => props.api,
 			() => {
-				request({ ...props.api, id: props.id })
+				if (props.api) request({ ...props.api, id: props.id })
 			},
 			{ deep: true },
 		)

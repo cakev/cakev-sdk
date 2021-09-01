@@ -5,7 +5,7 @@ export default class WidgetApi {
 	method: Method = 'GET'
 	loopTime = 10000 // 更新间隔时长
 	loop = false // 是否自动更新
-	params: any = '' // 参数
+	params = {} // 参数
 	headers: { [key: string]: string } = {} // 请求头
 	path = '' // 数据路径
 
