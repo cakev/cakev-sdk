@@ -38,7 +38,6 @@ export default defineComponent({
 				state.manager.temporary.sceneRightMenu = false
 				state.manager.temporary.widgetRightMenu = false
 				state.manager.temporary.widgetsRightMenu = false
-				console.log(item.handler)
 				typeof item.handler === 'function' && item.handler()
 			}
 		}

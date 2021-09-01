@@ -79,10 +79,13 @@ export default class Screen extends Factory<Screen> {
 		const currentWidgets = this.currentWidgets
 		this.cancelSelectWidget()
 		for (let i = 0; i < this.currentScreen.widgetsLayers.length; i++) {
-			if (currentWidgets.includes(this.currentScreen.widgetsLayers[i].id)) {
+			const id = this.currentScreen.widgetsLayers[i].id
+			if (currentWidgets.includes(id)) {
 				widgets.push(this.currentScreen.widgetsLayers[i])
 				this.currentScreen.widgetsLayers.splice(i, 1)
 				i--
+				this.currentScreen.widgets[id].x = this.currentScreen.widgets[id].x - obj.x
+				this.currentScreen.widgets[id].y = this.currentScreen.widgets[id].y - obj.y
 			}
 		}
 		const layer = new WidgetLayer({
@@ -100,6 +103,7 @@ export default class Screen extends Factory<Screen> {
 	// 取消拼合
 	cancelGroup() {
 		const id = this.currentWidgets[0]
+		const obj = this.currentScreen.widgets[this.currentWidgets[0]]
 		delete this.currentScreen.widgets[this.currentWidgets[0]]
 		this.cancelSelectWidget()
 		let widgets = []
@@ -110,6 +114,10 @@ export default class Screen extends Factory<Screen> {
 				i--
 			}
 		}
+		widgets.forEach(item => {
+			this.currentScreen.widgets[item.id].x = this.currentScreen.widgets[item.id].x + obj.x
+			this.currentScreen.widgets[item.id].y = this.currentScreen.widgets[item.id].y + obj.y
+		})
 		this.currentScreen.widgets = { ...this.currentScreen.widgets }
 		this.currentScreen.widgetsLayers = [...this.currentScreen.widgetsLayers, ...widgets]
 	}
@@ -192,7 +200,7 @@ export default class Screen extends Factory<Screen> {
 				this.screenList.splice(index, 1)
 				this.screenMd5SchemaList.splice(index, 1)
 			}
-			this.currentWidgets = []
+			this.cancelSelectWidget()
 			if (item.id === this.currentScreen.id) {
 				if (this.screenList.length > 0) {
 					this.currentScreen = this.screenList[0]

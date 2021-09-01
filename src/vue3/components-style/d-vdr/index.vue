@@ -4,7 +4,7 @@
 	:ref="el => (dom['vdr'] = el)",
 	:class="{ 'vdr-active': enabled, 'vdr-draggable': draggable, 'vdr-resizable': resizable }",
 	@contextmenu.stop.prevent="contextmenu($event)",
-	@mousedown.stop.prevent="mouseDown")
+	@mousedown="mouseDown")
 	.vdr-line.pos-a
 		.vdr-line-top.pos-a(:style="{ height: `${returnRatio}px` }")
 		.vdr-line-bottom.pos-a(:style="{ height: `${returnRatio}px` }")
@@ -52,7 +52,7 @@ export default defineComponent({
 		})
 		const mouseDown = e => _mouseDown(e, state, props)
 		const mouseMove = e => _mouseMove(e, state, props)
-		const mouseUp = e => _mouseUp(e, state, props)
+		const mouseUp = () => _mouseUp(state, props)
 		onMounted(() => {
 			on(document.documentElement, 'mousemove', mouseMove)
 			on(document.documentElement, 'mouseup', mouseUp)

@@ -1,11 +1,10 @@
 <template lang="pug">
 .pos-a(:style="style({ ...$attrs, ...$props })")
-	.pos-a(:style="styleGroup($attrs)")
-		template(v-for="item in $attrs.widgets")
-			dorring-widget(
-				:key="item.id",
-				v-if="!manager.screen.currentScreen.widgets[item.id].hide",
-				v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }")
+	template(v-for="item in $attrs.widgets")
+		dorring-widget(
+			:key="item.id",
+			v-if="!manager.screen.currentScreen.widgets[item.id].hide",
+			v-bind="{ ...item, ...manager.screen.currentScreen.widgets[item.id] }")
 </template>
 <script lang="ts">
 import style from './style'

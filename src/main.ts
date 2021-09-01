@@ -6,7 +6,7 @@ import 'element-plus/lib/theme-chalk/index.css'
 import '@/vue3/scss/index.scss'
 import '@/vue3/scss/element-theme.scss'
 import '@/vue3/scss/dorring.scss'
-import '@/icon'
+import '@/vue3/icon'
 
 const app = createApp(App)
 const components = require.context(

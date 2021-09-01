@@ -38,7 +38,7 @@ module.exports = {
 		config.module
 			.rule('svg-smart')
 			.test(/\.svg$/)
-			.include.add(resolve('src/icon'))
+			.include.add(resolve('src/vue3/icon'))
 			.end()
 			.use('svg-sprite-loader')
 			.loader('svg-sprite-loader')

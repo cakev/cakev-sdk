@@ -11,4 +11,5 @@ export default class Manager extends Factory<Manager> {
 	screen: Screen = Screen.Instance()
 	temporary: Temporary = Temporary.Instance()
 	log: Log = Log.Instance()
+	version = process.env.version
 }

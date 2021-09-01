@@ -5,8 +5,7 @@ import Widget from '@/core/Widget/task'
 const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
 
-export default async (e, data, props) => {
-	e.stopPropagation()
+export default async (data, props) => {
 	data.handle = ''
 	const diffX = data.left - state.manager.screen.currentScreen.widgets[props.id].x
 	const diffY = data.top - state.manager.screen.currentScreen.widgets[props.id].y

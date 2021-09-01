@@ -27,6 +27,7 @@ export default {
 				{
 					id: props.id,
 					class: 'widget-base',
+					style: props.style,
 				},
 				context.slots,
 			)

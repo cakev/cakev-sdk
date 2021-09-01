@@ -1,5 +1,5 @@
-﻿const lineContext = require.context('../../../vue3-widgets/base/line', true, /conf\.ts/)
-const pieContext = require.context('../../../vue3-widgets/base/pie', true, /conf\.ts/)
+﻿const lineContext = require.context('../../../vue3-widgets/line', true, /conf\.ts/)
+const pieContext = require.context('../../../vue3-widgets/pie', true, /conf\.ts/)
 let line = [],
 	pie = []
 lineContext.keys().forEach(name => {
