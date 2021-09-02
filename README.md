@@ -1,6 +1,6 @@
 # dorring-sdk
 
-<a href="https://app.travis-ci.com/fishuncle/dorring-sdk">
+<a href="https://app.travis-ci.com/github/fish-uncle/dorring-sdk">
 <img src="https://app.travis-ci.com/fish-uncle/dorring-sdk.svg?branch=master&status=created">
 </a>
 <a href="LICENSE">
