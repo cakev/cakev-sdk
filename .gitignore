@@ -33,6 +33,7 @@ logs/
 
 # web
 dist/
+lib/
 node_modules/
 npm-debug.log*
 yarn-debug.log*

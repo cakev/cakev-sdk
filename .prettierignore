@@ -2,6 +2,7 @@
 node_modules
 mock
 dist
+lib
 **.min.js
 public
 asset

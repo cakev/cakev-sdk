@@ -1,7 +1,8 @@
 {
 	"name": "@dorring/sdk",
 	"version": "0.0.1",
-	"main": "dist/dorring.umd.min.js",
+	"main": "lib/dorring.umd.min.js",
+	"typings": "typings/index.d.ts",
 	"keywords": [
 		"typescript",
 		"vue",
@@ -14,16 +15,15 @@
 		"vue3"
 	],
 	"files": [
-		"dist/dorring.css",
-		"dist/dorring.umd.min.js",
-		"dist/fonts",
-		"types"
+		"lib/dorring.css",
+		"lib/dorring.umd.min.js",
+		"typings"
 	],
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"commit": "git add .&&git-cz",
-		"changelog" : "standard-version",
-		"build": "vue-cli-service build --mode build --target lib --dest dist build/index.ts --name dorring",
+		"changelog": "standard-version",
+		"build": "gulp && vue-cli-service build --mode build --target lib --dest lib build/index.ts --name dorring",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
 	"dependencies": {
@@ -71,6 +71,8 @@
 		"eslint-plugin-standard": "^5.0.0",
 		"eslint-plugin-vue": "^6.2.2",
 		"git-cz": "^4.7.6",
+		"gulp": "^4.0.2",
+		"gulp-typescript": "^6.0.0-alpha.1",
 		"husky": "^4.3.8",
 		"lint-staged": "^11.1.2",
 		"node-sass": "^4.14.1",
@@ -86,6 +88,7 @@
 		"stylelint-config-standard": "^20.0.0",
 		"stylelint-scss": "^3.19.0",
 		"svg-sprite-loader": "^6.0.9",
+		"through2": "^4.0.2",
 		"typescript": "^4.1.5",
 		"webpack-bundle-analyzer": "^3.9.0"
 	},

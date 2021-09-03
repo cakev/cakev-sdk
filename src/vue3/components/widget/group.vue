@@ -11,13 +11,9 @@ import style from './style'
 import styleGroup from './styleGroup'
 import Manager from '@/core/Manager'
 import { reactive, toRefs, defineComponent } from 'vue'
-import dorringWidget from '@/vue3/components/widget/index.vue'
 
 export default defineComponent({
 	name: 'dorring-widget-group',
-	components: {
-		dorringWidget,
-	},
 	props: {
 		readonly: {
 			default: true,
