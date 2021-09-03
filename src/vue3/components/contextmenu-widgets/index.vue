@@ -5,9 +5,13 @@ d-contextmenu(:style="style", :list="list")
 import { reactive, toRefs, defineComponent } from 'vue'
 import style from './style'
 import makeGroup from './makeGroup'
+import dContextmenu from '@/vue3/components-style/d-contextmenu/index.vue'
 
 export default defineComponent({
 	name: 'contextmenu-widgets',
+	components: {
+		dContextmenu,
+	},
 	setup() {
 		const list = [
 			{

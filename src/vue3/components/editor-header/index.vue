@@ -26,6 +26,7 @@ import showNameMenu from './showNameMenu'
 import showZoomMenu from './showZoomMenu'
 import contextmenuZoom from '@/vue3/components/contextmenu-zoom/index.vue'
 import contextmenuScreen from '@/vue3/components/contextmenu-screen/index.vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
 import blur from './blur'
 
 export default defineComponent({
@@ -33,6 +34,7 @@ export default defineComponent({
 	components: {
 		contextmenuZoom,
 		contextmenuScreen,
+		dSvg,
 	},
 	directives: {
 		clickoutside: ClickOutside,

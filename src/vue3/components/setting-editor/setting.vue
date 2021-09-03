@@ -39,9 +39,19 @@ import Manager from '@/core/Manager'
 import screenSize from '@/config/screenSize'
 import layoutMode from '@/config/layoutMode'
 import size from './size'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
+import dColor from '@/vue3/components-style/d-color/index.vue'
+import dInput from '@/vue3/components-style/d-input/index.vue'
+import dSettingContainer from '@/vue3/components-style/d-setting-container/index.vue'
 
 export default defineComponent({
 	name: 'setting-editor-setting',
+	components: {
+		dTitles,
+		dColor,
+		dInput,
+		dSettingContainer,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })

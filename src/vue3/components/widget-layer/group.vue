@@ -9,9 +9,19 @@
 <script lang="ts">
 import Manager from '@/core/Manager'
 import { reactive, toRefs, defineComponent } from 'vue'
+import dorringWidgetLayerNormal from '@/vue3/components/widget-layer/normal.vue'
+import dorringWidgetLayer from '@/vue3/components/widget-layer/index.vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
 
+console.log(dorringWidgetLayer)
+console.log(dorringWidgetLayerNormal)
 export default defineComponent({
 	name: 'dorring-widget-layer-group',
+	components: {
+		dorringWidgetLayerNormal,
+		dorringWidgetLayer,
+		dSvg,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ active: false, manager })

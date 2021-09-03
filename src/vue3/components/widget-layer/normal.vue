@@ -16,9 +16,15 @@
 import Manager from '@/core/Manager'
 import { reactive, toRefs, defineComponent } from 'vue'
 import selectWidgetById from './selectWidgetById'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
+import dImg from '@/vue3/components-style/d-img/index.vue'
 
 export default defineComponent({
 	name: 'dorring-widget-layer-normal',
+	components: {
+		dSvg,
+		dImg,
+	},
 	props: {
 		lockable: {
 			type: Boolean,

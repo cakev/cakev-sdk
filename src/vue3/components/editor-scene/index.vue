@@ -38,12 +38,22 @@ import clickOutSide from './clickOutSide'
 import editableScene from './editableScene'
 import blurScene from './blurScene'
 import contextmenu from './contextmenu'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
+import dIcon from '@/vue3/components-style/d-icon/index.vue'
+import dDragContent from '@/vue3/components-style/d-drag-content/index.vue'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
+import dorringWidgetLayer from '@/vue3/components/widget-layer/index.vue'
 
 export default defineComponent({
 	name: 'editor-scene',
 	components: {
 		draggable,
 		contextmenuScene,
+		dSvg,
+		dIcon,
+		dDragContent,
+		dTitles,
+		dorringWidgetLayer,
 	},
 	directives: {
 		clickoutside: ClickOutside,

@@ -4,9 +4,13 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
 
 export default defineComponent({
 	name: 'd-icon',
+	components: {
+		dSvg,
+	},
 	props: {
 		type: {
 			type: String,

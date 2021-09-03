@@ -19,9 +19,13 @@
 <script lang="ts">
 import Manager from '@/core/Manager'
 import { defineComponent, reactive } from 'vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
 
 export default defineComponent({
 	name: 'd-contextmenu',
+	components: {
+		dSvg,
+	},
 	props: {
 		list: {
 			type: Array,

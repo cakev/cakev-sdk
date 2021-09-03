@@ -22,7 +22,8 @@
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"commit": "git add .&&git-cz",
-		"build": "vue-cli-service build --target lib --dest dist build/index.ts --name dorring",
+		"changelog" : "standard-version",
+		"build": "vue-cli-service build --mode build --target lib --dest dist build/index.ts --name dorring",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
 	"dependencies": {

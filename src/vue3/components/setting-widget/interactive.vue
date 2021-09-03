@@ -18,9 +18,17 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
 import currentWidget from './currentWidget'
 import animation from '@/config/animation'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
+import dInput from '@/vue3/components-style/d-input/index.vue'
+import dSettingContainer from '@/vue3/components-style/d-setting-container/index.vue'
 
 export default defineComponent({
 	name: 'setting-widget-interactive',
+	components: {
+		dTitles,
+		dInput,
+		dSettingContainer,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })

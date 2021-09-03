@@ -16,10 +16,11 @@ import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import vdr from '@/vue3/components-style/d-vdr/index.vue'
 import style from './style'
+import dorringWidget from '@/vue3/components/widget/index.vue'
 
 export default defineComponent({
 	name: 'dorring-widget-edit',
-	components: { vdr },
+	components: { vdr, dorringWidget },
 	props: {
 		readonly: {
 			default: true,

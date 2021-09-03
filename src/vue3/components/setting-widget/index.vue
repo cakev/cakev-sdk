@@ -9,9 +9,13 @@ import { ref, shallowRef, defineComponent } from 'vue'
 import sBase from './base.vue'
 import sData from './data.vue'
 import sInteractive from './interactive.vue'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
 
 export default defineComponent({
 	name: 'setting-widget',
+	components: {
+		dTitles,
+	},
 	setup() {
 		const list = [
 			{ label: '基础', component: sBase },

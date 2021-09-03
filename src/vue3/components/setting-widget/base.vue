@@ -34,9 +34,19 @@ d-setting-container
 import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@/core/Manager'
 import currentWidget from './currentWidget'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
+import dColor from '@/vue3/components-style/d-color/index.vue'
+import dInput from '@/vue3/components-style/d-input/index.vue'
+import dSettingContainer from '@/vue3/components-style/d-setting-container/index.vue'
 
 export default defineComponent({
 	name: 'setting-widget-base',
+	components: {
+		dTitles,
+		dColor,
+		dInput,
+		dSettingContainer,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ manager })

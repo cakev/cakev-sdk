@@ -6,9 +6,13 @@ component(:is="state.componentId")
 import { defineComponent, shallowRef, ref } from 'vue'
 import sSetting from './setting.vue'
 import sWidget from './widget.vue'
+import dTitles from '@/vue3/components-style/d-titles/index.vue'
 
 export default defineComponent({
 	name: 'setting-editor',
+	components: {
+		dTitles,
+	},
 	setup() {
 		const list = [
 			{ label: '设计', component: sSetting },

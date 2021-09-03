@@ -5,9 +5,15 @@ d-contextmenu.contextmenu-zoom(:list="list")
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import dContextmenu from '@/vue3/components-style/d-contextmenu/index.vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
 
 export default defineComponent({
 	name: 'contextmenu-zoom',
+	components: {
+		dContextmenu,
+		dSvg,
+	},
 	props: {
 		list: {
 			type: Array,

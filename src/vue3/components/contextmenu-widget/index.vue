@@ -10,9 +10,13 @@ import removeWidget from './removeWidget'
 import moveWidget from './moveWidget'
 import cancelGroup from './cancelGroup'
 import lockWidget from './lockWidget'
+import dContextmenu from '@/vue3/components-style/d-contextmenu/index.vue'
 
 export default defineComponent({
 	name: 'contextmenu-widget',
+	components: {
+		dContextmenu,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const sceneList = Object.values(manager.screen.currentScreen.scenes)

@@ -16,9 +16,15 @@ import dragStart from './dragStart'
 import list from './list'
 import Manager from '@/core/Manager'
 import { reactive, toRefs, defineComponent } from 'vue'
+import dSvg from '@/vue3/components-style/d-svg/index.vue'
+import dImg from '@/vue3/components-style/d-img/index.vue'
 
 export default defineComponent({
 	name: 'setting-editor-widget',
+	components: {
+		dSvg,
+		dImg,
+	},
 	setup() {
 		const manager: Manager = Manager.Instance()
 		const state = reactive({ list, manager })

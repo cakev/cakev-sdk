@@ -9,17 +9,6 @@ import '@/vue3/scss/dorring.scss'
 import '@/vue3/icon'
 
 const app = createApp(App)
-const components = require.context(
-	'./vue3',
-	true,
-	/((components\-style)|(components\/widget)|(components\/widget\-layer)).*\.vue$/,
-)
-components.keys().forEach(name => {
-	const item = components(name).default
-	if (item.name) {
-		app.component(item.name, item)
-	}
-})
 
 import ElementPlus from 'element-plus'
 

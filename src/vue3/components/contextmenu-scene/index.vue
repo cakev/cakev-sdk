@@ -7,9 +7,13 @@ import { reactive, toRefs, defineComponent } from 'vue'
 import Manager from '@/core/Manager'
 import removeScene from './removeScene'
 import clearScene from './clearScene'
+import dContextmenu from '@/vue3/components-style/d-contextmenu/index.vue'
 
 export default defineComponent({
 	name: 'contextmenu-scene',
+	components: {
+		dContextmenu,
+	},
 	props: {
 		editableScene: {
 			type: Function,
