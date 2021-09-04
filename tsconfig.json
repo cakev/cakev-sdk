@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"declaration": true,
 		"target": "esnext",
 		"module": "esnext",
 		"jsx": "preserve", // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
@@ -22,10 +23,10 @@
 		"pretty": true, // 给错误和消息设置样式，使用颜色和上下文。
 		"types": ["webpack-env"],
 		"paths": {
-			"@/*": ["src/*"]
+			"@dorring-sdk/*": ["src/packages/*"]
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
-	"include": ["build/**/*.ts", "src/**/*.ts", "src/**/*.vue", "typings/vue-shim.d.ts", "typings/global.d.ts"],
-	"exclude": ["node_modules", "lib"]
+	"include": ["typings/vue-shim.d.ts", "typings/global.d.ts", "build/**/*.ts", "src/**/*.ts", "src/**/*.vue"],
+	"exclude": ["node_modules", "dist/**", "lib/**"]
 }
