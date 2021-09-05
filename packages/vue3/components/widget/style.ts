@@ -1,11 +1,4 @@
-import Widget from '@dorring/sdk/core/Widget/task'
-
-class item extends Widget {
-	readonly: boolean
-	zIndex: number
-}
-
-export default (widget: item) => {
+export default widget => {
 	return {
 		top: (widget.readonly ? widget.y : 0) + 'px',
 		left: (widget.readonly ? widget.x : 0) + 'px',

@@ -11,7 +11,8 @@ import Manager from './core/Manager'
 // install
 import install from './make-installer'
 
-const version = process.env.version
+// version
+const version: string = process.env.version
 
 export { version, Editor, install }
 

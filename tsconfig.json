@@ -3,7 +3,7 @@
 		"declaration": true,
 		"target": "esnext",
 		"module": "esnext",
-		"jsx": "preserve", // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
+		"jsx": "preserve",
 		"importHelpers": true, // 从 tslib 导入辅助工具函数
 		"moduleResolution": "node",
 		"experimentalDecorators": true, // 启用装饰器
