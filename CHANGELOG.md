@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### 0.0.1 (2021-09-03)
+### 0.0.1-alpha.0 (2021-09-05)
 
 
 ### Features
@@ -10,9 +10,12 @@ All notable changes to this project will be documented in this file. See [standa
 * 🎸 d-code 更新 ([c6669ce](https://github.com/fish-uncle/dorring-sdk/commit/c6669ce36f73768a23e64bb9f3bc6f2150609537))
 * 🎸 多个同时拖动完善 ([7d46b92](https://github.com/fish-uncle/dorring-sdk/commit/7d46b925fd42a1dedb39445c098c513b21f1fe32))
 * 🎸 完善数据请求功能 ([ceb68ef](https://github.com/fish-uncle/dorring-sdk/commit/ceb68ef5644ef608df691c58b24a90f53e0c2034))
+* 🎸 添加dts自动生成 ([2265699](https://github.com/fish-uncle/dorring-sdk/commit/2265699f3e73bc9c97f910699cff638fe54a6b56))
 * 🎸 添加多个拖动 ([965852f](https://github.com/fish-uncle/dorring-sdk/commit/965852fe29fe0a61e639f9d31d82c3951e99cff5))
 * 🎸 添加左上角zoom ([9d8b7a5](https://github.com/fish-uncle/dorring-sdk/commit/9d8b7a5a8506e6f940ff6af5b70dd8f2b2be58f3))
+* 🎸 添加打包支持 ([d7de8fb](https://github.com/fish-uncle/dorring-sdk/commit/d7de8fb59dd01d03fb3999a8cfaf4d56822576f5))
 * 🎸 添加数据栏目 ([1eb2bf0](https://github.com/fish-uncle/dorring-sdk/commit/1eb2bf08327488ddc7e2ace0499aad2b9dddb25e))
+* 🎸 组件改为局部引入方式 ([5297999](https://github.com/fish-uncle/dorring-sdk/commit/5297999dc9761ab4d8e11af4c8718bd525f9e0d8))
 * add build mode ([2d514c7](https://github.com/fish-uncle/dorring-sdk/commit/2d514c7aa074f492d99c245eeb9efe328f802656))
 * add scene ([da57ca7](https://github.com/fish-uncle/dorring-sdk/commit/da57ca7a2e922ee25c568c89b5c1599dc2941e1c))
 * color ([dfd0fda](https://github.com/fish-uncle/dorring-sdk/commit/dfd0fda4ace94a5efb58c7b627deda587c386015))
