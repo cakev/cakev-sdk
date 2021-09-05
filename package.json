@@ -1,6 +1,6 @@
 {
 	"name": "@dorring/sdk",
-	"version": "0.0.1-alpha.0",
+	"version": "0.0.1",
 	"main": "dist/dorring.umd.min.js",
 	"typings": "dist/types/index.d.ts",
 	"keywords": [
@@ -108,6 +108,11 @@
 	"config": {
 		"commitizen": {
 			"path": "git-cz"
+		}
+	},
+	"standard-version": {
+		"skip": {
+			"changelog": true
 		}
 	},
 	"lint-staged": {
