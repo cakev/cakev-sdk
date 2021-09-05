@@ -3,8 +3,8 @@ editor
 </template>
 <script lang="ts">
 import { reactive, toRefs, defineComponent } from 'vue'
-import Manager from '@dorring-sdk/core/Manager'
-import editor from '@dorring-sdk/vue3/components/editor/index.vue'
+import Manager from '@dorring/sdk/core/Manager'
+import editor from '@dorring/sdk/vue3/components/editor/index.vue'
 
 export default defineComponent({
 	components: {

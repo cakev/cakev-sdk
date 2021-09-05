@@ -23,10 +23,18 @@
 		"pretty": true, // 给错误和消息设置样式，使用颜色和上下文。
 		"types": ["webpack-env"],
 		"paths": {
-			"@dorring-sdk/*": ["src/packages/*"]
+			"@dorring/sdk/*": ["packages/*"]
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
-	"include": ["typings/vue-shim.d.ts", "typings/global.d.ts", "build/**/*.ts", "src/**/*.ts", "src/**/*.vue"],
+	"include": [
+		"typings/vue-shim.d.ts",
+		"typings/global.d.ts",
+		"build/**/*.ts",
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"packages/**/*.ts",
+		"packages/**/*.vue"
+	],
 	"exclude": ["node_modules", "dist/**", "lib/**"]
 }
