@@ -19,6 +19,8 @@
 			@mousedown.stop.prevent="handleDown($event, handle)")
 			span(:style="{ borderWidth: `${returnRatio}px` }")
 	slot
+	.pos-a.vdr-size.text-center(:style="{bottom:`-${30*returnRatio}px`}" v-if="enabled")
+		span(:style="styleSize") {{width}}x{{height}}
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, onBeforeUnmount, watch, computed } from 'vue'
@@ -90,6 +92,7 @@ export default defineComponent({
 				}
 			},
 		)
+
 		const style = computed(() => {
 			return {
 				transform: `translate3d(${state.left}px, ${state.top}px, 0)`,
@@ -98,8 +101,18 @@ export default defineComponent({
 				zIndex: props.z,
 			}
 		})
+
 		const returnRatio = computed(() => {
 			return props.scaleRatio < 1 ? 1 / props.scaleRatio : 1
+		})
+
+		const styleSize = computed(() => {
+			const returnRatio = props.scaleRatio < 1 ? 1 / props.scaleRatio : 1
+			return {
+				fontSize: `${12 * returnRatio}px`,
+				borderRadius: `${2 * returnRatio}px`,
+				padding: `0 ${4 * returnRatio}px`,
+			}
 		})
 
 		return {
@@ -109,6 +122,7 @@ export default defineComponent({
 			mouseDown,
 			contextmenu: e => contextmenu(e, props.id),
 			style,
+			styleSize,
 			returnRatio,
 		}
 	},
@@ -126,6 +140,14 @@ export default defineComponent({
 		.vdr-line-right {
 			background-color: var(--el-color-primary);
 		}
+	}
+}
+.vdr-size {
+	bottom: -30px;
+	width: 100%;
+	span {
+		background-color: var(--el-color-primary);
+		color: #fff;
 	}
 }
 .vdr-handle {

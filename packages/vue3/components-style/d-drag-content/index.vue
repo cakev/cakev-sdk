@@ -71,12 +71,6 @@ export default defineComponent({
 		margin-right: 4px;
 		-webkit-appearance: none;
 	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: hsla(0, 0%, 100%, 0.4);
-		border-radius: 4px;
-		box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
-	}
 }
 
 .d-drag-content {
