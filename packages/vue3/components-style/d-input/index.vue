@@ -87,20 +87,41 @@ export default defineComponent({
 	}
 }
 .d-input-append {
+	padding: 1px;
 	&::v-deep(.el-input-group__append) {
-		border-width: 2px 2px 2px 0;
+		border-width: 1px 1px 1px 0;
 		border-top-right-radius: 2px;
 		border-bottom-right-radius: 2px;
 	}
 	&::v-deep(.el-input__inner) {
-		border-width: 2px 0 2px 2px;
+		border-width: 1px 0 1px 1px;
 	}
 }
 .d-input-prepend {
+	padding: 1px;
 	&::v-deep(.el-input-group__prepend) {
-		border-width: 2px 0 2px 2px;
+		border-width: 1px 0 1px 1px;
 		border-top-left-radius: 2px;
 		border-bottom-left-radius: 2px;
+	}
+	&::v-deep(.el-input__inner) {
+		border-width: 1px 1px 1px 0;
+	}
+}
+.d-input-focus {
+	&::v-deep(.el-input-group__append),
+	&::v-deep(.el-input-group__prepend),
+	&::v-deep(.el-input__inner) {
+		border-color: var(--el-color-primary) !important;
+	}
+	&::v-deep(.el-input__inner) {
+		border-width: 2px 0 2px 2px;
+	}
+	&::v-deep(.el-input-group__append) {
+		border-width: 2px 2px 2px 0;
+	}
+	&::v-deep(.el-input-group__prepend) {
+		border-width: 2px 0 2px 2px;
 	}
 	&::v-deep(.el-input__inner) {
 		border-width: 2px 2px 2px 0;
@@ -109,16 +130,11 @@ export default defineComponent({
 .d-input {
 	margin-bottom: 4px;
 	left: -10px;
-	&:hover,
-	&.d-input-focus {
-		&::v-deep(.el-input-group__append) {
-			border-color: var(--el-color-primary);
-		}
+	&:hover {
+		&::v-deep(.el-input-group__append),
+		&::v-deep(.el-input__inner),
 		&::v-deep(.el-input-group__prepend) {
-			border-color: var(--el-color-primary);
-		}
-		&::v-deep(.el-input__inner) {
-			border-color: var(--el-color-primary);
+			border-color: #ccc;
 		}
 	}
 	&::v-deep(.el-input-group__prepend),

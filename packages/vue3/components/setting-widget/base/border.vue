@@ -24,7 +24,6 @@ d-setting-container
 				el-option(value="double", label="双线")
 				el-option(value="dotted", label="点状")
 				el-option(value="none", label="无")
-				el-option(value="inherit", label="继承父元素样式")
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'

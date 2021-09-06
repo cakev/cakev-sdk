@@ -3,9 +3,8 @@ d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '尺寸' }]")
 	template(#content)
-		el-form-item(label="屏幕大小")
-			el-select(v-model="size")
-				el-option(v-for="item in screenSize", :key="item.value", :value="item.value", :label="item.label")
+		el-form-item(label-width="0px")
+			d-select(:list="screenSize" v-model="size")
 		el-form-item(label-width="0px")
 			d-input(v-model="manager.screen.currentScreen.width", format="number", prepend="W" title="宽度")
 			d-input(
@@ -39,10 +38,12 @@ import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
 import dColors from '@dorring/sdk/vue3/components-style/d-colors/index.vue'
+import dSelect from '@dorring/sdk/vue3/components-style/d-select/index.vue'
 
 export default defineComponent({
 	name: 'setting-editor-setting',
 	components: {
+		dSelect,
 		dTitles,
 		dColor,
 		dColors,

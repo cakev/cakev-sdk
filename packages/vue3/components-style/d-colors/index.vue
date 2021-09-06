@@ -15,7 +15,8 @@ d-setting-container
 				append="°",
 				:style="{marginLeft:'auto'}"
 				@update:modelValue="updateDirection")
-		el-form-item(label-width="0px")
+			d-color.pos-r(:style="{marginLeft:'auto'}" v-else v-for="(item,index) in list" :modelValue="item" @update:modelValue="val=>updateColor(val,index)")
+		el-form-item(label-width="0px" v-if="list.length>1")
 			.d-colors.fn-flex.flex-row(:class="{'feed-line':list.length>5}")
 				d-color.pos-r(v-for="(item,index) in list" :modelValue="item" @update:modelValue="val=>updateColor(val,index)")
 					.d-colors-icon-delete.pos-a.text-center.cursor-pointer(@click="removeColor(index)" v-if="list.length>1") -
