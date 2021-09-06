@@ -18,7 +18,8 @@ export default class Widget extends WidgetConfig {
 		version?: string
 		type?: string
 		avatar?: string
-		backgroundColor?: string | null
+		backgroundColor?: string[]
+		gradientDirection?: number
 		color?: string | null
 		fontSize?: number
 		lineHeight?: number

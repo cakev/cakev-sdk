@@ -9,7 +9,7 @@ export default {
 		type: String,
 	},
 	backgroundColor: {
-		type: String,
+		type: Array,
 	},
 	data: {
 		type: Array,

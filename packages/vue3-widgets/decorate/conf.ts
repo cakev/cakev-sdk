@@ -4,13 +4,8 @@ const type = 'dorring-decorate-1'
 export default new conf({
 	width: 200,
 	height: 40,
-	data: ['标题'],
 	type,
 	version: '1.0.0',
-	backgroundColor: 'rgba(123,164,222,1)',
-	name: '标题',
-	fontSize: 16,
-	textAlign: 'center',
-	color: 'rgba(255,255,255,1)',
-	lineHeight: 40,
+	backgroundColor: ['rgba(40, 80, 102,1)', 'rgba(40, 80, 102,0)'],
+	name: '渐变背景',
 })

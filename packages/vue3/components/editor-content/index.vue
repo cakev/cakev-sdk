@@ -42,8 +42,17 @@ export default defineComponent({
 		)
 
 		const style = computed(() => {
+			let backgroundColor = state.manager.screen.currentScreen.backgroundColor
+			let resultColor = ''
+			if (backgroundColor.length > 1) {
+				resultColor = `linear-gradient(${
+					state.manager.screen.currentScreen.gradientDirection
+				}deg, ${backgroundColor.toString()})`
+			} else {
+				resultColor = state.manager.screen.currentScreen.backgroundColor[0]
+			}
 			return {
-				backgroundColor: state.manager.screen.currentScreen.backgroundColor,
+				[backgroundColor.length > 1 ? 'background-image' : 'background-color']: resultColor,
 				width: state.manager.screen.currentScreen.width + 'px',
 				height: state.manager.screen.currentScreen.height + 'px',
 			}

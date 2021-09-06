@@ -18,7 +18,9 @@ d-setting-container
 		d-titles(:list="[{ label: '填充' }]")
 	template(#content)
 		el-form-item(label="背景色")
-			d-color(v-model="manager.screen.currentScreen.backgroundColor")
+			d-colors(:list="manager.screen.currentScreen.backgroundColor")
+		el-form-item(label="渐变方向" v-if="manager.screen.currentScreen.backgroundColor.length>1")
+			d-input(v-model="manager.screen.currentScreen.gradientDirection", format="number", append="°")
 d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '其他' }]")
@@ -43,12 +45,14 @@ import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'
 import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
+import dColors from '@dorring/sdk/vue3/components-style/d-colors/index.vue'
 
 export default defineComponent({
 	name: 'setting-editor-setting',
 	components: {
 		dTitles,
 		dColor,
+		dColors,
 		dInput,
 		dSettingContainer,
 	},

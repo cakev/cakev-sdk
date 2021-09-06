@@ -28,7 +28,6 @@ export default defineComponent({
 	justify-content: center;
 	width: 32px;
 	height: 32px;
-	margin-left: auto;
 	color: #333;
 	border-radius: 3px;
 

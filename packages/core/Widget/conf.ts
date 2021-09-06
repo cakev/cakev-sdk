@@ -13,7 +13,8 @@ export default class WidgetConfig {
 	height = 100
 
 	// 填充
-	backgroundColor: string = 'rgba(255,255,255,0)'
+	backgroundColor: string[] = ['rgba(255,255,255,0)']
+	gradientDirection = 90
 
 	// 字体
 	color: string = 'rgba(51,51,51,1)'
@@ -40,7 +41,8 @@ export default class WidgetConfig {
 		version?: string
 		type?: string
 		avatar?: string
-		backgroundColor?: string | null
+		backgroundColor?: string[]
+		gradientDirection?: number
 		color?: string | null
 		fontSize?: number
 		lineHeight?: number
@@ -56,6 +58,7 @@ export default class WidgetConfig {
 		if (obj.version) this.version = obj.version
 		if (obj.avatar) this.avatar = obj.avatar
 		if (obj.backgroundColor) this.backgroundColor = obj.backgroundColor
+		if (obj.gradientDirection) this.gradientDirection = obj.gradientDirection
 		if (obj.color) this.color = obj.color
 		if (obj.fontSize) this.fontSize = obj.fontSize
 		if (obj.lineHeight) this.lineHeight = obj.lineHeight

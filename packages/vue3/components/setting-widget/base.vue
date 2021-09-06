@@ -14,7 +14,9 @@ d-setting-container
 		d-titles(:list="[{ label: '填充' }]")
 	template(#content)
 		el-form-item(label="背景色")
-			d-color(v-model="currentWidget.backgroundColor")
+			d-colors(:list="currentWidget.backgroundColor" )
+		el-form-item(label="渐变方向" v-if="currentWidget.backgroundColor.length>1")
+			d-input(v-model="currentWidget.gradientDirection", format="number", append="°")
 d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '字体' }]")
@@ -53,6 +55,7 @@ import Manager from '@dorring/sdk/core/Manager'
 import currentWidget from './currentWidget'
 import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'
 import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
+import dColors from '@dorring/sdk/vue3/components-style/d-colors/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
 
@@ -61,6 +64,7 @@ export default defineComponent({
 	components: {
 		dTitles,
 		dColor,
+		dColors,
 		dInput,
 		dSettingContainer,
 	},

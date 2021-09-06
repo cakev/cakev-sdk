@@ -2,6 +2,7 @@
 .d-color.fn-flex.flex-row
 	el-color-picker(v-model="currentVal", show-alpha, @change="change")
 		span {{ currentVal ? currentVal : '无' }}
+	slot
 </template>
 <script lang="ts">
 import { reactive, toRefs, watch, defineComponent } from 'vue'

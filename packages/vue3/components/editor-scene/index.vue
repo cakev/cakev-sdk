@@ -1,7 +1,7 @@
 <template lang="pug">
 .editor-scene.pos-r
 	d-titles(:list="[{ label: '场景' }]", :left="true")
-		d-icon(type="el-icon-plus", @click="createScene")
+		d-icon(type="el-icon-plus", @click="createScene" :style="{marginLeft:'auto'}")
 	contextmenu-scene(v-if="manager.temporary.sceneRightMenu", :editableScene="editableScene")
 	d-drag-content(style="height: calc(100% - 40px)")
 		template(#top)
