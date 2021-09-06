@@ -15,7 +15,7 @@ d-setting-container
 				append="H")
 d-setting-container
 	template(#title)
-		d-titles(:list="[{ label: '背景' }]")
+		d-titles(:list="[{ label: '填充' }]")
 	template(#content)
 		el-form-item(label="背景色")
 			d-color(v-model="manager.screen.currentScreen.backgroundColor")

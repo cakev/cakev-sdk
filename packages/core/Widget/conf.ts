@@ -5,16 +5,31 @@ export default class WidgetConfig {
 	name = '未知组件'
 	version = '1.0.0'
 	type: string
-	width = 100
-	height = 100
 	data: Array<any> = []
 	avatar = ''
+
+	// 尺寸
+	width = 100
+	height = 100
+
+	// 填充
 	backgroundColor: string = 'rgba(255,255,255,0)'
+
+	// 字体
 	color: string = 'rgba(51,51,51,1)'
 	textAlign: 'left' | 'right' | 'center' = 'left'
 	fontSize = 16
 	lineHeight = 32
+
+	// 描边
+	borderColor: string = 'rgba(0,0,0,1)'
+	borderWidth = 0
+	borderStyle: 'solid' | 'dashed' = 'solid'
+
+	// 交互
 	animation: WidgetAnimation = new WidgetAnimation()
+
+	// 数据
 	api: WidgetApi | null = null
 
 	constructor(obj: {

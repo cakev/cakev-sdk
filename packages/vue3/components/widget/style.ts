@@ -10,5 +10,9 @@ export default widget => {
 		lineHeight: widget.lineHeight + 'px',
 		textAlign: widget.textAlign,
 		zIndex: widget.zIndex,
+		borderWidth: widget.borderWidth + 'px',
+		borderColor: widget.borderColor,
+		borderStyle: widget.borderStyle,
+		boxSizing: 'border-box',
 	}
 }
