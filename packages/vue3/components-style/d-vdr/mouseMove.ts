@@ -24,8 +24,8 @@ const handleResize = (e, data, props) => {
 	}
 	data.left = left
 	data.top = top
-	data.width = right - left
-	data.height = bottom - top
+	data.width = right - left > 1 ? right - left : 1
+	data.height = bottom - top > 1 ? bottom - top : 1
 	state.manager.temporary.widgetDragClientX = e.clientX
 	state.manager.temporary.widgetDragClientY = e.clientY
 }
