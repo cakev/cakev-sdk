@@ -6,6 +6,15 @@ export default widget => {
 	} else {
 		resultColor = widget.backgroundColor[0]
 	}
+
+	let borderWidth = '',
+		borderColor = '',
+		borderStyle = ''
+	if (widget.border) {
+		borderStyle = widget.border.style
+		borderColor = widget.border.color
+		borderWidth = `${widget.border.width[0]}px ${widget.border.width[1]}px ${widget.border.width[2]}px ${widget.border.width[3]}px`
+	}
 	return {
 		top: (widget.readonly ? widget.y : 0) + 'px',
 		left: (widget.readonly ? widget.x : 0) + 'px',
@@ -17,9 +26,9 @@ export default widget => {
 		lineHeight: widget.lineHeight + 'px',
 		textAlign: widget.textAlign,
 		zIndex: widget.zIndex,
-		borderWidth: widget.borderWidth + 'px',
-		borderColor: widget.borderColor,
-		borderStyle: widget.borderStyle,
+		borderWidth,
+		borderColor,
+		borderStyle,
 		boxSizing: 'border-box',
 	}
 }

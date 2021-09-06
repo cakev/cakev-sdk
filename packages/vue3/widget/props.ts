@@ -5,6 +5,9 @@ export default {
 	api: {
 		type: Object,
 	},
+	border: {
+		type: Object,
+	},
 	avatar: {
 		type: String,
 	},

@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import { ref, shallowRef, defineComponent } from 'vue'
-import sBase from './base.vue'
+import sBase from './base/index.vue'
 import sData from './data.vue'
 import sInteractive from './interactive.vue'
 import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'

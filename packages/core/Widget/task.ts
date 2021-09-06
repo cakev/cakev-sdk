@@ -1,6 +1,7 @@
 ﻿import WidgetConfig from '@dorring/sdk/core/Widget/conf'
 import WidgetAnimation from '@dorring/sdk/core/Widget/animation'
 import WidgetApi from '@dorring/sdk/core/Widget/api'
+import WidgetBorder from '@dorring/sdk/core/Widget/border'
 
 export default class Widget extends WidgetConfig {
 	id: string
@@ -23,6 +24,7 @@ export default class Widget extends WidgetConfig {
 		color?: string | null
 		fontSize?: number
 		lineHeight?: number
+		border?: WidgetBorder | null
 		textAlign?: 'left' | 'right' | 'center'
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null

@@ -3,11 +3,11 @@
 .el-form-item__content {
 	font-size: 12px;
 }
-
+.el-form-item--mini.el-form-item {
+	margin-bottom: 8px;
+}
 .el-input__inner,
-.el-color-picker__trigger,
-.el-input-group__append,
-.el-input-group__prepend {
+.el-color-picker__trigger {
 	border-radius: 2px;
 }
 
@@ -17,4 +17,10 @@
 
 .el-select {
 	width: 100%;
+}
+
+.el-form-item__content {
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
 }

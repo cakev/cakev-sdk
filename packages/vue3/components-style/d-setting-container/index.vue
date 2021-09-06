@@ -3,7 +3,7 @@
 	.d-setting-container-title
 		slot(name="title")
 	.d-setting-container-content
-		el-form(label-width="80px", label-position="left")
+		el-form(label-width="100px", label-position="left")
 			slot(name="content")
 </template>
 <script lang="ts">

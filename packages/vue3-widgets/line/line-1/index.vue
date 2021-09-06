@@ -1,5 +1,5 @@
 <template lang="pug">
-widget-base.line1(v-bind="$attrs") line1
+widget-base.dorring-line-1(v-bind="$attrs") line1
 </template>
 <script lang="ts">
 import widgetBase from '@dorring/sdk/vue3/widget/base'
@@ -13,7 +13,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-.line1 {
+.dorring-line-1 {
 	color: #333;
 }
 </style>

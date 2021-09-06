@@ -8,7 +8,7 @@ el-container.editor.fn-flex.flex-column(@contextmenu.prevent @click="click")
 		el-divider.divider(direction="vertical")
 		editor-main
 		el-divider.divider(direction="vertical")
-		el-aside(width="300px", v-if="manager.screen.currentScreen")
+		el-aside(width="242px", v-if="manager.screen.currentScreen")
 			setting-widget(v-if="manager.screen.currentWidgets.length === 1")
 			setting-editor(v-if="manager.screen.currentWidgets.length === 0")
 </template>

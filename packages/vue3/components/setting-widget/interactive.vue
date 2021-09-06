@@ -9,9 +9,9 @@ d-setting-container
 			el-select(v-model="currentWidget.animation.enter")
 				el-option(v-for="item in animation", :key="item.value", :value="item.value", :label="item.label")
 		el-form-item(label="时长" v-if="currentWidget.animation.enable")
-			d-input(v-model="currentWidget.animation.duration", format="number", append="ms")
+			d-input(v-model="currentWidget.animation.duration", format="number", prepend="ms")
 		el-form-item(label="延迟" v-if="currentWidget.animation.enable")
-			d-input(v-model="currentWidget.animation.delay", format="number", append="ms")
+			d-input(v-model="currentWidget.animation.delay", format="number", prepend="ms")
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'

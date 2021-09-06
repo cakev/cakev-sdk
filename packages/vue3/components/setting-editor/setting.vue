@@ -6,21 +6,14 @@ d-setting-container
 		el-form-item(label="屏幕大小")
 			el-select(v-model="size")
 				el-option(v-for="item in screenSize", :key="item.value", :value="item.value", :label="item.label")
-		el-form-item
-			d-input(v-model="manager.screen.currentScreen.width", style="width: 90px", format="number", append="W")
+		el-form-item(label-width="0px")
+			d-input(v-model="manager.screen.currentScreen.width", format="number", prepend="W" title="宽度")
 			d-input(
 				v-model="manager.screen.currentScreen.height",
-				style="width: 90px; margin-left: 8px",
 				format="number",
-				append="H")
-d-setting-container
-	template(#title)
-		d-titles(:list="[{ label: '填充' }]")
-	template(#content)
-		el-form-item(label="背景色")
-			d-colors(:list="manager.screen.currentScreen.backgroundColor")
-		el-form-item(label="渐变方向" v-if="manager.screen.currentScreen.backgroundColor.length>1")
-			d-input(v-model="manager.screen.currentScreen.gradientDirection", format="number", append="°")
+				prepend="H"
+				title="高度")
+d-colors(v-model:list="manager.screen.currentScreen.backgroundColor" v-model:direction="manager.screen.currentScreen.gradientDirection")
 d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '其他' }]")

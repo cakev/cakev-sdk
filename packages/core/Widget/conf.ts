@@ -1,5 +1,6 @@
 import WidgetAnimation from '@dorring/sdk/core/Widget/animation'
 import WidgetApi from '@dorring/sdk/core/Widget/api'
+import WidgetBorder from '@dorring/sdk/core/Widget/border'
 
 export default class WidgetConfig {
 	name = '未知组件'
@@ -16,18 +17,17 @@ export default class WidgetConfig {
 	backgroundColor: string[] = ['rgba(255,255,255,0)']
 	gradientDirection = 90
 
-	// 字体
+	// 文本
 	color: string = 'rgba(51,51,51,1)'
 	textAlign: 'left' | 'right' | 'center' = 'left'
 	fontSize = 16
 	lineHeight = 32
 
 	// 描边
-	borderColor: string = 'rgba(0,0,0,1)'
-	borderWidth = 0
-	borderStyle: 'solid' | 'dashed' = 'solid'
+	border: WidgetBorder | null = null
 
 	// 交互
+	// 动画
 	animation: WidgetAnimation = new WidgetAnimation()
 
 	// 数据
@@ -46,6 +46,7 @@ export default class WidgetConfig {
 		color?: string | null
 		fontSize?: number
 		lineHeight?: number
+		border?: WidgetBorder | null
 		textAlign?: 'left' | 'right' | 'center'
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
@@ -62,6 +63,7 @@ export default class WidgetConfig {
 		if (obj.color) this.color = obj.color
 		if (obj.fontSize) this.fontSize = obj.fontSize
 		if (obj.lineHeight) this.lineHeight = obj.lineHeight
+		if (obj.border) this.border = obj.border
 		if (obj.textAlign) this.textAlign = obj.textAlign
 		if (obj.animation) this.animation = obj.animation
 		if (obj.api) this.api = obj.api

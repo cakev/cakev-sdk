@@ -4,12 +4,13 @@ el-collapse.setting-editor-widget
 		template(#title)
 			d-svg(:type="child.icon" :size="16")
 			span(:style="{marginLeft:'8px'}") {{child.label}}
-		.cursor-pointer.fn-flex.flex-column(
-			v-for="widget in child.children",
-			:draggable="true",
-			@dragstart="dragStart($event, widget)")
-			d-img.widget-img(:src="widget.avatar")
-			span.widget-title {{ widget.name }}
+		.setting-editor-widget-list.fn-flex
+			.setting-editor-widget-item.cursor-pointer.fn-flex.flex-column(
+				v-for="widget in child.children",
+				:draggable="true",
+				@dragstart="dragStart($event, widget)")
+				d-img.setting-editor-widget-img(:src="widget.avatar")
+				span.setting-editor-widget-title {{ widget.name }}
 </template>
 <script lang="ts">
 import dragStart from './dragStart'
@@ -36,16 +37,25 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+.setting-editor-widget-list {
+	flex-wrap: wrap;
+}
+.setting-editor-widget-item {
+	margin-right: 10px;
+	&:nth-child(2n) {
+		margin-right: 0;
+	}
+}
 .setting-editor-widget {
 	padding: 0 16px;
 }
-.widget-img {
-	width: 120px;
+.setting-editor-widget-img {
+	width: 100px;
 	height: 60px;
 }
 
-.widget-title {
-	width: 120px;
+.setting-editor-widget-title {
+	width: 90px;
 	text-align: center;
 }
 </style>
