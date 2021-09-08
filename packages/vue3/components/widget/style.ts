@@ -1,10 +1,17 @@
 export default widget => {
-	let backgroundColor = widget.backgroundColor
-	let resultColor = ''
-	if (backgroundColor.length > 1) {
-		resultColor = `linear-gradient(${widget.gradientDirection}deg, ${backgroundColor.toString()})`
-	} else {
-		resultColor = widget.backgroundColor[0]
+	let resultColor = {}
+	if (widget.background) {
+		resultColor = widget.background.style
+		let backgroundColor = widget.background.color
+		if (backgroundColor.length > 1) {
+			resultColor = {
+				'background-image': `linear-gradient(${
+					widget.background.gradientDirection
+				}deg, ${backgroundColor.toString()})`,
+			}
+		} else {
+			resultColor = { 'background-color': widget.background.color[0] }
+		}
 	}
 
 	let borderWidth = '',
@@ -20,7 +27,7 @@ export default widget => {
 		left: (widget.readonly ? widget.x : 0) + 'px',
 		width: widget.width + 'px',
 		height: widget.height + 'px',
-		[backgroundColor.length > 1 ? 'background-image' : 'background-color']: resultColor,
+		...resultColor,
 		color: widget.color,
 		fontSize: widget.fontSize + 'px',
 		lineHeight: widget.lineHeight + 'px',

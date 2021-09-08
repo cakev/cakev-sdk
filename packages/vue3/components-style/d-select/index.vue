@@ -1,5 +1,5 @@
 <template lang="pug">
-el-select.d-select(v-model="currentVal")
+el-select.d-select.pos-r(:disabled="disabled" v-model="currentVal" :class="{'d-select-focus':focusState}",@focus="focus" @blur="blur")
 	el-option(v-for="item in list" :value="item.value" :label="item.label")
 </template>
 <script lang="ts">
@@ -12,10 +12,15 @@ export default defineComponent({
 		list: {
 			type: Array,
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	setup(props, { emit }) {
 		const state = reactive({
 			currentVal: props.modelValue,
+			focusState: false,
 		})
 		watch(
 			() => props.modelValue,
@@ -31,24 +36,31 @@ export default defineComponent({
 			},
 		)
 
+		const focus = () => {
+			state.focusState = true
+		}
+		const blur = () => {
+			state.focusState = false
+		}
+
 		return {
 			...toRefs(state),
+			focus,
+			blur,
 		}
 	},
 })
 </script>
 <style lang="scss" scoped>
 .d-select {
-	left: -10px;
 	&::v-deep(.el-input__inner) {
-		border-color: transparent;
+		padding: 1px 1px 1px 7px;
+		border-width: 1px;
 	}
-	&::v-deep(.el-input__suffix) {
-		display: none;
-	}
-	&:hover {
+	&.d-select-focus {
 		&::v-deep(.el-input__inner) {
-			border-color: #ccc;
+			padding: 0 0 0 6px;
+			border-width: 2px;
 		}
 	}
 }

@@ -2,36 +2,34 @@
 d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '填充' }]")
-			d-icon(type="el-icon-plus", @click="createColor" :style="{marginLeft:'auto'}")
+			d-icon.ml-auto(type="el-icon-plus", @click="createColor" v-if="")
 	template(#content)
 		el-form-item(label-width="0px")
-			el-select(v-model="colorType" :style="{width:'100px'}")
-				el-option(value="纯色" label="纯色")
-				el-option(value="线性渐变" label="线性渐变")
-			d-input.d-input-direction(
-				v-if="list.length>1",
-				:modelValue="currentDirection",
-				format="number", 
-				append="°",
-				:style="{marginLeft:'auto'}"
-				@update:modelValue="updateDirection")
-			d-color.pos-r(:style="{marginLeft:'auto'}" v-else v-for="(item,index) in list" :modelValue="item" @update:modelValue="val=>updateColor(val,index)")
-		el-form-item(label-width="0px" v-if="list.length>1")
-			.d-colors.fn-flex.flex-row(:class="{'feed-line':list.length>5}")
-				d-color.pos-r(v-for="(item,index) in list" :modelValue="item" @update:modelValue="val=>updateColor(val,index)")
-					.d-colors-icon-delete.pos-a.text-center.cursor-pointer(@click="removeColor(index)" v-if="list.length>1") -
+			d-select(v-model="colorType" :style="{width:'100px'}" :list="background")
+			//d-input.d-input-direction.ml-10(
+			//	:modelValue="currentDirection",
+			//	format="number", 
+			//	append="°",
+			//	:style="{width:'36px'}"
+			//	@update:modelValue="updateDirection")
+			d-icon.ml-auto(type="el-icon-edit", @click="destroyColor")
+			d-icon.ml-10(type="el-icon-minus", @click="destroyColor")
+			//d-color.pos-r.ml-auto(v-for="(item,index) in list" :modelValue="item" @update:modelValue="val=>updateColor(val,index)")
 </template>
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue'
 import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
+import dSelect from '@dorring/sdk/vue3/components-style/d-select/index.vue'
 import dIcon from '@dorring/sdk/vue3/components-style/d-icon/index.vue'
 import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
+import background from '@dorring/sdk/config/background'
 
 export default defineComponent({
 	name: 'd-colors',
 	components: {
+		dSelect,
 		dColor,
 		dIcon,
 		dTitles,
@@ -86,19 +84,24 @@ export default defineComponent({
 			if (props.list.length > 1) props.list.splice(index, 1)
 		}
 
+		const destroyColor = () => {}
+
 		return {
 			...toRefs(state),
 			colorType,
+			background,
 			updateColor,
 			createColor,
 			removeColor,
 			updateDirection,
+			destroyColor,
 		}
 	},
 })
 </script>
 <style lang="scss" scoped>
 .d-input-direction {
+	height: 28px;
 	&::v-deep(.d-input) {
 		margin-bottom: 0;
 		width: 60px !important;
@@ -108,7 +111,7 @@ export default defineComponent({
 		text-align: right;
 	}
 	&::v-deep(.el-input-group__append) {
-		padding: 0;
+		height: 28px;
 	}
 }
 .d-colors-icon-delete {

@@ -4,10 +4,7 @@ d-setting-container
 		d-titles(:list="[{ label: '数据类型' }]")
 	template(#content)
 		el-form-item(label="常用类型")
-			el-select(v-model="api")
-				el-option(value="no", label="无")
-				el-option(value="static", label="静态数据")
-				el-option(value="api", label="API接口")
+			d-select(v-model="apiType" :list="api")
 template(v-if="currentWidget.api")
 	d-setting-container(v-if="currentWidget.api.url")
 		template(#title)
@@ -59,10 +56,12 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@dorring/sdk/core/Manager'
 import currentWidget from './currentWidget'
 import request from '@dorring/sdk/vue3/widget/request'
-import api from './api'
+import apiType from './apiType'
+import api from '@dorring/sdk/config/api'
 import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'
 import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
+import dSelect from '@dorring/sdk/vue3/components-style/d-select/index.vue'
 import dCode from '@dorring/sdk/vue3/components-style/d-code/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
 
@@ -72,6 +71,7 @@ export default defineComponent({
 		dTitles,
 		dColor,
 		dInput,
+		dSelect,
 		dCode,
 		dSettingContainer,
 	},
@@ -89,6 +89,7 @@ export default defineComponent({
 		return {
 			...toRefs(state),
 			currentWidget,
+			apiType,
 			api,
 			test,
 		}

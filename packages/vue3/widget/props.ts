@@ -5,14 +5,14 @@ export default {
 	api: {
 		type: Object,
 	},
+	background: {
+		type: Object,
+	},
 	border: {
 		type: Object,
 	},
 	avatar: {
 		type: String,
-	},
-	backgroundColor: {
-		type: Array,
 	},
 	data: {
 		type: Array,

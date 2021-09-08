@@ -2,12 +2,13 @@
 v-ace-editor(v-model:value="currentVal"
 	lang="json"
 	theme="chrome"
-	style="height: 300px")
+	:style="{height:'100px',width:'100%'}")
 </template>
 <script lang="ts">
 import { reactive, defineComponent, toRefs, computed } from 'vue'
 import { VAceEditor } from 'vue3-ace-editor'
 import ace from 'ace-builds'
+
 ace.config.set(
 	'basePath',
 	'https://cdn.jsdelivr.net/npm/ace-builds@' + require('ace-builds').version + '/src-noconflict/',

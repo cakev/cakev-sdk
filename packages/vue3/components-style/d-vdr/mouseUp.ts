@@ -1,6 +1,5 @@
 import Manager from '@dorring/sdk/core/Manager'
 import { reactive } from 'vue'
-import Widget from '@dorring/sdk/core/Widget/task'
 
 const manager: Manager = Manager.Instance()
 const state = reactive({ manager })
@@ -10,7 +9,7 @@ export default async (data, props) => {
 	const diffX = data.left - state.manager.screen.currentScreen.widgets[props.id].x
 	const diffY = data.top - state.manager.screen.currentScreen.widgets[props.id].y
 	// 拖动控制柄
-	const widget: Widget = state.manager.screen.currentScreen.widgets[props.id]
+	const widget = state.manager.screen.currentScreen.widgets[props.id]
 	if (data.resizing) {
 		data.resizing = false
 		data.clientX = 0
@@ -27,7 +26,7 @@ export default async (data, props) => {
 
 	// 拖动组件
 	for (let key in state.manager.screen.currentWidgetDragging) {
-		const widget: Widget = state.manager.screen.currentScreen.widgets[key]
+		const widget = state.manager.screen.currentScreen.widgets[key]
 		if (widget) {
 			widget.x += diffX
 			widget.y += diffY

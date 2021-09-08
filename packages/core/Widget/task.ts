@@ -2,6 +2,8 @@
 import WidgetAnimation from '@dorring/sdk/core/Widget/animation'
 import WidgetApi from '@dorring/sdk/core/Widget/api'
 import WidgetBorder from '@dorring/sdk/core/Widget/border'
+import WidgetFont from '@dorring/sdk/core/Widget/font'
+import WidgetBackground from '@dorring/sdk/core/Widget/background'
 
 export default class Widget extends WidgetConfig {
 	id: string
@@ -19,13 +21,9 @@ export default class Widget extends WidgetConfig {
 		version?: string
 		type?: string
 		avatar?: string
-		backgroundColor?: string[]
-		gradientDirection?: number
-		color?: string | null
-		fontSize?: number
-		lineHeight?: number
+		background?: WidgetBackground | null
 		border?: WidgetBorder | null
-		textAlign?: 'left' | 'right' | 'center'
+		font?: WidgetFont | null
 		animation?: WidgetAnimation | null
 		api?: WidgetApi | null
 		group?: boolean

@@ -3,7 +3,7 @@ el-collapse.setting-editor-widget
 	el-collapse-item(v-for="child in list", :key="child.label", :index="child.label")
 		template(#title)
 			d-svg(:type="child.icon" :size="16")
-			span(:style="{marginLeft:'8px'}") {{child.label}}
+			span.ml-10 {{child.label}}
 		.setting-editor-widget-list.fn-flex
 			.setting-editor-widget-item.cursor-pointer.fn-flex.flex-column(
 				v-for="widget in child.children",

@@ -2,9 +2,13 @@
 d-setting-container
 	template(#title)
 		d-titles(:list="[{ label: '描边' }]")
-			d-icon(type="el-icon-minus", @click="destroyBorder" :style="{marginLeft:'auto'}" v-if="currentWidget.border")
-			d-icon(type="el-icon-plus", @click="createBorder" :style="{marginLeft:'auto'}" v-else)
+			d-icon.ml-auto(type="el-icon-minus", @click="destroyBorder" v-if="currentWidget.border")
+			d-icon.ml-auto(type="el-icon-plus", @click="createBorder" v-else)
 	template(#content)
+		el-form-item(label="颜色" v-if="currentWidget.border")
+			d-color(v-model="currentWidget.border.color")
+		el-form-item(label="样式" v-if="currentWidget.border")
+			d-select(v-model="currentWidget.border.type" :list="border")
 		el-form-item(label-width="0px" v-if="currentWidget.border" :style="{marginBottom:'2px'}")
 			.d-input-shangmiaobian
 			.d-input-zuomiaobian
@@ -15,32 +19,25 @@ d-setting-container
 			d-input.d-input-border(v-model="currentWidget.border.width[1]", format="number")
 			d-input.d-input-border(v-model="currentWidget.border.width[2]", format="number")
 			d-input.d-input-border(v-model="currentWidget.border.width[3]", format="number")
-		el-form-item(label="颜色" v-if="currentWidget.border")
-			d-color(v-model="currentWidget.border.color")
-		el-form-item(label="样式" v-if="currentWidget.border")
-			el-select(v-model="currentWidget.border.style")
-				el-option(value="solid", label="实线")
-				el-option(value="dashed", label="虚线")
-				el-option(value="double", label="双线")
-				el-option(value="dotted", label="点状")
-				el-option(value="none", label="无")
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
 import Manager from '@dorring/sdk/core/Manager'
 import currentWidget from '../currentWidget'
-import createBorder from '../createBorder'
-import destroyBorder from '../destroyBorder'
 import dTitles from '@dorring/sdk/vue3/components-style/d-titles/index.vue'
 import dColor from '@dorring/sdk/vue3/components-style/d-color/index.vue'
 import dInput from '@dorring/sdk/vue3/components-style/d-input/index.vue'
+import dSelect from '@dorring/sdk/vue3/components-style/d-select/index.vue'
 import dIcon from '@dorring/sdk/vue3/components-style/d-icon/index.vue'
 import dSettingContainer from '@dorring/sdk/vue3/components-style/d-setting-container/index.vue'
+import border from '@dorring/sdk/config/border'
+import WidgetBorder from '@dorring/sdk/core/Widget/border'
 
 export default defineComponent({
 	name: 'setting-widget-base',
 	components: {
 		dTitles,
+		dSelect,
 		dColor,
 		dInput,
 		dIcon,
@@ -48,13 +45,23 @@ export default defineComponent({
 	},
 	setup() {
 		const manager: Manager = Manager.Instance()
-		const state = reactive({ manager })
+		const state = reactive({ manager, currentWidget })
+
+		const createBorder = () => {
+			state.currentWidget.border = new WidgetBorder()
+			state.manager.screen.currentScreen.widgets = { ...state.manager.screen.currentScreen.widgets }
+		}
+		const destroyBorder = () => {
+			state.currentWidget.border = null
+			state.manager.screen.currentScreen.widgets = { ...state.manager.screen.currentScreen.widgets }
+		}
 
 		return {
 			...toRefs(state),
 			currentWidget,
 			createBorder,
 			destroyBorder,
+			border,
 		}
 	},
 })
