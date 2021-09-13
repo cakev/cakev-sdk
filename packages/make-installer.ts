@@ -9,8 +9,8 @@ import dorringWidgetLayerNormal from './vue3/components/widget-layer/normal.vue'
 import dorringWidgetLayer from './vue3/components/widget-layer/index.vue'
 
 // widgets components
-import decorate1 from './vue3-widgets/decorate/decorate1/index.vue'
-import line1 from './vue3-widgets/line/line1/index.vue'
+import decorate1 from './vue3-widgets/decorate/decorate-1/index.vue'
+import line1 from './vue3-widgets/line/line-1/index.vue'
 
 export default (app: App) => {
 	app.component(decorate1.name, decorate1)
