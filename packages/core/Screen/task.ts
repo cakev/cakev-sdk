@@ -34,8 +34,27 @@ export default class ScreenTask {
 		hueRotate: 0, // 色相
 	}
 	marketComponents = [] // 大屏内组件市场的组件
-	constructor(id) {
+	constructor({
+		id,
+		scenes,
+		widgets,
+		widgetsLayers = [],
+		layoutMode = 'FULL_SIZE',
+		backgroundColor = ['rgba(255,255,255,1)'],
+		width = 1920,
+		height = 1080,
+	}) {
 		this.id = id
-		this.scenes = { '0': new SceneTask('0'), '-1': new SceneTask('-1') }
+		if (scenes) {
+			this.scenes = scenes
+		} else {
+			this.scenes = { '0': new SceneTask('0'), '-1': new SceneTask('-1') }
+		}
+		this.widgets = widgets
+		this.widgetsLayers = widgetsLayers
+		this.layoutMode = layoutMode
+		this.backgroundColor = backgroundColor
+		this.width = width
+		this.height = height
 	}
 }

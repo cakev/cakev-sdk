@@ -31,7 +31,7 @@ export default class ScreenCache extends BaseCache {
 				.get({ name })
 				.then(collection => {
 					if (collection) {
-						resolve(JSON.parse(collection.data))
+						resolve(JSON.parse(JSON.parse(collection.data)))
 					} else {
 						resolve(null)
 					}

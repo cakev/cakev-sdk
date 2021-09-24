@@ -218,8 +218,8 @@ export default class Screen extends Factory<Screen> {
 	}
 
 	// 创建大屏
-	createScreen(id) {
-		const screen: ScreenTask = new ScreenTask(id)
+	createScreen(id, obj?: any) {
+		const screen: ScreenTask = new ScreenTask({ id, ...obj })
 		this.screenMd5SchemaList.push(md5(JSON.stringify(screen)))
 		this.screenList = [...this.screenList, screen]
 		if (!this.currentScreen) {
@@ -230,6 +230,7 @@ export default class Screen extends Factory<Screen> {
 
 	// 当前场景 按zIndex 排序后的序列
 	get sceneWidgetsBySortList(): Array<WidgetLayer> {
+		if (!this.currentScreen) return []
 		return this.currentScreen.widgetsLayers
 			.filter((item: WidgetLayer) =>
 				this.currentScene.id === '0' || this.currentScene.id === '-1'

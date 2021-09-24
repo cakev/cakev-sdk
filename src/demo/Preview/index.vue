@@ -1,13 +1,14 @@
-<template lang="pug">
-editor
+﻿<template lang="pug">
+prev
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import editor from '@dorring/sdk/vue3/components/editor/index.vue'
+import prev from '@dorring/sdk/vue3/components/preview/index.vue'
 
 export default defineComponent({
+	name: 'preview',
 	components: {
-		editor,
+		prev,
 	},
 })
 </script>

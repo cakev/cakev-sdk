@@ -29,7 +29,7 @@ import contextmenuZoom from '@dorring/sdk/vue3/components/contextmenu-zoom/index
 import contextmenuScreen from '@dorring/sdk/vue3/components/contextmenu-screen/index.vue'
 import dSvg from '@dorring/sdk/vue3/components-style/d-svg/index.vue'
 import blur from './blur'
-import preview from './preview'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
 	name: 'editor-header',
@@ -43,6 +43,7 @@ export default defineComponent({
 	},
 	setup() {
 		const manager: Manager = Manager.Instance()
+		const router = useRouter()
 		const state = reactive({
 			dom: {},
 			manager,
@@ -57,6 +58,21 @@ export default defineComponent({
 		}
 		const hideZoomMenu = () => {
 			state.zoomMenuState = false
+		}
+		const preview = () => {
+			state.manager.screenCache.add(
+				'screen-preview',
+				JSON.stringify({
+					widgets: state.manager.screen.currentScreen.widgets,
+					scenes: state.manager.screen.currentScreen.scenes,
+					widgetsLayers: state.manager.screen.currentScreen.widgetsLayers,
+					layoutMode: state.manager.screen.currentScreen.layoutMode,
+					width: state.manager.screen.currentScreen.width,
+					height: state.manager.screen.currentScreen.height,
+					backgroundColor: state.manager.screen.currentScreen.backgroundColor,
+				}),
+			)
+			router.push('/preview')
 		}
 		onBeforeMount(() => {
 			if (!manager.screen.currentScreen) {

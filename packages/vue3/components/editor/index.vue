@@ -22,7 +22,7 @@ import settingWidget from '@dorring/sdk/vue3/components/setting-widget/index.vue
 import editorScene from '@dorring/sdk/vue3/components/editor-scene/index.vue'
 
 export default defineComponent({
-	name: 'editor',
+	name: 'dorring-editor',
 	components: {
 		settingEditor,
 		editorHeader,
