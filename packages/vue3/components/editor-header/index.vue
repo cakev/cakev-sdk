@@ -12,6 +12,7 @@
 		d-svg.editor-header-icon(type="el-icon-arrow-down", @click="showNameMenu", v-show="!editName")
 		contextmenu-screen(v-if="nameMenuState", :list="nameList")
 	.editor-header-right.fn-flex.pos-r(v-clickoutside="hideZoomMenu")
+		d-svg.editor-header-play.cursor-pointer(@click="preview" type="el-icon-caret-right" :size="20")
 		span(@click="showZoomMenu") {{Math.round(manager.temporary.zoom *100)}}%
 		d-svg.editor-header-icon(type="el-icon-arrow-down", @click="showZoomMenu")
 		contextmenu-zoom(v-if="zoomMenuState" :list="zoomList")
@@ -28,6 +29,7 @@ import contextmenuZoom from '@dorring/sdk/vue3/components/contextmenu-zoom/index
 import contextmenuScreen from '@dorring/sdk/vue3/components/contextmenu-screen/index.vue'
 import dSvg from '@dorring/sdk/vue3/components-style/d-svg/index.vue'
 import blur from './blur'
+import preview from './preview'
 
 export default defineComponent({
 	name: 'editor-header',
@@ -67,6 +69,7 @@ export default defineComponent({
 			showZoomMenu: () => showZoomMenu(state),
 			hideNameMenu,
 			hideZoomMenu,
+			preview,
 			blur: () => blur(state),
 			dblclick: () => dblclick(state),
 		}
@@ -74,6 +77,13 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+.editor-header-play {
+	margin-right: 10px;
+	border: 1px solid transparent;
+	&:hover {
+		opacity: 0.8;
+	}
+}
 .editor-header-icon {
 	height: 100%;
 	align-items: center;

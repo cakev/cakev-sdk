@@ -30,6 +30,7 @@
 	"dependencies": {
 		"axios": "^0.21.1",
 		"core-js": "^3.6.5",
+		"dexie": "^3.0.3",
 		"element-plus": "^1.0.2-beta.71",
 		"md5": "^2.3.0",
 		"tslib": "^2.3.1",
