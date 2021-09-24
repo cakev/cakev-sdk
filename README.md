@@ -1,4 +1,5 @@
 # dorring-sdk
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/fish-uncle/dorring-sdk.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/fish-uncle/dorring-sdk/context:javascript)
 ![https://www.npmjs.org/package/@dorring/sdk](https://img.shields.io/npm/v/@dorring/sdk.svg)
 ![http://img.badgesize.io/https://unpkg.com/@dorring/sdk/dist/dorring.umd.min.js?compression=gzip&label=gzip%20size:%20JS](http://img.badgesize.io/https://unpkg.com/@dorring/sdk/dist/dorring.umd.min.js?compression=gzip&label=gzip%20size:%20JS)
 ![http://img.badgesize.io/https://unpkg.com/@dorring/sdk/dist/dorring.css?compression=gzip&label=gzip%20size:%20CSS](http://img.badgesize.io/https://unpkg.com/@dorring/sdk/dist/dorring.css?compression=gzip&label=gzip%20size:%20CSS)
