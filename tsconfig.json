@@ -21,7 +21,7 @@
 		"noImplicitAny": false, // 在表达式和声明上有隐含的 any类型时报错
 		"noImplicitThis": false, // 在"this"表达式上有隐含的 any类型时报错
 		"pretty": true, // 给错误和消息设置样式，使用颜色和上下文。
-		"types": ["webpack-env"],
+		"types": ["webpack-env", "jest"],
 		"paths": {
 			"@dorring/sdk/*": ["packages/*"]
 		},

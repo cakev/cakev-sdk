@@ -25,6 +25,8 @@
 		"build:dts": "rimraf dist/types && esno build/gen-dts.ts",
 		"build:umd": "vue-cli-service build --mode build --target lib --dest dist packages/index.ts --name dorring --no-clean",
 		"build": "npm run build:dts && npm run build:umd",
+		"test:unit": "jest",
+		"test:cover": "jest --collect-coverage",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
 	"dependencies": {
@@ -49,6 +51,7 @@
 		"@commitlint/cli": "^9.1.2",
 		"@commitlint/config-conventional": "^13.1.0",
 		"@prettier/plugin-pug": "^1.16.5",
+		"@types/jest": "^27.0.2",
 		"@types/klaw-sync": "^6.0.1",
 		"@typescript-eslint/eslint-plugin": "^4.20.0",
 		"@typescript-eslint/parser": "^4.20.0",
@@ -61,6 +64,7 @@
 		"@vue/eslint-config-standard": "^5.1.2",
 		"@vue/eslint-config-typescript": "^7.0.0",
 		"babel-eslint": "^8.1.1",
+		"babel-jest": "^27.2.1",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"commitizen": "^4.2.3",
 		"commitlint-config-cz": "^0.13.2",
@@ -77,6 +81,7 @@
 		"esno": "^0.9.1",
 		"git-cz": "^4.7.6",
 		"husky": "^4.3.8",
+		"jest": "^27.2.1",
 		"klaw-sync": "^6.0.0",
 		"lint-staged": "^11.1.2",
 		"node-sass": "^4.14.1",
@@ -93,8 +98,10 @@
 		"stylelint-config-standard": "^20.0.0",
 		"stylelint-scss": "^3.19.0",
 		"svg-sprite-loader": "^6.0.9",
+		"ts-jest": "^27.0.5",
 		"ts-morph": "^12.0.0",
 		"typescript": "^4.4.2",
+		"vue-jest": "^3.0.7",
 		"webpack-bundle-analyzer": "^3.9.0"
 	},
 	"author": "fish uncle",
