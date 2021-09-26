@@ -1,12 +1,12 @@
 import Dexie from 'dexie'
 
-interface ImageCacheDB {
+type ImageCacheDB = {
 	id?: number
 	picture?: Blob
 	name?: string
 }
 
-interface ScreenCacheDB {
+type ScreenCacheDB = {
 	id?: number
 	data?: string
 	name?: string
