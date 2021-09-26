@@ -3,5 +3,9 @@ language: node_js
 node_js: 14
 install:
     - npm install
-script:
+before_script:
     - npm run build
+script:
+    - npm run test
+after_success:
+    - npm run coverall

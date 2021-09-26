@@ -25,8 +25,8 @@
 		"build:dts": "rimraf dist/types && esno build/gen-dts.ts",
 		"build:umd": "vue-cli-service build --mode build --target lib --dest dist packages/index.ts --name dorring --no-clean",
 		"build": "npm run build:dts && npm run build:umd",
-		"test:unit": "jest",
-		"test:cover": "jest --collect-coverage",
+		"test": "jest",
+		"coverall": "cat coverage/lcov.info | coveralls",
 		"stylelint": "stylelint 'src/**/*.{scss,vue}' --config '.stylelintrc.js' --fix"
 	},
 	"dependencies": {
@@ -73,6 +73,7 @@
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"commitizen": "^4.2.3",
 		"commitlint-config-cz": "^0.13.2",
+		"coveralls": "^3.1.1",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^6.7.2",
 		"eslint-plugin-flowtype": "^5.4.0",

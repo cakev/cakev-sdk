@@ -3,6 +3,7 @@ const path = require('path')
 module.exports = {
 	rootDir: path.resolve(__dirname),
 	clearMocks: true,
+	collectCoverage: true,
 	coverageDirectory: 'coverage',
 	coverageProvider: 'v8',
 	moduleFileExtensions: ['vue', 'js', 'json', 'jsx', 'ts', 'tsx', 'node'],
