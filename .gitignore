@@ -49,3 +49,4 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+/coverage/

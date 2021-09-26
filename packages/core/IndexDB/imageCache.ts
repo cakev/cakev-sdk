@@ -1,6 +1,6 @@
 import BaseCache from '@dorring/sdk/core/IndexDB/baseCache'
 
-interface ImageCacheDB {
+type ImageCacheDB = {
 	id?: number
 	picture?: Blob
 	name?: string

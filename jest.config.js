@@ -1,14 +1,21 @@
+const path = require('path')
+
 module.exports = {
-	moduleFileExtensions: ['vue', 'js', 'ts'],
+	rootDir: path.resolve(__dirname),
+	clearMocks: true,
+	coverageDirectory: 'coverage',
+	coverageProvider: 'v8',
+	moduleFileExtensions: ['vue', 'js', 'json', 'jsx', 'ts', 'tsx', 'node'],
+	moduleNameMapper: {
+		'@dorring/sdk/(.*)$': '<rootDir>/packages/$1',
+	},
 	preset: 'ts-jest',
 	testEnvironment: 'jsdom',
+	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
+	setupFiles: ['<rootDir>/tests/globals-test.ts'],
 	transform: {
 		'^.+\\.vue$': 'vue-jest',
-		'^.+\\.ts$': 'ts-jest',
-	},
-	// 匹配 __tests__ 目录下的 .js/.ts 文件 或 xx.test.js/ts xx.spec.js/ts
-	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',
-	moduleNameMapper: {
-		'^@/(.*)$': '<rootDir>/src/$1', // 配置 jest 下 @ -> src
+		'^.+\\js$': 'babel-jest',
+		'^.+\\.(t|j)sx?$': 'ts-jest',
 	},
 }

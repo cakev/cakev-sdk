@@ -1,26 +1,30 @@
 import BaseCache from '@dorring/sdk/core/IndexDB/baseCache'
 
-interface ScreenCacheDB {
+type ScreenCacheDB = {
 	id?: number
 	data?: string
 	name?: string
 }
 
 export default class ScreenCache extends BaseCache {
-	add(name: string, data) {
-		this.db.screenCache.get({ name }).then((collection: ScreenCacheDB) => {
-			if (collection) {
-				this.db.screenCache.put({
-					id: collection.id,
-					name,
-					data: JSON.stringify(data),
-				})
-			} else {
-				this.db.screenCache.put({
-					name,
-					data: JSON.stringify(data),
-				})
-			}
+	async add(name: string, data) {
+		return new Promise(resolve => {
+			this.db.screenCache.get({ name }).then((collection: ScreenCacheDB) => {
+				if (collection) {
+					this.db.screenCache.put({
+						id: collection.id,
+						name,
+						data: JSON.stringify(data),
+					})
+					resolve(null)
+				} else {
+					this.db.screenCache.put({
+						name,
+						data: JSON.stringify(data),
+					})
+					resolve(null)
+				}
+			})
 		})
 	}
 

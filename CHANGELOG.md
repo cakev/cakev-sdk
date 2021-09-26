@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.1](https://github.com/fish-uncle/dorring-sdk/compare/v0.0.1...v0.0.1-alpha.1) (2021-09-26)
+
+
+### Features
+
+* 🎸 添加dts自动生成 ([2265699](https://github.com/fish-uncle/dorring-sdk/commit/2265699f3e73bc9c97f910699cff638fe54a6b56))
+* 🎸 添加indexdb 缓存 ([922990f](https://github.com/fish-uncle/dorring-sdk/commit/922990fa097d5908897014f26a182ccf0be65ded))
+* 🎸 添加打包支持 ([d7de8fb](https://github.com/fish-uncle/dorring-sdk/commit/d7de8fb59dd01d03fb3999a8cfaf4d56822576f5))
+* 🎸 添加组件描边功能 ([9d86fdc](https://github.com/fish-uncle/dorring-sdk/commit/9d86fdca00d843e4f5d8a82491c7fe00a9c7a92f)), closes [#2](https://github.com/fish-uncle/dorring-sdk/issues/2)
+* 🎸 添加预览页 ([01702e5](https://github.com/fish-uncle/dorring-sdk/commit/01702e56548cf5e73ea5143e4dad21abe082f250)), closes [#3](https://github.com/fish-uncle/dorring-sdk/issues/3)
+* 🎸 组件改为局部引入方式 ([5297999](https://github.com/fish-uncle/dorring-sdk/commit/5297999dc9761ab4d8e11af4c8718bd525f9e0d8))
+* 🎸 选中时优化提示组件宽高 ([397219b](https://github.com/fish-uncle/dorring-sdk/commit/397219b383058a6228276697810793f05c3700b7)), closes [#4](https://github.com/fish-uncle/dorring-sdk/issues/4)
+* 🎸 颜色添加多色渐变功能 ([a07da69](https://github.com/fish-uncle/dorring-sdk/commit/a07da69fa633d32546f7b9f56c1189f1cb8dd24a)), closes [#6](https://github.com/fish-uncle/dorring-sdk/issues/6)
+* 🎸 颜色添加多色渐变功能 ([948718c](https://github.com/fish-uncle/dorring-sdk/commit/948718c1c9ccc5a8e3cbac41e42a48a481319eba)), closes [#6](https://github.com/fish-uncle/dorring-sdk/issues/6)
+
+
+### Bug Fixes
+
+* 🐞 build failed ([0148ea6](https://github.com/fish-uncle/dorring-sdk/commit/0148ea64d9539a6e7fc425ccc3e3e869fe7d56d4))
+* 🐞 打包ts类型不完整 ([176d04f](https://github.com/fish-uncle/dorring-sdk/commit/176d04fb75bb6b33bfe43f88fcdbbca0f4f1b6be)), closes [#1](https://github.com/fish-uncle/dorring-sdk/issues/1)
+* 🐞 组件拖拽时，宽高可变为负值 ([e8f9abf](https://github.com/fish-uncle/dorring-sdk/commit/e8f9abfd2ede9e7112e3c41cd8eecfde7eed8359)), closes [#5](https://github.com/fish-uncle/dorring-sdk/issues/5)
+
 ### 0.0.1-alpha.0 (2021-09-05)
 
 
