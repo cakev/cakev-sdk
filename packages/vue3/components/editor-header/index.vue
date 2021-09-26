@@ -13,7 +13,7 @@
 		contextmenu-screen(v-if="nameMenuState", :list="nameList")
 	.editor-header-right.fn-flex.pos-r(v-clickoutside="hideZoomMenu")
 		d-svg.editor-header-play.cursor-pointer(@click="preview" type="el-icon-caret-right" :size="20")
-		span(@click="showZoomMenu") {{Math.round(manager.temporary.zoom *100)}}%
+		span.text-right(@click="showZoomMenu") {{Math.round(manager.temporary.zoom *100)}}%
 		d-svg.editor-header-icon(type="el-icon-arrow-down", @click="showZoomMenu")
 		contextmenu-zoom(v-if="zoomMenuState" :list="zoomList")
 </template>
@@ -94,8 +94,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .editor-header-play {
-	margin-right: 10px;
-	border: 1px solid transparent;
 	&:hover {
 		opacity: 0.8;
 	}
@@ -130,6 +128,9 @@ export default defineComponent({
 	align-items: center;
 	padding-right: 18px;
 	color: #fff;
+	span {
+		width: 30px;
+	}
 }
 .editor-header {
 	height: 48px;
