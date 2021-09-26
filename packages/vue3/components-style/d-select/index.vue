@@ -1,5 +1,5 @@
 <template lang="pug">
-el-select.d-select.pos-r(:disabled="disabled" v-model="currentVal" :class="{'d-select-focus':focusState}",@focus="focus" @blur="blur")
+el-select.d-select.pos-r(:disabled="disabled" v-model="currentVal" :class="{'d-select-focus':focusState}", @focus="focus" @blur="blur")
 	el-option(v-for="item in list" :value="item.value" :label="item.label")
 </template>
 <script lang="ts">

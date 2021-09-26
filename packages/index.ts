@@ -1,5 +1,6 @@
 // style
 import './vue3/scss/index.scss'
+import './vue3/scss/element-theme.scss'
 import './vue3/scss/dorring.scss'
 
 // core components
