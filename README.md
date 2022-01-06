@@ -13,7 +13,7 @@
 通过灵活多样的图表形式对庞杂的数据进行直观、清晰的可视化呈现，可视化大屏方便快速地洞察复杂业务背后的数据本质，帮助管理者及时发现问题，指导相关决策。
 
 ## 文档
-[项目地址](http://dorring.shenzhepei.com)
+[项目地址](https://fish-uncle.github.io/dorring-doc/)
 
 [文档地址](https://www.yuque.com/books/share/37da6b4f-cfd5-420b-91b3-da578a2a89fd)
 
