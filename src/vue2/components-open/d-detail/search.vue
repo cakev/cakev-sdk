@@ -8,58 +8,61 @@
 			li.pointer(v-for="(k, i) in searchResult", :key="i", @click="check(k)") {{ k.config.widget.name }}
 </template>
 <script>
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 import { Icon, Input } from 'view-design'
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
-import Widget from '@/core/Widget/normal'
 
-@Component({
+export default {
+	name: 'd-search',
+	directives: { ClickOutside },
 	components: {
 		'i-icon': Icon,
 		'i-input': Input,
 	},
-	directives: { ClickOutside },
-})
-export default class DSearch extends Vue {
-	searchResult = []
-	keyword = ''
-	editor = Editor.Instance()
-	@Prop() value
-	@Prop() hide
-
-	@Watch('value')
-	valueChange(val) {
-		if (val) {
-			this.keyword = ''
+	props: {
+		value: {},
+		hide: {},
+	},
+	data() {
+		return {
+			searchResult: [],
+			keyword: '',
+			editor: Editor.Instance(),
 		}
-	}
-
-	@Watch('keyword')
-	keywordChange(val) {
-		if (!val) {
-			this.searchResult = []
-			return
-		}
-		let arr = []
-		for (const key in this.editor.screen.screenWidgets) {
-			if (
-				this.editor.screen.screenWidgets[key].config.widget.name.includes(val) &&
-				this.editor.screen.screenWidgets[key].scene !== -1
-			) {
-				arr.push(this.editor.screen.screenWidgets[key])
+	},
+	watch: {
+		value: val => {
+			if (val) {
+				this.keyword = ''
 			}
-		}
-		this.searchResult = arr
-	}
-	close() {
-		this.hide()
-	}
-	check(widget) {
-		this.editor.selectSceneIndex(widget.scene)
-		this.editor.selectWidget(widget)
-		this.hide()
-	}
+		},
+		keyword: val => {
+			if (!val) {
+				this.searchResult = []
+				return
+			}
+			let arr = []
+			for (const key in this.editor.screen.screenWidgets) {
+				if (
+					this.editor.screen.screenWidgets[key].config.widget.name.includes(val) &&
+					this.editor.screen.screenWidgets[key].scene !== -1
+				) {
+					arr.push(this.editor.screen.screenWidgets[key])
+				}
+			}
+			this.searchResult = arr
+		},
+	},
+	methods: {
+		close() {
+			this.hide()
+		},
+		check(widget) {
+			this.editor.selectSceneIndex(widget.scene)
+			this.editor.selectWidget(widget)
+			this.hide()
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

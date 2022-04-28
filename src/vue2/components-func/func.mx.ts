@@ -16,7 +16,6 @@ import {
 	Upload,
 	Modal,
 } from 'view-design'
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import dRightSwiper from '@/vue2/components-right/d-right-swiper/index.vue'
 import dRightSwiperList from '@/vue2/components-right/d-right-swiper-list/index.vue'
 import dRightSwiperEye from '@/vue2/components-right/d-right-swiper-eye/index.vue'
@@ -24,8 +23,7 @@ import dRightControl from '@/vue2/components-right/d-right-control/index.vue'
 import dInput from '@/vue2/components-style/d-input/index.vue'
 import Editor from '@/core/Editor'
 
-@Component({
-	// @ts-ignore
+export default {
 	components: {
 		dRightSwiper,
 		dRightControl,
@@ -47,62 +45,64 @@ import Editor from '@/core/Editor'
 		CheckboxGroup,
 		Checkbox,
 	},
-})
-export default class Func extends Vue {
-	editor: Editor = Editor.Instance()
-	@Prop() config
-	@Prop() parentProp // group时会有
-	@Prop() parentIndex // group时会有
-
-	get fixedConfig() {
-		if (this.parentProp) {
-			return {
-				...this.config,
-				prop: `config.config.${this.parentProp}.${this.config.prop}`,
-			}
-		} else {
-			return this.config
+	data() {
+		return {
+			editor: Editor.Instance(),
 		}
-	}
-
-	get obj() {
-		if (!this.fixedConfig.prop) return null
-		let res = this.editor.currentWidget
-		if (res) {
+	},
+	props: {
+		config: {},
+		parentProp: {},
+		parentIndex: {},
+	},
+	computed: {
+		fixedConfig() {
+			if (this.parentProp) {
+				return {
+					...this.config,
+					prop: `config.config.${this.parentProp}.${this.config.prop}`,
+				}
+			} else {
+				return this.config
+			}
+		},
+		obj() {
+			if (!this.fixedConfig.prop) return null
+			let res = this.editor.currentWidget
+			if (res) {
+				const props = this.fixedConfig.prop.split('.')
+				props.length = props.length - 1
+				props.forEach(v => {
+					res = res[v]
+				})
+				return this.parentProp ? res[this.parentIndex] : res
+			}
+			return {}
+		},
+		inputKey() {
+			if (this.parentProp) return this.config.prop
+			if (!this.fixedConfig.prop) return null
 			const props = this.fixedConfig.prop.split('.')
+			return props.reverse()[0]
+		},
+	},
+	methods: {
+		getItemValue(keyString) {
+			let res = this.editor.currentWidget
+			const props = keyString.split('.')
+			props.forEach(v => {
+				res = res[v]
+			})
+			return res
+		},
+		getItemObj(keyString) {
+			let res = this.editor.currentWidget
+			const props = keyString.split('.')
 			props.length = props.length - 1
 			props.forEach(v => {
 				res = res[v]
 			})
-			return this.parentProp ? res[this.parentIndex] : res
-		}
-		return {}
-	}
-
-	// config.api.data，返回‘data‘
-	get inputKey() {
-		if (this.parentProp) return this.config.prop
-		if (!this.fixedConfig.prop) return null
-		const props = this.fixedConfig.prop.split('.')
-		return props.reverse()[0]
-	}
-
-	getItemValue(keyString) {
-		let res = this.editor.currentWidget
-		const props = keyString.split('.')
-		props.forEach(v => {
-			res = res[v]
-		})
-		return res
-	}
-
-	getItemObj(keyString) {
-		let res = this.editor.currentWidget
-		const props = keyString.split('.')
-		props.length = props.length - 1
-		props.forEach(v => {
-			res = res[v]
-		})
-		return res
-	}
+			return res
+		},
+	},
 }

@@ -37,94 +37,95 @@ dr(
 <script lang="ts">
 import dr from '@/vue2/components-base/d-dr/index.vue'
 import dDrKuang from '@/vue2/components-base/d-dr-kuang/index.vue'
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
-@Component({
+
+export default {
+	name: 'item-card',
 	components: {
 		dr,
 		dDrKuang,
 	},
-})
-export default class ItemCard extends Vue {
-	editor: Editor = Editor.Instance()
-
-	@Prop() id
-	@Prop() zIndex
-	@Prop() getRefLineParams
-
-	get item() {
-		return this.editor.screen.screenWidgets[this.id]
-	}
-
-	get style() {
+	data() {
 		return {
-			transform: `translate3d(${this.item.config.layout.position.left}px, ${this.item.config.layout.position.top}px,0)`,
-			width: this.item.config.layout.size.width + 'px',
-			height: this.item.config.layout.size.height + 'px',
-			zIndex: this.zIndex,
+			editor: Editor.Instance(),
 		}
-	}
-	handleClick(e, item): void {
-		if (e.shiftKey) {
-			this.editor.selectWidget(item)
-		} else {
+	},
+	props: {
+		id: {},
+		zIndex: {},
+		getRefLineParams: {},
+	},
+	computed: {
+		item() {
+			return this.editor.screen.screenWidgets[this.id]
+		},
+		style() {
+			return {
+				transform: `translate3d(${this.item.config.layout.position.left}px, ${this.item.config.layout.position.top}px,0)`,
+				width: this.item.config.layout.size.width + 'px',
+				height: this.item.config.layout.size.height + 'px',
+				zIndex: this.zIndex,
+			}
+		},
+	},
+	methods: {
+		handleClick(e, item): void {
+			if (e.shiftKey) {
+				this.editor.selectWidget(item)
+			} else {
+				this.editor.unSelectWidget()
+				this.editor.selectWidget(item)
+			}
+		},
+		showRightMenu(e: MouseEvent, item: any): void {
+			e.preventDefault()
 			this.editor.unSelectWidget()
 			this.editor.selectWidget(item)
-		}
-	}
-
-	showRightMenu(e: MouseEvent, item: any): void {
-		e.preventDefault()
-		this.editor.unSelectWidget()
-		this.editor.selectWidget(item)
-		const rightMenu = document.getElementById('widget-right-menu')
-		rightMenu.classList.add('active')
-		const rulerRightMenu = document.getElementById('ruler-right-menu')
-		rulerRightMenu.classList.remove('active')
-		if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
-			rightMenu.style.top = e.clientY - rightMenu.scrollHeight + 'px'
-		} else {
-			rightMenu.style.top = e.clientY + 'px'
-		}
-		rightMenu.style.left = e.clientX + 'px'
-	}
-
-	onDragStop(left: number, top: number): void {
-		if (this.editor.currentWidget) {
-			const diffLeft = left - this.editor.currentWidget.config.layout.position.left
-			const diffTop = top - this.editor.currentWidget.config.layout.position.top
-			this.editor.currentWidget.config.layout.position.left = left
-			this.editor.currentWidget.config.layout.position.top = top
-			this.onGroupDragStop(
-				this.editor.screen.screenWidgetsLays[this.editor.currentWidgetList[0]],
-				diffLeft,
-				diffTop,
-			)
-		}
-	}
-
-	onGroupDragStop(item: any, diffLeft: number, diffTop: number): void {
-		if (item.children) {
-			if (Object.values(item.children).length > 0)
-				for (let key in item.children) {
-					this.editor.screen.screenWidgets[key].config.layout.position.left =
-						Number(this.editor.screen.screenWidgets[key].config.layout.position.left) + diffLeft
-					this.editor.screen.screenWidgets[key].config.layout.position.top =
-						Number(this.editor.screen.screenWidgets[key].config.layout.position.top) + diffTop
-					this.onGroupDragStop(item.children[key], diffLeft, diffTop)
-					this.editor.screen.screenWidgets = { ...this.editor.screen.screenWidgets }
-				}
-		}
-	}
-
-	onResizeStop(width: number, height: number): void {
-		this.editor.currentWidget.config.layout.size.width = width
-		this.editor.currentWidget.config.layout.size.height = height
-	}
-
-	widgetEditable({ config }): boolean {
-		return !config.widget.locked
-	}
+			const rightMenu = document.getElementById('widget-right-menu')
+			rightMenu.classList.add('active')
+			const rulerRightMenu = document.getElementById('ruler-right-menu')
+			rulerRightMenu.classList.remove('active')
+			if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
+				rightMenu.style.top = e.clientY - rightMenu.scrollHeight + 'px'
+			} else {
+				rightMenu.style.top = e.clientY + 'px'
+			}
+			rightMenu.style.left = e.clientX + 'px'
+		},
+		onDragStop(left: number, top: number): void {
+			if (this.editor.currentWidget) {
+				const diffLeft = left - this.editor.currentWidget.config.layout.position.left
+				const diffTop = top - this.editor.currentWidget.config.layout.position.top
+				this.editor.currentWidget.config.layout.position.left = left
+				this.editor.currentWidget.config.layout.position.top = top
+				this.onGroupDragStop(
+					this.editor.screen.screenWidgetsLays[this.editor.currentWidgetList[0]],
+					diffLeft,
+					diffTop,
+				)
+			}
+		},
+		onGroupDragStop(item: any, diffLeft: number, diffTop: number): void {
+			if (item.children) {
+				if (Object.values(item.children).length > 0)
+					for (let key in item.children) {
+						this.editor.screen.screenWidgets[key].config.layout.position.left =
+							Number(this.editor.screen.screenWidgets[key].config.layout.position.left) + diffLeft
+						this.editor.screen.screenWidgets[key].config.layout.position.top =
+							Number(this.editor.screen.screenWidgets[key].config.layout.position.top) + diffTop
+						this.onGroupDragStop(item.children[key], diffLeft, diffTop)
+						this.editor.screen.screenWidgets = { ...this.editor.screen.screenWidgets }
+					}
+			}
+		},
+		onResizeStop(width: number, height: number): void {
+			this.editor.currentWidget.config.layout.size.width = width
+			this.editor.currentWidget.config.layout.size.height = height
+		},
+		widgetEditable({ config }): boolean {
+			return !config.widget.locked
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

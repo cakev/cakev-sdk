@@ -22,37 +22,40 @@ li.pointer.pos-r.d-left-scene-list-li(
 	scene-group(:childList="item.children")
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
 
-@Component({
+export default {
 	components: {
 		'i-icon': Icon,
 	},
-})
-export default class DLeftSceneItem extends Vue {
-	editScene = false
-	copyModel = false
-	editor: Editor = Editor.Instance()
-	@Prop() item
-
-	handleClick(e, item): void {
-		if (e.shiftKey) {
-			this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
-		} else {
-			this.editor.unSelectWidget()
-			this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+	name: 'd-left-scene-item',
+	data() {
+		return {
+			editScene: false,
+			copyModel: false,
+			editor: Editor.Instance(),
 		}
-	}
-
-	handleUnLock(id: string): void {
-		this.editor.screen.screenWidgets[id].config.widget.locked = false
-	}
-
-	handleTaggerHide(id: string): void {
-		this.editor.screen.screenWidgetsLays[id].hide = !this.editor.screen.screenWidgetsLays[id].hide
-	}
+	},
+	props: {
+		item: {},
+	},
+	methods: {
+		handleClick(e, item): void {
+			if (e.shiftKey) {
+				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+			} else {
+				this.editor.unSelectWidget()
+				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+			}
+		},
+		handleUnLock(id: string): void {
+			this.editor.screen.screenWidgets[id].config.widget.locked = false
+		},
+		handleTaggerHide(id: string): void {
+			this.editor.screen.screenWidgetsLays[id].hide = !this.editor.screen.screenWidgetsLays[id].hide
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

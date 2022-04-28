@@ -4,29 +4,32 @@
 	e-input(v-model="currentVal", width="62px", height="26px")
 </template>
 <script>
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { Slider } from 'view-design'
 import eInput from '@/vue2/components-style/e-input/index.vue'
 
-@Component({
+export default {
+	name: 'd-slider',
 	components: {
 		'i-slider': Slider,
 		eInput,
 	},
-})
-export default class DSlider extends Vue {
-	@Prop() value
-	currentVal = this.value
-	@Prop() type
-	@Watch('value')
-	onValueChange(val) {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val) {
-		this.$emit('input', val)
-	}
+	props: {
+		value: {},
+		type: {},
+	},
+	data() {
+		return {
+			currentVal: this.value,
+		}
+	},
+	watch: {
+		value: val => {
+			this.currentVal = val
+		},
+		currentVal: val => {
+			this.$emit('input', val)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -7,11 +7,11 @@ li.fn-flex.flex-row
 		img.d-footer-hot-key-img(v-if="child.type === 'img'", :src="child.value")
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class ItemCard extends Vue {
-	@Prop() item
+export default {
+	name: 'item-card',
+	props: {
+		item: {},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -6,24 +6,26 @@ component(
 	:parentIndex="parentIndex")
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class DManageItem extends Vue {
-	@Prop({ type: Object }) config: any
-	@Prop() parentProp: any
-	@Prop() parentIndex: any
-	currentComponent: any = {}
-	created(): void {
-		const components = require.context(
-			`../../components-func`,
-			true,
-			/\.(vue)$/,
-		)
+export default {
+	name: 'd-manage-item',
+	props: {
+		config: {
+			type: Object,
+		},
+		parentProp: {},
+		parentIndex: {},
+	},
+	data() {
+		return {
+			currentComponent: {},
+		}
+	},
+	created() {
+		const components = require.context(`../../components-func`, true, /\.(vue)$/)
 		components.keys().forEach(child => {
 			const name = child.split('/')[1].replace('.vue', '')
 			this.currentComponent[name] = components(child).default
 		})
-	}
+	},
 }
 </script>

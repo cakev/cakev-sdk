@@ -13,14 +13,15 @@ d-drawer(title="全局请求设置", v-model="currentVal")
 			height="200")
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import eInput from '@/vue2/components-style/e-input/index.vue'
 import eLabel from '@/vue2/components-style/e-label/index.vue'
 import Editor from '@/core/Editor'
 const editor = require('vue2-ace-editor')
 import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 import EFormItem from '@/vue2/components-style/e-form-item/index.vue'
-@Component({
+
+export default {
+	name: 'global-request-config',
 	components: {
 		editor,
 		eInput,
@@ -28,31 +29,36 @@ import EFormItem from '@/vue2/components-style/e-form-item/index.vue'
 		DDrawer,
 		EFormItem,
 	},
-})
-export default class GlobalRequestConfig extends Vue {
-	@Prop(Boolean) value!: boolean
-	currentVal = false
-	editor: Editor = Editor.Instance()
-
-	@Watch('value')
-	onValueChange(val: boolean): void {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val: boolean): void {
-		this.$emit('input', val)
-	}
-
-	editorInit(): void {
-		require('brace/ext/language_tools')
-		require('brace/mode/html')
-		require('brace/mode/javascript')
-		require('brace/mode/less')
-		require('brace/mode/json')
-		require('brace/theme/idle_fingers')
-		require('brace/snippets/javascript')
-	}
+	props: {
+		value: {
+			type: Boolean,
+		},
+	},
+	data() {
+		return {
+			currentVal: false,
+			editor: Editor.Instance(),
+		}
+	},
+	watch: {
+		value: (val: boolean) => {
+			this.currentVal = val
+		},
+		currentVal: (val: boolean) => {
+			this.$emit('input', val)
+		},
+	},
+	methods: {
+		editorInit(): void {
+			require('brace/ext/language_tools')
+			require('brace/mode/html')
+			require('brace/mode/javascript')
+			require('brace/mode/less')
+			require('brace/mode/json')
+			require('brace/theme/idle_fingers')
+			require('brace/snippets/javascript')
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -7,82 +7,89 @@ d-drawer(title="组件升级", v-model="currentVal")
 		.row(v-for="(k, i) in data", :key="i")
 			checkbox(:label="k.componentTitle")
 </template>
-
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Checkbox, CheckboxGroup } from 'view-design'
 import Editor from '@/core/Editor'
 import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 
-@Component({
+export default {
+	name: 'update-drawer',
 	components: {
 		CheckboxGroup,
 		Checkbox,
 		DDrawer,
 	},
-})
-export default class UpdateDrawer extends Vue {
-	@Prop(Boolean) value!: boolean
-	@Prop(Array) data: any
-	currentVal = false
-	checkAllGroup = []
-	checkAll = false
-	indeterminate = false
-	editor: Editor = Editor.Instance()
-
-	@Watch('value')
-	onValueChange(val: boolean): void {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val: boolean): void {
-		this.$emit('input', val)
-	}
-
-	handleCheckAll(): void {
-		if (this.indeterminate) {
-			this.checkAll = false
-		} else {
-			this.checkAll = !this.checkAll
+	props: {
+		value: {
+			type: Boolean,
+		},
+		data: {
+			type: Array,
+		},
+	},
+	data() {
+		return {
+			currentVal: false,
+			checkAllGroup: [],
+			checkAll: false,
+			indeterminate: false,
+			editor: Editor.Instance(),
 		}
-		this.indeterminate = false
-
-		if (this.checkAll) {
-			this.checkAllGroup = this.data.map((v: any) => v.componentTitle)
-		} else {
-			this.checkAllGroup = []
-		}
-	}
-	checkAllGroupChange(data): void {
-		if (data.length === this.data.length) {
+	},
+	watch: {
+		value: (val: boolean) => {
+			this.currentVal = val
+		},
+		currentVal: (val: boolean) => {
+			this.$emit('input', val)
+		},
+	},
+	methods: {
+		handleCheckAll(): void {
+			if (this.indeterminate) {
+				this.checkAll = false
+			} else {
+				this.checkAll = !this.checkAll
+			}
 			this.indeterminate = false
-			this.checkAll = true
-		} else if (data.length > 0) {
-			this.indeterminate = true
-			this.checkAll = false
-		} else {
-			this.indeterminate = false
-			this.checkAll = false
-		}
-	}
-	update(): void {
-		if (this.checkAllGroup.length === 0) return
-		this.$Modal.confirm({
-			title: `更新组件`,
-			content: '更新组件有可能导致组件不可用，如果有重要数据请备份大屏。是否确定要更新？',
-			onOk: () => {
-				this.checkAllGroup.forEach((v: any) => {
-					const t = this.data.find((m: any) => m.componentTitle === v)
-					this.editor.screen.screenWidgets[t.componentId].config.widget.componentVersion = t.componentVersion
-					this.currentVal = false
-					this.$Message.success('组件升级成功')
-				})
-			},
-			okText: '确定',
-			cancelText: '取消',
-		})
-	}
+
+			if (this.checkAll) {
+				this.checkAllGroup = this.data.map((v: any) => v.componentTitle)
+			} else {
+				this.checkAllGroup = []
+			}
+		},
+		checkAllGroupChange(data): void {
+			if (data.length === this.data.length) {
+				this.indeterminate = false
+				this.checkAll = true
+			} else if (data.length > 0) {
+				this.indeterminate = true
+				this.checkAll = false
+			} else {
+				this.indeterminate = false
+				this.checkAll = false
+			}
+		},
+		update(): void {
+			if (this.checkAllGroup.length === 0) return
+			this.$Modal.confirm({
+				title: `更新组件`,
+				content: '更新组件有可能导致组件不可用，如果有重要数据请备份大屏。是否确定要更新？',
+				onOk: () => {
+					this.checkAllGroup.forEach((v: any) => {
+						const t = this.data.find((m: any) => m.componentTitle === v)
+						this.editor.screen.screenWidgets[t.componentId].config.widget.componentVersion =
+							t.componentVersion
+						this.currentVal = false
+						this.$Message.success('组件升级成功')
+					})
+				},
+				okText: '确定',
+				cancelText: '取消',
+			})
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

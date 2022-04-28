@@ -1,12 +1,12 @@
 <template lang="pug">
-label.e-label {{ value }}
+label.e-label {{  value  }}
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class ELabel extends Vue {
-	@Prop() value
+export default {
+	name: 'e-label',
+	props: {
+		value: {},
+	},
 }
 </script>
 <style lang="scss" scoped>

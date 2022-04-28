@@ -7,9 +7,8 @@ div
 import WidgetGroupItem from './widget-group-item.vue'
 
 export default {
-	name: 'WidgetGroup',
+	name: 'widget-group',
 	props: ['childList'],
 	components: { WidgetGroupItem },
 }
 </script>
-<style lang="scss" scoped></style>

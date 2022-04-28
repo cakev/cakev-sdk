@@ -4,25 +4,29 @@
 	config
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
 import config from './config.vue'
 import { Icon, Input } from 'view-design'
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
 
-@Component({
+export default {
+	name: 'd-right-manage',
 	components: {
 		config,
 		'i-icon': Icon,
 		'i-input': Input,
 	},
 	directives: { ClickOutside },
-})
-export default class DRightManage extends Vue {
-	editName = false
-	editor = Editor.Instance()
-	close() {
-		this.editName = false
-	}
+	data() {
+		return {
+			editName: false,
+			editor: Editor.Instance(),
+		}
+	},
+	methods: {
+		close() {
+			this.editName = false
+		},
+	},
 }
 </script>

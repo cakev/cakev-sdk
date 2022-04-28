@@ -27,15 +27,15 @@
 			label(:style="{ marginRight: '10px', width: '100px' }") {{ guideType }}轴坐标值
 			i-input(v-model="guide")
 </template>
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+<script>
 import { Icon, Input, Modal } from 'view-design'
 import Editor from '@/core/Editor'
 import ClickOutside from 'vue-click-outside'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
 import { hotKeys } from '@/vue2/utils'
 
-@Component({
+export default {
+	name: 'rightMenu',
 	components: {
 		ItemCard,
 		'i-icon': Icon,
@@ -43,55 +43,58 @@ import { hotKeys } from '@/vue2/utils'
 		'i-modal': Modal,
 	},
 	directives: { ClickOutside },
-})
-export default class rightMenu extends Vue {
-	editor: Editor = Editor.Instance()
-	guide = ''
-	guideType = ''
-	createModal = false
-	hotKeys = hotKeys
-
-	zoomIn(): void {
-		this.editor.zoomIn()
-		this.hideRightMenu()
-	}
-	zoomOut(): void {
-		this.editor.zoomOut()
-		this.hideRightMenu()
-	}
-	createGuide(): void {
-		if (isNaN(Number(this.guide))) this.$Message.error('请输入数字')
-		this.editor.createGuide(this.guide, this.guideType)
-	}
-	resetZoom(): void {
-		this.editor.resetZoom()
-		this.hideRightMenu()
-	}
-	handleCreateXGuide(): void {
-		this.createModal = true
-		this.guide = ''
-		this.guideType = 'x'
-		this.hideRightMenu()
-	}
-	handleClearGuide(): void {
-		this.hideRightMenu()
-		this.$Modal.confirm({
-			title: '确定是否清空参考线',
-			onOk: () => {
-				this.editor.clearGuides()
-			},
-		})
-	}
-	handleCreateYGuide(): void {
-		this.createModal = true
-		this.guide = ''
-		this.guideType = 'y'
-		this.hideRightMenu()
-	}
-	hideRightMenu(): void {
-		const rightMenu = document.getElementById('ruler-right-menu')
-		rightMenu.classList.remove('active')
-	}
+	data() {
+		return {
+			editor: Editor.Instance(),
+			guide: '',
+			guideType: '',
+			createModal: false,
+			hotKeys: hotKeys,
+		}
+	},
+	methods: {
+		zoomIn() {
+			this.editor.zoomIn()
+			this.hideRightMenu()
+		},
+		zoomOut() {
+			this.editor.zoomOut()
+			this.hideRightMenu()
+		},
+		createGuide() {
+			if (isNaN(Number(this.guide))) this.$Message.error('请输入数字')
+			this.editor.createGuide(this.guide, this.guideType)
+		},
+		resetZoom() {
+			this.editor.resetZoom()
+			this.hideRightMenu()
+		},
+		handleCreateXGuide() {
+			this.createModal = true
+			this.guide = ''
+			this.guideType = 'x'
+			this.hideRightMenu()
+		},
+		handleClearGuide() {
+			this.hideRightMenu()
+			this.$Modal.confirm({
+				title: '确定是否清空参考线',
+				onOk: () => {
+					this.editor.clearGuides()
+				},
+			})
+		},
+		handleCreateYGuide() {
+			this.createModal = true
+			this.guide = ''
+			this.guideType = 'y'
+			this.hideRightMenu()
+		},
+		hideRightMenu() {
+			const rightMenu = document.getElementById('ruler-right-menu')
+			rightMenu.classList.remove('active')
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -63,12 +63,6 @@ module.exports = {
 						amd: 'vue',
 					},
 					'vue-router': 'VueRouter',
-					'vue-class-component': {
-						root: 'VueClassComponent',
-						commonjs: 'vue-class-component',
-						commonjs2: 'vue-class-component',
-						amd: 'vue-class-component',
-					},
 					echarts: 'echarts',
 				},
 			]
@@ -77,7 +71,6 @@ module.exports = {
 				{
 					vue: 'Vue',
 					'vue-router': 'VueRouter',
-					'vue-class-component': 'VueClassComponent',
 					echarts: 'echarts',
 				},
 			]

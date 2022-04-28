@@ -105,19 +105,6 @@ export default class ScreenPc extends ScreenBase {
 				delete item.config.eventType
 			}
 			delete item.config.widget.remark
-			if (item.config.api) {
-				delete item.config.api.system.check
-				if (item.config.api.system.params) {
-					delete item.config.api.system.params.chartCondition
-					delete item.config.api.system.params.analyseCondition
-					delete item.config.api.system.params.databaseId
-					delete item.config.api.system.params.databaseType
-					delete item.config.api.system.params.databaseName
-					delete item.config.api.system.params.executeSql
-					delete item.config.api.system.params.tableId
-					delete item.config.api.system.params.tableName
-				}
-			}
 			if (item.config.layout) {
 				delete item.config.layout.position.value
 			}

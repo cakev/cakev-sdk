@@ -11,22 +11,28 @@
 		v-if="editor.screen.screenWidgets[child.id].children")
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 
-@Component
-export default class widgetGroupItem extends Vue {
-	editor: Editor = Editor.Instance()
-	@Prop() child
-
-	handleClick(e, item): void {
-		if (e.shiftKey) {
-			this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
-		} else {
-			this.editor.unSelectWidget()
-			this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+export default {
+	name: 'widget-group-item',
+	props: {
+		child: {},
+	},
+	data() {
+		return {
+			editor: Editor.Instance(),
 		}
-	}
+	},
+	methods: {
+		handleClick(e, item): void {
+			if (e.shiftKey) {
+				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+			} else {
+				this.editor.unSelectWidget()
+				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

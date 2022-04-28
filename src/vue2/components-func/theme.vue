@@ -13,44 +13,44 @@
 </template>
 <script lang="ts">
 import func from './func.mx'
-import { Component } from 'vue-property-decorator'
 import colorTheme from '@/core/colorTheme.js'
 
-@Component
-export default class FuncAnimation extends func {
-	get colorTheme() {
-		return this.editor.currentWidget.config.config.colorTheme
-			? this.editor.currentWidget.config.config.colorTheme
-			: colorTheme
-	}
-
-	get colorDiskArray() {
-		let obj = {}
-		const theme = this.colorTheme
-		theme.colorDisk.map((item, index) => {
-			obj[index] = item
-		})
-		return obj
-	}
-
-	handleResetColor(): void {
-		this.editor.currentWidget.config.config.colorTheme = colorTheme
-		this.handleSync()
-	}
-
-	colorDiskChange(val: string, index: number): void {
-		if (!this.editor.currentWidget.config.config.colorTheme) {
-			this.editor.currentWidget.config.config.colorTheme = {}
-		}
-		if (!this.editor.currentWidget.config.config.colorTheme.colorDisk) {
-			this.editor.currentWidget.config.config.colorTheme.colorDisk = []
-		}
-		this.editor.currentWidget.config.config.colorTheme.colorDisk[index] = val
-		this.handleSync()
-	}
-
-	handleSync(): void {
-		this.editor.refreshWidget()
-	}
+export default {
+	name: 'func-animation',
+	mixins: [func],
+	computed: {
+		colorTheme() {
+			return this.editor.currentWidget.config.config.colorTheme
+				? this.editor.currentWidget.config.config.colorTheme
+				: colorTheme
+		},
+		colorDiskArray() {
+			let obj = {}
+			const theme = this.colorTheme
+			theme.colorDisk.map((item, index) => {
+				obj[index] = item
+			})
+			return obj
+		},
+	},
+	methods: {
+		handleResetColor(): void {
+			this.editor.currentWidget.config.config.colorTheme = colorTheme
+			this.handleSync()
+		},
+		colorDiskChange(val: string, index: number): void {
+			if (!this.editor.currentWidget.config.config.colorTheme) {
+				this.editor.currentWidget.config.config.colorTheme = {}
+			}
+			if (!this.editor.currentWidget.config.config.colorTheme.colorDisk) {
+				this.editor.currentWidget.config.config.colorTheme.colorDisk = []
+			}
+			this.editor.currentWidget.config.config.colorTheme.colorDisk[index] = val
+			this.handleSync()
+		},
+		handleSync(): void {
+			this.editor.refreshWidget()
+		},
+	},
 }
 </script>

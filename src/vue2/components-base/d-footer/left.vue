@@ -24,8 +24,7 @@
 			span.fn-hide.copy-id {{ editor.currentSceneIndex }}
 			i-input(:value="editor.currentSceneIndex", search, readonly, enter-button="复制", @on-search="")
 </template>
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+<script>
 import { Input, Modal, Icon } from 'view-design'
 import Editor from '@/core/Editor'
 import { copyText } from '@/vue2/utils'
@@ -34,7 +33,8 @@ import { hotKeys } from '@/vue2/utils'
 import ClickOutside from 'vue-click-outside'
 import dSwitch from '@/vue2/components-style/d-switch/index.vue'
 
-@Component({
+export default {
+	name: 'left',
 	components: {
 		'i-input': Input,
 		'i-modal': Modal,
@@ -43,31 +43,34 @@ import dSwitch from '@/vue2/components-style/d-switch/index.vue'
 		ItemCard,
 	},
 	directives: { ClickOutside },
-})
-export default class Left extends Vue {
-	showHotKey = false
-	copyModal = false
-	viewModal = false
-	hotKeys = hotKeys
-	editor: Editor = Editor.Instance()
-
-	taggerXRoomL2(): void {
-		this.editor.taggerXRoomL2()
-		this.viewModal = false
-	}
-	taggerXRoomR1(): void {
-		this.editor.taggerXRoomR1()
-		this.viewModal = false
-	}
-	hideHotKey(): void {
-		this.showHotKey = false
-	}
-	hideView(): void {
-		this.viewModal = false
-	}
-	handleCopy(): void {
-		copyText(this.editor.currentSceneIndex)
-	}
+	data() {
+		return {
+			showHotKey: false,
+			copyModal: false,
+			viewModal: false,
+			hotKeys: hotKeys,
+			editor: Editor.Instance(),
+		}
+	},
+	methods: {
+		taggerXRoomL2() {
+			this.editor.taggerXRoomL2()
+			this.viewModal = false
+		},
+		taggerXRoomR1() {
+			this.editor.taggerXRoomR1()
+			this.viewModal = false
+		},
+		hideHotKey() {
+			this.showHotKey = false
+		},
+		hideView() {
+			this.viewModal = false
+		},
+		handleCopy() {
+			copyText(this.editor.currentSceneIndex)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

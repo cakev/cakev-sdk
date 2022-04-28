@@ -18,25 +18,38 @@
 		slot
 </template>
 <script>
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Icon, Tooltip } from 'view-design'
 
-@Component({
+export default {
+	name: 'd-right-swiper',
 	components: {
 		'i-icon': Icon,
 		'i-tooltip': Tooltip,
 	},
-})
-export default class DRightSwiper extends Vue {
-	@Prop({type:String}) title
-	@Prop({type:Array,default:()=>[]}) icon
-	@Prop({ type:Boolean,default: false }) show
-
-	active = this.show
-	handleIconClick(value) {
-		this.active = true
-		this.$emit('icon-click', value)
-	}
+	props: {
+		title: {
+			type: String,
+		},
+		icon: {
+			type: Array,
+			default: () => [],
+		},
+		show: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	data(props) {
+		return {
+			active: props.show,
+		}
+	},
+	methods: {
+		handleIconClick(value) {
+			this.active = true
+			this.$emit('icon-click', value)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

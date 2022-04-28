@@ -3,7 +3,7 @@ import copy from 'fast-copy'
 /**
  * @description uuid
  */
-export function uuid(): string {
+export const uuid = (): string => {
 	return Math.random().toString(36).replace('0.', '')
 }
 
@@ -33,7 +33,7 @@ export const configMerge = function (from: any, to: any): any {
  * @description 1.0.0 --->100000
  * 每一位限两位数
  */
-export function versionToNum(version: string): number {
+export const versionToNum = (version: string): number => {
 	let num = version.split('.')
 	num = num.map(item => {
 		if (Number(item) >= 99) item = '99'
@@ -48,7 +48,7 @@ export function versionToNum(version: string): number {
 /**
  * @description 获取url参数
  */
-export function getQueryString(name) {
+export const getQueryString = name => {
 	const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
 	const r = window.location.search.substr(1).match(reg)
 	if (r != null) return unescape(r[2])
@@ -58,7 +58,7 @@ export function getQueryString(name) {
 /**
  * @description 加载三方包
  */
-export function loadJs(src: string | string[], value: string): Promise<any> {
+export const loadJs = (src: string | string[], value: string): Promise<any> => {
 	if (!src) {
 		return
 	}

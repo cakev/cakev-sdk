@@ -9,34 +9,50 @@
 			slot(:index="i", :activeIndex="index", :data="v" v-if="i === index")
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
 import dRightSwiper from '../d-right-swiper/index.vue'
 
-@Component({ components: { dRightSwiper } })
-export default class DRightSwiperList extends Vue {
-	@Prop() title: string
-	@Prop({ default: '配置' }) prefix: string
-	@Prop({ default: false }) show: boolean
-	@Prop({ default: () => [] }) list
-	index = 0
-	icon = [
-		{ icon: 'md-add-circle', msg: '加一个' },
-		{ icon: 'md-trash', msg: '减一个' },
-	]
-
-	handleClickTab(index: number): void {
-		this.index = index
-	}
-
-	handleClick(value: string): void {
-		if (value === 'md-add-circle') {
-			this.$emit('add-click')
+export default {
+	name: 'd-right-swiper-list',
+	components: { dRightSwiper },
+	props: {
+		title: {
+			type: String,
+		},
+		prefix: {
+			type: String,
+			default: '配置',
+		},
+		show: {
+			type: Boolean,
+			default: false,
+		},
+		list: {
+			default: () => [],
+		},
+	},
+	data() {
+		return {
+			index: 0,
+			icon: [
+				{ icon: 'md-add-circle', msg: '加一个' },
+				{ icon: 'md-trash', msg: '减一个' },
+			],
 		}
-		if (value === 'md-trash') {
-			this.$emit('remove-click', this.index)
-			this.index = 0
-		}
-	}
+	},
+	methods: {
+		handleClickTab(index: number): void {
+			this.index = index
+		},
+		handleClick(value: string): void {
+			if (value === 'md-add-circle') {
+				this.$emit('add-click')
+			}
+			if (value === 'md-trash') {
+				this.$emit('remove-click', this.index)
+				this.index = 0
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

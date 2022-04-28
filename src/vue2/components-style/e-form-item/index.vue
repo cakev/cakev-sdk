@@ -3,12 +3,16 @@
 	slot
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class EFormItem extends Vue {
-	@Prop({ default: 'row' }) direction
-	@Prop({ default: 'center' }) align
+export default {
+	name: 'e-form-item',
+	props: {
+		direction: {
+			default: 'row',
+		},
+		align: {
+			default: 'center',
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

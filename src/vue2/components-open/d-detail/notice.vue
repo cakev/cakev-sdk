@@ -12,50 +12,51 @@ d-drawer(title="消息通知", v-model="currentVal")
 		.empty.fn-flex(v-else) 未检测到任何异常
 </template>
 <script>
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 import { Button } from 'view-design'
-import Widget from '@/core/Widget/normal'
 
-@Component({
+export default {
+	name: 'notice',
 	components: {
 		DDrawer,
 		'i-button': Button,
 	},
-})
-export default class Notice extends Vue {
-	@Prop() value
-	currentVal = false
-	editor = Editor.Instance()
+	props: {
+		value: {},
+	},
+	data() {
+		return {
+			currentVal: false,
+			editor: Editor.Instance(),
+			message: {
+				HTTP_ERROR: '请求异常',
+				OLD_METHOD_WARN: '方法过时',
+				LOAD_COMPONENT_ERROR: '组件加载失败',
+				DATA_FILTER_ERROR: '数据过滤器异常',
+				OTHERS: '其他',
+			},
+		}
+	},
+	watch: {
+		value: val => {
+			this.currentVal = val
+		},
+		currentVal: val => {
+			this.$emit('input', val)
+		},
+	},
+	methods: {
+		handleClick(widget) {
+			this.editor.unSelectWidget()
+			this.editor.selectSceneIndex(widget.scene)
+			this.editor.selectWidget(widget)
+		},
 
-	message = {
-		HTTP_ERROR: '请求异常',
-		OLD_METHOD_WARN: '方法过时',
-		LOAD_COMPONENT_ERROR: '组件加载失败',
-		DATA_FILTER_ERROR: '数据过滤器异常',
-		OTHERS: '其他',
-	}
-
-	@Watch('value')
-	valueChange(val) {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val) {
-		this.$emit('input', val)
-	}
-
-	handleClick(widget) {
-		this.editor.unSelectWidget()
-		this.editor.selectSceneIndex(widget.scene)
-		this.editor.selectWidget(widget)
-	}
-
-	clear() {
-		this.editor.log.clear()
-	}
+		clear() {
+			this.editor.log.clear()
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

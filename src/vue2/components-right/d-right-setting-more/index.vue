@@ -5,31 +5,34 @@
 		i-button(@click="handleDelete", type="primary") 删除
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
 import { Button } from 'view-design'
 import Editor from '@/core/Editor'
 
-@Component({
+export default {
+	name: 'DRightSettingMore',
 	components: {
 		'i-button': Button,
 	},
-})
-export default class DRightSettingMore extends Vue {
-	editor = Editor.Instance()
-
-	handleGroup() {
-		this.editor.createWidgetGroup()
-	}
-	handleDelete() {
-		this.$Modal.confirm({
-			title: '是否删除所选组件？',
-			content: '所有组件将自动进入回收站！',
-			onOk: () => {
-				this.editor.deleteWidgets()
-				this.editor.unSelectWidget()
-			},
-		})
-	}
+	data() {
+		return {
+			editor: Editor.Instance(),
+		}
+	},
+	methods: {
+		handleGroup() {
+			this.editor.createWidgetGroup()
+		},
+		handleDelete() {
+			this.$Modal.confirm({
+				title: '是否删除所选组件？',
+				content: '所有组件将自动进入回收站！',
+				onOk: () => {
+					this.editor.deleteWidgets()
+					this.editor.unSelectWidget()
+				},
+			})
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

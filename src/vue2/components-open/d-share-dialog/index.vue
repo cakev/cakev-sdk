@@ -41,60 +41,73 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 			v-model="shareUrl")
 </template>
 <script>
-import { Component, Prop, Watch } from 'vue-property-decorator'
 import { Modal, Button, Input, Switch } from 'view-design'
 import shareMx from './share.mx'
-import { mixins } from 'vue-class-component'
 
-@Component({
+export default {
+	name: 'DShareDialog',
 	components: {
 		'i-button': Button,
 		'i-modal': Modal,
 		'i-input': Input,
 		'i-switch': Switch,
 	},
-})
-// @ts-ignore
-export default class DShareDialog extends mixins(shareMx) {
-	@Prop({ type: Boolean }) value
-	@Prop({ type: String }) sid
-	@Prop({ type: String }) screenMainScene
-	@Prop({ type: String }) screenLayoutMode
-	@Prop({ type: Boolean, default: false }) autoInit
-
-	get openShare() {
-		// @ts-ignore
-		return this.shareType !== 'NO'
-	}
-
-	set openShare(val) {
-		if (val) {
-			// @ts-ignore
-			this.shareSubmit('ALL')
-		} else {
-			// @ts-ignore
-			this.closeShare()
+	mixins: [shareMx],
+	props: {
+		value: {
+			type: Boolean,
+		},
+		sid: {
+			type: String,
+		},
+		screenMainScene: {
+			type: String,
+		},
+		screenLayoutMode: {
+			type: String,
+		},
+		autoInit: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	data() {
+		return {
+			screenId: '',
+			modalShow: false,
+			isInit: true,
 		}
-	}
-
-	screenId = ''
-	modalShow = false
-	isInit = true
-
-	@Watch('value')
-	onValueChange(val) {
-		this.modalShow = val
-		if (val && this.isInit && !this.autoInit) {
-			// @ts-ignore
-			this.init()
-			this.isInit = false
-		}
-	}
-
-	@Watch('modalShow')
-	onModalShow(val) {
-		this.$emit('input', val)
-	}
+	},
+	computed: {
+		openShare: {
+			get() {
+				// @ts-ignore
+				return this.shareType !== 'NO'
+			},
+			set(val) {
+				if (val) {
+					// @ts-ignore
+					this.shareSubmit('ALL')
+				} else {
+					// @ts-ignore
+					this.closeShare()
+				}
+			},
+		},
+	},
+	watch: {
+		value: val => {
+			this.modalShow = val
+			if (val && this.isInit && !this.autoInit) {
+				// @ts-ignore
+				this.init()
+				this.isInit = false
+			}
+		},
+		modalShow: val => {
+			this.$emit('input', val)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -9,36 +9,43 @@ widget-normal(
 </template>
 <script lang="ts">
 import widgetMixin from '@/vue2/mixins'
-import { widgetNormalMixin } from '@/vue2'
-import { Component, Watch } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
 import widgetNormal from '@/vue2/components-open/Widget/normal'
 import { value, customConfig } from './index.component'
 
-@Component({ components: { widgetNormal } })
-export default class extends mixins(widgetMixin) {
-	test = {
+export default {
+	components: { widgetNormal },
+	mixins: [widgetMixin],
+	data() {
+		return {
+			test: {
+				data: {
+					value: [
+						{
+							x: ['07/11', '07/13', '07/14', '07/15', '07/16', '07/17'],
+							y: [250, 350, 120, 290, 240, 250],
+							name: '数据1',
+						},
+						{
+							x: ['08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
+							y: [150, 250, 420, 390, 140, 350],
+							name: '数据2',
+						},
+					],
+				},
+			},
+			value: value,
+			customConfig: customConfig,
+		}
+	},
+	watch: {
 		data: {
-			value: [
-				{
-					x: ['07/11', '07/13', '07/14', '07/15', '07/16', '07/17'],
-					y: [250, 350, 120, 290, 240, 250],
-					name: '数据1',
-				},
-				{
-					x: ['08/12', '08/13', '08/14', '08/15', '08/16', '08/17'],
-					y: [150, 250, 420, 390, 140, 350],
-					name: '数据2',
-				},
-			],
+			handler(val) {
+				console.log(val)
+			},
+			deep: true,
+			immediate: true,
 		},
-	}
-	value = value
-	customConfig = customConfig
-	@Watch('data', { deep: true, immediate: true })
-	dataHandle(val) {
-		console.log(val)
-	}
+	},
 }
 </script>
 <style lang="scss">

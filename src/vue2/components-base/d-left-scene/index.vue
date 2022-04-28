@@ -23,14 +23,14 @@
 			:class="{ disabled: editor.currentSceneIndex === 0 }") 删除
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
 import { Icon, Input, Select, Option } from 'view-design'
 import ItemCard from './item-card.vue'
 import draggable from 'vuedraggable'
 import Editor from '@/core/Editor'
 import { market } from '@/vue2/api/marketComponentType.api'
 
-@Component({
+export default {
+	name: 'd-left-scene',
 	components: {
 		draggable,
 		ItemCard,
@@ -39,78 +39,78 @@ import { market } from '@/vue2/api/marketComponentType.api'
 		'i-select': Select,
 		'i-option': Option,
 	},
-})
-export default class DLeftScene extends Vue {
-	editor: Editor = Editor.Instance()
-	editScene = false
-
-	changeSceneIndex(index: string | number): void {
-		this.editor.selectSceneIndex(index)
-	}
-	handleSetScene(name: string): void {
-		switch (name) {
-			case 'create':
-				this.editor.createScene()
-				break
-			case 'edit':
-				this.editScene = true
-				break
-			case 'destroy':
-				this.$Modal.confirm({
-					title: '是否删除当前场景？',
-					content: '该场景未删除的组件将自动进入回收站！',
-					onOk: () => {
-						this.editor.destroyScene()
-					},
-				})
-				break
-			case 'clear':
-				if (this.editor.currentSceneIndex === -1) {
-					this.$Modal.confirm({
-						title: '是否清空回收站？',
-						content: '回收站的组件将被清空！',
-						onOk: () => {
-							this.editor.clearWidgetByCurrentScene()
-						},
-					})
-				} else {
-					this.$Modal.confirm({
-						title: '是否清空当前场景？',
-						content: '删除的组件将自动进入回收站！',
-						onOk: () => {
-							this.editor.clearWidgetByCurrentScene()
-						},
-					})
-				}
-				break
+	data() {
+		return {
+			editor: Editor.Instance(),
+			editScene: false,
 		}
-	}
-
-	handleSceneName(e): void {
-		this.editor.setSceneName(e.target.value)
-	}
-
-	sceneWidgetDragEnd(e): void {
-		debugger
-		const oldItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.oldIndex].id]
-		const newItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.newIndex].id]
-		if (oldItem.zIndex === newItem.zIndex) {
-			if (e.moved.newIndex > e.moved.oldIndex) {
-				newItem.zIndex++
-			} else {
-				oldItem.zIndex++
+	},
+	methods: {
+		changeSceneIndex(index: string | number): void {
+			this.editor.selectSceneIndex(index)
+		},
+		handleSetScene(name: string): void {
+			switch (name) {
+				case 'create':
+					this.editor.createScene()
+					break
+				case 'edit':
+					this.editScene = true
+					break
+				case 'destroy':
+					this.$Modal.confirm({
+						title: '是否删除当前场景？',
+						content: '该场景未删除的组件将自动进入回收站！',
+						onOk: () => {
+							this.editor.destroyScene()
+						},
+					})
+					break
+				case 'clear':
+					if (this.editor.currentSceneIndex === -1) {
+						this.$Modal.confirm({
+							title: '是否清空回收站？',
+							content: '回收站的组件将被清空！',
+							onOk: () => {
+								this.editor.clearWidgetByCurrentScene()
+							},
+						})
+					} else {
+						this.$Modal.confirm({
+							title: '是否清空当前场景？',
+							content: '删除的组件将自动进入回收站！',
+							onOk: () => {
+								this.editor.clearWidgetByCurrentScene()
+							},
+						})
+					}
+					break
 			}
-		} else {
-			let zIndex = newItem.zIndex
-			newItem.zIndex = oldItem.zIndex
-			oldItem.zIndex = zIndex
-		}
-		this.editor.screen.screenWidgetsLays = { ...this.editor.screen.screenWidgetsLays }
-	}
-
+		},
+		handleSceneName(e): void {
+			this.editor.setSceneName(e.target.value)
+		},
+		sceneWidgetDragEnd(e): void {
+			debugger
+			const oldItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.oldIndex].id]
+			const newItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.newIndex].id]
+			if (oldItem.zIndex === newItem.zIndex) {
+				if (e.moved.newIndex > e.moved.oldIndex) {
+					newItem.zIndex++
+				} else {
+					oldItem.zIndex++
+				}
+			} else {
+				let zIndex = newItem.zIndex
+				newItem.zIndex = oldItem.zIndex
+				oldItem.zIndex = zIndex
+			}
+			this.editor.screen.screenWidgetsLays = { ...this.editor.screen.screenWidgetsLays }
+		},
+	},
 	mounted(): void {
 		market()
-	}
+	},
 }
 </script>
 <style lang="scss" scoped>

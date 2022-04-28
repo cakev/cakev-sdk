@@ -6,13 +6,24 @@
 		:key="`${i}-${editor.currentWidgetList[0]}`")
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import DManageItem from './item.vue'
 import Editor from '@/core/Editor'
 
-@Component({ components: { DManageItem } })
-export default class DManageItemList extends Vue {
-	@Prop(Array) list: any[]
-	editor: Editor = Editor.Instance()
+export default {
+	name: 'd-manage-item-list',
+	components: {
+		DManageItem,
+	},
+	props: {
+		list: {
+			type: Array,
+			default: () => [],
+		},
+	},
+	data() {
+		return {
+			editor: Editor.Instance(),
+		}
+	},
 }
 </script>

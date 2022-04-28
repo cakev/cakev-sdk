@@ -3,36 +3,33 @@
 	slot
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class widgetNormal extends Vue {
-	@Prop() value
-	@Prop() customConfig
-	@Prop() customEventsConfig
-	@Prop({
-		default() {
-			return []
+export default {
+	name: 'widget-normal',
+	props: {
+		value: {},
+		customConfig: {},
+		customEventsConfig: {},
+		setting: {
+			default() {
+				return []
+			},
 		},
-	})
-	setting
-	@Prop({
-		default() {
-			return {}
+		settingData: {
+			default() {
+				return {}
+			},
 		},
-	})
-	settingData
-	@Prop({
-		default() {
-			return []
+		eventTypes: {
+			default() {
+				return []
+			},
 		},
-	})
-	eventTypes
-
-	get styles() {
-		return (this.$parent as any).styles
-	}
-
+	},
+	computed: {
+		styles() {
+			return (this.$parent as any).styles
+		},
+	},
 	created(): void {
 		;(this.$parent as any).__init__({
 			value: this.value,
@@ -42,6 +39,6 @@ export default class widgetNormal extends Vue {
 			eventTypes: this.eventTypes,
 			customEventsConfig: this.customEventsConfig,
 		})
-	}
+	},
 }
 </script>

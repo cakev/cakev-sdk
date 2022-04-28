@@ -7,19 +7,34 @@ transition(name="fade")
 		slot {{ text }}
 </template>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-
-@Component
-class loadMask extends Vue {
-	@Prop({ default: 'rgba(0, 0, 0, .4)' }) backgroundColor: string
-	@Prop({ default: true }) show: boolean
-	@Prop({ default: '#e2e2e2' }) color: string
-	@Prop({ default: '24px' }) fontSize: string
-	@Prop({ default: 48 }) iconSize: number
-	@Prop({ default: '请稍后…' }) text: string
+export default {
+	props: {
+		backgroundColor: {
+			type: String,
+			default: 'rgba(0, 0, 0, .4)',
+		},
+		show: {
+			type: Boolean,
+			default: true,
+		},
+		color: {
+			type: String,
+			default: '#e2e2e2',
+		},
+		fontSize: {
+			type: String,
+			default: '24px',
+		},
+		iconSize: {
+			type: Number,
+			default: 48,
+		},
+		text: {
+			type: String,
+			default: '请稍后…',
+		},
+	},
 }
-
-export default loadMask
 </script>
 <style lang="scss">
 @keyframes rotate {

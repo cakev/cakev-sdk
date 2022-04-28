@@ -9,9 +9,8 @@ import '@/vue2/plugin.js'
 import colorTheme from '@/core/colorTheme'
 import widgetEcharts from '@/vue2/components-open/Widget/echarts.vue'
 import widgetNormal from '@/vue2/components-open/Widget/normal.vue'
-import { mixins } from 'vue-class-component'
 
-const widgetNormalMixin = mixins(widgetMixin)
+const widgetNormalMixin = widgetMixin
 
 const eslinkV = {
 	widgetNormalMixin,

@@ -4,26 +4,34 @@ drawer.d-drawer(v-bind="{ ...$props, ...$attrs }", v-on="$listeners", v-model="c
 </template>
 <script>
 import { Drawer } from 'view-design'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-@Component({
+export default {
+	name: 'd-drawer',
 	components: {
 		Drawer,
 	},
-})
-export default class DDrawer extends Vue {
-	currentVal = false
-	@Prop({ type:Boolean }) value
-	@Prop({ type:Number,default: 335 }) width
-	@Watch('value')
-	onValueChange(val) {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val) {
-		this.$emit('input', val)
-	}
+	props: {
+		value: {
+			type: Boolean,
+		},
+		width: {
+			type: Number,
+			default: 33,
+		},
+	},
+	data() {
+		return {
+			currentVal: false,
+		}
+	},
+	watch: {
+		value: val => {
+			this.currentVal = val
+		},
+		currentVal: val => {
+			this.$emit('input', val)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -33,12 +33,15 @@ div
 			i-option(value="dotted") dotted
 </template>
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
 import func from '@/vue2/components-func/func.mx'
 import dCode from '@/vue2/components-right/d-code/index.vue'
 
-@Component({ components: { dCode } })
-export default class FuncData extends func {
-	@Prop() echartsConfig
+export default {
+	name: 'func-data',
+	mixins: [func],
+	components: { dCode },
+	props: {
+		echartsConfig: {},
+	},
 }
 </script>

@@ -33,123 +33,117 @@
 			i-icon(type="md-trash")
 			span 删除
 </template>
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+<script>
 import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
 import ClickOutside from 'vue-click-outside'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
 import { create } from '@/vue2/api/collectionComponent.api.js'
 
-@Component({
+export default {
+	name: 'right-menu',
 	components: {
 		'i-icon': Icon,
 		ItemCard,
 	},
 	directives: { ClickOutside },
-})
-export default class rightMenu extends Vue {
-	isLock = false
-	editor: Editor = Editor.Instance()
-
-	get isGroup(): boolean {
-		if (this.editor.currentWidget) {
-			return this.editor.currentWidget.widgetType === 'group'
+	data() {
+		return {
+			isLock: false,
+			editor: Editor.Instance(),
 		}
-		return false
-	}
-
-	handleRelieveGroup(): void {
-		this.editor.relieveWidgetGroup()
-		this.hideRightMenu()
-		this.handleUnActive()
-	}
-
-	handleCollection(): void {
-		const widget = this.editor.currentWidget
-		create({
-			componentConfig: widget.config,
-			componentEnTitle: widget.type,
-			componentTitle: widget.config.widget.name,
-			componentVersion: widget.config.widget.componentVersion,
-		}).then(() => {
-			this.$Modal.info({
-				content: '收藏成功',
+	},
+	computed: {
+		isGroup() {
+			if (this.editor.currentWidget) {
+				return this.editor.currentWidget.widgetType === 'group'
+			}
+			return false
+		},
+	},
+	methods: {
+		handleRelieveGroup() {
+			this.editor.relieveWidgetGroup()
+			this.hideRightMenu()
+			this.handleUnActive()
+		},
+		handleCollection() {
+			const widget = this.editor.currentWidget
+			create({
+				componentConfig: widget.config,
+				componentEnTitle: widget.type,
+				componentTitle: widget.config.widget.name,
+				componentVersion: widget.config.widget.componentVersion,
+			}).then(() => {
+				this.$Modal.info({
+					content: '收藏成功',
+				})
 			})
-		})
-	}
-
-	handleSync(): void {
-		this.editor.refreshWidget()
-		this.hideRightMenu()
-	}
-
-	handleZIndexTop(): void {
-		this.editor.currentWidget.config.layout.zIndex = this.editor.currentMaxZIndex
-		this.hideRightMenu()
-	}
-
-	handleZIndexBottom(): void {
-		this.editor.currentWidget.config.layout.zIndex = this.editor.currentMinZIndex
-		this.hideRightMenu()
-	}
-
-	hideWidget(): void {
-		const id = this.editor.currentWidget.id
-		this.hideRightMenu()
-		this.handleUnActive()
-		this.editor.screen.screenWidgetsLays[id].hide = true
-	}
-
-	deleteWidget(): void {
-		const id = this.editor.currentWidgetList[0]
-		if (this.editor.currentSceneIndex === -1) {
-			this.$Modal.confirm({
-				title: '是否删除当前组件？',
-				content: '该组件将自动进入回收站！',
-				onOk: () => {
-					this.editor.deleteWidget(id)
-					this.hideRightMenu()
-				},
-				onCancel: () => {
-					this.hideRightMenu()
-				},
-			})
-		} else {
-			this.$Modal.confirm({
-				title: '是否删除当前组件？',
-				content: '该组件将自动进入回收站！',
-				onOk: () => {
-					this.editor.deleteWidget(id)
-					this.hideRightMenu()
-				},
-				onCancel: () => {
-					this.hideRightMenu()
-				},
-			})
-		}
-	}
-
-	copyWidget(): void {
-		this.editor.copyWidget()
-		this.handleUnActive()
-		this.hideRightMenu()
-	}
-
-	hideRightMenu(): void {
-		const rightMenu = document.getElementById('widget-right-menu')
-		rightMenu.classList.remove('active')
-	}
-
-	handleUnActive(): void {
-		this.editor.unSelectWidget()
-	}
-
-	handleLock(): void {
-		this.isLock = !this.isLock
-		this.editor.currentWidget.config.widget.locked = this.isLock
-		this.hideRightMenu()
-	}
+		},
+		handleSync() {
+			this.editor.refreshWidget()
+			this.hideRightMenu()
+		},
+		handleZIndexTop() {
+			this.editor.currentWidget.config.layout.zIndex = this.editor.currentMaxZIndex
+			this.hideRightMenu()
+		},
+		handleZIndexBottom() {
+			this.editor.currentWidget.config.layout.zIndex = this.editor.currentMinZIndex
+			this.hideRightMenu()
+		},
+		hideWidget() {
+			const id = this.editor.currentWidget.id
+			this.hideRightMenu()
+			this.handleUnActive()
+			this.editor.screen.screenWidgetsLays[id].hide = true
+		},
+		deleteWidget() {
+			const id = this.editor.currentWidgetList[0]
+			if (this.editor.currentSceneIndex === -1) {
+				this.$Modal.confirm({
+					title: '是否删除当前组件？',
+					content: '该组件将自动进入回收站！',
+					onOk: () => {
+						this.editor.deleteWidget(id)
+						this.hideRightMenu()
+					},
+					onCancel: () => {
+						this.hideRightMenu()
+					},
+				})
+			} else {
+				this.$Modal.confirm({
+					title: '是否删除当前组件？',
+					content: '该组件将自动进入回收站！',
+					onOk: () => {
+						this.editor.deleteWidget(id)
+						this.hideRightMenu()
+					},
+					onCancel: () => {
+						this.hideRightMenu()
+					},
+				})
+			}
+		},
+		copyWidget() {
+			this.editor.copyWidget()
+			this.handleUnActive()
+			this.hideRightMenu()
+		},
+		hideRightMenu() {
+			const rightMenu = document.getElementById('widget-right-menu')
+			rightMenu.classList.remove('active')
+		},
+		handleUnActive() {
+			this.editor.unSelectWidget()
+		},
+		handleLock() {
+			this.isLock = !this.isLock
+			this.editor.currentWidget.config.widget.locked = this.isLock
+			this.hideRightMenu()
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

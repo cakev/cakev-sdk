@@ -43,10 +43,10 @@ import dRuler from '../d-ruler/index.vue'
 import drMore from '@/vue2/components-base/d-dr-more/index.vue'
 import dFooter from '../d-footer/index.vue'
 import ItemCard from './item-card.vue'
-import { Component, Vue } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 
-@Component({
+export default {
+	name: 'd-editor',
 	components: {
 		ItemCard,
 		dRuler,
@@ -54,67 +54,74 @@ import Editor from '@/core/Editor'
 		drMore,
 		widgetRightMenu,
 	},
-})
-export default class DEditor extends Vue {
-	editor: Editor = Editor.Instance()
-	vLine = []
-	hLine = []
-	get canvasStyle(): any {
-		if (this.editor) {
-			return {
-				width: `${this.editor.width}px`,
-				height: `${this.editor.height}px`,
-				backgroundColor: this.editor.backgroundColor,
-				backgroundImage: `url(${this.editor.backgroundImage})`,
-				...this.editor.screen.screenFilterStyle,
+	data() {
+		return {
+			editor: Editor.Instance(),
+			vLine: [],
+			hLine: [],
+		}
+	},
+	computed: {
+		canvasStyle(): any {
+			if (this.editor) {
+				return {
+					width: `${this.editor.width}px`,
+					height: `${this.editor.height}px`,
+					backgroundColor: this.editor.backgroundColor,
+					backgroundImage: `url(${this.editor.backgroundImage})`,
+					...this.editor.screen.screenFilterStyle,
+				}
 			}
-		}
-		return {}
-	}
-	get showWidgets() {
-		const list = []
-		for (const key in this.editor.screen.screenWidgetsLays) {
-			const widget = this.editor.screen.screenWidgetsLays[key]
-			if ((widget.scene === this.editor.current.currentSceneIndex || widget.scene === 0) && !widget.hide) {
-				list.push(widget)
+			return {}
+		},
+		showWidgets() {
+			const list = []
+			for (const key in this.editor.screen.screenWidgetsLays) {
+				const widget = this.editor.screen.screenWidgetsLays[key]
+				if ((widget.scene === this.editor.current.currentSceneIndex || widget.scene === 0) && !widget.hide) {
+					list.push(widget)
+				}
 			}
-		}
-		return list
-	}
-	createWidget(e: any): void {
-		const widgetConfig = e.dataTransfer.getData('widget-config')
-		if (widgetConfig) {
-			this.editor.createWidget(e.offsetX, e.offsetY, JSON.parse(widgetConfig))
-		}
-	}
+			return list
+		},
+	},
+	methods: {
+		createWidget(e: any): void {
+			const widgetConfig = e.dataTransfer.getData('widget-config')
+			if (widgetConfig) {
+				this.editor.createWidget(e.offsetX, e.offsetY, JSON.parse(widgetConfig))
+			}
+		},
 
-	getRefLineParams(params: any, item: any): void {
-		const { vLine, hLine } = params
-		this.vLine = vLine.map((child: any) => {
-			child.w = item.config.layout.size.width
-			child.h = item.config.layout.size.height
-			return child
-		})
-		this.hLine = hLine.map((child: any) => {
-			child.w = item.config.layout.size.width
-			child.h = item.config.layout.size.height
-			return child
-		})
-	}
-	fullscreenchange(): void {
-		this.editor.current.fullscreen = !this.editor.current.fullscreen
-	}
+		getRefLineParams(params: any, item: any): void {
+			const { vLine, hLine } = params
+			this.vLine = vLine.map((child: any) => {
+				child.w = item.config.layout.size.width
+				child.h = item.config.layout.size.height
+				return child
+			})
+			this.hLine = hLine.map((child: any) => {
+				child.w = item.config.layout.size.width
+				child.h = item.config.layout.size.height
+				return child
+			})
+		},
+		fullscreenchange(): void {
+			this.editor.current.fullscreen = !this.editor.current.fullscreen
+		},
+	},
+
 	beforeDestroy(): void {
 		this.editor.current.fullscreen = false
 		this.editor.ruler = null
 		document.removeEventListener('fullscreenchange', this.fullscreenchange)
-	}
+	},
 	created() {
 		this.editor.updateEditorStatus('inEdit')
-	}
+	},
 	mounted(): void {
 		document.addEventListener('fullscreenchange', this.fullscreenchange)
-	}
+	},
 }
 </script>
 <style lang="scss">

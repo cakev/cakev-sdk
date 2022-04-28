@@ -5,19 +5,21 @@
 	slot
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Icon, Tooltip } from 'view-design'
 
-@Component({
+export default {
+	name: 'item-card',
 	components: {
 		'i-icon': Icon,
 		'i-tooltip': Tooltip,
 	},
-})
-export default class ItemCard extends Vue {
-	@Prop() icon
-	@Prop() title
-	@Prop({ default: false }) active
+	props: {
+		icon: {},
+		title: {},
+		active: {
+			default: false,
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

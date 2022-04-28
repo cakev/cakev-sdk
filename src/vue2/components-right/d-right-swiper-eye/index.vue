@@ -18,59 +18,77 @@
 		slot(v-if="enable")
 </template>
 <script>
-import { Component, Vue, Prop, PropSync } from 'vue-property-decorator'
 import { Icon, Tooltip } from 'view-design'
 
-@Component({
+export default {
+	name: 'd-right-swiper-eye',
 	components: {
 		'i-icon': Icon,
 		'i-tooltip': Tooltip,
 	},
-})
-export default class DRightSwiperEye extends Vue {
-	@Prop({ type: String }) title
-	@Prop({ type: Boolean }) enable
-	@Prop({ default: false, type: Boolean }) show
-	@PropSync('enable') syncedEnable
-
-	// @ts-ignore
-	active = this.show
-
-	get icon() {
-		if (this.syncedEnable) {
+	props: {
+		title: {
+			type: String,
+		},
+		enable: {
+			type: Boolean,
+		},
+		show: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	data() {
+		return {
+			active: this.show,
+		}
+	},
+	computed: {
+		icon() {
+			if (this.syncedEnable) {
+				return [
+					{
+						icon: 'md-eye-off',
+						msg: '关闭',
+					},
+				]
+			}
 			return [
 				{
-					icon: 'md-eye-off',
-					msg: '关闭',
+					icon: 'md-eye',
+					msg: '开启',
 				},
 			]
-		}
-		return [
-			{
-				icon: 'md-eye',
-				msg: '开启',
+		},
+		syncedEnable: {
+			get() {
+				return this.enable
 			},
-		]
-	}
+			set(value) {
+				this.$emit('update:enable', value)
+			},
+		},
+	},
+	methods: {
+		handleClick() {
+			if (this.syncedEnable) {
+				this.active = !this.active
+			}
+		},
 
-	handleClick() {
-		if (this.syncedEnable) {
-			this.active = !this.active
-		}
-	}
-
-	handleIconClick(e, value) {
-		e.preventDefault()
-		e.stopPropagation()
-		if (value === 'md-eye') {
-			this.active = true
-			this.$emit('open-click', !this.syncedEnable)
-		}
-		if (value === 'md-eye-off') {
-			this.active = false
-			this.$emit('close-click', !this.syncedEnable)
-		}
-	}
+		handleIconClick(e, value) {
+			e.preventDefault()
+			e.stopPropagation()
+			if (value === 'md-eye') {
+				this.active = true
+				this.$emit('open-click', !this.syncedEnable)
+			}
+			if (value === 'md-eye-off') {
+				this.active = false
+				this.$emit('close-click', !this.syncedEnable)
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

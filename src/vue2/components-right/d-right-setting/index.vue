@@ -25,51 +25,59 @@
 			v-if="editor.currentRightSettingIndex === index")
 </template>
 <script>
-import { Component, Vue, Watch } from 'vue-property-decorator'
 import itemList from './item-list.vue'
 import { Icon, Input } from 'view-design'
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
 
-@Component({
+export default {
+	name: 'd-right-setting',
 	components: {
 		itemList,
 		'i-icon': Icon,
 		'i-input': Input,
 	},
 	directives: { ClickOutside },
-})
-export default class DRightSetting extends Vue {
-	editName = false
-	editor = Editor.Instance()
-	title = ['基础', '数据', '交互', '自定义']
-	chooseList = []
-
-	@Watch('editor.currentWidget.config.customConfig', { immediate: true })
-	customConfigChange(val) {
-		this.chooseList = [
-			{
-				key: [{ type: 'base' }],
+	data() {
+		return {
+			editName: false,
+			editor: Editor.Instance(),
+			title: ['基础', '数据', '交互', '自定义'],
+			chooseList: [],
+		}
+	},
+	watch: {
+		'editor.currentWidget.config.customConfig': {
+			handler(val) {
+				if(val) {
+					this.chooseList = [
+						{
+							key: [{ type: 'base' }],
+						},
+						{
+							key: [{ type: 'data' }],
+						},
+						{
+							key: [{ type: 'interactive' }],
+						},
+						{
+							key: val || [],
+						},
+					]
+				}
 			},
-			{
-				key: [{ type: 'data' }],
-			},
-			{
-				key: [{ type: 'interactive' }],
-			},
-			{
-				key: val || [],
-			},
-		]
-	}
-
-	close() {
-		this.editName = false
-	}
-
-	handleClick(index) {
-		this.editor.selectRightSettingIndex(index)
-	}
+			deep: true,
+			immediate: true,
+		},
+	},
+	methods: {
+		close() {
+			this.editName = false
+		},
+		handleClick(index) {
+			this.editor.selectRightSettingIndex(index)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

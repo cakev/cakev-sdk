@@ -58,34 +58,39 @@
 			i-option(:value="k", v-for="(k, i) in animates", :key="i") {{ k }}
 </template>
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
 import func from '@/vue2/components-func/func.mx'
 import dCode from '@/vue2/components-right/d-code/index.vue'
 import { animates } from '@/vue2/components-func/config.js'
 
-@Component({ components: { dCode } })
-export default class FuncData extends func {
-	@Prop() activeIndex
-	@Prop() eventType
-	animates = animates
-
-	get isComponentClass(): boolean {
-		return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'component'
-	}
-
-	get isSceneClass(): boolean {
-		return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'scene'
-	}
-
-	get isShowCustomEvents() {
-		const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
-		return ids.length === 1
-	}
-
-	get customEventsConfig() {
-		const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
-		if (ids.length !== 1) return []
-		return this.editor.screen.screenWidgets[ids[0]].customEventsConfig
-	}
+export default {
+	name: 'func-data',
+	components: { dCode },
+	mixins: [func],
+	props: {
+		activeIndex: {},
+		eventType: {},
+	},
+	data() {
+		return {
+			animates: animates,
+		}
+	},
+	computed: {
+		isComponentClass() {
+			return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'component'
+		},
+		isSceneClass() {
+			return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'scene'
+		},
+		isShowCustomEvents() {
+			const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
+			return ids.length === 1
+		},
+		customEventsConfig() {
+			const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
+			if (ids.length !== 1) return []
+			return this.editor.screen.screenWidgets[ids[0]].customEventsConfig
+		},
+	},
 }
 </script>

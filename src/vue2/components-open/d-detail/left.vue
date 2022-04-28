@@ -9,25 +9,29 @@
 	widget
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator'
 import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
 import eInput from '@/vue2/components-style/e-input/index.vue'
 import widget from './widget.vue'
-@Component({
+
+export default {
+	name: 'd-detail',
 	components: {
 		'i-icon': Icon,
 		eInput,
 		widget,
 	},
-})
-export default class DDetail extends Vue {
-	editor = Editor.Instance()
-	editName = false
-
-	backHandler() {
-		this.$router.push('/editor/manger')
-	}
+	data() {
+		return {
+			editor: Editor.Instance(),
+			editName: false,
+		}
+	},
+	methods: {
+		backHandler() {
+			this.$router.push('/editor/manger')
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

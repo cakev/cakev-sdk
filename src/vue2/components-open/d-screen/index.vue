@@ -11,7 +11,6 @@
 		load-mask(:show="true") 加载中...
 </template>
 <script>
-import { Vue, Component } from 'vue-property-decorator'
 import dLeftScene from '@/vue2/components-base/d-left-scene/index.vue'
 import dEditor from '@/vue2/components-base/d-editor/index.vue'
 import dRightManage from '@/vue2/components-right/d-right-manage/index.vue'
@@ -23,7 +22,8 @@ import loadMask from '../load-mask/index.vue'
 import { linkList } from '@/vue2/api/screen.api'
 import { loadCss, loadJs } from '@/core/utils'
 
-@Component({
+export default {
+	name: 'd-screen',
 	components: {
 		loadMask,
 		dLeftScene,
@@ -33,29 +33,31 @@ import { loadCss, loadJs } from '@/core/utils'
 		dSuspension,
 		dEditor,
 	},
-})
-export default class dScreen extends Vue {
-	editor = Editor.Instance()
-
-	async loadExtraLink() {
-		const res = await linkList({ screenId: this.$route.params.id })
-		if (!res.length) return
-		const arr = []
-		for (let i = 0; i < res.length; i++) {
-			if (res[i].linkType === 'javascript' || res[i].linkType === 'iconfont') {
-				arr.push(loadJs(res[i].linkUrl, res[i].linkUrl))
-			} else if (res[i].linkType === 'css') {
-				arr.push(loadCss(res[i].linkUrl, res[i].linkUrl))
-			}
+	data() {
+		return {
+			editor: Editor.Instance(),
 		}
-		await Promise.all(arr)
-	}
-
+	},
+	methods: {
+		async loadExtraLink() {
+			const res = await linkList({ screenId: this.$route.params.id })
+			if (!res.length) return
+			const arr = []
+			for (let i = 0; i < res.length; i++) {
+				if (res[i].linkType === 'javascript' || res[i].linkType === 'iconfont') {
+					arr.push(loadJs(res[i].linkUrl, res[i].linkUrl))
+				} else if (res[i].linkType === 'css') {
+					arr.push(loadCss(res[i].linkUrl, res[i].linkUrl))
+				}
+			}
+			await Promise.all(arr)
+		},
+	},
 	async created() {
 		if (this.$route.params.id) {
 			await this.loadExtraLink()
 		}
-	}
+	},
 }
 </script>
 <style lang="scss" scoped>

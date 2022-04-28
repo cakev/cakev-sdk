@@ -26,11 +26,12 @@ import updateDrawer from './updateDrawer.vue'
 import globalRequestConfig from './globalRequestConfig.vue'
 import theme from './theme.vue'
 import globalFilter from './globalFilter.vue'
-import { Component, Vue } from 'vue-property-decorator'
 import { versionUpdateList } from '@/vue2/api/marketComponent.api'
 import Editor from '@/core/Editor'
 import ItemCard from '@/vue2/components-base/d-suspension/item-card.vue'
-@Component({
+
+export default {
+	name: 'd-suspension',
 	components: {
 		ItemCard,
 		updateDrawer,
@@ -38,38 +39,42 @@ import ItemCard from '@/vue2/components-base/d-suspension/item-card.vue'
 		theme,
 		globalFilter,
 	},
-})
-export default class DSuspension extends Vue {
-	editor = Editor.Instance()
-	showDrawer = false
-	globalRequestConfigShow = false
-	themeShow = false
-	filterShow = false
-	updateInfo = []
-	async update() {
-		const req = []
-		const obj = this.editor.screen.screenWidgets
-		if (obj) {
-			Object.values(obj).forEach((v: any) => {
-				if (v.market) {
-					req.push({
-						componentEnTitle: v.type,
-						componentVersion: v.config.widget.componentVersion,
-						componentId: v.id,
-						componentTitle: v.config.widget.name,
-					})
-				}
-			})
-			this.updateInfo = await versionUpdateList({ components: req })
-			if (this.updateInfo.length === 0) {
-				this.$Message.warning('暂无可更新组件')
-				return
-			}
-			this.showDrawer = true
-		} else {
-			this.$Message.warning('暂无可更新组件')
+	data() {
+		return {
+			editor: Editor.Instance(),
+			showDrawer: false,
+			globalRequestConfigShow: false,
+			themeShow: false,
+			filterShow: false,
+			updateInfo: [],
 		}
-	}
+	},
+	methods: {
+		async update() {
+			const req = []
+			const obj = this.editor.screen.screenWidgets
+			if (obj) {
+				Object.values(obj).forEach((v: any) => {
+					if (v.market) {
+						req.push({
+							componentEnTitle: v.type,
+							componentVersion: v.config.widget.componentVersion,
+							componentId: v.id,
+							componentTitle: v.config.widget.name,
+						})
+					}
+				})
+				this.updateInfo = await versionUpdateList({ components: req })
+				if (this.updateInfo.length === 0) {
+					this.$Message.warning('暂无可更新组件')
+					return
+				}
+				this.showDrawer = true
+			} else {
+				this.$Message.warning('暂无可更新组件')
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

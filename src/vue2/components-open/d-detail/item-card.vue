@@ -8,52 +8,57 @@
 		h2.ellipsis(:title="componentTitle") {{ componentTitle }}
 </template>
 <script>
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 
-@Component
-export default class ItemCard extends Vue {
-	@Prop() componentEnTitle
-	@Prop() componentConfig
-	@Prop() componentAvatar
-	@Prop() componentId
-	@Prop() componentVersion
-	@Prop() componentTitle
-	@Prop({ type: Boolean }) market
-
-	editor = Editor.Instance()
-	handleClick() {
-		this.editor.screen.createWidget(0, 0, {
-			type: this.componentEnTitle,
-			config: this.componentConfig,
-			market: this.market,
-			componentVersion: this.componentVersion,
-			componentId: this.componentId,
-			startX: 0,
-			startY: 0,
-		})
-	}
-
-	/**
-	 * @description h5 原生拖拽事件
-	 */
-	dragstart(e) {
-		e.dataTransfer.setData(
-			'widget-config',
-			JSON.stringify({
+export default {
+	name: 'item-card',
+	props: {
+		componentEnTitle: {},
+		componentConfig: {},
+		componentAvatar: {},
+		componentId: {},
+		componentVersion: {},
+		componentTitle: {},
+		market: { type: Boolean },
+	},
+	data() {
+		return {
+			editor: Editor.Instance(),
+		}
+	},
+	methods: {
+		handleClick() {
+			this.editor.screen.createWidget(0, 0, {
 				type: this.componentEnTitle,
 				config: this.componentConfig,
 				market: this.market,
 				componentVersion: this.componentVersion,
 				componentId: this.componentId,
-				startX: e.offsetX,
-				startY: e.offsetY,
-			}),
-		)
-		setTimeout(() => {
-			this.$parent.widgetShow = false
-		}, 300)
-	}
+				startX: 0,
+				startY: 0,
+			})
+		},
+		/**
+		 * @description h5 原生拖拽事件
+		 */
+		dragstart(e) {
+			e.dataTransfer.setData(
+				'widget-config',
+				JSON.stringify({
+					type: this.componentEnTitle,
+					config: this.componentConfig,
+					market: this.market,
+					componentVersion: this.componentVersion,
+					componentId: this.componentId,
+					startX: e.offsetX,
+					startY: e.offsetY,
+				}),
+			)
+			setTimeout(() => {
+				this.$parent.widgetShow = false
+			}, 300)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

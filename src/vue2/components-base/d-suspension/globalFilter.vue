@@ -23,7 +23,6 @@ d-drawer(title="全局滤镜", v-model="currentVal")
 		d-slider(v-model="editor.screen.screenFilter.grayscale")
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Switch } from 'view-design'
 import eLabel from '@/vue2/components-style/e-label/index.vue'
 import Editor from '@/core/Editor'
@@ -32,7 +31,8 @@ import DSlider from '@/vue2/components-style/d-slider/index.vue'
 import DSwitch from '@/vue2/components-style/d-switch/index.vue'
 import EFormItem from '@/vue2/components-style/e-form-item/index.vue'
 
-@Component({
+export default {
+	name: 'global-filter',
 	components: {
 		eLabel,
 		DDrawer,
@@ -41,19 +41,24 @@ import EFormItem from '@/vue2/components-style/e-form-item/index.vue'
 		DSwitch,
 		'i-switch': Switch,
 	},
-})
-export default class globalFilter extends Vue {
-	@Prop(Boolean) value!: boolean
-	currentVal = false
-	editor: Editor = Editor.Instance()
-	@Watch('value')
-	onValueChange(val: boolean): void {
-		this.currentVal = val
-	}
-
-	@Watch('currentVal')
-	onCurrentVal(val: boolean): void {
-		this.$emit('input', val)
-	}
+	props: {
+		value: {
+			type: Boolean,
+		},
+	},
+	data() {
+		return {
+			currentVal: false,
+			editor: Editor.Instance(),
+		}
+	},
+	watch: {
+		value: (val: boolean) => {
+			this.currentVal = val
+		},
+		currentVal: (val: boolean) => {
+			this.$emit('input', val)
+		},
+	},
 }
 </script>

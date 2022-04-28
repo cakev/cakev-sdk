@@ -24,33 +24,36 @@
 </template>
 <script lang="ts">
 import func from './func.mx'
-import { Component } from 'vue-property-decorator'
 import dRightEcharts from '../components-right/d-right-echarts/index.vue'
 
-@Component({
+export default {
+	name: 'FuncBase',
 	components: {
 		dRightEcharts,
 	},
-})
-export default class FuncBase extends func {
-	get scale() {
-		return `${Math.round(this.editor.currentWidget.config.layout.scale * 100)}%`
-	}
+	mixins: [func],
+	computed: {
+		scale: {
+			get() {
+				return `${Math.round(this.editor.currentWidget.config.layout.scale * 100)}%`
+			},
 
-	set scale(val: any) {
-		if (!isNaN(val)) {
-			this.editor.currentWidget.config.layout.scale = val
-		} else {
-			const back = this.editor.currentWidget.config.layout.scale
-			if (val.indexOf('%') !== -1) {
-				let v = val.replace('%', '') / 100
-				if (!isNaN(v)) {
-					this.editor.currentWidget.config.layout.scale = v
+			set(val: any) {
+				if (!isNaN(val)) {
+					this.editor.currentWidget.config.layout.scale = val
 				} else {
-					this.editor.currentWidget.config.layout.scale = back
+					const back = this.editor.currentWidget.config.layout.scale
+					if (val.indexOf('%') !== -1) {
+						let v = val.replace('%', '') / 100
+						if (!isNaN(v)) {
+							this.editor.currentWidget.config.layout.scale = v
+						} else {
+							this.editor.currentWidget.config.layout.scale = back
+						}
+					}
 				}
-			}
-		}
-	}
+			},
+		},
+	},
 }
 </script>

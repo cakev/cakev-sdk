@@ -15,30 +15,33 @@
 				@click="handleFullscreen")
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
 import { Icon, Tooltip } from 'view-design'
 import Editor from '@/core/Editor'
 import { hotKeys } from '@/vue2/utils'
 import left from './left.vue'
 
-@Component({
+export default {
+	name: 'd-footer',
 	components: {
 		'i-icon': Icon,
 		'i-tooltip': Tooltip,
 		left,
 	},
-})
-export default class DFooter extends Vue {
-	hotKeys = hotKeys
-	editor: Editor = Editor.Instance()
-
-	handleFullscreen(): void {
-		if (this.editor.current.fullscreen) {
-			document.exitFullscreen()
-		} else {
-			document.body.requestFullscreen()
+	data() {
+		return {
+			hotKeys: hotKeys,
+			editor: Editor.Instance(),
 		}
-	}
+	},
+	methods: {
+		handleFullscreen(): void {
+			if (this.editor.current.fullscreen) {
+				document.exitFullscreen()
+			} else {
+				document.body.requestFullscreen()
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -19,12 +19,12 @@ div
 				height="600")
 </template>
 <script>
-import { Component, Vue, Prop, PropSync } from 'vue-property-decorator'
 import { Icon, Modal, Tooltip } from 'view-design'
 import dRightControl from '@/vue2/components-right/d-right-control/index.vue'
 const editor = require('vue2-ace-editor')
 
-@Component({
+export default {
+	name: 'd-dcode',
 	components: {
 		editor,
 		dRightControl,
@@ -32,25 +32,49 @@ const editor = require('vue2-ace-editor')
 		'i-modal': Modal,
 		'i-tooltip': Tooltip,
 	},
-})
-export default class DDcode extends Vue {
-	modal = false
-	@Prop({ default: '代码' }) label
-	@Prop({ default: 'javascript' }) lang
-	@Prop({ default: '全屏模式' }) title
-	@Prop({ default: 'idle_fingers' }) theme
-	@Prop({ default: true }) show
-	@PropSync('code') syncedCode
-
-	editorInit() {
-		require('brace/ext/language_tools')
-		require('brace/mode/html')
-		require('brace/mode/javascript')
-		require('brace/mode/less')
-		require('brace/mode/json')
-		require('brace/theme/idle_fingers')
-		require('brace/snippets/javascript')
-	}
+	props: {
+		label: {
+			default: '代码',
+		},
+		lang: {
+			default: 'javascript',
+		},
+		title: {
+			default: '全屏模式',
+		},
+		theme: {
+			default: 'idle_fingers',
+		},
+		show: {
+			default: true,
+		},
+	},
+	data() {
+		return {
+			modal: false,
+		}
+	},
+	computed: {
+		syncedCode: {
+			get() {
+				return this.code
+			},
+			set(val) {
+				this.$emit('update:code', val)
+			},
+		},
+	},
+	methods: {
+		editorInit() {
+			require('brace/ext/language_tools')
+			require('brace/mode/html')
+			require('brace/mode/javascript')
+			require('brace/mode/less')
+			require('brace/mode/json')
+			require('brace/theme/idle_fingers')
+			require('brace/snippets/javascript')
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

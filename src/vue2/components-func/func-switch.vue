@@ -4,8 +4,9 @@ d-right-control(:label="`${config.label} [${inputKey}]`")
 </template>
 <script lang="ts">
 import func from './func.mx'
-import { Component } from 'vue-property-decorator'
 
-@Component
-export default class FuncSwitch extends func {}
+export default {
+	name: 'func-switch',
+	mixins: [func],
+}
 </script>

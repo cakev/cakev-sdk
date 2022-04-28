@@ -11,14 +11,16 @@ li.fn-flex(@click="handleClick")
 				:src="child.value")
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-
-@Component
-export default class ItemCard extends Vue {
-	@Prop() keyItem
-	handleClick(): void {
-		this.$emit('click')
-	}
+export default {
+	name: 'item-card',
+	props: {
+		keyItem: {},
+	},
+	methods: {
+		handleClick(): void {
+			this.$emit('click')
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

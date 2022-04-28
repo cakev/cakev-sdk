@@ -9,24 +9,28 @@
 </template>
 <script lang="ts">
 import func from './func.mx'
-import { Component } from 'vue-property-decorator'
 import { getVersionList } from '@/vue2/api/marketComponent.api'
 
-@Component
-export default class FuncCustom extends func {
-	versionList = []
-
-	async getVersionList() {
-		const res = await getVersionList({
-			componentEnTitle: this.editor.currentWidget.type,
-		})
-		this.versionList = res
-	}
-
+export default {
+	name: 'func-custom',
+	data() {
+		return {
+			versionList: [],
+		}
+	},
+	mixins: [func],
+	methods: {
+		async getVersionList() {
+			const res = await getVersionList({
+				componentEnTitle: this.editor.currentWidget.type,
+			})
+			this.versionList = res
+		},
+	},
 	mounted() {
 		if (this.editor.currentWidget.market) {
 			this.getVersionList()
 		}
-	}
+	},
 }
 </script>

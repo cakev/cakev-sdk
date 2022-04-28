@@ -3,24 +3,31 @@
 	label
 		span(style="margin-right: 5px") {{ label }}
 		i-tooltip(:content="title", placement="top", v-if="title")
-			e-svg.pos-r.pointer(:icon-class="icon", size="16", :style="{ top: '3px' }")
+			e-svg.pos-r.pointer(:icon-class="icon", :size="16", :style="{ top: '3px' }")
 	.d-manage-modal-control-right
 		slot
 </template>
 <script>
 import { Tooltip, Icon } from 'view-design'
-import { Component, Vue, Prop } from 'vue-property-decorator'
 
-@Component({
+export default {
+	name: 'd-right-control',
 	components: {
 		'i-tooltip': Tooltip,
 		'i-icon': Icon,
 	},
-})
-export default class DRightControl extends Vue {
-	@Prop({ type: String }) label
-	@Prop({ type: String }) title
-	@Prop({ type: String, default: 'help' }) icon
+	props: {
+		label: {
+			type: String,
+		},
+		title: {
+			type: String,
+		},
+		icon: {
+			type: String,
+			default: 'help',
+		},
+	},
 }
 </script>
 <style lang="scss">

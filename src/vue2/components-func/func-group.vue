@@ -15,22 +15,24 @@
 </template>
 <script lang="ts">
 import func from './func.mx'
-import { Component } from 'vue-property-decorator'
 import DManageItem from '@/vue2/components-right/d-right-setting/item.vue'
 
-@Component({ components: { DManageItem } })
-export default class FuncGroup extends func {
-	handleAddClick(): void {
-		const child = {}
-		this.config.children.forEach(v => {
-			child[v.prop] = ''
-		})
-		this.obj[this.inputKey].push(child)
-	}
-
-	handleRemoveClick(index): void {
-		this.obj[this.inputKey].splice(index, 1)
-	}
+export default {
+	components: { DManageItem },
+	name: 'func-group',
+	mixins: [func],
+	methods: {
+		handleAddClick(): void {
+			const child = {}
+			this.config.children.forEach(v => {
+				child[v.prop] = ''
+			})
+			this.obj[this.inputKey].push(child)
+		},
+		handleRemoveClick(index): void {
+			this.obj[this.inputKey].splice(index, 1)
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

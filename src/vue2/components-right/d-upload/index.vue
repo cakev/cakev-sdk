@@ -43,69 +43,70 @@
 </template>
 <script>
 import { baseURL } from '@/vue2/api/request.js'
-import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Upload, Icon, Progress } from 'view-design'
 
-@Component({
+export default {
+	name: 'd-upload',
 	components: {
 		'i-upload': Upload,
 		'i-icon': Icon,
 		'i-progress': Progress,
 	},
-})
-export default class DUpload extends Vue {
-	@Prop({ default: `${baseURL}/upload/file` }) action
-	@Prop() data
-	@Prop() accept
-	@Prop({ default: 'img' }) type
-	@Prop() value
-
-	percent = 0
-	isShowProgress = false
-	isPlaying = false
-
-	handleDown() {
-		const a = document.createElement('a')
-		a.setAttribute('download', this.value)
-		a.setAttribute('href', this.value)
-		a.click()
-	}
-
-	handleRemove() {
-		this.$emit('input', '')
-		this.$emit('success', '')
-	}
-
-	handleSuccess(res) {
-		this.isShowProgress = false
-		this.isPlaying = false
-		this.$emit('input', res.result.url)
-		this.$emit('success', res)
-	}
-
-	handleProgress(event) {
-		this.percent = event.percent
-	}
-
-	handleBeforeUpload(file) {
-		if (this.type === 'img') {
-			if (file.size > 1024 * 1024) {
-				this.$Message.error('图片大小不能超过1M')
-				return false
+	props: {
+		action: {
+			default: `${baseURL}/upload/file`,
+		},
+		data: {},
+		accept: {},
+		type: { default: 'img' },
+		value: {},
+	},
+	data() {
+		return {
+			percent: 0,
+			isShowProgress: false,
+			isPlaying: false,
+		}
+	},
+	methods: {
+		handleDown() {
+			const a = document.createElement('a')
+			a.setAttribute('download', this.value)
+			a.setAttribute('href', this.value)
+			a.click()
+		},
+		handleRemove() {
+			this.$emit('input', '')
+			this.$emit('success', '')
+		},
+		handleSuccess(res) {
+			this.isShowProgress = false
+			this.isPlaying = false
+			this.$emit('input', res.result.url)
+			this.$emit('success', res)
+		},
+		handleProgress(event) {
+			this.percent = event.percent
+		},
+		handleBeforeUpload(file) {
+			if (this.type === 'img') {
+				if (file.size > 1024 * 1024) {
+					this.$Message.error('图片大小不能超过1M')
+					return false
+				}
 			}
-		}
-		this.isShowProgress = true
-		return true
-	}
-
-	handlePlayVideo() {
-		if (this.isPlaying) {
-			this.$refs.video.pause()
-		} else {
-			this.$refs.video.play()
-		}
-		this.isPlaying = !this.isPlaying
-	}
+			this.isShowProgress = true
+			return true
+		},
+		handlePlayVideo() {
+			if (this.isPlaying) {
+				this.$refs.video.pause()
+			} else {
+				this.$refs.video.play()
+			}
+			this.isPlaying = !this.isPlaying
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

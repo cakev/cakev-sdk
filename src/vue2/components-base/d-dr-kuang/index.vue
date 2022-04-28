@@ -6,16 +6,20 @@
 	.dr-line-right.pos-a(:style="{ width: `${returnRatio}px` }")
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 
-@Component
-export default class Kuang extends Vue {
-	editor: Editor = Editor.Instance()
-
-	get returnRatio(): number {
-		return this.editor.zoom < 1 ? 1 / this.editor.zoom : 1
-	}
+export default {
+	name: 'Kuang',
+	data() {
+		return {
+			editor: Editor.Instance(),
+		}
+	},
+	computed: {
+		returnRatio(): number {
+			return this.editor.zoom < 1 ? 1 / this.editor.zoom : 1
+		},
+	},
 }
 </script>
 <style lang="scss">

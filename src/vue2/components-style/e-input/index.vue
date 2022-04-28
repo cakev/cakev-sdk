@@ -7,24 +7,34 @@ input.e-input(
 	@change="$emit('change', $event)",
 	@input="$emit('input', $event.target.value)")
 </template>
-<script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-
-@Component
-export default class EInput extends Vue {
-	@Prop({ default: '100%' }) width
-	@Prop({ default: '' }) height
-	@Prop({ default: 'block' }) display
-	@Prop() value
-	currentVal = ''
-
-	@Watch('value')
-	valueChange(val): void {
-		this.currentVal = val
-	}
-	mounted(): void {
+<script>
+export default {
+	name: 'e-input',
+	props: {
+		width: {
+			default: '100%',
+		},
+		height: {
+			default: '',
+		},
+		display: {
+			default: 'block',
+		},
+		value: {},
+	},
+	data() {
+		return {
+			currentVal: '',
+		}
+	},
+	watch: {
+		value: val => {
+			this.currentVal = val
+		},
+	},
+	mounted() {
 		this.currentVal = this.value
-	}
+	},
 }
 </script>
 <style lang="scss" scoped>

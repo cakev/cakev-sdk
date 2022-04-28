@@ -25,65 +25,70 @@
 				:componentAvatar="widget.componentAvatar",
 				:componentTitle="widget.componentTitle")
 </template>
-<script lang="ts">
+<script>
 import itemCard from './item-card.vue'
-import { Component, Vue } from 'vue-property-decorator'
 import Editor from '@/core/Editor'
 import { typeList } from '@/vue2/api/marketComponent.api'
 
-@Component({
+export default {
+	name: 'widget',
 	components: {
 		itemCard,
 	},
-})
-export default class Widget extends Vue {
-	editor: Editor = Editor.Instance()
-	leftIndex = null
-	rightIndex = null
-	list = {}
-	current = null
-	openList = {}
-	widgetShow = false
-
-	get childrenList() {
-		if (this.leftIndex) {
-			return this.editor.local.widgets[this.leftIndex].children
+	data() {
+		return {
+			editor: Editor.Instance(),
+			leftIndex: null,
+			rightIndex: null,
+			list: {},
+			current: null,
+			openList: {},
+			widgetShow: false,
 		}
-		return []
-	}
-	mouseenter(componentTypeId: string): void {
-		this.leftIndex = componentTypeId
-		this.widgetShow = true
-		const item = this.editor.local.widgets[this.leftIndex].children[0]
-		this.handleCheckType(item.componentTypeId, item.market, item)
-	}
-	mouseleave(): void {
-		this.widgetShow = false
-	}
-	handleCheckType(componentTypeId: string, market: boolean, item): void {
-		this.$set(this.openList, componentTypeId, true)
-		this.current = item
-		if (!this.list[componentTypeId]) {
-			if (market) {
-				typeList({
-					componentTypeId,
-					isCurrentVersion: true,
-					status: 'SUCCESS',
-					pageNum: 1,
-					pageSize: 999,
-				}).then(res => {
-					this.$set(this.list, componentTypeId, res.list)
-				})
-			} else {
-				const list = this.editor.local.widgets[this.leftIndex].children
-				list.forEach(item => {
-					if (item.componentTypeId === componentTypeId) {
-						this.$set(this.list, componentTypeId, item.children)
-					}
-				})
+	},
+	computed: {
+		childrenList() {
+			if (this.leftIndex) {
+				return this.editor.local.widgets[this.leftIndex].children
 			}
-		}
-	}
+			return []
+		},
+	},
+	methods: {
+		mouseenter(componentTypeId) {
+			this.leftIndex = componentTypeId
+			this.widgetShow = true
+			const item = this.editor.local.widgets[this.leftIndex].children[0]
+			this.handleCheckType(item.componentTypeId, item.market, item)
+		},
+		mouseleave() {
+			this.widgetShow = false
+		},
+		handleCheckType(componentTypeId, market, item) {
+			this.$set(this.openList, componentTypeId, true)
+			this.current = item
+			if (!this.list[componentTypeId]) {
+				if (market) {
+					typeList({
+						componentTypeId,
+						isCurrentVersion: true,
+						status: 'SUCCESS',
+						pageNum: 1,
+						pageSize: 999,
+					}).then(res => {
+						this.$set(this.list, componentTypeId, res.list)
+					})
+				} else {
+					const list = this.editor.local.widgets[this.leftIndex].children
+					list.forEach(item => {
+						if (item.componentTypeId === componentTypeId) {
+							this.$set(this.list, componentTypeId, item.children)
+						}
+					})
+				}
+			}
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>
