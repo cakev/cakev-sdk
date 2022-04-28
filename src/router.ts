@@ -1,14 +1,17 @@
-import { createRouter, createWebHistory, RouteRecordRaw, Router } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-const routes: Array<RouteRecordRaw> = []
-const context = require.context('./demo', true, /\.(route.ts)$/)
+const routes: Array<any> = []
+const context = require.context('./demo', true, /\.(route.js)$/)
 
 context.keys().forEach(name => {
 	routes.push(context(name).default)
 })
 
-const router: Router = createRouter({
-	history: createWebHistory(),
+Vue.use(VueRouter)
+
+const router: any = new VueRouter({
+	mode: 'history',
 	routes,
 })
 
