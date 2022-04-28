@@ -59,8 +59,8 @@ export default defineComponent({
 		const hideZoomMenu = () => {
 			state.zoomMenuState = false
 		}
-		const preview = () => {
-			state.manager.screenCache.add(
+		const preview = async () => {
+			await state.manager.screenCache.add(
 				'screen-preview',
 				JSON.stringify({
 					widgets: state.manager.screen.currentScreen.widgets,

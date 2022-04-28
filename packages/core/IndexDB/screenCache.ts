@@ -11,18 +11,24 @@ export default class ScreenCache extends BaseCache {
 		return new Promise(resolve => {
 			this.db.screenCache.get({ name }).then((collection: ScreenCacheDB) => {
 				if (collection) {
-					this.db.screenCache.put({
-						id: collection.id,
-						name,
-						data: JSON.stringify(data),
-					})
-					resolve(null)
+					this.db.screenCache
+						.put({
+							id: collection.id,
+							name,
+							data: JSON.stringify(data),
+						})
+						.then(() => {
+							resolve(null)
+						})
 				} else {
-					this.db.screenCache.put({
-						name,
-						data: JSON.stringify(data),
-					})
-					resolve(null)
+					this.db.screenCache
+						.put({
+							name,
+							data: JSON.stringify(data),
+						})
+						.then(() => {
+							resolve(null)
+						})
 				}
 			})
 		})

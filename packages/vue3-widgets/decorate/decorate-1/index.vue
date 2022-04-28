@@ -1,5 +1,6 @@
 <template lang="pug">
 widget-base.dorring-decorate-1(v-bind="$attrs")
+	span 文本内容
 </template>
 <script lang="ts">
 import widgetBase from '@dorring/sdk/vue3/widget/base'

@@ -5,10 +5,6 @@ import request from './request'
 export default {
 	props,
 	setup(props, context) {
-		// const state = reactive({
-		// 	count: 0,
-		// })
-
 		onMounted(() => {
 			context.emit('mounted')
 		})
