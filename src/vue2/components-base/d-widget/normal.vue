@@ -13,7 +13,7 @@ import Editor from '@/core/Editor'
 import { use } from '@/vue2/api/marketComponent.api'
 
 const prefix1 = 'market-'
-const prefix2 = 'eslinkv-'
+const prefix2 = 'cakev-'
 export default {
 	name: 'd-widget',
 	props: {
@@ -108,8 +108,8 @@ export default {
 				value && this.setAnimation()
 			},
 		},
-		ready: val => {
-			if (val) this.setAnimation()
+		ready(){
+			this.setAnimation()
 		},
 	},
 	mounted() {

@@ -20,7 +20,7 @@
 		"noImplicitAny": false,
 		"noImplicitThis": false,
 		"pretty": true,
-		"types": ["webpack-env"],
+		"types": ["webpack-env", "jest"],
 		"paths": {
 			"@/*": ["src/*"]
 		},

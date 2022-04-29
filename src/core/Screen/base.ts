@@ -4,54 +4,32 @@ import Widget from '@/core/Widget/base'
 import copy from 'fast-copy'
 import commonConfigValue from '@/core/common-config-value.js'
 import { configMerge, versionToNum } from '@/core/utils'
+
 export default class Screen extends Factory<Screen> {
-	/* 当前系统版本 */
-	currentVersion = '1.1.0'
-	/* 大屏ID */
-	screenId: string
-	/* 大屏名 */
-	screenName = '未命名'
-	/* 大屏组件配置 */
-	screenWidgets: { [key: string]: Widget } = {}
-	/* 大屏组件嵌套规则 */
-	screenWidgetsLays = {}
-	/* 大屏类型 CUSTOM:大屏 TEMPLATE:模版 */
-	screenType = 'CUSTOM'
-	/* 已废弃 */
-	/* 大屏发布情况 EDIT:未发布 COMPLETE:已发布*/
-	screenPublish = ''
-	/* 大屏缩略图 */
-	screenAvatar = ''
-	/* 大屏版本号 */
-	screenVersion = ''
-	/* 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度 */
-	screenLayoutMode = 'full-size'
-	/* 备注 */
-	remark = ''
-	/* 排序 */
-	sort = 1
-	/* 创建时间 */
-	createTime: string
-	/* 更新时间 */
-	updateTime: string
-	/* 大屏宽度 */
-	screenWidth = 1920
-	/* 大屏高度 */
-	screenHeight = 1080
-	/* 大屏背景颜色 */
-	screenBackGroundColor = 'rgba(24, 27, 36,1)'
-	/* 大屏背景图片 */
-	screenBackGroundImage = ''
-	/* 大屏首屏场景 */
-	screenMainScene: string | number
-	/* 大屏平台类型 PC:PC */
-	screenPlatform: string
-	/* 大屏组件接口Domain */
-	screenDomain: string
-	/* 大屏组件接口Headers */
-	screenHeaders: string
-	/* 更新大屏组件配置 */
+	currentVersion = '1.1.0' // 当前系统版本
+	screenId: string // 大屏ID
+	screenName = '未命名' // 大屏名
+	screenWidgets: { [key: string]: Widget } = {} // 大屏组件配置
+	screenWidgetsLays = {} // 大屏组件嵌套规则
+	screenType = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
+	screenPublish = '' // 大屏发布情况 EDIT:未发布 COMPLETE:已发布
+	screenAvatar = '' // 大屏缩略图
+	screenVersion = '' // 大屏版本号
+	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
+	remark = '' // 备注
+	sort = 1 // 排序
+	createTime: string // 创建时间
+	updateTime: string // 更新时间
+	screenWidth = 1920 // 大屏宽度
+	screenHeight = 1080 // 大屏高度
+	screenBackGroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
+	screenBackGroundImage = '' // 大屏背景图片
+	screenMainScene: string | number // 大屏首屏场景
+	screenPlatform: string // 大屏平台类型 PC:PC
+	screenDomain: string // 大屏组件接口Domain
+	screenHeaders: string // 大屏组件接口Headers
 	screenFilter = {
+		// 更新大屏组件配置
 		enable: false, // 开启状态
 		grayscale: 0, // 灰度
 		opacity: 100, // 不透明度
@@ -191,8 +169,8 @@ export default class Screen extends Factory<Screen> {
 		const config = newWidget.config
 		config.widget.id = id
 		const layout = config.layout
-		layout.position.left = 10 + Number(layout.position.left)
-		layout.position.top = 10 + Number(layout.position.top)
+		layout.left = 10 + Number(layout.left)
+		layout.top = 10 + Number(layout.top)
 		this.screenWidgets = { ...this.screenWidgets, [id]: newWidget }
 	}
 	/* 更新组件 */

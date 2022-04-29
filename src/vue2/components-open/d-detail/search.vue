@@ -31,7 +31,7 @@ export default {
 		}
 	},
 	watch: {
-		value: val => {
+		value(val) {
 			if (val) {
 				this.keyword = ''
 			}

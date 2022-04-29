@@ -1,7 +1,7 @@
 import Factory from '@/core/Base/factory'
 
 export default class Emitter extends Factory<Emitter> {
-	private events: any = {}
+	events: any = {}
 	constructor() {
 		super()
 		this.events = {}

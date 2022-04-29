@@ -1,17 +1,15 @@
 <template lang="pug">
 .d-slider.fn-flex(:class="`d-slider-${type}`")
 	i-slider(size="small", v-bind="{ ...$props, ...$attrs }", v-on="$listeners", v-model="currentVal")
-	e-input(v-model="currentVal", width="62px", height="26px")
+	c-input(v-model="currentVal", width="62px", height="26px")
 </template>
 <script>
 import { Slider } from 'view-design'
-import eInput from '@/vue2/components-style/e-input/index.vue'
 
 export default {
 	name: 'd-slider',
 	components: {
 		'i-slider': Slider,
-		eInput,
 	},
 	props: {
 		value: {},
@@ -23,10 +21,10 @@ export default {
 		}
 	},
 	watch: {
-		value: val => {
+		value(val) {
 			this.currentVal = val
 		},
-		currentVal: val => {
+		currentVal(val) {
 			this.$emit('input', val)
 		},
 	},

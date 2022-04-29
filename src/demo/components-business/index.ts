@@ -17,4 +17,4 @@ const conf = require.context(
 	/\.(component.ts)$/,
 )
 
-editor.localInit({ name: '测', component, avatar, conf })
+editor.localInit({ name: '本地组件', component, avatar, conf })

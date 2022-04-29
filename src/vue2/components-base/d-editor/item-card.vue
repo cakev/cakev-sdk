@@ -8,10 +8,10 @@ dr(
 	:resizable="widgetEditable(item)",
 	:scale="item.config.layout.scale",
 	:active="editor.currentWidgetList.includes(id) && widgetEditable(item)",
-	:w="item.config.layout.size.width",
-	:h="item.config.layout.size.height",
-	:x="item.config.layout.position.left",
-	:y="item.config.layout.position.top",
+	:w="item.config.layout.width",
+	:h="item.config.layout.height",
+	:x="item.config.layout.left",
+	:y="item.config.layout.top",
 	:z="zIndex",
 	:snap="editor.current.autoAlignGuide",
 	:item="item",
@@ -22,7 +22,7 @@ dr(
 	@dragstop="onDragStop",
 	@on-click="handleClick($event, item)",
 	@contextmenu.native.stop="showRightMenu($event, item)")
-	eslinkv-widget(
+	cakev-widget(
 		:id="id",
 		:zIndex="zIndex",
 		:widgetType="item.widgetType",
@@ -61,9 +61,9 @@ export default {
 		},
 		style() {
 			return {
-				transform: `translate3d(${this.item.config.layout.position.left}px, ${this.item.config.layout.position.top}px,0)`,
-				width: this.item.config.layout.size.width + 'px',
-				height: this.item.config.layout.size.height + 'px',
+				transform: `translate3d(${this.item.config.layout.left}px, ${this.item.config.layout.top}px,0)`,
+				width: this.item.config.layout.width + 'px',
+				height: this.item.config.layout.height + 'px',
 				zIndex: this.zIndex,
 			}
 		},
@@ -94,10 +94,10 @@ export default {
 		},
 		onDragStop(left: number, top: number): void {
 			if (this.editor.currentWidget) {
-				const diffLeft = left - this.editor.currentWidget.config.layout.position.left
-				const diffTop = top - this.editor.currentWidget.config.layout.position.top
-				this.editor.currentWidget.config.layout.position.left = left
-				this.editor.currentWidget.config.layout.position.top = top
+				const diffLeft = left - this.editor.currentWidget.config.layout.left
+				const diffTop = top - this.editor.currentWidget.config.layout.top
+				this.editor.currentWidget.config.layout.left = left
+				this.editor.currentWidget.config.layout.top = top
 				this.onGroupDragStop(
 					this.editor.screen.screenWidgetsLays[this.editor.currentWidgetList[0]],
 					diffLeft,
@@ -109,18 +109,18 @@ export default {
 			if (item.children) {
 				if (Object.values(item.children).length > 0)
 					for (let key in item.children) {
-						this.editor.screen.screenWidgets[key].config.layout.position.left =
-							Number(this.editor.screen.screenWidgets[key].config.layout.position.left) + diffLeft
-						this.editor.screen.screenWidgets[key].config.layout.position.top =
-							Number(this.editor.screen.screenWidgets[key].config.layout.position.top) + diffTop
+						this.editor.screen.screenWidgets[key].config.layout.left =
+							Number(this.editor.screen.screenWidgets[key].config.layout.left) + diffLeft
+						this.editor.screen.screenWidgets[key].config.layout.top =
+							Number(this.editor.screen.screenWidgets[key].config.layout.top) + diffTop
 						this.onGroupDragStop(item.children[key], diffLeft, diffTop)
 						this.editor.screen.screenWidgets = { ...this.editor.screen.screenWidgets }
 					}
 			}
 		},
 		onResizeStop(width: number, height: number): void {
-			this.editor.currentWidget.config.layout.size.width = width
-			this.editor.currentWidget.config.layout.size.height = height
+			this.editor.currentWidget.config.layout.width = width
+			this.editor.currentWidget.config.layout.height = height
 		},
 		widgetEditable({ config }): boolean {
 			return !config.widget.locked

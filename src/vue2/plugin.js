@@ -1,4 +1,3 @@
-import '@/vue2/icons'
 import 'view-design/dist/styles/iview.css'
 import '@/vue2/scss/conf.scss'
 import '@/vue2/scss/reset.scss'
@@ -13,6 +12,6 @@ import widgetGroup from '@/vue2/components-base/d-widget/group.vue'
 import widgetNormal from '@/vue2/components-base/d-widget/normal.vue'
 import widget from '@/vue2/components-base/d-widget/index.vue'
 Vue.component('scene-group', sceneGroup)
-Vue.component('eslinkv-group', widgetGroup)
-Vue.component('eslinkv-normal', widgetNormal)
-Vue.component('eslinkv-widget', widget)
+Vue.component('cakev-group', widgetGroup)
+Vue.component('cakev-normal', widgetNormal)
+Vue.component('cakev-widget', widget)

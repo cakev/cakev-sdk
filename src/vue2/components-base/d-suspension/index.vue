@@ -14,17 +14,10 @@
 		@click="filterShow = true",
 		:active="editor.screen.screenFilter.enable")
 		global-filter(v-model="filterShow")
-	item-card(
-		v-if="editor.currentWidgetList[0] && editor.currentWidget",
-		title="主题风格",
-		icon="md-color-palette",
-		@click="themeShow = true")
-		theme(v-model="themeShow")
 </template>
 <script lang="ts">
 import updateDrawer from './updateDrawer.vue'
 import globalRequestConfig from './globalRequestConfig.vue'
-import theme from './theme.vue'
 import globalFilter from './globalFilter.vue'
 import { versionUpdateList } from '@/vue2/api/marketComponent.api'
 import Editor from '@/core/Editor'
@@ -36,7 +29,6 @@ export default {
 		ItemCard,
 		updateDrawer,
 		globalRequestConfig,
-		theme,
 		globalFilter,
 	},
 	data() {
@@ -44,7 +36,6 @@ export default {
 			editor: Editor.Instance(),
 			showDrawer: false,
 			globalRequestConfigShow: false,
-			themeShow: false,
 			filterShow: false,
 			updateInfo: [],
 		}

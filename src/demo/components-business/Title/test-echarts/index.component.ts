@@ -1,12 +1,7 @@
 export const value = {
 	layout: {
-		size: {
-			width: 992,
-			height: 214,
-		},
-		position: {
-			value: 'relative',
-		},
+		width: 992,
+		height: 214,
 	},
 	widgetType: 'echarts',
 	api: {

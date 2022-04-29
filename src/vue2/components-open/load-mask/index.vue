@@ -3,7 +3,7 @@ transition(name="fade")
 	.load-mask.pos-a.fn-flex.z-index-999(
 		v-if="show",
 		:style="`background-color: ${backgroundColor}; color: ${color}; font-size: ${fontSize}`")
-		e-svg.loading(icon-class="loading", :size="iconSize")
+		c-svg.loading(type="loading", :size="iconSize")
 		slot {{ text }}
 </template>
 <script lang="ts">

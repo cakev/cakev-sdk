@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const routes: Array<any> = []
-const context = require.context('./demo', true, /\.(route.js)$/)
+const context = require.context('./demo', true, /\.(route.ts)$/)
 
 context.keys().forEach(name => {
 	routes.push(context(name).default)

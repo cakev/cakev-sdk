@@ -19,16 +19,16 @@ export default {
 			default: 33,
 		},
 	},
-	data() {
+	data(props) {
 		return {
-			currentVal: false,
+			currentVal: props.value,
 		}
 	},
 	watch: {
-		value: val => {
+		value(val) {
 			this.currentVal = val
 		},
-		currentVal: val => {
+		currentVal(val) {
 			this.$emit('input', val)
 		},
 	},

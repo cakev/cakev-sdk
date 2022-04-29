@@ -50,17 +50,15 @@ export default class Widget {
 		// this.events = events
 		this.market = market
 		this.scene = currentSceneIndex
-		const { layout = { size: {}, position: {} }, config = {}, widget = {}, api } = inputConfig || {}
-		if (!layout.size) layout.size = {}
-		if (!layout.position) layout.position = {}
+		const { layout, config = {}, widget = {}, api } = inputConfig || {}
 		if (widgetType) this.widgetType = widgetType
 		if (name) widget.name = name
-		if (width) layout.size.width = width
-		if (height) layout.size.height = height
+		if (width) layout.width = width
+		if (height) layout.height = height
 		const top = offsetY - startY
 		const left = offsetX - startX
-		layout.position.top = top
-		layout.position.left = left
+		layout.top = top
+		layout.left = left
 		layout.zIndex = currentMaxZIndex
 		this.id = uuid()
 		widget.id = this.id

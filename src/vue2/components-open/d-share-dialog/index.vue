@@ -96,7 +96,7 @@ export default {
 		},
 	},
 	watch: {
-		value: val => {
+		value(val) {
 			this.modalShow = val
 			if (val && this.isInit && !this.autoInit) {
 				// @ts-ignore

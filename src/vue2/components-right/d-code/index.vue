@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-	d-right-control(:label="label", title="全屏编辑", icon="md-code-working")
+	d-right-control(:label="label", title="全屏编辑",)
 		slot(name="right")
 	.d-manage-modal-control(v-if="show")
 		editor.d-manage-modal-control-editor(

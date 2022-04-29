@@ -1,42 +1,25 @@
 import Emitter from './emitter'
 import Task from './task'
+
 export default class Http extends Emitter {
 	limit = 1
-	/* 大屏组件接口Domain */
-	screenDomain: string
-	/* 大屏组件接口Headers */
-	screenHeaders: string
-	//时间loop任务队列
-	private loopPool: { [key: string]: Task } = {}
-	// private loopPoolObj: { [key: string]: Task } = {}
+	screenDomain: string // 大屏组件接口Domain
+	screenHeaders: string // 大屏组件接口Headers
+	loopPool: { [key: string]: Task } = {} // 时间loop任务队列
+	waitPool: Array<Task> = [] // 待请求任务队列
+	currentPool: Array<Task> = [] // 请求任务队列
+	loading = false
+	static POOL_START = 'POOL_START'
+	static POOL_ADD = 'POOL_ADD'
+	static POOL_UPDATE = 'POOL_UPDATE'
+	static POOL_STOP = 'POOL_STOP'
 
-	//待请求任务队列
-	private waitPool: Array<Task> = []
-
-	//请求任务队列
-	private currentPool: Array<Task> = []
-	private loading = false
-	static POOL_START = 'pool_start'
-	static POOL_ADD = 'pool_add'
-	static POOL_UPDATE = 'pool_update'
-	static POOL_STOP = 'pool_stop'
-
-	// todo
-	// 报错捕获是否抛出，node服务增加字段，默认false
-	// private httpErrorDebugger = false
-
-	private timer: any = null
+	timer: any = null
 	constructor() {
 		super()
 	}
 
 	init(): void {}
-
-	// sortTask(): void {
-	// 	this.waitPool.sort((a: Task, b: Task): number => {
-	// 		return b.weight - a.weight
-	// 	})
-	// }
 
 	pushOne(task: Task, id?: string): void {
 		if (task.loopTime > 0) {
@@ -46,10 +29,9 @@ export default class Http extends Emitter {
 		this.push2Wait(task)
 	}
 
-	private push2Wait(task: Task) {
+	push2Wait(task: Task) {
 		this.waitPool.push(task)
-		// this.sortTask()
-		task.status = Task.STATUS_WAITTING
+		task.status = Task.STATUS_WAIT
 		this.emit(Http.POOL_ADD)
 		if (!this.loading) {
 			this.emit(Http.POOL_START)
@@ -57,17 +39,17 @@ export default class Http extends Emitter {
 		}
 	}
 
-	private retry(t: Task, res) {
+	retry(t: Task, res) {
 		t.errorCount++
 		if (t.errorCount < t.maxErrorCount) {
 			t.status = Task.STATUS_RETRY
 			this.push2Wait(t)
 		} else {
-			t.catchCB(res)
+			t.catchCallBack(res)
 		}
 	}
 
-	private startInterval(): void {
+	startInterval(): void {
 		if (this.timer) return
 		this.timer = setInterval(() => {
 			Object.keys(this.loopPool).forEach(key => {
@@ -78,29 +60,28 @@ export default class Http extends Emitter {
 		}, 1000)
 	}
 
-	private run() {
+	run() {
 		this.loading = true
 		if (this.waitPool.length > 0) {
 			this.currentPool = this.waitPool.splice(0, this.limit)
 			const list: Array<Promise<any>> = []
 			this.currentPool.forEach(task => {
 				task.status = Task.STATUS_READY
-				list.push(task.execut({ screenDomain: this.screenDomain, screenHeaders: this.screenHeaders }))
+				list.push(task.request({ screenDomain: this.screenDomain, screenHeaders: this.screenHeaders }))
 			})
-			//todo allSettled 兼容性问题
 			Promise.allSettled(list).then(result => {
 				this.emit(Http.POOL_UPDATE)
 				result.forEach((res, index) => {
-					const t: Task = this.currentPool[index]
+					const task: Task = this.currentPool[index]
 					if (res.status === 'rejected') {
-						if (t.loopTime === 0) {
-							this.retry(t, res)
+						if (task.loopTime === 0) {
+							this.retry(task, res)
 						}
 					} else {
-						t.status = Task.STATUS_FINISH
-						t.thenCb(res.value)
+						task.status = Task.STATUS_FINISH
+						task.thenCallBack(res.value)
 					}
-					t.lastTime = Date.now()
+					task.lastTime = Date.now()
 				})
 				this.run()
 			})
@@ -108,13 +89,14 @@ export default class Http extends Emitter {
 			this.stop()
 		}
 	}
+	
 	// 停止某一个请求
 	abortOne(id: string): void {
 		delete this.loopPool[id]
 	}
 
-	/* 清空队列中的请求 */
-	public abortAll(): void {
+	// 清空队列中的请求
+	abortAll(): void {
 		this.waitPool = []
 		this.loopPool = {}
 		this.currentPool = []
@@ -122,11 +104,12 @@ export default class Http extends Emitter {
 		this.stopLoop()
 	}
 
-	private stop() {
+	stop() {
 		this.loading = false
 		this.emit(Http.POOL_STOP)
 	}
-	private stopLoop() {
+	
+	stopLoop() {
 		if (this.timer) {
 			clearInterval(this.timer)
 			this.timer = null

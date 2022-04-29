@@ -194,10 +194,10 @@ export default {
 		styles() {
 			const { layout } = this.config
 			return {
-				width: `${layout.size.width}px`,
-				height: `${layout.size.height}px`,
+				width: `${layout.width}px`,
+				height: `${layout.height}px`,
 				zIndex: `${this.zIndex}`,
-				transform: `translate3d(${layout.position.left}px, ${layout.position.top}px,0) ${
+				transform: `translate3d(${layout.left}px, ${layout.top}px,0) ${
 					layout.scale ? 'scale(' + layout.scale + ')' : ''
 				}`,
 			}

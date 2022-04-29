@@ -4,21 +4,19 @@
 		.d-detail-left-icon.fn-flex.pointer(@click="backHandler")
 			i-icon(type="ios-arrow-dropleft", size="22")
 	.d-detail-title.fn-flex.pointer(:title="editor.name", @click="editName = true")
-		e-input(width="152px" v-model="editor.name", v-if="editName", @blur="editName = false", :autofocus="true")
+		c-input(width="152px" v-model="editor.name", v-if="editName", @blur="editName = false", :autofocus="true")
 		span.fn-flex.d-detail-title.ellipsis(v-else) {{ editor.name }}
 	widget
 </template>
 <script>
 import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
-import eInput from '@/vue2/components-style/e-input/index.vue'
 import widget from './widget.vue'
 
 export default {
 	name: 'd-detail',
 	components: {
 		'i-icon': Icon,
-		eInput,
 		widget,
 	},
 	data() {

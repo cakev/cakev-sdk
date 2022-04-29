@@ -92,10 +92,10 @@ export default {
 				Object.values(this.editor.screen.screenWidgets).forEach((v) => {
 					// 只能框选当前场景下的组件
 					if (this.editor.screen.screenWidgetsLays[v.id].scene === this.editor.currentSceneIndex) {
-						const widgetStartX = Number(v.config.layout.position.left)
-						const widgetStartY = Number(v.config.layout.position.top)
-						const widgetEndX = Number(v.config.layout.position.left) + Number(v.config.layout.size.width)
-						const widgetEndY = Number(v.config.layout.position.top) + Number(v.config.layout.size.height)
+						const widgetStartX = Number(v.config.layout.left)
+						const widgetStartY = Number(v.config.layout.top)
+						const widgetEndX = Number(v.config.layout.left) + Number(v.config.layout.width)
+						const widgetEndY = Number(v.config.layout.top) + Number(v.config.layout.height)
 						if (
 							minPointerX < widgetStartX &&
 							widgetStartX < maxPointerX &&

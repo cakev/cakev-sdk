@@ -6,18 +6,16 @@ import dView from '@/vue2/components-open/d-view/index.vue'
 import loadMask from '@/vue2/components-open/load-mask/index.vue'
 import dImage from '@/vue2/components-open/d-image/index.vue'
 import '@/vue2/plugin.js'
-import colorTheme from '@/core/colorTheme'
 import widgetEcharts from '@/vue2/components-open/Widget/echarts.vue'
 import widgetNormal from '@/vue2/components-open/Widget/normal.vue'
 
 const widgetNormalMixin = widgetMixin
 
-const eslinkV = {
+const cakeV = {
 	widgetNormalMixin,
 	widgetMixin,
 	widgetEcharts,
 	widgetNormal,
-	colorTheme,
 	dScreen,
 	dShareDialog,
 	dDetail,
@@ -26,10 +24,10 @@ const eslinkV = {
 	dImage,
 }
 if (window !== undefined) {
-	if (!window.eslinkV) {
-		window.eslinkV = {}
+	if (!window.cakeV) {
+		window.cakeV = {}
 	}
-	window.eslinkV = { ...window.eslinkV, ...eslinkV }
+	window.cakeV = { ...window.cakeV, ...cakeV }
 }
 
 export {
@@ -37,7 +35,6 @@ export {
 	widgetMixin,
 	widgetEcharts,
 	widgetNormal,
-	colorTheme,
 	dScreen,
 	dDetail,
 	dShareDialog,
@@ -45,4 +42,4 @@ export {
 	loadMask,
 	dImage,
 }
-export default eslinkV
+export default cakeV

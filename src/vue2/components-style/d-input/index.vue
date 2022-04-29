@@ -21,16 +21,18 @@ export default {
 .d-input {
 	border: 1px solid #393b4a;
 
-	&::v-deep(.ivu-input) {
-		color: #fafafa;
-		background-color: #181b24;
-		border: none;
-		border-radius: 2px;
-	}
+	&::v-deep {
+		.ivu-input {
+			color: #fafafa;
+			background-color: #181b24;
+			border: none;
+			border-radius: 2px;
+		}
 
-	&::v-deep(.ivu-input-group-append) {
-		background-color: #181b24;
-		border: none;
+		.ivu-input-group-append {
+			background-color: #181b24;
+			border: none;
+		}
 	}
 }
 </style>

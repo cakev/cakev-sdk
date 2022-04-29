@@ -67,7 +67,7 @@ export declare class widgetNormalMixin extends Vue {
 	 *
 	 * 组件数据对象
 	 *
-	 * eslinkV缓存数据或通过API请求获取到的数据
+	 * cakeV缓存数据或通过API请求获取到的数据
 	 */
 	data: any
 	/**

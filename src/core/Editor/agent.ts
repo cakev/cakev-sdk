@@ -102,9 +102,6 @@ export default class Agent extends EditorBase {
 	set widgetMove(val: boolean) {
 		this.current.widgetMove = val
 	}
-	// get xRoomL1(): number {
-	// 	return this.current.xRoomL1
-	// }
 	get xRoomL2(): number {
 		return this.current.xRoomL2
 	}
@@ -117,9 +114,6 @@ export default class Agent extends EditorBase {
 	get zoom(): number {
 		return this.current.zoom
 	}
-	// taggerXRoomL1(): void {
-	// 	this.current.taggerXRoomL1()
-	// }
 	taggerXRoomL2(): void {
 		this.current.taggerXRoomL2()
 	}

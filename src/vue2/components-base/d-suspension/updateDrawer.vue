@@ -37,10 +37,10 @@ export default {
 		}
 	},
 	watch: {
-		value: (val: boolean) => {
+		value(val: boolean) {
 			this.currentVal = val
 		},
-		currentVal: (val: boolean) => {
+		currentVal(val: boolean) {
 			this.$emit('input', val)
 		},
 	},

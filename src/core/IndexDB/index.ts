@@ -5,7 +5,7 @@ export default class IndexDB extends Dexie {
 	public screenCache: Dexie.Table<ScreenCacheDB, number>
 
 	public constructor() {
-		super('EslinkVDB')
+		super('cakeVDB')
 		this.version(1).stores({
 			imageCache: '++id,picture,name',
 		})

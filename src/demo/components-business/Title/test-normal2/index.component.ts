@@ -28,13 +28,8 @@ export const value = {
 		data: JSON.stringify({ title: '标题' }),
 	},
 	layout: {
-		size: {
-			width: 480,
-			height: 43,
-		},
-		position: {
-			value: 'relative',
-		},
+		width: 480,
+		height: 43,
 	},
 	config: {
 		title: 'aaaaa',

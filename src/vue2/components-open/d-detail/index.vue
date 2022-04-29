@@ -3,22 +3,22 @@
 	left
 	ul.d-detail-right.fn-flex
 		li.fn-flex.flex-column.pointer(@click.stop="search")
-			e-svg(icon-class="search", :size="18")
+			c-svg(type="search", :size="18")
 			span 搜索
 		li.fn-flex.flex-column.pointer.pos-r(@click.stop="notice", :class="{ active: Object.keys(this.editor.log.list).length }")
-			e-svg(icon-class="notice", :size="18")
+			c-svg(type="notice", :size="18")
 			span 消息
 		li.fn-flex.flex-column.pointer(@click="preview")
-			e-svg(icon-class="preview", :size="20")
+			c-svg(type="preview", :size="20")
 			span 预览
 		li.fn-flex.flex-column.pointer(@click="handleExport")
-			e-svg(icon-class="export", :size="20")
+			c-svg(type="export", :size="20")
 			span 导出
 		li.fn-flex.flex-column.pointer(@click="importModal = true")
-			e-svg(icon-class="import", :size="20")
+			c-svg(type="import", :size="20")
 			span 导入
 		li.fn-flex.flex-column.pointer(@click="handleSave")
-			e-svg(icon-class="save", :size="20")
+			c-svg(type="save", :size="20")
 			span 保存
 	load-mask(:show="loading") {{ loadingMsg }}
 	i-modal(v-model="importModal", :footer-hide="true")

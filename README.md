@@ -1,4 +1,6 @@
-# dorring-sdk
+# cakev-sdk
+
+![](./public/logo192x192.png)
 
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/fish-uncle/dorring-sdk.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/fish-uncle/dorring-sdk/context:javascript)
 [![Coverage Status](https://coveralls.io/repos/github/fish-uncle/dorring-sdk/badge.svg?branch=master)](https://coveralls.io/github/fish-uncle/dorring-sdk?branch=master)

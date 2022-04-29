@@ -3,14 +3,14 @@
 	left
 	.d-footer-bar.fn-flex(:style="{ marginLeft: 'auto' }")
 		i-tooltip(content="缩小")
-			e-svg.pointer(:size="18", icon-class="zoomOut", @click.native="() => editor.zoomOut()")
+			c-svg.pointer(:size="18", type="zoomOut", @click.native="() => editor.zoomOut()")
 	.d-footer-bar.fn-flex
 		i-tooltip(content="放大")
-			e-svg.pointer(:size="18", icon-class="zoomIn", @click.native="() => editor.zoomIn()")
+			c-svg.pointer(:size="18", type="zoomIn", @click.native="() => editor.zoomIn()")
 	.d-footer-bar.fn-flex(:style="{ marginRight: '0' }")
 		i-tooltip(:content="editor.current.fullscreen ? '退出全屏' : '全屏'")
-			e-svg.pointer(
-				:icon-class="editor.current.fullscreen ? 'unfullscreen' : 'fullscreen'",
+			c-svg.pointer(
+				:type="editor.current.fullscreen ? 'unfullscreen' : 'fullscreen'",
 				:size="18",
 				@click="handleFullscreen")
 </template>

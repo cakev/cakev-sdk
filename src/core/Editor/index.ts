@@ -405,38 +405,38 @@ class Editor extends Agent {
 		this.currentWidgetList.map(item => {
 			const m = this.screen.screenWidgets[item]
 			if (minLeft === null) {
-				minLeft = Number(m.config.layout.position.left)
+				minLeft = Number(m.config.layout.left)
 			}
 			if (maxLeft === null) {
-				maxLeft = Number(m.config.layout.position.left)
-				width = Number(m.config.layout.size.width)
+				maxLeft = Number(m.config.layout.left)
+				width = Number(m.config.layout.width)
 			}
 			if (minTop === null) {
-				minTop = Number(m.config.layout.position.top)
+				minTop = Number(m.config.layout.top)
 			}
 			if (maxTop === null) {
-				maxTop = Number(m.config.layout.position.top)
-				height = Number(m.config.layout.size.height)
+				maxTop = Number(m.config.layout.top)
+				height = Number(m.config.layout.height)
 			}
-			if (minLeft > Number(m.config.layout.position.left)) {
-				minLeft = m.config.layout.position.left
+			if (minLeft > Number(m.config.layout.left)) {
+				minLeft = m.config.layout.left
 			}
 			if (
 				Number(maxLeft) + Number(width) <
-				Number(m.config.layout.position.left) + Number(m.config.layout.size.width)
+				Number(m.config.layout.left) + Number(m.config.layout.width)
 			) {
-				maxLeft = m.config.layout.position.left
-				width = m.config.layout.size.width
+				maxLeft = m.config.layout.left
+				width = m.config.layout.width
 			}
-			if (minTop > Number(m.config.layout.position.top)) {
-				minTop = m.config.layout.position.top
+			if (minTop > Number(m.config.layout.top)) {
+				minTop = m.config.layout.top
 			}
 			if (
 				Number(maxTop) + Number(height) <
-				Number(m.config.layout.position.top) + Number(m.config.layout.size.height)
+				Number(m.config.layout.top) + Number(m.config.layout.height)
 			) {
-				maxTop = m.config.layout.position.top
-				height = m.config.layout.size.height
+				maxTop = m.config.layout.top
+				height = m.config.layout.height
 			}
 		})
 		this.selectWidgetList({
@@ -449,6 +449,6 @@ class Editor extends Agent {
 	}
 }
 
-if (!window.eslinkV) window.eslinkV = {}
-window.eslinkV.Editor = Editor
-export default window.eslinkV.Editor
+if (!window.cakeV) window.cakeV = {}
+window.cakeV.Editor = Editor
+export default window.cakeV.Editor

@@ -23,14 +23,8 @@ export const value = {
 		]),
 	},
 	layout: {
-		// 宽高
-		size: {
-			width: 250,
-			height: 32,
-		},
-		position: {
-			value: 'relative',
-		},
+		width: 250,
+		height: 32,
 	},
 	// 自定义配置默认值
 	config: {

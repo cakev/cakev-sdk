@@ -1,10 +1,10 @@
 <template lang="pug">
 d-drawer(title="全局请求设置", v-model="currentVal")
-	e-form-item(direction="column", align="start")
-		e-label(value="请求链接前缀")
-		e-input(v-model="editor.screen.screenDomain", placeholder="http://example.com")
-	e-form-item(direction="column", align="start")
-		e-label(value="请求头设置")
+	c-column(align="start")
+		c-label 请求链接前缀
+		c-input(v-model="editor.screen.screenDomain", placeholder="http://example.com")
+	c-column(align="start")
+		c-label 请求头设置
 		editor.d-manage-modal-control-editor(
 			v-model="editor.screen.screenHeaders",
 			@init="editorInit",
@@ -12,44 +12,39 @@ d-drawer(title="全局请求设置", v-model="currentVal")
 			theme="idle_fingers",
 			height="200")
 </template>
-<script lang="ts">
-import eInput from '@/vue2/components-style/e-input/index.vue'
-import eLabel from '@/vue2/components-style/e-label/index.vue'
+<script>
 import Editor from '@/core/Editor'
 const editor = require('vue2-ace-editor')
 import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
-import EFormItem from '@/vue2/components-style/e-form-item/index.vue'
 
 export default {
 	name: 'global-request-config',
 	components: {
 		editor,
-		eInput,
-		eLabel,
 		DDrawer,
-		EFormItem,
 	},
 	props: {
 		value: {
 			type: Boolean,
+			default: false,
 		},
 	},
-	data() {
+	data(props) {
 		return {
-			currentVal: false,
+			currentVal: props.value,
 			editor: Editor.Instance(),
 		}
 	},
 	watch: {
-		value: (val: boolean) => {
+		value(val) {
 			this.currentVal = val
 		},
-		currentVal: (val: boolean) => {
+		currentVal(val) {
 			this.$emit('input', val)
 		},
 	},
 	methods: {
-		editorInit(): void {
+		editorInit() {
 			require('brace/ext/language_tools')
 			require('brace/mode/html')
 			require('brace/mode/javascript')

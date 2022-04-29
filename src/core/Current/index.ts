@@ -3,44 +3,27 @@ import Widget from '@/core/Widget/normal'
 
 export default class Current extends Factory<Current> {
 	rulerContainerId: string
-	xRoomL1 = 0
 	xRoomL2 = 238
 	xRoomR1 = 335
 	yRoom = 60
-	/* 大屏平台状态 是否自动贴靠参考线 */
-	autoAlignGuide = true
-	/* 拖动模式/预览模式 控制组件内部事件关闭 */
-	currentEventDisabled = true
-	/* 当前场景动画 */
-	sceneAnimate = ''
-	/* 被激活的场景对应组件 */
-	activeWidgetId = ''
-	/* 被激活的场景id */
-	activeSceneId: number | string = 0
-	/* 是否按下了 空格 键，启动内容区拖动 */
-	contentMove = false
-	/* 组件点击开始拖拽 */
-	widgetMove = false
-	/* 大屏平台状态 是否全屏 */
-	fullscreen = false
-	/* 当前标尺zoom */
-	zoom = 1
-	/* 当前标尺zoom步长 */
-	zoomStep = 0.02
-	/* 当前位置x */
-	offsetX = 0
-	/* 当前位置y */
-	offsetY = 0
-	/* 当前组件 */
-	currentWidget = {}
-	/* 当前选中组件-多组件 */
-	currentWidgetList: string[] = []
-	/* 当前场景 */
-	currentSceneIndex: number | string = 0
-	/* 当前打开的场景集合 */
-	currentCreateSceneList: Array<number | string> = []
-	/* 当前选中组件-多组件配置 */
+	autoAlignGuide = true // 大屏平台状态 是否自动贴靠参考线
+	currentEventDisabled = true // 拖动模式/预览模式 控制组件内部事件关闭
+	sceneAnimate = '' // 当前场景动画
+	activeWidgetId = '' // 被激活的场景对应组件
+	activeSceneId: number | string = 0 // 被激活的场景id
+	contentMove = false // 是否按下了 空格 键，启动内容区拖动
+	widgetMove = false // 组件点击开始拖拽
+	fullscreen = false // 大屏平台状态 是否全屏
+	zoom = 1 // 当前标尺zoom
+	zoomStep = 0.02 // 当前标尺zoom步长
+	offsetX = 0 // 当前位置x
+	offsetY = 0 // 当前位置y
+	currentWidget = {} // 当前组件
+	currentWidgetList: string[] = [] // 当前选中组件-多组件
+	currentSceneIndex: number | string = 0 // 当前场景
+	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
 	currentWidgetListConfig = {
+		// 当前选中组件-多组件配置
 		left: 0,
 		top: 0,
 		width: 0,
@@ -74,9 +57,6 @@ export default class Current extends Factory<Current> {
 		}
 	}
 
-	// taggerXRoomL1(): void {
-	// 	this.xRoomL1 = this.xRoomL1 > 0 ? 0 : 238
-	// }
 	taggerXRoomL2(): void {
 		this.xRoomL2 = this.xRoomL2 > 0 ? 0 : 238
 	}
@@ -136,7 +116,7 @@ export default class Current extends Factory<Current> {
 	selectSceneIndex(val: number | string): void {
 		if (val === undefined || val === null) return
 		this.currentSceneIndex = val
-		window.eslinkV.scene ? (window.eslinkV.scene.state.index = val) : void 0 // 兼容老版本
+		window.cakeV.scene ? (window.cakeV.scene.state.index = val) : void 0 // 兼容老版本
 		this.activeSceneId = val
 		let event = new CustomEvent('SceneIndex', { detail: { index: val } })
 		document.dispatchEvent(event)

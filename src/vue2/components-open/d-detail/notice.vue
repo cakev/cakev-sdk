@@ -39,10 +39,10 @@ export default {
 		}
 	},
 	watch: {
-		value: val => {
+		value(val) {
 			this.currentVal = val
 		},
-		currentVal: val => {
+		currentVal(val) {
 			this.$emit('input', val)
 		},
 	},

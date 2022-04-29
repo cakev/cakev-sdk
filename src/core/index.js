@@ -1,20 +1,18 @@
 import Editor from './Editor/index.ts'
 import { loadCss, loadJs } from '@/core/utils'
-import colorTheme from '@/core/colorTheme'
 import Widget from '@/core/Widget/normal'
 
-const eslinkV = {
+const cakeV = {
 	Editor,
 	loadCss,
 	loadJs,
-	colorTheme,
 	Widget,
 }
 if (window !== undefined) {
-	if (!window.eslinkV) {
-		window.eslinkV = {}
+	if (!window.cakeV) {
+		window.cakeV = {}
 	}
-	window.eslinkV = { ...window.eslinkV, ...eslinkV }
+	window.cakeV = { ...window.cakeV, ...cakeV }
 }
-export { Editor, loadCss, loadJs, colorTheme, Widget }
-export default eslinkV
+export { Editor, loadCss, loadJs, Widget }
+export default cakeV

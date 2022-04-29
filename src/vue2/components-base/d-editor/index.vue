@@ -96,13 +96,13 @@ export default {
 		getRefLineParams(params: any, item: any): void {
 			const { vLine, hLine } = params
 			this.vLine = vLine.map((child: any) => {
-				child.w = item.config.layout.size.width
-				child.h = item.config.layout.size.height
+				child.w = item.config.layout.width
+				child.h = item.config.layout.height
 				return child
 			})
 			this.hLine = hLine.map((child: any) => {
-				child.w = item.config.layout.size.width
-				child.h = item.config.layout.size.height
+				child.w = item.config.layout.width
+				child.h = item.config.layout.height
 				return child
 			})
 		},

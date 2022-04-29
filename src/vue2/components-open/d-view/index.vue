@@ -1,14 +1,14 @@
 <template lang="pug">
 #screen(ref="canvas-wrapper", :style="editor.screen.screenStyle")
 	d-scene(:zIndex="1")
-		eslinkv-widget(
+		cakev-widget(
 			v-for="item in sceneWidgets(0)",
 			:id="item.id",
 			:key="item.id",
 			:children="item.children",
 			readonly,
 			:zIndex="item.zIndex")
-		eslinkv-widget(
+		cakev-widget(
 			v-for="item in editor.current.currentSceneIndex === 0 ? [] : sceneWidgets(editor.current.currentSceneIndex)",
 			:id="item.id",
 			:key="item.id",
@@ -20,7 +20,7 @@
 		:key="sceneId",
 		:sceneId="sceneId",
 		:zIndex="index + 2")
-		eslinkv-widget(
+		cakev-widget(
 			v-for="item in sceneWidgets(sceneId)",
 			:id="item.id",
 			:zIndex="item.zIndex",

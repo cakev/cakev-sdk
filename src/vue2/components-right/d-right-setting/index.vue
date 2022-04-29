@@ -5,8 +5,8 @@
 		i-input.widget-name(
 			v-if="editName",
 			v-model="editor.currentWidget.config.widget.name")
-		e-svg.pointer.widget-name-icon(
-			icon-class="edit",
+		c-svg.pointer.widget-name-icon(
+			type="edit",
 			color="#515a6e",
 			@click.stop="editName = true",
 			v-if="!editName")

@@ -4,15 +4,15 @@
 		d-right-control(label="位置")
 			d-input(
 				append="X",
-				v-model="editor.currentWidget.config.layout.position.left",
+				v-model="editor.currentWidget.config.layout.left",
 				:style="{ width: '100px', marginRight: '10px' }")
-			d-input(append="Y", v-model="editor.currentWidget.config.layout.position.top", :style="{ width: '100px' }")
+			d-input(append="Y", v-model="editor.currentWidget.config.layout.top", :style="{ width: '100px' }")
 		d-right-control(label="宽高")
 			d-input(
 				append="W",
-				v-model="editor.currentWidget.config.layout.size.width",
+				v-model="editor.currentWidget.config.layout.width",
 				:style="{ width: '100px', marginRight: '10px' }")
-			d-input(append="H", v-model="editor.currentWidget.config.layout.size.height", :style="{ width: '100px' }")
+			d-input(append="H", v-model="editor.currentWidget.config.layout.height", :style="{ width: '100px' }")
 		d-right-control(label="场景")
 			i-select(v-model="editor.screen.screenWidgetsLays[editor.currentWidget.id].scene")
 				i-option(:value="0") 主场景

@@ -1,12 +1,6 @@
-const path = require('path')
 const pkg = require('./package.json')
 const isProduction = process.env.NODE_ENV === 'production'
-const proxyUrl = 'http://eslinkv.eslink.cc'
-// const proxyUrl = 'http://127.0.0.1:7001'
-
-function resolve(dir) {
-	return path.join(__dirname, dir)
-}
+const proxyUrl = 'http://127.0.0.1:7001'
 
 module.exports = {
 	transpileDependencies: ['@simonwep', 'swiper', 'dom7'],
@@ -83,18 +77,6 @@ module.exports = {
 			.test(/view-design.src.*?js$/)
 			.use('babel')
 			.loader('babel-loader')
-			.end()
-		config.module.rule('svg').exclude.add(resolve('src/vue2/icons')).end()
-		config.module
-			.rule('icons')
-			.test(/\.svg$/)
-			.include.add(resolve('src/vue2/icons'))
-			.end()
-			.use('svg-sprite-loader')
-			.loader('svg-sprite-loader')
-			.options({
-				symbolId: 'icon-[name]',
-			})
 			.end()
 		if (isProduction) {
 			config.plugins.delete('prefetch')

@@ -2,7 +2,7 @@
 .pos-a.widget-part-group(:style="{ ...styles, animationDuration, animationDelay }", :class="animationClass")
 	.pos-a(:style="stylesR")
 		template(v-for="item in children")
-			eslinkv-widget(v-bind="item")
+			cakev-widget(v-bind="item")
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
@@ -29,10 +29,10 @@ export default {
 		styles() {
 			const { layout } = this.item.config
 			return {
-				width: `${layout.size.width}px`,
-				height: `${layout.size.height}px`,
+				width: `${layout.width}px`,
+				height: `${layout.height}px`,
 				zIndex: `${this.zIndex}`,
-				transform: `translate3d(${layout.position.left}px, ${layout.position.top}px,0) ${
+				transform: `translate3d(${layout.left}px, ${layout.top}px,0) ${
 					layout.scale ? 'scale(' + layout.scale + ')' : ''
 				}`,
 			}
@@ -40,8 +40,8 @@ export default {
 		stylesR() {
 			const { layout } = this.item.config
 			return {
-				left: `${-layout.position.left}px`,
-				top: `${-layout.position.top}px`,
+				left: `${-layout.left}px`,
+				top: `${-layout.top}px`,
 			}
 		},
 	},
