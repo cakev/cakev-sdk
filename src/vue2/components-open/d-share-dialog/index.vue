@@ -3,7 +3,7 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 	p(:style="{ marginBottom: '10px' }") 快生成链接，分享给你的好友吧
 	.fn-flex.flex-row(:style="{ marginBottom: '10px' }")
 		label 开启分享
-		i-switch(v-model="openShare", :style="{ marginLeft: '10px' }")
+		c-switch(v-model="openShare", :style="{ marginLeft: '10px' }")
 	.fn-flex.flex-row(:style="{ marginBottom: '10px' }", v-if="openShare")
 		label.ivu-btn.d-detail-share-button(
 			:style="{ borderRadius: '2px 0 0 2px' }",
@@ -41,7 +41,7 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 			v-model="shareUrl")
 </template>
 <script>
-import { Modal, Button, Input, Switch } from 'view-design'
+import { Modal, Button, Input } from 'view-design'
 import shareMx from './share.mx'
 
 export default {
@@ -50,7 +50,6 @@ export default {
 		'i-button': Button,
 		'i-modal': Modal,
 		'i-input': Input,
-		'i-switch': Switch,
 	},
 	mixins: [shareMx],
 	props: {

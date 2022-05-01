@@ -14,15 +14,6 @@
 		d-right-control(label="动画时长")
 			d-input(append="ms", v-model="editor.currentWidget.animation.duration")
 	data-event
-	d-right-control(label="组件关联", v-if="editor.currentWidget.config.api.bind")
-		i-switch(v-model="editor.currentWidget.config.api.bind.enable")
-		i-select(
-			v-if="editor.currentWidget.config.api.bind.enable",
-			v-model="editor.currentWidget.config.api.bind.refIds",
-			filterable,
-			multiple,
-			:style="{ width: '100px', marginLeft: '10px' }")
-			i-option(:value="editor.currentWidget.id", v-for="(item, key) in relateList", :key="key") {{ item.id }}
 </template>
 <script lang="ts">
 import func from '@/vue2/components-func/func.mx'

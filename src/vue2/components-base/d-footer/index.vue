@@ -2,20 +2,19 @@
 .d-footer.fn-flex.flex-row.pos-r.z-index-999
 	left
 	.d-footer-bar.fn-flex(:style="{ marginLeft: 'auto' }")
-		i-tooltip(content="缩小")
+		c-tooltip(content="缩小" placement="top")
 			c-svg.pointer(:size="18", type="zoomOut", @click.native="() => editor.zoomOut()")
 	.d-footer-bar.fn-flex
-		i-tooltip(content="放大")
+		c-tooltip(content="放大" placement="top")
 			c-svg.pointer(:size="18", type="zoomIn", @click.native="() => editor.zoomIn()")
 	.d-footer-bar.fn-flex(:style="{ marginRight: '0' }")
-		i-tooltip(:content="editor.current.fullscreen ? '退出全屏' : '全屏'")
+		c-tooltip(:content="editor.current.fullscreen ? '退出全屏' : '全屏'" placement="top")
 			c-svg.pointer(
 				:type="editor.current.fullscreen ? 'unfullscreen' : 'fullscreen'",
 				:size="18",
 				@click="handleFullscreen")
 </template>
 <script lang="ts">
-import { Icon, Tooltip } from 'view-design'
 import Editor from '@/core/Editor'
 import { hotKeys } from '@/vue2/utils'
 import left from './left.vue'
@@ -23,8 +22,6 @@ import left from './left.vue'
 export default {
 	name: 'd-footer',
 	components: {
-		'i-icon': Icon,
-		'i-tooltip': Tooltip,
 		left,
 	},
 	data() {

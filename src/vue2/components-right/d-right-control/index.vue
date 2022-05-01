@@ -2,18 +2,17 @@
 .d-manage-modal-control
 	label
 		span(style="margin-right: 5px") {{ label }}
-		i-tooltip(:content="title", placement="top", v-if="title")
+		c-tooltip(:content="title", placement="top", v-if="title")
 			c-svg.pos-r.pointer(:type="icon", :size="16", :style="{ top: '3px' }")
 	.d-manage-modal-control-right
 		slot
 </template>
 <script>
-import { Tooltip, Icon } from 'view-design'
+import { Icon } from 'view-design'
 
 export default {
 	name: 'd-right-control',
 	components: {
-		'i-tooltip': Tooltip,
 		'i-icon': Icon,
 	},
 	props: {

@@ -30,7 +30,7 @@
 	notice(v-model="noticeModal")
 </template>
 <script>
-import { Button, Modal, Form, FormItem, Input, Tooltip } from 'view-design'
+import { Button, Modal, Form, FormItem, Input } from 'view-design'
 import loadMask from '../load-mask/index.vue'
 import { downloadFile, getQueryString } from '@/vue2/utils'
 import search from './search.vue'
@@ -49,7 +49,6 @@ export default {
 		'i-form': Form,
 		'i-form-item': FormItem,
 		'i-input': Input,
-		'i-tooltip': Tooltip,
 		search,
 		notice,
 		left,

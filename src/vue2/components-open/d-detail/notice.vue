@@ -1,5 +1,5 @@
 <template lang="pug">
-d-drawer(title="消息通知", v-model="currentVal")
+c-drawer(title="消息通知", v-model="currentVal")
 	.drawer-tool.fn-flex.flex-column
 		.update-btn(@click="clear") 清空消息
 		ul(v-if="Object.keys(this.editor.log.list).length")
@@ -13,13 +13,11 @@ d-drawer(title="消息通知", v-model="currentVal")
 </template>
 <script>
 import Editor from '@/core/Editor'
-import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 import { Button } from 'view-design'
 
 export default {
 	name: 'notice',
 	components: {
-		DDrawer,
 		'i-button': Button,
 	},
 	props: {

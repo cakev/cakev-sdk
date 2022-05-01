@@ -19,7 +19,7 @@ div
 				height="600")
 </template>
 <script>
-import { Icon, Modal, Tooltip } from 'view-design'
+import { Icon, Modal } from 'view-design'
 import dRightControl from '@/vue2/components-right/d-right-control/index.vue'
 const editor = require('vue2-ace-editor')
 
@@ -30,7 +30,6 @@ export default {
 		dRightControl,
 		'i-icon': Icon,
 		'i-modal': Modal,
-		'i-tooltip': Tooltip,
 	},
 	props: {
 		label: {

@@ -5,7 +5,7 @@
 			v-model="editor.currentWidget.config.widget.componentVersion",
 			:style="{ marginRight: '10px', width: '156px' }")
 			i-option(:value="item.componentVersion", v-for="(item, i) in versionList", :key="i") {{ item.componentVersion }}
-		i-switch(v-model="editor.currentWidget.market")
+		c-switch(v-model="editor.currentWidget.market")
 </template>
 <script lang="ts">
 import func from './func.mx'

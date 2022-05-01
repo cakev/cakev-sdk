@@ -1,5 +1,5 @@
 <template lang="pug">
-d-drawer(title="组件升级", v-model="currentVal")
+c-drawer(title="组件升级", v-model="currentVal")
 	.drawer-tool
 		checkbox(:indeterminate="indeterminate", :value="checkAll", @click.prevent.native="handleCheckAll") 可更新组件
 		.update-btn(@click="update") 更新
@@ -10,14 +10,12 @@ d-drawer(title="组件升级", v-model="currentVal")
 <script lang="ts">
 import { Checkbox, CheckboxGroup } from 'view-design'
 import Editor from '@/core/Editor'
-import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 
 export default {
 	name: 'update-drawer',
 	components: {
 		CheckboxGroup,
 		Checkbox,
-		DDrawer,
 	},
 	props: {
 		value: {

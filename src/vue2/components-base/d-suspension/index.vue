@@ -1,19 +1,19 @@
 <template lang="pug">
 .d-suspension.fn-flex.flex-column.pos-a.z-index-999(:style="{ right: `${editor.xRoomR1 + 20}px` }")
 	item-card(title="更新组件", icon="md-sync", @click="update")
-		updateDrawer(v-model="showDrawer", :data="updateInfo")
+	updateDrawer(v-model="showDrawer", :data="updateInfo")
 	item-card(
 		title="全局请求设置",
 		icon="md-planet",
 		@click="globalRequestConfigShow = true",
 		:active="editor.screen.screenDomain || editor.screen.screenHeaders")
-		globalRequestConfig(v-model="globalRequestConfigShow")
+	globalRequestConfig(v-model="globalRequestConfigShow")
 	item-card(
 		title="全局滤镜",
 		icon="ios-color-filter",
 		@click="filterShow = true",
 		:active="editor.screen.screenFilter.enable")
-		global-filter(v-model="filterShow")
+	global-filter(v-model="filterShow")
 </template>
 <script lang="ts">
 import updateDrawer from './updateDrawer.vue'

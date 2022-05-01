@@ -1,5 +1,5 @@
 <template lang="pug">
-d-drawer(title="全局请求设置", v-model="currentVal")
+c-drawer(title="全局请求设置", v-model="currentVal")
 	c-column(align="start")
 		c-label 请求链接前缀
 		c-input(v-model="editor.screen.screenDomain", placeholder="http://example.com")
@@ -15,13 +15,11 @@ d-drawer(title="全局请求设置", v-model="currentVal")
 <script>
 import Editor from '@/core/Editor'
 const editor = require('vue2-ace-editor')
-import DDrawer from '@/vue2/components-style/d-drawer/index.vue'
 
 export default {
 	name: 'global-request-config',
 	components: {
 		editor,
-		DDrawer,
 	},
 	props: {
 		value: {

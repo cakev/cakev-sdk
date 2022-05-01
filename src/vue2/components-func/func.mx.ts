@@ -36,7 +36,6 @@ export default {
 		'i-input-number': InputNumber,
 		'i-select': Select,
 		'i-option': Option,
-		'i-switch': Switch,
 		'i-color-picker': ColorPicker,
 		'i-collapse': Collapse,
 		'i-panel': Panel,

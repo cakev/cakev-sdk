@@ -32,7 +32,7 @@
 			:show="editor.currentWidget.events[eventType][activeIndex].process.enable",
 			@update:code="value => (editor.currentWidget.events[eventType][activeIndex].process.methodBody = value)")
 			template(slot="right")
-				i-switch(v-model="editor.currentWidget.events[eventType][activeIndex].process.enable")
+				c-switch(v-model="editor.currentWidget.events[eventType][activeIndex].process.enable")
 		i-select(
 			v-if="isSceneClass",
 			:style="{ marginBottom: '10px' }",

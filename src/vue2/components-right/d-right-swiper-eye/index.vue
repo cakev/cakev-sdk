@@ -6,7 +6,7 @@
 		i-icon.pointer.d-right-swiper-title-down.fn-flex(type="ios-arrow-down")
 		label.pointer {{ title }}
 		.d-right-swiper-title-right.fn-flex.flex-row
-			i-tooltip(v-for="item in icon", :content="item.msg")
+			c-tooltip(v-for="item in icon", :content="item.msg" placement="top")
 				i-icon.pointer(
 					:type="item.icon",
 					@click="e => handleIconClick(e, item.icon)",
@@ -18,13 +18,12 @@
 		slot(v-if="enable")
 </template>
 <script>
-import { Icon, Tooltip } from 'view-design'
+import { Icon } from 'view-design'
 
 export default {
 	name: 'd-right-swiper-eye',
 	components: {
 		'i-icon': Icon,
-		'i-tooltip': Tooltip,
 	},
 	props: {
 		title: {

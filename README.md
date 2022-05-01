@@ -1,4 +1,4 @@
-# cakev-sdk
+# @cakev/sdk
 
 ![](./public/logo192x192.png)
 

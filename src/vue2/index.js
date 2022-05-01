@@ -4,7 +4,6 @@ import dDetail from '@/vue2/components-open/d-detail/index.vue'
 import dShareDialog from '@/vue2/components-open/d-share-dialog/index.vue'
 import dView from '@/vue2/components-open/d-view/index.vue'
 import loadMask from '@/vue2/components-open/load-mask/index.vue'
-import dImage from '@/vue2/components-open/d-image/index.vue'
 import '@/vue2/plugin.js'
 import widgetEcharts from '@/vue2/components-open/Widget/echarts.vue'
 import widgetNormal from '@/vue2/components-open/Widget/normal.vue'
@@ -21,7 +20,6 @@ const cakeV = {
 	dDetail,
 	dView,
 	loadMask,
-	dImage,
 }
 if (window !== undefined) {
 	if (!window.cakeV) {
@@ -40,6 +38,5 @@ export {
 	dShareDialog,
 	dView,
 	loadMask,
-	dImage,
 }
 export default cakeV

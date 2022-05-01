@@ -1,17 +1,15 @@
 <template lang="pug">
 .d-suspension-item.pointer.pos-r.fn-flex(v-bind="{ ...$props, ...$attrs }", v-on="$listeners", :class="{ active }")
-	i-tooltip(:content="title", placement="left")
+	c-tooltip(:content="title", placement="left")
 		i-icon.pointer(:type="icon", :size="22")
-	slot
 </template>
 <script lang="ts">
-import { Icon, Tooltip } from 'view-design'
+import { Icon } from 'view-design'
 
 export default {
 	name: 'item-card',
 	components: {
 		'i-icon': Icon,
-		'i-tooltip': Tooltip,
 	},
 	props: {
 		icon: {},
