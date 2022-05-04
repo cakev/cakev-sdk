@@ -1,6 +1,7 @@
 <template lang="pug">
 div
-	d-right-swiper-list(
+	c-collapse(
+		type="list"
 		:title="item.label",
 		@add-click="handleAddClick(item['key'])",
 		v-for="item in editor.currentWidget.eventTypes",

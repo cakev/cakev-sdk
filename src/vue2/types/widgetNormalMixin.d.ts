@@ -1,16 +1,5 @@
 import Vue from 'vue'
 
-interface __handleClick__ {
-	/**
-	 * widgetNormalMixin(即将废弃 请使用 __handleEvent__)
-	 *
-	 * 组件事件、场景事件配置
-	 *
-	 * 目前支持更新组件、场景切换、添加场景、移除场景、及自定义
-	 */
-	(val?: any): void
-}
-
 interface __handleEvent__ {
 	/**
 	 * widgetNormalMixin
@@ -86,21 +75,8 @@ export declare class widgetNormalMixin extends Vue {
 	 * 例如：组件的长、宽、定位……
 	 */
 	config: any
-	__handleClick__: __handleClick__
 	__handleEvent__: __handleEvent__
 	__settingData__: __settingData__
-	/**
-	 * widgetNormalMixin
-	 *
-	 * 动画定时器
-	 */
-	animateTimer: any
-	/**
-	 * widgetNormalMixin
-	 *
-	 * 动画定时器,当前播放索引值
-	 */
-	animateActiveIndex: number
 	/**
 	 * widgetNormalMixin
 	 *

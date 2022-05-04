@@ -1,6 +1,6 @@
 <template lang="pug">
 .d-manage-modal-control-base
-	d-right-swiper(title="基础属性", :show="true")
+	c-collapse(title="基础属性", :show="true")
 		d-right-control(label="位置")
 			d-input(
 				append="X",
@@ -20,17 +20,12 @@
 				i-option(:value="-1") 回收站
 		d-right-control(label="缩放比例")
 			i-input(v-model="scale", :style="{ width: '100px' }")
-	d-right-echarts(v-if="editor.currentWidget.config.widgetType === 'echarts'")
 </template>
 <script lang="ts">
 import func from './func.mx'
-import dRightEcharts from '../components-right/d-right-echarts/index.vue'
 
 export default {
 	name: 'FuncBase',
-	components: {
-		dRightEcharts,
-	},
 	mixins: [func],
 	computed: {
 		scale: {

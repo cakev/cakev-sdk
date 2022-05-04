@@ -45,6 +45,8 @@ li {
 
 .d-footer-hot-key-img {
 	margin-left: 6px;
+	width: 18px;
+	text-align: center;
 }
 
 .d-footer-hot-key-item {
@@ -61,10 +63,5 @@ li {
 	border: 1px solid #393b4a;
 	border-radius: 2px;
 	box-shadow: 0 1px 3px 0 rgba(44, 46, 64, 0.82);
-}
-
-.d-footer-hot-key-img {
-	width: 18px;
-	text-align: center;
 }
 </style>

@@ -1,6 +1,7 @@
 <template lang="pug">
 .d-manage-modal-control-data
-	d-right-swiper-eye(
+	c-collapse(
+		type="eye"
 		title="入场动画",
 		:show="true",
 		@open-click="editor.currentWidget.animation.transitionEnable = true",

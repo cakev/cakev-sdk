@@ -4,7 +4,6 @@ import '@/vue2/scss/reset.scss'
 import '@/vue2/scss/index.scss'
 import '@/vue2/scss/animate.min.scss'
 import '@/vue2/scss/animate-widget.min.scss'
-import '@/vue2/scss/font.scss'
 import Vue from 'vue'
 
 import sceneGroup from '@/vue2/components-base/d-left-scene/widget-group'

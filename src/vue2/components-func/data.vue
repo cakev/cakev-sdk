@@ -1,6 +1,6 @@
 <template lang="pug">
 .d-manage-modal-control-data
-	d-right-swiper(title="数据请求", :show="true")
+	c-collapse(title="数据请求", :show="true")
 		d-right-control(label="数据类型")
 			i-select(v-model="apiType", :style="{ width: apiType === '数仓平台' ? '122px' : '208px' }")
 				i-option(value="静态数据") 静态数据
@@ -21,7 +21,8 @@
 			:code="typeof editor.currentWidget.config.api.params === 'string' ? editor.currentWidget.config.api.params : JSON.stringify(editor.currentWidget.config.api.params)",
 			@update:code="value => (editor.currentWidget.config.api.params = JSON.parse(value))")
 		d-code(label="响应数据", lang="json", :code="apiData", @update:code="value => (apiData = value)")
-	d-right-swiper-eye(
+	c-collapse(
+		type="eye"
 		title="数据过滤器",
 		:enable="editor.currentWidget.config.api.process.enable",
 		@open-click="editor.currentWidget.config.api.process.enable = true",
@@ -31,7 +32,8 @@
 			:code="editor.currentWidget.config.api.process.methodBody",
 			@update:code="value => (editor.currentWidget.config.api.process.methodBody = value)")
 	data-custom-deal
-	d-right-swiper-eye(
+	c-collapse(
+		type="eye"
 		title="自动更新",
 		:enable="editor.currentWidget.config.api.autoFetch.enable",
 		@open-click="editor.currentWidget.config.api.autoFetch.enable = true",

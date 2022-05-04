@@ -1,6 +1,7 @@
 <template lang="pug">
 .func-group.fn-flex.flex-column
-	d-right-swiper-list(
+	c-collapse(
+		type="list"
 		:title="`${config.label} [${inputKey}]`",
 		@add-click="handleAddClick",
 		:list="obj[inputKey]",

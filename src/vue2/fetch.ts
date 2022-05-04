@@ -41,10 +41,10 @@ export default {
 				return
 			}
 			response = usePath(path, response, errorMessage => {
-				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.__widgetId__, errorMessage }))
+				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id, errorMessage }))
 			})
 			response = useProcess(process, response, () => {
-				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.__widgetId__ }))
+				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id }))
 			})
 			this.data = response
 		},
@@ -52,7 +52,7 @@ export default {
 			const { url, method } = api
 			if (!url) return
 			const params = parseParams(api.params)
-			this.editor.request(method, url, params, this.__widgetId__)
+			this.editor.request(method, url, params, this.cake_widget_id)
 		},
 		dispatchQuery(api): void {
 			this.outerQuery(api)

@@ -5,12 +5,10 @@
 	ul.d-footer-view-modal.pos-a(v-show="viewModal", v-click-outside="hideView")
 		li.fn-flex.pointer(@click="taggerXRoomL2")
 			span 场景区
-			i-icon.pointer(type="md-checkmark", v-show="editor.xRoomL2 > 0")
+			c-svg.pointer(type="checkmark", :size="12" v-show="editor.xRoomL2 > 0")
 		li.fn-flex.pointer(@click="taggerXRoomR1")
 			span 设置区
-			i-icon.pointer(type="md-checkmark", v-show="editor.xRoomR1 > 0")
-	.d-footer-bar.fn-flex.flex-row(@click="copyModal = true")
-		.d-footer-bar-text.ellipsis(v-if="editor.sceneObj") {{ editor.currentSceneIndex === 0 ? '主场景' : editor.currentSceneIndex === -1 ? '回收站' : editor.sceneObj[editor.currentSceneIndex].name }}
+			c-svg.pointer(type="checkmark", :size="12" v-show="editor.xRoomR1 > 0")
 	.d-footer-bar.fn-flex
 		label.d-footer-hot-keys.fn-flex.flex-row
 			.d-footer-bar-text.pointer.ellipsis(@click="showHotKey = !showHotKey", v-click-outside="hideHotKey") 快捷键
@@ -19,15 +17,9 @@
 		c-switch(v-model="editor.current.currentEventDisabled")
 	ul.d-footer-hot-key-list.pos-a(v-show="showHotKey")
 		item-card(v-for="item in hotKeys", :key="item.name", :item="item")
-	i-modal(v-model="copyModal", title="场景ID", :footer-hide="true")
-		.fn-flex.flex-row
-			span.fn-hide.copy-id {{ editor.currentSceneIndex }}
-			i-input(:value="editor.currentSceneIndex", search, readonly, enter-button="复制", @on-search="")
 </template>
 <script>
-import { Input, Modal, Icon } from 'view-design'
 import Editor from '@/core/Editor'
-import { copyText } from '@/vue2/utils'
 import ItemCard from '@/vue2/components-base/d-footer/item-card.vue'
 import { hotKeys } from '@/vue2/utils'
 import ClickOutside from 'vue-click-outside'
@@ -35,16 +27,12 @@ import ClickOutside from 'vue-click-outside'
 export default {
 	name: 'left',
 	components: {
-		'i-input': Input,
-		'i-modal': Modal,
-		'i-icon': Icon,
 		ItemCard,
 	},
 	directives: { ClickOutside },
 	data() {
 		return {
 			showHotKey: false,
-			copyModal: false,
 			viewModal: false,
 			hotKeys: hotKeys,
 			editor: Editor.Instance(),
@@ -64,9 +52,6 @@ export default {
 		},
 		hideView() {
 			this.viewModal = false
-		},
-		handleCopy() {
-			copyText(this.editor.currentSceneIndex)
 		},
 	},
 }

@@ -3,12 +3,7 @@ import {
 	InputNumber,
 	Select,
 	Option,
-	Switch,
 	ColorPicker,
-	Collapse,
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	Panel,
 	Button,
 	CheckboxGroup,
 	Checkbox,
@@ -16,20 +11,14 @@ import {
 	Upload,
 	Modal,
 } from 'view-design'
-import dRightSwiper from '@/vue2/components-right/d-right-swiper/index.vue'
-import dRightSwiperList from '@/vue2/components-right/d-right-swiper-list/index.vue'
-import dRightSwiperEye from '@/vue2/components-right/d-right-swiper-eye/index.vue'
 import dRightControl from '@/vue2/components-right/d-right-control/index.vue'
-import dInput from '@/vue2/components-style/d-input/index.vue'
+import dInput from '@/vue2/components-base/d-input/index.vue'
 import Editor from '@/core/Editor'
 
 export default {
 	components: {
-		dRightSwiper,
 		dRightControl,
 		dInput,
-		dRightSwiperList,
-		dRightSwiperEye,
 		'i-input': Input,
 		'i-upload': Upload,
 		'i-icon': Icon,
@@ -37,8 +26,6 @@ export default {
 		'i-select': Select,
 		'i-option': Option,
 		'i-color-picker': ColorPicker,
-		'i-collapse': Collapse,
-		'i-panel': Panel,
 		'i-button': Button,
 		'i-modal': Modal,
 		CheckboxGroup,

@@ -47,29 +47,6 @@ body {
 	pointer-events: none !important;
 }
 
-.fn-clear {
-	*zoom: 1;
-
-	&::before,
-	&::after {
-		display: table;
-		line-height: 0;
-		content: '';
-	}
-
-	&::after {
-		clear: both;
-	}
-}
-
-.fn-fl {
-	float: left;
-}
-
-.fn-fr {
-	float: right;
-}
-
 .z-index-9 {
 	z-index: 9;
 }
