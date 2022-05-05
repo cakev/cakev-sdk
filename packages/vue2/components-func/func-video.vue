@@ -23,7 +23,7 @@ export default {
 		formData() {
 			if (this.editor.currentWidget) {
 				return {
-					library: `componentStatic/${this.editor.currentWidget.type}/${this.editor.currentWidget.config.widget.componentVersion}`,
+					library: `componentStatic/${this.editor.currentWidget.type}/${this.editor.currentWidget.config.widget.widgetVersion}`,
 				}
 			}
 			return {}

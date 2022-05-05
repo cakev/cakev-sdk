@@ -1,9 +1,10 @@
-﻿import { getQueryString, uuid } from '@/core/utils'
+﻿import { getQueryString, uuid } from '@cakev/util'
 import Factory from '@/core/Base/factory'
 import Widget from '@/core/Widget/base'
 import copy from 'fast-copy'
 import commonConfigValue from '@/core/common-config-value.js'
-import { configMerge, versionToNum } from '@/core/utils'
+import { configMerge } from '@/core/utils'
+import { versionToNum } from '@cakev/util'
 
 export default class Screen extends Factory<Screen> {
 	currentVersion = '1.1.0' // 当前系统版本
@@ -18,8 +19,6 @@ export default class Screen extends Factory<Screen> {
 	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
 	remark = '' // 备注
 	sort = 1 // 排序
-	createTime: string // 创建时间
-	updateTime: string // 更新时间
 	screenWidth = 1920 // 大屏宽度
 	screenHeight = 1080 // 大屏高度
 	screenBackGroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
@@ -40,15 +39,12 @@ export default class Screen extends Factory<Screen> {
 	}
 
 	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
-		const mergedValue = localConfigValue
-			? configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
-			: commonConfigValue()
+		const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
 		const target = this.screenWidgets[id]
 		const inputConfig = Object.freeze(target.config || {})
 		const res = configMerge(inputConfig, mergedValue)
+		console.log(res)
 		res.widget.name = res.widget.name || '未知组件'
-		if (!target.widgetType)
-			target.widgetType = localConfigValue ? localConfigValue.widgetType || 'normal' : 'normal'
 		if (customConfig) {
 			customConfig.map(item => {
 				if (!item.prop.includes('config.config')) {
@@ -60,7 +56,7 @@ export default class Screen extends Factory<Screen> {
 		target.config = res
 	}
 
-	changeLayoutMode(value: string): string {
+	changeLayoutMode(value: string | null): string {
 		let scaleX = 0,
 			scaleY = 1,
 			actualScaleRatio = 1,
@@ -141,6 +137,7 @@ export default class Screen extends Factory<Screen> {
 			screenMainScene: this.screenMainScene,
 		}
 	}
+
 	/* 添加组件 */
 	createWidget(
 		offsetX = 0,
@@ -159,6 +156,7 @@ export default class Screen extends Factory<Screen> {
 			[widgetItem.id]: { scene: currentSceneIndex, id: widgetItem.id, zIndex: currentMaxZIndex, hide: false },
 		}
 	}
+
 	/* 复制组件 */
 	copyWidget(copyId: string): void {
 		const widget = this.screenWidgets[copyId]
@@ -173,6 +171,7 @@ export default class Screen extends Factory<Screen> {
 		layout.top = 10 + Number(layout.top)
 		this.screenWidgets = { ...this.screenWidgets, [id]: newWidget }
 	}
+
 	/* 更新组件 */
 	updateComponentTarget(id, target, value): void {
 		switch (target) {

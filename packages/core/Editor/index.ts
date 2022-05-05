@@ -1,5 +1,5 @@
 ﻿import Ruler from '@/core/ui/Ruler'
-import { uuid } from '@/core/utils'
+import { uuid } from '@cakev/util'
 import { useList } from '@/vue2/api/marketComponent.api'
 import Agent from '@/core/Editor/agent'
 import HttpTask from '@/core/Http/task'
@@ -8,7 +8,7 @@ import Widget from '@/core/Widget/normal'
 import { Method } from 'axios'
 import LogTask from '@/core/Log/task'
 
-class Editor extends Agent {
+export default class Editor extends Agent {
 	init(res?: any): any {
 		let screen
 		if (res) {
@@ -34,8 +34,8 @@ class Editor extends Agent {
 			if (!this.widgetLoaded[`${item.type}${item.version}`]) {
 				this.updateWidgetLoaded(`${item.type}${item.version}`)
 				list.push({
-					componentEnTitle: item.type,
-					componentVersion: item.version,
+					widgetType: item.type,
+					widgetVersion: item.version,
 				})
 			}
 		})
@@ -56,7 +56,7 @@ class Editor extends Agent {
 								this.log.push(
 									new LogTask({
 										code: 'LOAD_COMPONENT_ERROR',
-										errorMessage: `${list[index].componentEnTitle}${list[index].componentVersion}`,
+										errorMessage: `${list[index].widgetType}${list[index].widgetVersion}`,
 									}),
 								)
 								resolve(true)
@@ -448,7 +448,3 @@ class Editor extends Agent {
 		})
 	}
 }
-
-if (!window.cakeV) window.cakeV = {}
-window.cakeV.Editor = Editor
-export default window.cakeV.Editor

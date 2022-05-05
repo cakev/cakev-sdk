@@ -27,8 +27,8 @@ export default {
 		},
 		currentComponent() {
 			if (this.ready) {
-				if (this.item.market && this.editor.widgetLoaded[`${this.item.type}${this.componentVersion}`]) {
-					return `${prefix1}${this.item.type}-${this.componentVersion}`
+				if (this.item.market && this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
+					return `${prefix1}${this.item.type}-${this.widgetVersion}`
 				}
 				return `${prefix2}${this.item.type}`
 			}
@@ -37,7 +37,7 @@ export default {
 	},
 	data() {
 		return {
-			componentVersion: '',
+			widgetVersion: '',
 			ready: false,
 			animationClass: null,
 			animationDuration: `.6s`,
@@ -61,19 +61,19 @@ export default {
 			this.animationClass = null
 		},
 		loadMarket() {
-			this.componentVersion = this.item.config.widget.componentVersion
-			if (this.editor.widgetLoaded[`${this.item.type}${this.componentVersion}`]) {
+			this.widgetVersion = this.item.config.widget.widgetVersion
+			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
 				this.ready = true
 			} else {
 				use({
-					componentEnTitle: this.item.type,
-					componentVersion: this.item.config.widget.componentVersion,
+					widgetType: this.item.type,
+					widgetVersion: this.item.config.widget.widgetVersion,
 				})
 					.then(res => {
 						const script = document.createElement('script')
 						script.onload = () => {
 							this.ready = true
-							this.editor.updateWidgetLoaded(`${this.item.type}${this.componentVersion}`)
+							this.editor.updateWidgetLoaded(`${this.item.type}${this.widgetVersion}`)
 							if (res.isCollection) {
 								res.componentConfig.widget.id = this.item.config.widget.id
 								this.editor.screen.screenWidgets[this.item.config.widget.id].config =
@@ -84,17 +84,17 @@ export default {
 							script.src = res.componentJsUrl
 							document.head.appendChild(script)
 						} else {
-							console.error(`${this.item.type}${this.componentVersion}加载组件失败`)
+							console.error(`${this.item.type}${this.widgetVersion}加载组件失败`)
 						}
 					})
 					.catch(() => {
-						console.error(`${this.item.type}${this.componentVersion}加载组件失败`)
+						console.error(`${this.item.type}${this.widgetVersion}加载组件失败`)
 					})
 			}
 		},
 	},
 	watch: {
-		'item.config.widget.componentVersion': {
+		'item.config.widget.widgetVersion': {
 			deep: true,
 			handler() {
 				if (this.item.market) {
@@ -117,7 +117,7 @@ export default {
 		if (this.item.market) {
 			this.loadMarket()
 		} else {
-			if (this.editor.widgetLoaded[`${this.item.type}${this.componentVersion}`]) {
+			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
 				this.ready = true
 			} else {
 				Vue.component(`${prefix2}${this.item.type}`, this.editor.local.components[this.item.type])

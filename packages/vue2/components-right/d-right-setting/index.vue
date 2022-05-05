@@ -11,7 +11,7 @@
 			@click.stop="editName = true",
 			v-if="!editName")
 	.d-right-modal-id.fn-flex.flex-column
-		span {{ editor.currentWidget.type }}{{ editor.currentWidget.config.widget.componentVersion ? ` | ${editor.currentWidget.config.widget.componentVersion}` : '' }}
+		span {{ editor.currentWidget.type }}{{ editor.currentWidget.config.widget.widgetVersion ? ` | ${editor.currentWidget.config.widget.widgetVersion}` : '' }}
 	.d-right-modal-title.pointer.text-center.fn-flex.flex-row
 		span.pos-r(
 			v-for="(item, index) in title",

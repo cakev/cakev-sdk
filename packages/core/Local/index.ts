@@ -32,16 +32,15 @@ export default class Local extends Factory<Local> {
 			const typeTwo = name.split('/')[2]
 			const componentConfig = {
 				...conf(name).value,
-				componentEnTitle: typeTwo,
+				widgetType: typeTwo,
 			}
 			const componentAvatar = snapshots[typeTwo]
 			if (componentConfig) {
 				if (w[typeOne]) {
 					widgetsObject[widgetsObject.length - 1].children.push({
-						componentId: Date.now(),
 						componentConfig,
 						componentTitle: typeTwo,
-						componentEnTitle: typeTwo,
+						widgetType: typeTwo,
 						componentAvatar,
 						market: false,
 					})
@@ -54,11 +53,10 @@ export default class Local extends Factory<Local> {
 						market: false,
 						children: [
 							{
-								componentId: Date.now(),
 								componentConfig,
 								market: false,
 								componentTitle: typeTwo,
-								componentEnTitle: typeTwo,
+								widgetType: typeTwo,
 								componentTypeId: typeTwo,
 								componentAvatar,
 							},

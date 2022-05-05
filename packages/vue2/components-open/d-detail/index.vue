@@ -32,7 +32,8 @@
 <script>
 import { Button, Modal, Form, FormItem, Input } from 'view-design'
 import loadMask from '../load-mask/index.vue'
-import { downloadFile, getQueryString } from '@/vue2/utils'
+import {getQueryString} from '@cakev/util'
+import { downloadFile } from '@/vue2/utils'
 import search from './search.vue'
 import notice from './notice.vue'
 import Editor from '@/core/Editor'

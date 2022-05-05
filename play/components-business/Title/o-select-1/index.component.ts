@@ -31,7 +31,7 @@ export const value = {
 		defaultValue: '1',
 	},
 	widget: {
-		componentVersion: version,
+		widgetVersion: version,
 		name,
 	},
 }

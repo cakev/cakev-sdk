@@ -18,10 +18,9 @@
 			item-card(
 				v-for="widget in list[current.componentTypeId]",
 				:market="current.market",
-				:componentEnTitle="widget.componentEnTitle",
+				:widgetType="widget.widgetType",
 				:componentConfig="widget.componentConfig",
-				:componentVersion="widget.componentVersion",
-				:componentId="widget.componentId",
+				:widgetVersion="widget.widgetVersion",
 				:componentAvatar="widget.componentAvatar",
 				:componentTitle="widget.componentTitle")
 </template>

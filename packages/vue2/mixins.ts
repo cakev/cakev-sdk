@@ -31,23 +31,19 @@ export default {
 		return {
 			data: null,
 			time: Date.now(),
-			instance: null,
 			output: null,
-			inPreview: true,
 			cake_widget_id: props.config.widget.id,
 			cake_editor: Editor.Instance(),
 		}
 	},
 	beforeDestroy(): void {
-		this.instance = null
 		this.cake_editor.http.abortOne(this.cake_widget_id)
-		this.animateActiveIndex = -1
 	},
 	methods: {
 		__eventTypesSetting__(eventTypes): void {
 			this.cake_editor.eventTypesSetting(this.config.widget.id, eventTypes)
 		},
-		__handleEvent__(eventType = 'click', val): void {
+		cake_event(eventType = 'click', val): void {
 			if (this.events) {
 				this.events[eventType].forEach(item => {
 					let finalType = item.triggerType
@@ -114,29 +110,6 @@ export default {
 				this.__eventTypesSetting__([{ key: 'click', label: '点击事件' }])
 			}
 		},
-		/**
-		 * @description 组件间联动，被关联组件收动添加 updateComponent 方法
-		 * [id]
-		 */
-		emitComponentUpdate(data): void {
-			if (this.config) {
-				this.config.api.bind.refIds.forEach((ref: any) => {
-					const widget = this.cake_editor.screen.screenWidgets[ref]
-					if (!widget) return
-					let params = widget.config.api.params
-					if (params) {
-						if (typeof params === 'string') {
-							params = { ...JSON.parse(params), ...data }
-						} else {
-							params = { ...params, ...data }
-						}
-					} else {
-						params = data
-					}
-					widget.config.api.params = params
-				})
-			}
-		},
 		__init__(obj): void {
 			const { value, customConfig, setting, settingData, eventTypes, customEventsConfig } = obj
 			this.__eventTypesSetting__(eventTypes)
@@ -175,24 +148,5 @@ export default {
 			const now = +new Date()
 			return `d-${now}`
 		},
-		eventLength(): number {
-			return Object.keys(this.events).length
-		},
-		isSceneActive(): boolean {
-			if (!this.events) return false
-			const events = this.events
-			let e = []
-			for (const key in events) {
-				// @ts-ignore
-				e = [...e, ...events[key]]
-			}
-			return (
-				this.cake_editor.activeWidgetId === this.config.widget.id &&
-				e.some(v => v.id === this.cake_editor.activeSceneId)
-			)
-		},
-	},
-	mounted(): void {
-		this.inPreview = this.cake_editor.editorStatus === 'inPreview'
 	},
 }

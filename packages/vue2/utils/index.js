@@ -117,23 +117,6 @@ export const configMerge = function (from, to) {
 	return output
 }
 
-/**
- * @description uuid
- */
-export function uuid() {
-	return Math.random().toString(36).replace('0.', '')
-}
-
-/**
- * @description 获取url参数
- */
-export function getQueryString(name) {
-	const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
-	const r = window.location.search.substr(1).match(reg)
-	if (r != null) return unescape(r[2])
-	return null
-}
-
 const types = {
 	json: 'application/json',
 	txt: 'text/plain',

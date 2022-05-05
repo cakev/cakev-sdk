@@ -13,11 +13,10 @@ import Editor from '@/core/Editor'
 export default {
 	name: 'item-card',
 	props: {
-		componentEnTitle: {},
+		widgetType: {},
 		componentConfig: {},
 		componentAvatar: {},
-		componentId: {},
-		componentVersion: {},
+		widgetVersion: {},
 		componentTitle: {},
 		market: { type: Boolean },
 	},
@@ -29,11 +28,10 @@ export default {
 	methods: {
 		handleClick() {
 			this.editor.screen.createWidget(0, 0, {
-				type: this.componentEnTitle,
+				type: this.widgetType,
 				config: this.componentConfig,
 				market: this.market,
-				componentVersion: this.componentVersion,
-				componentId: this.componentId,
+				widgetVersion: this.widgetVersion,
 				startX: 0,
 				startY: 0,
 			})
@@ -45,11 +43,10 @@ export default {
 			e.dataTransfer.setData(
 				'widget-config',
 				JSON.stringify({
-					type: this.componentEnTitle,
+					type: this.widgetType,
 					config: this.componentConfig,
 					market: this.market,
-					componentVersion: this.componentVersion,
-					componentId: this.componentId,
+					widgetVersion: this.widgetVersion,
 					startX: e.offsetX,
 					startY: e.offsetY,
 				}),

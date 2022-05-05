@@ -1,3 +1,7 @@
+import '@/vue2/scss/conf.scss'
+import '@/vue2/scss/reset.scss'
+import '@/vue2/scss/index.scss'
+
 import dShareDialog from './vue2/components-open/d-share-dialog/index.vue'
 import Editor from './core/Editor'
 import dDetail from './vue2/components-open/d-detail/index.vue'

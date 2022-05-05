@@ -34,9 +34,9 @@
 import loadMask from '../load-mask/index.vue'
 import dScene from '../../components-base/d-scene/index.vue'
 import Editor from '@/core/Editor'
-import { getQueryString } from '@/vue2/utils'
+import { getQueryString } from '@cakev/util'
 import { loadJs, loadCss } from '@/core/utils'
-import { linkList } from '@/vue2/api/screen.api.js'
+import { linkList } from '@/vue2/api/screen.api'
 
 export default {
 	name: 'd-view',

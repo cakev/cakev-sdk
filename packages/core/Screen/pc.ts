@@ -36,8 +36,6 @@ export default class ScreenPc extends ScreenBase {
 		this.screenVersion = res.screenVersion
 		this.screenLayoutMode = res.screenLayoutMode || 'full-size'
 		this.sort = res.sort
-		this.createTime = res.createTime
-		this.updateTime = res.updateTime
 		this.screenWidth = res.screenWidth
 		this.screenHeight = res.screenHeight
 		this.screenBackGroundColor = res.screenBackGroundColor
@@ -53,7 +51,7 @@ export default class ScreenPc extends ScreenBase {
 				this.marketComponents.push({
 					id: key,
 					type: screenWidgets[key].type,
-					version: screenWidgets[key].config.widget.componentVersion,
+					version: screenWidgets[key].config.widget.widgetVersion,
 				})
 			}
 			if (screenWidgets[key].children) {

@@ -71,9 +71,9 @@ export default {
 			const widget = this.editor.currentWidget
 			create({
 				componentConfig: widget.config,
-				componentEnTitle: widget.type,
+				widgetType: widget.type,
 				componentTitle: widget.config.widget.name,
-				componentVersion: widget.config.widget.componentVersion,
+				widgetVersion: widget.config.widget.widgetVersion,
 			}).then(() => {
 				this.$Modal.info({
 					content: '收藏成功',

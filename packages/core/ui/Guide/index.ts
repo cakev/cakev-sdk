@@ -1,5 +1,5 @@
 import './index.scss'
-import { uuid } from '@/core/utils'
+import { uuid } from '@cakev/util'
 
 export default class Guide {
 	guideLineClassName = { x: 'd-ruler-guide-x', y: 'd-ruler-guide-y' }

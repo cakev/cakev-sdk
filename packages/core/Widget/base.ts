@@ -1,4 +1,4 @@
-import { uuid } from '@/core/utils'
+import { uuid } from '@cakev/util'
 
 export default class Widget {
 	id: string
@@ -40,8 +40,7 @@ export default class Widget {
 			startX,
 			startY,
 			market = false,
-			componentVersion,
-			componentId,
+			widgetVersion,
 		} = data
 		this.type = type
 		// this.settingDataHandle = settingDataHandle
@@ -62,8 +61,7 @@ export default class Widget {
 		layout.zIndex = currentMaxZIndex
 		this.id = uuid()
 		widget.id = this.id
-		widget.componentVersion = componentVersion
-		widget.componentId = componentId
+		widget.widgetVersion = widgetVersion
 
 		this.config = {
 			layout,

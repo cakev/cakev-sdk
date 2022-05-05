@@ -104,7 +104,7 @@ export default {
 						data[prop] = JSON.stringify(JSON.parse(v))
 					} catch (err) {
 						console.log(
-							`${this.editor.currentWidget.config.widget.name} ${this.editor.currentWidget.config.widget.componentVersion} JSON 格式化 响应数据有错误信息！！！`,
+							`${this.editor.currentWidget.config.widget.name} ${this.editor.currentWidget.config.widget.widgetVersion} JSON 格式化 响应数据有错误信息！！！`,
 						)
 						console.log(err.stack)
 					}

@@ -2,9 +2,9 @@
 .d-manage-modal-control-base
 	d-right-control(label="组件市场")
 		i-select(
-			v-model="editor.currentWidget.config.widget.componentVersion",
+			v-model="editor.currentWidget.config.widget.widgetVersion",
 			:style="{ marginRight: '10px', width: '156px' }")
-			i-option(:value="item.componentVersion", v-for="(item, i) in versionList", :key="i") {{ item.componentVersion }}
+			i-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i") {{ item.widgetVersion }}
 		c-switch(v-model="editor.currentWidget.market")
 </template>
 <script lang="ts">
@@ -22,7 +22,7 @@ export default {
 	methods: {
 		async getVersionList() {
 			const res = await getVersionList({
-				componentEnTitle: this.editor.currentWidget.type,
+				widgetType: this.editor.currentWidget.type,
 			})
 			this.versionList = res
 		},

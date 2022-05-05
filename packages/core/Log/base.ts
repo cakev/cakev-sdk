@@ -1,6 +1,6 @@
 import Factory from '@/core/Base/factory'
 import LogTask from '@/core/Log/task'
-import { uuid } from '@/core/utils'
+import { uuid } from '@cakev/util'
 
 export default class Emitter extends Factory<Emitter> {
 	list: { [key: string]: LogTask } = {}

@@ -1,7 +1,5 @@
 <template lang="pug">
 .d-suspension.fn-flex.flex-column.pos-a.z-index-999(:style="{ right: `${editor.xRoomR1 + 20}px` }")
-	item-card(title="更新组件", icon="md-sync", @click="update")
-	updateDrawer(v-model="showDrawer", :data="updateInfo")
 	item-card(
 		title="全局请求设置",
 		icon="md-planet",
@@ -16,10 +14,8 @@
 	global-filter(v-model="filterShow")
 </template>
 <script lang="ts">
-import updateDrawer from './updateDrawer.vue'
 import globalRequestConfig from './globalRequestConfig.vue'
 import globalFilter from './globalFilter.vue'
-import { versionUpdateList } from '@/vue2/api/marketComponent.api'
 import Editor from '@/core/Editor'
 import ItemCard from '@/vue2/components-base/d-suspension/item-card.vue'
 
@@ -27,44 +23,15 @@ export default {
 	name: 'd-suspension',
 	components: {
 		ItemCard,
-		updateDrawer,
 		globalRequestConfig,
 		globalFilter,
 	},
 	data() {
 		return {
 			editor: Editor.Instance(),
-			showDrawer: false,
 			globalRequestConfigShow: false,
 			filterShow: false,
-			updateInfo: [],
 		}
-	},
-	methods: {
-		async update() {
-			const req = []
-			const obj = this.editor.screen.screenWidgets
-			if (obj) {
-				Object.values(obj).forEach((v: any) => {
-					if (v.market) {
-						req.push({
-							componentEnTitle: v.type,
-							componentVersion: v.config.widget.componentVersion,
-							componentId: v.id,
-							componentTitle: v.config.widget.name,
-						})
-					}
-				})
-				this.updateInfo = await versionUpdateList({ components: req })
-				if (this.updateInfo.length === 0) {
-					this.$Message.warning('暂无可更新组件')
-					return
-				}
-				this.showDrawer = true
-			} else {
-				this.$Message.warning('暂无可更新组件')
-			}
-		},
 	},
 }
 </script>
