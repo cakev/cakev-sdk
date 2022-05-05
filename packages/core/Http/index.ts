@@ -19,9 +19,7 @@ export default class Http extends Emitter {
 		super()
 	}
 
-	init(): void {}
-
-	pushOne(task: Task, id?: string): void {
+	pushOne(task: Task, id: string): void {
 		if (task.loopTime > 0) {
 			this.loopPool[id] = task
 			this.startInterval()

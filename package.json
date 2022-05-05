@@ -1,15 +1,15 @@
 {
 	"name": "@cakev/sdk",
-	"version": "0.0.1-beta.1",
+	"version": "0.0.1-beta.2",
 	"scripts": {
 		"serve": "vue-cli-service --mode local serve",
-		"lib-core": "vue-cli-service build --mode build --target lib --dest src/core/lib src/core/index.js --name core",
-		"lib-vue2": "vue-cli-service build --mode build --target lib --dest src/vue2/lib src/vue2/index.js --name v2",
+		"build": "vue-cli-service build --mode build --target lib --dest dist packages/index.ts",
 		"commit": "git add .&&git cz"
 	},
-	"types": "vue2.d.ts",
+	"main": "dist/sdk.umd.min.js",
 	"dependencies": {
-		"@cakev/ui": "0.0.1-beta.3",
+		"@cakev/ui": "0.0.1-beta.4",
+		"@cakev/util": "0.0.1-beta.2",
 		"axios": "^0.21.1",
 		"clipboard": "^2.0.6",
 		"codemirror": "^5.59.4",
@@ -91,8 +91,7 @@
 		}
 	},
 	"files": [
-		"lib",
-		"vue2.d.ts"
+		"dist"
 	],
 	"license": "MIT",
 	"lint-staged": {

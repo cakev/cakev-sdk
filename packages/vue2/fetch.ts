@@ -6,7 +6,9 @@ const parseParams = (params = {}) => {
 	if (typeof params === 'string' && params !== '') {
 		try {
 			return JSON.parse(params)
-		} catch (e) {}
+		} catch (e) {
+			// @ts-ignore
+		}
 	}
 	return params
 }

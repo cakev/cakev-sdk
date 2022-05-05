@@ -4,7 +4,7 @@ import CakeUi from '@cakev/ui'
 import { Message, Modal } from 'view-design'
 import router from './router'
 import '@/vue2/index.js'
-import '@/demo/components-business'
+import './components-business'
 import '@cakev/ui/dist/ui.css'
 
 Vue.use(CakeUi)

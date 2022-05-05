@@ -27,7 +27,9 @@ export default class Task {
 	headers = {}
 	params: any = ''
 
+	// @ts-ignore
 	thenCallBack: Function
+	// @ts-ignore
 	catchCallBack: Function
 
 	constructor(method: Method, url: string, params: any, loopTime: number) {

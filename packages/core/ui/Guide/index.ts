@@ -27,27 +27,19 @@ export default class Guide {
 		this.init()
 	}
 
-	clear() {}
-
-	initFather() {}
-
 	init(): void {
 		const dom = document.createElement('div')
 		dom.id = this.id
 		dom.className = this.guideLineClassName[this.type]
 		if (this.type === 'x') {
 			dom.style.height = `${this.height + this.rulerSize}px`
-			dom.style.transform = `translateX(${
-				this.offset + this.num * this.zoom
-			}px)`
+			dom.style.transform = `translateX(${this.offset + this.num * this.zoom}px)`
 			dom.setAttribute('data-top', '0px')
 			dom.setAttribute('data-left', `${this.num - 1}px`)
 			dom.innerHTML = `<div class="d-ruler-guide-x-num">${this.num}</div>`
 		} else {
 			dom.style.width = `${this.width + this.rulerSize}px`
-			dom.style.transform = `translateY(${
-				this.offset + this.num * this.zoom
-			}px)`
+			dom.style.transform = `translateY(${this.offset + this.num * this.zoom}px)`
 			dom.setAttribute('data-left', '0px')
 			dom.setAttribute('data-top', `${this.num - 1}px`)
 			dom.innerHTML = `<div class="d-ruler-guide-y-num">${this.num}</div>`
@@ -55,6 +47,6 @@ export default class Guide {
 		// dom.onmousedown = (e) => {
 		// 	console.log(1)
 		// }
-		this.father.appendChild(dom)
+		;(this.father as HTMLElement).appendChild(dom)
 	}
 }

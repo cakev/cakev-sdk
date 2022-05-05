@@ -11,6 +11,7 @@ component.widget-part.animate__animated(
 <script>
 import Editor from '@/core/Editor'
 import { use } from '@/vue2/api/marketComponent.api'
+import Vue from 'vue'
 
 const prefix1 = 'market-'
 const prefix2 = 'cakev-'

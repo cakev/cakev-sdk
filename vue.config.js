@@ -8,9 +8,12 @@ const resolve = dir => {
 }
 
 module.exports = {
-	publicPath: '/',
-	productionSourceMap: false,
-	lintOnSave: false,
+	pages: {
+		index: {
+			entry: './play/main.ts',
+		},
+	},
+	assetsDir: './',
 	devServer: {
 		port: 3000,
 		hot: true,
@@ -58,6 +61,8 @@ module.exports = {
 					},
 					'vue-router': 'VueRouter',
 					echarts: 'echarts',
+					'@cakev/ui': 'cakeV-ui',
+					'@cakev/util': 'cakeV-util',
 				},
 			]
 		} else {
@@ -71,7 +76,7 @@ module.exports = {
 		}
 	},
 	chainWebpack: config => {
-		config.resolve.alias.set('@', resolve('src'))
+		config.resolve.alias.set('@', resolve('packages'))
 		config.plugin('define').tap(args => {
 			args[0]['process.env'].version = JSON.stringify(pkg.version)
 			return args

@@ -82,12 +82,16 @@ export default {
 				if (typeof req === 'object') {
 					try {
 						return JSON.stringify(req, null, '\t')
-					} catch (e) {}
+					} catch (e) {
+						// @ts-ignore
+					}
 				} else {
 					if (req) {
 						try {
 							return JSON.stringify(JSON.parse(req), null, '\t')
-						} catch (e) {}
+						} catch (e) {
+							// @ts-ignore
+						}
 					}
 					return ''
 				}

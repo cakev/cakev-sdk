@@ -22,7 +22,7 @@
 		"pretty": true,
 		"types": ["webpack-env", "jest"],
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": ["packages/*"]
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
