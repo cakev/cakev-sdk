@@ -7,9 +7,7 @@ module.exports = {
 	coverageDirectory: 'coverage',
 	coverageProvider: 'v8',
 	moduleFileExtensions: ['vue', 'js', 'json', 'jsx', 'ts', 'tsx', 'node'],
-	moduleNameMapper: {
-		'@dorring/sdk/(.*)$': '<rootDir>/packages/$1',
-	},
+	moduleNameMapper: {},
 	preset: 'ts-jest',
 	testEnvironment: 'jsdom',
 	testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$',

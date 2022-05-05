@@ -1,14 +1,14 @@
 const pkg = require('./package.json')
+const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 const proxyUrl = 'http://127.0.0.1:7001'
 
+const resolve = dir => {
+	return path.join(__dirname, dir)
+}
+
 module.exports = {
-	transpileDependencies: ['@simonwep', 'swiper', 'dom7'],
-	assetsDir: './',
-	publicPath: isProduction ? `/${pkg.version}` : '/',
-	outputDir: `dist/${pkg.version}`,
-	indexPath: '../index.html',
-	filenameHashing: false,
+	publicPath: '/',
 	productionSourceMap: false,
 	lintOnSave: false,
 	devServer: {
@@ -71,6 +71,11 @@ module.exports = {
 		}
 	},
 	chainWebpack: config => {
+		config.resolve.alias.set('@', resolve('src'))
+		config.plugin('define').tap(args => {
+			args[0]['process.env'].version = JSON.stringify(pkg.version)
+			return args
+		})
 		config.module.rule('vue').use('iview').loader('iview-loader').options({ prefix: false })
 		config.module
 			.rule('view-design')
@@ -79,6 +84,7 @@ module.exports = {
 			.loader('babel-loader')
 			.end()
 		if (isProduction) {
+			config.plugins.delete('prefetch')
 			config.plugins.delete('prefetch')
 		} else {
 			config.resolve.symlinks(true)
