@@ -5,19 +5,19 @@
 			template(slot="right")
 				d-input(
 					append="X",
-					v-model="editor.currentWidget.layout.left",
+					v-model="editor.current.widget.widgetLayout.left",
 					:style="{ width: '100px', marginRight: '10px' }")
-				d-input(append="Y", v-model="editor.currentWidget.layout.top", :style="{ width: '100px' }")
+				d-input(append="Y", v-model="editor.current.widget.widgetLayout.top", :style="{ width: '100px' }")
 		c-control(label="宽高")
 			template(slot="right")
 				d-input(
 					append="W",
-					v-model="editor.currentWidget.layout.width",
+					v-model="editor.current.widget.widgetLayout.width",
 					:style="{ width: '100px', marginRight: '10px' }")
-				d-input(append="H", v-model="editor.currentWidget.layout.height", :style="{ width: '100px' }")
+				d-input(append="H", v-model="editor.current.widget.widgetLayout.height", :style="{ width: '100px' }")
 		c-control(label="场景")
 			template(slot="right")
-				i-select(v-model="editor.screen.screenWidgetsLays[editor.currentWidget.id].scene")
+				i-select(v-model="editor.screen.screenWidgetsLays[editor.current.widget.widgetId].scene")
 					i-option(:value="0") 主场景
 					i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
 					i-option(:value="-1") 回收站
@@ -34,20 +34,20 @@ export default {
 	computed: {
 		scale: {
 			get() {
-				return `${Math.round(this.editor.currentWidget.layout.scale * 100)}%`
+				return `${Math.round(this.editor.current.widget.widgetLayout.scale * 100)}%`
 			},
 
 			set(val: any) {
 				if (!isNaN(val)) {
-					this.editor.currentWidget.layout.scale = val
+					this.editor.current.widget.widgetLayout.scale = val
 				} else {
-					const back = this.editor.currentWidget.layout.scale
+					const back = this.editor.current.widget.widgetLayout.scale
 					if (val.indexOf('%') !== -1) {
 						let v = val.replace('%', '') / 100
 						if (!isNaN(v)) {
-							this.editor.currentWidget.layout.scale = v
+							this.editor.current.widget.widgetLayout.scale = v
 						} else {
-							this.editor.currentWidget.layout.scale = back
+							this.editor.current.widget.widgetLayout.scale = back
 						}
 					}
 				}

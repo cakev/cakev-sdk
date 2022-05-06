@@ -4,7 +4,7 @@ import { useList } from '@/vue2/api/marketComponent.api'
 import Agent from '@/core/Editor/agent'
 import HttpTask from '@/core/Http/task'
 import { usePath, useProcess } from '@/vue2/utils'
-import Widget from '@/core/Widget'
+import WidgetTask from '@/core/Widget/task'
 import { Method } from 'axios'
 
 export default class Editor extends Agent {
@@ -65,31 +65,12 @@ export default class Editor extends Agent {
 						}
 					}
 					this.screen.screenWidgets = screen.screenWidgets
-					this.initScreenWidgetsLays(screen)
+					this.screen.screenWidgetsLays = screen.screenWidgetsLays
 					this.marketComponentLoading = false
 				})
 			})
 		} else {
 			this.screen.screenWidgets = screen.screenWidgets
-			this.initScreenWidgetsLays(screen)
-		}
-	}
-	initScreenWidgetsLays(screen) {
-		if (!screen.screenWidgetsLays) {
-			const obj = {}
-			for (const key in screen.screenWidgets) {
-				obj[key] = {
-					scene: screen.screenWidgets[key].scene,
-					hide: screen.screenWidgets[key].config.widget.hide,
-					id: key,
-					zIndex: screen.screenWidgets[key].widgetLayout.zIndex,
-				}
-				delete screen.screenWidgets[key].scene
-				delete screen.screenWidgets[key].config.widget.hide
-				delete screen.screenWidgets[key].widgetLayout.zIndex
-			}
-			this.screen.screenWidgetsLays = obj
-		} else {
 			this.screen.screenWidgetsLays = screen.screenWidgetsLays
 		}
 	}
@@ -171,7 +152,7 @@ export default class Editor extends Agent {
 		const height = this.current.currentWidgetListConfig.height
 		const widgetType = 'group'
 		const name = '分组'
-		const widgetItem = new Widget(
+		const widgetItem = new WidgetTask(
 			offsetX,
 			offsetY,
 			{ width, height, widgetType, name, startX: 0, startY: 0 },
@@ -343,7 +324,7 @@ export default class Editor extends Agent {
 		const target = this.screen.screenWidgets[id]
 		const path = target.config.api.path
 		const process = target.config.api.process
-		const loopTime = target.config.api.autoFetch.enable ? target.config.api.autoFetch.duration : 0
+		const loopTime = target.config.api.autoFetchEnable ? target.config.api.autoFetchDuration : 0
 		this.http.screenDomain = this.screen.screenDomain
 		this.http.screenHeaders = this.screen.screenHeaders
 		this.http.pushOne(
@@ -357,7 +338,7 @@ export default class Editor extends Agent {
 		)
 	}
 	/* 添加到选中组件集合 */
-	selectWidget(widget: Widget) {
+	selectWidget(widget: WidgetTask) {
 		this.current.selectWidget(widget)
 		if (this.currentWidgetList.length > 1) {
 			this.updateCurrentWidgetListConfig()

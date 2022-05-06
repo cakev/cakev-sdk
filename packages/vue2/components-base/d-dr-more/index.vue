@@ -18,7 +18,7 @@ export default {
 	},
 	computed: {
 		style() {
-			if (!this.editor.currentWidgetListConfig) return {}
+			if (!this.editor.current.widgetListConfig) return {}
 			return {
 				transform: `translate3d(${this.editor.currentWidgetListConfig.left}px, ${this.editor.currentWidgetListConfig.top}px,0)`,
 				width: this.editor.currentWidgetListConfig.width + 'px',

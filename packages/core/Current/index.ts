@@ -1,5 +1,5 @@
 import Factory from '@/core/Base/factory'
-import Widget from '@/core/Widget'
+import WidgetTask from '@/core/Widget/task'
 
 export default class Current extends Factory<Current> {
 	rulerContainerId: string
@@ -18,7 +18,7 @@ export default class Current extends Factory<Current> {
 	zoomStep = 0.02 // 当前标尺zoom步长
 	offsetX = 0 // 当前位置x
 	offsetY = 0 // 当前位置y
-	currentWidget = {} // 当前组件
+	widget = {} // 当前组件
 	currentWidgetList: string[] = [] // 当前选中组件-多组件
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
@@ -44,7 +44,7 @@ export default class Current extends Factory<Current> {
 		this.currentRightSettingIndex = 0
 		this.activeWidgetId = ''
 		this.sceneAnimate = ''
-		this.currentWidget = {}
+		this.widget = {}
 		this.currentSceneIndex = 0
 		this.currentWidgetList = []
 		this.currentCreateSceneList = []
@@ -88,21 +88,21 @@ export default class Current extends Factory<Current> {
 		this.offsetY = (rulerOffsetHeight - screenHeight) * 0.5
 	}
 	/* 选中组件 */
-	selectWidget(widget: Widget): void {
+	selectWidget(widget: WidgetTask): void {
 		if (this.currentWidgetList.includes(widget.id)) {
 			this.currentWidgetList.splice(this.currentWidgetList.indexOf(widget.id), 1)
 		} else {
 			this.currentWidgetList = [...this.currentWidgetList, widget.id]
 		}
 		if (this.currentWidgetList.length == 1) {
-			this.currentWidget = widget
+			this.widget = widget
 		} else {
-			this.currentWidget = null
+			this.widget = null
 		}
 	}
 	/* 取消选中组件 */
 	unSelectWidget(): void {
-		this.currentWidget = null
+		this.widget = null
 		this.currentWidgetList = []
 	}
 	/* 取消选中组件集合 */

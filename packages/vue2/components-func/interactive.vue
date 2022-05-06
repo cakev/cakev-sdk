@@ -4,19 +4,19 @@
 		type="eye"
 		title="入场动画",
 		:show="true",
-		@open-click="editor.currentWidget.animation.transitionEnable = true",
-		@close-click="editor.currentWidget.animation.transitionEnable = false",
-		:enable="editor.currentWidget.animation.transitionEnable")
+		@open-click="editor.current.widget.animation.transitionEnable = true",
+		@close-click="editor.current.widget.animation.transitionEnable = false",
+		:enable="editor.current.widget.animation.transitionEnable")
 		c-control(label="动画形式")
 			template(slot="right")
-				i-select(v-model="editor.currentWidget.animation.enter")
+				i-select(v-model="editor.current.widget.animation.enter")
 					i-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
 		c-control(label="延时时长")
 			template(slot="right")
-				d-input(append="ms", v-model="editor.currentWidget.animation.delay")
+				d-input(append="ms", v-model="editor.current.widget.animation.delay")
 		c-control(label="动画时长")
 			template(slot="right")
-				d-input(append="ms", v-model="editor.currentWidget.animation.duration")
+				d-input(append="ms", v-model="editor.current.widget.animation.duration")
 	data-event
 </template>
 <script lang="ts">

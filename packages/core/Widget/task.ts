@@ -4,26 +4,23 @@ export default class Widget {
 	widgetIs = ''
 	widgetType = 'normal'
 	widgetAvatar = ''
-	widgetTitle = ''
-	widgetMarket: boolean = false
+	widgetMarket = false
 	widgetApi = {}
 	widgetBase = {}
 	widgetConfig = {}
+	widgetAnimation = {
+		transitionEnable: true,
+		enter: 'fadeIn',
+		duration: 600,
+		delay: 0,
+	}
 	// events = {}
-	// 组件动画
-	// animation = {
-	// 	transitionEnable: true,
-	// 	enter: 'fadeIn',
-	// 	duration: 600,
-	// 	delay: 0,
-	// }
 	constructor({
 		widgetId,
 		widgetLayout,
 		widgetIs,
 		widgetType,
 		widgetAvatar,
-		widgetTitle,
 		widgetMarket,
 		widgetApi,
 		widgetBase,
@@ -37,7 +34,6 @@ export default class Widget {
 		this.widgetIs = widgetIs
 		this.widgetType = widgetType
 		this.widgetAvatar = widgetAvatar
-		this.widgetTitle = widgetTitle
 		this.widgetMarket = widgetMarket
 		this.widgetApi = widgetApi
 		this.widgetBase = widgetBase

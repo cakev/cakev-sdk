@@ -8,7 +8,7 @@
 	},
 	"main": "dist/sdk.umd.min.js",
 	"dependencies": {
-		"@cakev/ui": "0.0.1-beta.4",
+		"@cakev/ui": "0.0.1-beta.6",
 		"@cakev/util": "0.0.1-beta.3",
 		"axios": "^0.21.1",
 		"clipboard": "^2.0.6",

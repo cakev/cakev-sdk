@@ -4,34 +4,19 @@
 		draggable="true",
 		@dragstart="dragstart($event)",
 		@click="handleClick")
-		.d-widget-list-img.fn-flex(:style="{ backgroundImage: `url(${widgetAvatar})` }")
-		h2.ellipsis.text-center(:title="widgetTitle") {{ widgetTitle }}
+		.d-widget-list-img.fn-flex(:style="{ backgroundImage: `url(${widget.widgetAvatar})` }")
+		h2.ellipsis.text-center(:title="widget.widgetBase.name") {{ widget.widgetBase.name }}
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
+import WidgetTask from '@/core/Widget/task'
 
 export default {
 	name: 'item-card',
 	props: {
-		widgetType: {
-			type: String,
+		widget: {
+			type: WidgetTask,
 		},
-		widgetIs: {
-			type: String,
-		},
-		widgetAvatar: {
-			type: String,
-		},
-		widgetTitle: {
-			type: String,
-		},
-		widgetMarket: {
-			type: Boolean,
-		},
-		widgetApi: {},
-		widgetBase: {},
-		widgetConfig: {},
-		widgetLayout: {},
 	},
 	data() {
 		return {
@@ -43,15 +28,14 @@ export default {
 			this.editor.screen.createWidget({
 				currentSceneIndex: this.editor.current.currentSceneIndex,
 				currentMaxZIndex: this.editor.currentMaxZIndex,
-				widgetLayout: this.widgetLayout,
-				widgetIs: this.widgetIs,
-				widgetType: this.widgetType,
-				widgetAvatar: this.widgetAvatar,
-				widgetTitle: this.widgetTitle,
-				widgetMarket: this.widgetMarket,
-				widgetApi: this.widgetApi,
-				widgetBase: this.widgetBase,
-				widgetConfig: this.widgetConfig,
+				widgetLayout: this.widget.widgetLayout,
+				widgetIs: this.widget.widgetIs,
+				widgetType: this.widget.widgetType,
+				widgetAvatar: this.widget.widgetAvatar,
+				widgetMarket: this.widget.widgetMarket,
+				widgetApi: this.widget.widgetApi,
+				widgetBase: this.widget.widgetBase,
+				widgetConfig: this.widget.widgetConfig,
 			})
 		},
 		dragstart(e) {
@@ -62,15 +46,14 @@ export default {
 					startY: e.offsetY,
 					currentSceneIndex: this.editor.current.currentSceneIndex,
 					currentMaxZIndex: this.editor.currentMaxZIndex,
-					widgetLayout: this.widgetLayout,
-					widgetIs: this.widgetIs,
-					widgetType: this.widgetType,
-					widgetAvatar: this.widgetAvatar,
-					widgetTitle: this.widgetTitle,
-					widgetMarket: this.widgetMarket,
-					widgetApi: this.widgetApi,
-					widgetBase: this.widgetBase,
-					widgetConfig: this.widgetConfig,
+					widgetLayout: this.widget.widgetLayout,
+					widgetIs: this.widget.widgetIs,
+					widgetType: this.widget.widgetType,
+					widgetAvatar: this.widget.widgetAvatar,
+					widgetMarket: this.widget.widgetMarket,
+					widgetApi: this.widget.widgetApi,
+					widgetBase: this.widget.widgetBase,
+					widgetConfig: this.widget.widgetConfig,
 				}),
 			)
 		},

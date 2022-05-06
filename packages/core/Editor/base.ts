@@ -5,7 +5,6 @@ import Scene from '@/core/Scene'
 import Http from '@/core/Http'
 import Local from '@/core/Local'
 import Ruler from '@/core/ui/Ruler'
-import ImageCache from '@/core/IndexDB/imageCache'
 import ScreenCache from '@/core/IndexDB/screenCache'
 import IndexDB from '@/core/IndexDB'
 
@@ -20,7 +19,6 @@ export default class EditorBase extends Factory<EditorBase> {
 	scene: Scene = Scene.Instance()
 	http: Http = Http.Instance()
 	local: Local = Local.Instance()
-	imageCache: ImageCache = ImageCache.Instance(db)
 	screenCache: ScreenCache = ScreenCache.Instance(db)
 	ruler: Ruler | null
 	rulerContainerId = rulerContainerId

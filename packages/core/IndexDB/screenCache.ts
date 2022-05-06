@@ -1,8 +1,8 @@
-import BaseCache from '@/core/IndexDB/baseCache'
+import Base from '@/core/IndexDB/base'
 
-export default class ScreenCache extends BaseCache {
+export default class ScreenCache extends Base {
 	async add(name: string, value: any): Promise<any> {
-		const collection: ScreenCacheDB = await this.db.screenCache.get({ name })
+		const collection = await this.db.screenCache.get({ name })
 		if (collection) {
 			return this.db.screenCache.update(collection.id, {
 				name,
@@ -18,7 +18,7 @@ export default class ScreenCache extends BaseCache {
 
 	async get(name: string): Promise<any> {
 		if (!name) return
-		const collection: ScreenCacheDB = await this.db.screenCache.get({ name })
+		const collection = await this.db.screenCache.get({ name })
 		if (collection) {
 			return JSON.parse(collection.value)
 		} else {

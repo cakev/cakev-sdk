@@ -11,7 +11,7 @@
 	ul.d-scrollbar.d-left-scene-list
 		draggable(:value="editor.currentSceneWidget", @change="sceneWidgetDragEnd")
 			transition-group
-				item-card(v-for="item in editor.currentSceneWidget", :key="item.id", :item="item")
+				item-card(v-for="item in editor.currentSceneWidget", :key="item.widgetId", v-bind="item")
 	.d-left-scene-bottom.fn-flex.flex-row
 		.d-left-scene-bottom-btn.text-center(@click="handleSetScene('clear')") 清空
 		.d-left-scene-bottom-btn.text-center(@click="handleSetScene('create')") 新增

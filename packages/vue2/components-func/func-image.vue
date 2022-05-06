@@ -17,7 +17,7 @@ export default {
 		formData() {
 			if (this.editor.currentWidget) {
 				return {
-					library: `componentStatic/${this.editor.currentWidget.type}/${this.editor.currentWidget.config.widget.widgetVersion}`,
+					library: `componentStatic/${this.editor.current.widget.type}/${this.editor.current.widget.config.widget.widgetVersion}`,
 				}
 			}
 			return {}

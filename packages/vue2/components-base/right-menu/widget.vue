@@ -56,7 +56,7 @@ export default {
 	computed: {
 		isGroup() {
 			if (this.editor.currentWidget) {
-				return this.editor.currentWidget.widgetType === 'group'
+				return this.editor.current.widget.widgetType === 'group'
 			}
 			return false
 		},
@@ -72,7 +72,6 @@ export default {
 			create({
 				componentConfig: widget.config,
 				widgetType: widget.type,
-				widgetTitle: widget.config.widget.name,
 				widgetVersion: widget.config.widget.widgetVersion,
 			}).then(() => {
 				this.$Modal.info({
@@ -85,15 +84,15 @@ export default {
 			this.hideRightMenu()
 		},
 		handleZIndexTop() {
-			this.editor.currentWidget.layout.zIndex = this.editor.currentMaxZIndex
+			this.editor.current.widget.layout.zIndex = this.editor.currentMaxZIndex
 			this.hideRightMenu()
 		},
 		handleZIndexBottom() {
-			this.editor.currentWidget.layout.zIndex = this.editor.currentMinZIndex
+			this.editor.current.widget.layout.zIndex = this.editor.currentMinZIndex
 			this.hideRightMenu()
 		},
 		hideWidget() {
-			const id = this.editor.currentWidget.id
+			const id = this.editor.current.widget.id
 			this.hideRightMenu()
 			this.handleUnActive()
 			this.editor.screen.screenWidgetsLays[id].hide = true
@@ -140,7 +139,7 @@ export default {
 		},
 		handleLock() {
 			this.isLock = !this.isLock
-			this.editor.currentWidget.config.widget.locked = this.isLock
+			this.editor.current.widget.config.widget.locked = this.isLock
 			this.hideRightMenu()
 		},
 	},

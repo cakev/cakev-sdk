@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		getItemValue(keyString) {
-			let res = this.editor.currentWidget
+			let res = this.editor.current.widget
 			const props = keyString.split('.')
 			props.forEach(v => {
 				res = res[v]
@@ -80,7 +80,7 @@ export default {
 			return res
 		},
 		getItemObj(keyString) {
-			let res = this.editor.currentWidget
+			let res = this.editor.current.widget
 			const props = keyString.split('.')
 			props.length = props.length - 1
 			props.forEach(v => {

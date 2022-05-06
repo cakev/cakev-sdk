@@ -4,8 +4,8 @@ div
 		type="list"
 		:title="item.label",
 		@add-click="handleAddClick(item['key'])",
-		v-for="item in editor.currentWidget.eventTypes",
-		:list="editor.currentWidget.events[item['key']]",
+		v-for="item in editor.current.widget.eventTypes",
+		:list="editor.current.widget.events[item['key']]",
 		@remove-click="index => handleRemoveClick(item['key'], index)")
 		template(v-slot="dataDefault")
 			item-card(:activeIndex="dataDefault.activeIndex", :eventType="item['key']")
@@ -22,7 +22,7 @@ export default {
 	},
 	methods: {
 		handleAddClick(eventType: string): void {
-			this.editor.current.currentWidget.events[eventType].push({
+			this.editor.current.current.widget.events[eventType].push({
 				ids: [],
 				id: '',
 				animate: '',
@@ -38,7 +38,7 @@ export default {
 			})
 		},
 		handleRemoveClick(eventType: string, index: number): void {
-			this.editor.currentWidget.events[eventType].splice(index, 1)
+			this.editor.current.widget.events[eventType].splice(index, 1)
 		},
 	},
 }

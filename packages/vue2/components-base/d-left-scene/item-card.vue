@@ -1,25 +1,25 @@
 <template lang="pug">
 li.pointer.pos-r.d-left-scene-list-li(
-	:class="{ active: editor.currentWidgetList.includes(item.id) }",
-	@click.stop="handleClick($event, item)")
+	:class="{ active: editor.currentWidgetList.includes(widgetId) }",
+	@click.stop="handleClick")
 	.parent.fn-flex
 		.d-left-scene-left
-			h2 {{ editor.screen.screenWidgets[item.id].config.widget.name }}
+			h2 {{ editor.screen.screenWidgets[widgetId].widgetBase.name }}
 		.d-left-scene-right
 			i-icon(
-				v-if="editor.screen.screenWidgetsLays[item.id].hide",
+				v-if="hide",
 				type="md-eye-off",
 				title="显示",
-				@click="handleTaggerHide(item.id)",
+				@click="handleTaggerHide(widgetId)",
 				@click.stop)
 			i-icon(
 				style="margin-left: 10px",
-				v-if="editor.screen.screenWidgets[item.id].config.widget.locked",
+				v-if="editor.screen.screenWidgets[widgetId].widgetBase.locked",
 				type="md-unlock",
 				title="解锁",
-				@click="handleUnLock(editor.screen.screenWidgets[item.id].id)",
+				@click="handleUnLock(widgetId)",
 				@click.stop)
-	scene-group(:childList="item.children")
+	//scene-group(:childList="item.children")
 </template>
 <script lang="ts">
 import { Icon } from 'view-design'
@@ -38,22 +38,33 @@ export default {
 		}
 	},
 	props: {
-		item: {},
+		hide: {
+			type: Boolean,
+		},
+		scene: {
+			type: Number | String,
+		},
+		widgetId: {
+			type: String,
+		},
+		zIndex: {
+			type: Number,
+		},
 	},
 	methods: {
-		handleClick(e, item): void {
+		handleClick(e): void {
 			if (e.shiftKey) {
-				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+				this.editor.selectWidget(this.editor.screen.screenWidgets[this.widgetId])
 			} else {
 				this.editor.unSelectWidget()
-				this.editor.selectWidget(this.editor.screen.screenWidgets[item.id])
+				this.editor.selectWidget(this.editor.screen.screenWidgets[this.widgetId])
 			}
 		},
-		handleUnLock(id: string): void {
-			this.editor.screen.screenWidgets[id].config.widget.locked = false
+		handleUnLock(widgetId: string): void {
+			this.editor.screen.screenWidgets[widgetId].widgetBase.locked = false
 		},
-		handleTaggerHide(id: string): void {
-			this.editor.screen.screenWidgetsLays[id].hide = !this.editor.screen.screenWidgetsLays[id].hide
+		handleTaggerHide(widgetId: string): void {
+			this.editor.screen.screenWidgetsLays[widgetId].hide = !this.editor.screen.screenWidgetsLays[widgetId].hide
 		},
 	},
 }

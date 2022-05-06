@@ -1,17 +1,17 @@
 <template lang="pug">
 .d-right-modal-box.z-index-999(:style="{ width: `${editor.xRoomR1}px` }")
 	.d-right-modal-name.fn-flex.flex-row(v-click-outside="close")
-		span.widget-name-text(v-if="!editName") {{ editor.currentWidget.config.widget.name }}_{{ editor.currentWidget.id }}
+		span.widget-name-text(v-if="!editName") {{ editor.current.widget.widgetBase.name }}_{{ editor.current.widget.widgetId }}
 		i-input.widget-name(
 			v-if="editName",
-			v-model="editor.currentWidget.config.widget.name")
+			v-model="editor.current.widget.widgetBase.name")
 		c-svg.pointer.widget-name-icon(
 			type="edit",
 			color="#515a6e",
 			@click.stop="editName = true",
 			v-if="!editName")
 	.d-right-modal-id.fn-flex.flex-column
-		span {{ editor.currentWidget.type }}{{ editor.currentWidget.config.widget.widgetVersion ? ` | ${editor.currentWidget.config.widget.widgetVersion}` : '' }}
+		span {{ editor.current.widget.widgetIs }}{{ editor.current.widget.widgetBase.version }}
 	.d-right-modal-title.pointer.text-center.fn-flex.flex-row
 		span.pos-r(
 			v-for="(item, index) in title",
@@ -24,9 +24,10 @@
 			:list="item.key",
 			v-if="editor.currentRightSettingIndex === index")
 </template>
-<script>
+<script lang="ts">
 import itemList from './item-list.vue'
 import { Icon, Input } from 'view-design'
+// @ts-ignore
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
 
@@ -43,38 +44,27 @@ export default {
 			editName: false,
 			editor: Editor.Instance(),
 			title: ['基础', '数据', '交互', '自定义'],
-			chooseList: [],
+			chooseList: [
+				{
+					key: [{ type: 'base' }],
+				},
+				{
+					key: [{ type: 'data' }],
+				},
+				{
+					key: [{ type: 'interactive' }],
+				},
+				// {
+				// 	key: val || [],
+				// },
+			],
 		}
 	},
-	watch: {
-		'editor.currentWidget.config.customConfig': {
-			handler(val) {
-				if(val) {
-					this.chooseList = [
-						{
-							key: [{ type: 'base' }],
-						},
-						{
-							key: [{ type: 'data' }],
-						},
-						{
-							key: [{ type: 'interactive' }],
-						},
-						{
-							key: val || [],
-						},
-					]
-				}
-			},
-			deep: true,
-			immediate: true,
-		},
-	},
 	methods: {
-		close() {
+		close(): void {
 			this.editName = false
 		},
-		handleClick(index) {
+		handleClick(index: number): void {
 			this.editor.selectRightSettingIndex(index)
 		},
 	},

@@ -14,7 +14,7 @@
 					@mouseenter="handleCheckType(item)")
 					label.pointer {{ item.widgetTypeName }}
 		.d-left-widget-list.fn-flex
-			item-card(v-for="widget in editor.local.widgets[hoverWidgetTypeId]", v-bind="widget")
+			item-card(v-for="widget in editor.local.widgets[hoverWidgetTypeId]", :widget="widget")
 </template>
 <script>
 import itemCard from './item-card.vue'

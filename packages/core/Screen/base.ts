@@ -1,15 +1,15 @@
-﻿import { getQueryString, uuid,versionToNum } from '@cakev/util'
+﻿import { getQueryString, uuid, versionToNum } from '@cakev/util'
 import Factory from '@/core/Base/factory'
-import Widget from '@/core/Widget'
+import WidgetTask from '@/core/Widget/task'
+import LayTask from '@/core/Lay/task'
 import copy from 'fast-copy'
-import commonConfigValue from '@/core/common-config-value.js'
 import { configMerge } from '@/core/utils'
 
 export default class Screen extends Factory<Screen> {
 	currentVersion = '1.1.0' // 当前系统版本
 	screenId = '' // 大屏ID
 	screenName = '未命名' // 大屏名
-	screenWidgets: { [key: string]: Widget } = {} // 大屏组件配置
+	screenWidgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
 	screenWidgetsLays = {} // 大屏组件嵌套规则
 	screenType = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
 	screenPublish = '' // 大屏发布情况 EDIT:未发布 COMPLETE:已发布
@@ -36,21 +36,21 @@ export default class Screen extends Factory<Screen> {
 	}
 
 	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
-		const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
-		const target = this.screenWidgets[id]
-		const inputConfig = Object.freeze(target.config || {})
-		const res = configMerge(inputConfig, mergedValue)
-		console.log(res)
-		res.widget.name = res.widget.name || '未知组件'
-		if (customConfig) {
-			customConfig.map(item => {
-				if (!item.prop.includes('config.config')) {
-					item.prop = `config.config.${item.prop}`
-				}
-			})
-			res.customConfig = [{ type: 'custom' }, ...customConfig]
-		}
-		target.config = res
+		// const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
+		// const target = this.screenWidgets[id]
+		// const inputConfig = Object.freeze(target.config || {})
+		// const res = configMerge(inputConfig, mergedValue)
+		// console.log(res)
+		// res.widget.name = res.widget.name || '未知组件'
+		// if (customConfig) {
+		// 	customConfig.map(item => {
+		// 		if (!item.prop.includes('config.config')) {
+		// 			item.prop = `config.config.${item.prop}`
+		// 		}
+		// 	})
+		// 	res.customConfig = [{ type: 'custom' }, ...customConfig]
+		// }
+		// target.config = res
 	}
 
 	changeLayoutMode(value: string | null): string {
@@ -147,24 +147,22 @@ export default class Screen extends Factory<Screen> {
 		widgetIs,
 		widgetType,
 		widgetAvatar,
-		widgetTitle,
 		widgetMarket,
 		widgetApi,
 		widgetBase,
 		widgetConfig,
 	}): void {
-		const top = offsetY - startY
-		const left = offsetX - startX
+		const top = (offsetY || 0) - (startY || 0)
+		const left = (offsetX || 0) - (startX || 0)
 		widgetLayout.top = top
 		widgetLayout.left = left
 		const widgetId = uuid()
-		const widgetItem = new Widget({
+		const widget = new WidgetTask({
 			widgetId,
 			widgetLayout,
 			widgetIs,
 			widgetType,
 			widgetAvatar,
-			widgetTitle,
 			widgetMarket,
 			widgetApi,
 			widgetBase,
@@ -172,11 +170,12 @@ export default class Screen extends Factory<Screen> {
 		})
 		this.screenWidgets = {
 			...this.screenWidgets,
-			[widgetId]: widgetItem,
+			[widgetId]: widget,
 		}
+		const lay = new LayTask({ scene: currentSceneIndex, widgetId, zIndex: currentMaxZIndex, hide: false })
 		this.screenWidgetsLays = {
 			...this.screenWidgetsLays,
-			[widgetId]: { scene: currentSceneIndex, widgetId, zIndex: currentMaxZIndex, hide: false },
+			[widgetId]: lay,
 		}
 	}
 

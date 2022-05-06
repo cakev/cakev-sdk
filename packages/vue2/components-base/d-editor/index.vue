@@ -15,7 +15,7 @@
 				:key="item.widgetId",
 				v-for="item in showWidgets",
 				:getRefLineParams="getRefLineParams")
-			dr-more(v-show="editor.currentWidgetList&&editor.currentWidgetList.length>1")
+			//dr-more(v-show="editor.currentWidgetList&&editor.currentWidgetList.length>1")
 			.d-editor-line(data-top="0px", data-left="0px")
 			.d-editor-line(:data-top="`${editor.height}px`", data-left="0px")
 			.d-editor-line(
@@ -80,7 +80,7 @@ export default {
 					list.push(widget)
 				}
 			}
-			console.log(list)
+			return list
 		},
 	},
 	methods: {

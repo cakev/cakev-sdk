@@ -1,7 +1,6 @@
 <template lang="pug">
 .dr.pos-a(
 	:style="style",
-	:data-id="id",
 	:data-top="`${this.top}px`",
 	:data-left="`${this.left}px`",
 	:class="[{ ['dr-active']: enabled, ['dr-unactive']: !enabled, ['dr-dragging']: dragging, ['dr-resizing']: resizing, ['dr-draggable']: draggable, ['dr-resizable']: resizable }]",
@@ -27,7 +26,7 @@
 			:style="{ fontSize: `${14 * returnRatio}px`, right: `${30 * returnRatio}px`, bottom: `${5 * returnRatio}px` }") {{ top }}
 	slot
 	.dr-disabled-event.pos-a(
-		@contextmenu.stop="showRightMenu($event, item)",
+		@contextmenu.stop="showRightMenu($event, widget)",
 		:style="{ width: '100%', height: '100%', top: 0, left: 0, zIndex: z }",
 		v-if="editor.current.currentEventDisabled")
 </template>
@@ -35,6 +34,7 @@
 import { addEvent, removeEvent } from './dom'
 import dDrKuang from '../d-dr-kuang/index.vue'
 import Editor from '@/core/Editor'
+import WidgetTask from '@/core/Widget/task'
 
 export default {
 	components: {
@@ -43,10 +43,8 @@ export default {
 	replace: true,
 	name: 'd-dr',
 	props: {
-		item: {},
-		id: {
-			type: [String, Number],
-			default: '',
+		widget: {
+			type: WidgetTask,
 		},
 		active: {
 			type: Boolean,
@@ -151,10 +149,10 @@ export default {
 		removeEvent(document.documentElement, 'touchend touchcancel', this.deselect)
 	},
 	methods: {
-		showRightMenu(e: MouseEvent, item: any): void {
+		showRightMenu(e: MouseEvent, widget: any): void {
 			e.preventDefault()
 			this.editor.unSelectWidget()
-			this.editor.selectWidget(item)
+			this.editor.selectWidget(widget)
 			const rightMenu = document.getElementById('widget-right-menu')
 			rightMenu.classList.add('active')
 			const rulerRightMenu = document.getElementById('ruler-right-menu')
@@ -198,8 +196,8 @@ export default {
 				}
 
 				if (this.snapToTarget) {
-					this.snapToTarget.forEach(item => {
-						const targets = document.querySelectorAll(item)
+					this.snapToTarget.forEach(widget => {
+						const targets = document.querySelectorAll(widget)
 						if (targets.length) {
 							this.brotherNodes.push(...targets)
 						}

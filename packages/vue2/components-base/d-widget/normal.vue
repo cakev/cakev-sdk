@@ -11,7 +11,6 @@ component.widget-part.animate__animated(
 <script>
 import Editor from '@/core/Editor'
 import { use } from '@/vue2/api/marketComponent.api'
-import Vue from 'vue'
 
 export default {
 	name: 'd-widget',
@@ -25,9 +24,6 @@ export default {
 			type: String,
 		},
 		widgetAvatar: {
-			type: String,
-		},
-		widgetTitle: {
 			type: String,
 		},
 		widgetMarket: {
@@ -128,7 +124,7 @@ export default {
 			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
 				this.ready = true
 			} else {
-				Vue.component(`${prefix2}${this.item.type}`, this.editor.local.components[this.item.type])
+				// Vue.component(`${prefix2}${this.item.type}`, this.editor.local.components[this.item.type])
 				this.ready = true
 			}
 		}

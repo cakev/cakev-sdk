@@ -3,10 +3,10 @@
 	c-right-control(label="组件市场")
 		template(slot="right")
 			i-select(
-				v-model="editor.currentWidget.config.widget.widgetVersion",
+				v-model="editor.current.widget.config.widget.widgetVersion",
 				:style="{ marginRight: '10px', width: '156px' }")
 				i-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i") {{ item.widgetVersion }}
-			c-switch(v-model="editor.currentWidget.widgetMarket")
+			c-switch(v-model="editor.current.widget.widgetMarket")
 </template>
 <script lang="ts">
 import func from './func.mx'
@@ -23,13 +23,13 @@ export default {
 	methods: {
 		async getVersionList() {
 			const res = await getVersionList({
-				widgetType: this.editor.currentWidget.type,
+				widgetType: this.editor.current.widget.type,
 			})
 			this.versionList = res
 		},
 	},
 	mounted() {
-		if (this.editor.currentWidget.widgetMarket) {
+		if (this.editor.current.widget.widgetMarket) {
 			this.getVersionList()
 		}
 	},

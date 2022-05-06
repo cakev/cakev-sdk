@@ -34,9 +34,6 @@ export default class Agent extends EditorBase {
 	get currentWidgetListConfig(): any {
 		return this.current.currentWidgetListConfig
 	}
-	get currentWidget() {
-		return this.current.currentWidget
-	}
 	/* 当前选中组件-多组件 */
 	get currentWidgetList(): any {
 		return this.current.currentWidgetList

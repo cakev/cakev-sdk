@@ -3,13 +3,13 @@
 	.fn-flex.flex-column(:style="{ width: '100%', paddingRight: '10px' }")
 		i-select(
 			:style="{ marginBottom: '10px' }",
-			v-model="editor.currentWidget.events[eventType][activeIndex].eventClass",
+			v-model="editor.current.widget.events[eventType][activeIndex].eventClass",
 			placeholder="事件类型")
 			i-option(value="scene") 场景事件
 			i-option(value="component") 组件事件
 		i-select(
 			v-if="isComponentClass",
-			v-model="editor.currentWidget.events[eventType][activeIndex].ids",
+			v-model="editor.current.widget.events[eventType][activeIndex].ids",
 			:style="{ marginBottom: '10px' }",
 			placeholder="选择组件",
 			multiple,
@@ -18,7 +18,7 @@
 		i-select(
 			v-if="isComponentClass",
 			:style="{ marginBottom: '10px' }",
-			v-model="editor.currentWidget.events[eventType][activeIndex].triggerType",
+			v-model="editor.current.widget.events[eventType][activeIndex].triggerType",
 			placeholder="事件类型")
 			i-option(value="config.api.params") 更新请求参数
 			i-option(value="config.api.data") 更新响应数据
@@ -29,15 +29,15 @@
 			template(slot="bottom")
 				c-code(
 					v-if="isComponentClass",
-					:code="editor.currentWidget.events[eventType][activeIndex].process.methodBody",
-					:show="editor.currentWidget.events[eventType][activeIndex].process.enable",
-					@update:code="value => (editor.currentWidget.events[eventType][activeIndex].process.methodBody = value)")
+					:code="editor.current.widget.events[eventType][activeIndex].processBody",
+					:show="editor.current.widget.events[eventType][activeIndex].processEnable",
+					@update:code="value => (editor.current.widget.events[eventType][activeIndex].processBody = value)")
 			template(slot="right")
-				c-switch(v-model="editor.currentWidget.events[eventType][activeIndex].process.enable")
+				c-switch(v-model="editor.current.widget.events[eventType][activeIndex].processEnable")
 		i-select(
 			v-if="isSceneClass",
 			:style="{ marginBottom: '10px' }",
-			v-model="editor.currentWidget.events[eventType][activeIndex].id",
+			v-model="editor.current.widget.events[eventType][activeIndex].id",
 			filterable,
 			placeholder="目标场景")
 			i-option(:value="0") 主场景
@@ -45,7 +45,7 @@
 		i-select(
 			v-if="isSceneClass",
 			:style="{ marginBottom: '10px' }",
-			v-model="editor.currentWidget.events[eventType][activeIndex].triggerType",
+			v-model="editor.current.widget.events[eventType][activeIndex].triggerType",
 			placeholder="事件类型")
 			i-option(value="openScene") 打开场景
 			i-option(value="closeScene") 关闭场景
@@ -55,7 +55,7 @@
 			clearable,
 			filterable,
 			placeholder="场景过度动画",
-			v-model="editor.currentWidget.events[eventType][activeIndex].animate")
+			v-model="editor.current.widget.events[eventType][activeIndex].animate")
 			i-option(:value="k", v-for="(k, i) in animates", :key="i") {{ k }}
 </template>
 <script lang="ts">
@@ -76,17 +76,17 @@ export default {
 	},
 	computed: {
 		isComponentClass() {
-			return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'component'
+			return this.editor.current.widget.events[this.eventType][this.activeIndex].eventClass === 'component'
 		},
 		isSceneClass() {
-			return this.editor.currentWidget.events[this.eventType][this.activeIndex].eventClass === 'scene'
+			return this.editor.current.widget.events[this.eventType][this.activeIndex].eventClass === 'scene'
 		},
 		isShowCustomEvents() {
-			const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
+			const ids = this.editor.current.widget.events[this.eventType][this.activeIndex].ids
 			return ids.length === 1
 		},
 		customEventsConfig() {
-			const ids = this.editor.currentWidget.events[this.eventType][this.activeIndex].ids
+			const ids = this.editor.current.widget.events[this.eventType][this.activeIndex].ids
 			if (ids.length !== 1) return []
 			return this.editor.screen.screenWidgets[ids[0]].customEventsConfig
 		},

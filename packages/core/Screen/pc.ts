@@ -2,7 +2,7 @@ import ScreenBase from '@/core/Screen/base'
 
 export default class ScreenPc extends ScreenBase {
 	marketComponents = []
-	
+
 	clear(): void {
 		this.screenWidgets = {}
 		this.screenWidgetsLays = {}
