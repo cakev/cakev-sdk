@@ -2,32 +2,23 @@
 .d-left-widget.fn-flex.flex-row.pos-r(@mouseleave="mouseleave")
 	ul.d-left-widget-top.fn-flex.flex-row
 		li.fn-flex.pos-r.pointer(
-			v-for="item in editor.local.widgets",
-			:key="item.componentTypeId",
-			@mouseenter="mouseenter(item.componentTypeId)",
-			:class="{ active: widgetShow && leftIndex === item.componentTypeId }")
-			p.ellipsis {{ item.componentTypeName }}
+			v-for="item in editor.local.widgetType",
+			:key="item.widgetTypeId",
+			@mouseenter="mouseenter(item)",
+			:class="{ active: widgetShow && currentWidgetTypeId === item.widgetTypeId }")
+			p.ellipsis {{ item.widgetTypeName }}
 	.d-left-widget-bottom.pos-a.z-index-999.fn-flex.flex-row(v-show="widgetShow")
 		ul.fn-flex.flex-column
-			li(v-for="item in childrenList", :class="{ active: openList[item.componentTypeId] }")
+			li(v-for="item in currentWidgetTypeList", :class="{ active: item.widgetTypeId===hoverWidgetTypeId }")
 				.d-left-widget-bottom-title.fn-flex.pointer(
-					:class="{ active: current && item.componentTypeId === current.componentTypeId }",
-					@mouseenter="handleCheckType(item.componentTypeId, item.market, item)")
-					label.pointer {{ item.componentTypeName }}
-		.d-left-widget-list.fn-flex(v-if="current", v-show="openList[current.componentTypeId]")
-			item-card(
-				v-for="widget in list[current.componentTypeId]",
-				:market="current.market",
-				:widgetType="widget.widgetType",
-				:componentConfig="widget.componentConfig",
-				:widgetVersion="widget.widgetVersion",
-				:componentAvatar="widget.componentAvatar",
-				:componentTitle="widget.componentTitle")
+					@mouseenter="handleCheckType(item)")
+					label.pointer {{ item.widgetTypeName }}
+		.d-left-widget-list.fn-flex
+			item-card(v-for="widget in editor.local.widgets[hoverWidgetTypeId]", v-bind="widget")
 </template>
 <script>
 import itemCard from './item-card.vue'
 import Editor from '@/core/Editor'
-import { typeList } from '@/vue2/api/marketComponent.api'
 
 export default {
 	name: 'widget',
@@ -37,55 +28,31 @@ export default {
 	data() {
 		return {
 			editor: Editor.Instance(),
-			leftIndex: null,
-			rightIndex: null,
-			list: {},
-			current: null,
-			openList: {},
+			hoverWidgetTypeId: null, // 组件二级分类
+			currentWidgetTypeId: null, // 组件一级分类
+			currentWidgetTypeList: [], // 组件二级分类
 			widgetShow: false,
 		}
 	},
-	computed: {
-		childrenList() {
-			if (this.leftIndex) {
-				return this.editor.local.widgets[this.leftIndex].children
-			}
-			return []
-		},
-	},
 	methods: {
-		mouseenter(componentTypeId) {
-			this.leftIndex = componentTypeId
+		mouseenter(item) {
+			this.currentWidgetTypeId = item.widgetTypeId
+			this.editor.local.widgetType.forEach(i => {
+				if (i.widgetTypeId === item.widgetTypeId) {
+					this.currentWidgetTypeList = i.children
+				}
+			})
 			this.widgetShow = true
-			const item = this.editor.local.widgets[this.leftIndex].children[0]
-			this.handleCheckType(item.componentTypeId, item.market, item)
+			this.handleCheckType(item.children[0])
 		},
 		mouseleave() {
+			this.currentWidgetTypeList = []
+			this.currentWidgetTypeId = null
+			this.hoverWidgetTypeId = null
 			this.widgetShow = false
 		},
-		handleCheckType(componentTypeId, market, item) {
-			this.$set(this.openList, componentTypeId, true)
-			this.current = item
-			if (!this.list[componentTypeId]) {
-				if (market) {
-					typeList({
-						componentTypeId,
-						isCurrentVersion: true,
-						status: 'SUCCESS',
-						pageNum: 1,
-						pageSize: 999,
-					}).then(res => {
-						this.$set(this.list, componentTypeId, res.list)
-					})
-				} else {
-					const list = this.editor.local.widgets[this.leftIndex].children
-					list.forEach(item => {
-						if (item.componentTypeId === componentTypeId) {
-							this.$set(this.list, componentTypeId, item.children)
-						}
-					})
-				}
-			}
+		handleCheckType(child) {
+			this.hoverWidgetTypeId = child.widgetTypeId
 		},
 	},
 }
@@ -158,18 +125,17 @@ export default {
 	}
 
 	li {
+		color: rgb(188, 201, 212);
 		.d-left-widget-bottom-title {
 			align-items: center;
 			justify-content: center;
 			width: 60px;
 			height: 60px;
-			color: rgb(188, 201, 212);
-
-			&:hover,
-			&.active {
-				color: var(--text-3);
-				background-color: var(--primary-color);
-			}
+		}
+		&:hover,
+		&.active {
+			color: var(--text-3);
+			background-color: var(--primary-color);
 		}
 	}
 

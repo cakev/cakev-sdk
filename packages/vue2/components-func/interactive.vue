@@ -7,13 +7,16 @@
 		@open-click="editor.currentWidget.animation.transitionEnable = true",
 		@close-click="editor.currentWidget.animation.transitionEnable = false",
 		:enable="editor.currentWidget.animation.transitionEnable")
-		d-right-control(label="动画形式")
-			i-select(v-model="editor.currentWidget.animation.enter")
-				i-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
-		d-right-control(label="延时时长")
-			d-input(append="ms", v-model="editor.currentWidget.animation.delay")
-		d-right-control(label="动画时长")
-			d-input(append="ms", v-model="editor.currentWidget.animation.duration")
+		c-control(label="动画形式")
+			template(slot="right")
+				i-select(v-model="editor.currentWidget.animation.enter")
+					i-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
+		c-control(label="延时时长")
+			template(slot="right")
+				d-input(append="ms", v-model="editor.currentWidget.animation.delay")
+		c-control(label="动画时长")
+			template(slot="right")
+				d-input(append="ms", v-model="editor.currentWidget.animation.duration")
 	data-event
 </template>
 <script lang="ts">

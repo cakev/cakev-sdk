@@ -25,12 +25,13 @@
 			i-option(value="config.config") 更新自定义数据
 			template(v-if="isShowCustomEvents")
 				i-option(:value="m.type", v-for="(m, n) in customEventsConfig", :key="n") {{ m.name }}
-		d-code(
-			v-if="isComponentClass",
-			label="更新加工",
-			:code="editor.currentWidget.events[eventType][activeIndex].process.methodBody",
-			:show="editor.currentWidget.events[eventType][activeIndex].process.enable",
-			@update:code="value => (editor.currentWidget.events[eventType][activeIndex].process.methodBody = value)")
+		c-control(label="更新加工",)
+			template(slot="bottom")
+				c-code(
+					v-if="isComponentClass",
+					:code="editor.currentWidget.events[eventType][activeIndex].process.methodBody",
+					:show="editor.currentWidget.events[eventType][activeIndex].process.enable",
+					@update:code="value => (editor.currentWidget.events[eventType][activeIndex].process.methodBody = value)")
 			template(slot="right")
 				c-switch(v-model="editor.currentWidget.events[eventType][activeIndex].process.enable")
 		i-select(
@@ -59,12 +60,10 @@
 </template>
 <script lang="ts">
 import func from '@/vue2/components-func/func.mx'
-import dCode from '@/vue2/components-right/d-code/index.vue'
 import { animates } from '@/vue2/components-func/config.js'
 
 export default {
 	name: 'func-data',
-	components: { dCode },
 	mixins: [func],
 	props: {
 		activeIndex: {},

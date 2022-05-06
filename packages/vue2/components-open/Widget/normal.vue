@@ -9,16 +9,6 @@ export default {
 		value: {},
 		customConfig: {},
 		customEventsConfig: {},
-		setting: {
-			default() {
-				return []
-			},
-		},
-		settingData: {
-			default() {
-				return {}
-			},
-		},
 		eventTypes: {
 			default() {
 				return []
@@ -34,8 +24,6 @@ export default {
 		;(this.$parent as any).__init__({
 			value: this.value,
 			customConfig: this.customConfig,
-			setting: this.setting,
-			settingData: this.settingData,
 			eventTypes: this.eventTypes,
 			customEventsConfig: this.customEventsConfig,
 		})

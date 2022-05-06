@@ -1,6 +1,5 @@
 import Editor from '@/core/Editor'
 import { usePath, useProcess } from '@/vue2/utils'
-import LogTask from '@/core/Log/task'
 
 const parseParams = (params = {}) => {
 	if (typeof params === 'string' && params !== '') {
@@ -42,12 +41,8 @@ export default {
 			if (!response.data || typeof response.data !== 'object') {
 				return
 			}
-			response = usePath(path, response, errorMessage => {
-				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id, errorMessage }))
-			})
-			response = useProcess(process, response, () => {
-				this.editor.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id }))
-			})
+			response = usePath(path, response)
+			response = useProcess(process, response)
 			this.data = response
 		},
 		outerQuery(api): void {

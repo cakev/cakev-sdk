@@ -60,7 +60,7 @@ export default {
 			type: String,
 		},
 		screenMainScene: {
-			type: String,
+			type: String | Number,
 		},
 		screenLayoutMode: {
 			type: String,
@@ -80,15 +80,12 @@ export default {
 	computed: {
 		openShare: {
 			get() {
-				// @ts-ignore
 				return this.shareType !== 'NO'
 			},
 			set(val) {
 				if (val) {
-					// @ts-ignore
 					this.shareSubmit('ALL')
 				} else {
-					// @ts-ignore
 					this.closeShare()
 				}
 			},
@@ -98,7 +95,6 @@ export default {
 		value(val) {
 			this.modalShow = val
 			if (val && this.isInit && !this.autoInit) {
-				// @ts-ignore
 				this.init()
 				this.isInit = false
 			}

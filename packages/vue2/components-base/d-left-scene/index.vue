@@ -27,7 +27,6 @@ import { Icon, Input, Select, Option } from 'view-design'
 import ItemCard from './item-card.vue'
 import draggable from 'vuedraggable'
 import Editor from '@/core/Editor'
-import { market } from '@/vue2/api/marketComponentType.api'
 
 export default {
 	name: 'd-left-scene',
@@ -107,9 +106,6 @@ export default {
 			}
 			this.editor.screen.screenWidgetsLays = { ...this.editor.screen.screenWidgetsLays }
 		},
-	},
-	mounted(): void {
-		market()
 	},
 }
 </script>

@@ -17,7 +17,7 @@ Vue.component('scene-group', sceneGroup)
 Vue.component('cakev-group', widgetGroup)
 Vue.component('cakev-normal', widgetNormal)
 Vue.component('cakev-widget', widget)
-import './components-business'
+import './widget-business'
 import '@cakev/ui/dist/ui.css'
 
 Vue.use(CakeUi)

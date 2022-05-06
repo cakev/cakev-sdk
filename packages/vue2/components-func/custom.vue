@@ -1,11 +1,12 @@
 <template lang="pug">
 .d-manage-modal-control-base
-	d-right-control(label="组件市场")
-		i-select(
-			v-model="editor.currentWidget.config.widget.widgetVersion",
-			:style="{ marginRight: '10px', width: '156px' }")
-			i-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i") {{ item.widgetVersion }}
-		c-switch(v-model="editor.currentWidget.market")
+	c-right-control(label="组件市场")
+		template(slot="right")
+			i-select(
+				v-model="editor.currentWidget.config.widget.widgetVersion",
+				:style="{ marginRight: '10px', width: '156px' }")
+				i-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i") {{ item.widgetVersion }}
+			c-switch(v-model="editor.currentWidget.widgetMarket")
 </template>
 <script lang="ts">
 import func from './func.mx'
@@ -28,7 +29,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.editor.currentWidget.market) {
+		if (this.editor.currentWidget.widgetMarket) {
 			this.getVersionList()
 		}
 	},

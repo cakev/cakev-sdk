@@ -8,7 +8,6 @@ import Ruler from '@/core/ui/Ruler'
 import ImageCache from '@/core/IndexDB/imageCache'
 import ScreenCache from '@/core/IndexDB/screenCache'
 import IndexDB from '@/core/IndexDB'
-import Log from '@/core/Log/base'
 
 const db = new IndexDB()
 const rulerContainerId = `drag-content-${+new Date()}`
@@ -19,7 +18,6 @@ export default class EditorBase extends Factory<EditorBase> {
 	})
 	indexDB = db
 	scene: Scene = Scene.Instance()
-	log: Log = Log.Instance()
 	http: Http = Http.Instance()
 	local: Local = Local.Instance()
 	imageCache: ImageCache = ImageCache.Instance(db)

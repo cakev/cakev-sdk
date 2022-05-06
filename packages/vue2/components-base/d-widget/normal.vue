@@ -1,7 +1,7 @@
 <template lang="pug">
 component.widget-part.animate__animated(
 	:style="{ animationDuration, animationDelay }",
-	:is="currentComponent",
+	:is="widgetIs",
 	:class="animationClass",
 	:id="id",
 	v-bind="{ zIndex, ...item, ...$attrs }",
@@ -13,26 +13,34 @@ import Editor from '@/core/Editor'
 import { use } from '@/vue2/api/marketComponent.api'
 import Vue from 'vue'
 
-const prefix1 = 'market-'
-const prefix2 = 'cakev-'
 export default {
 	name: 'd-widget',
 	props: {
 		id: {},
 		zIndex: {},
+		widgetType: {
+			type: String,
+		},
+		widgetIs: {
+			type: String,
+		},
+		widgetAvatar: {
+			type: String,
+		},
+		widgetTitle: {
+			type: String,
+		},
+		widgetMarket: {
+			type: Boolean,
+		},
+		widgetApi: {},
+		widgetBase: {},
+		widgetConfig: {},
+		widgetLayout: {},
 	},
 	computed: {
 		item() {
 			return this.editor.screen.screenWidgets[this.id]
-		},
-		currentComponent() {
-			if (this.ready) {
-				if (this.item.market && this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
-					return `${prefix1}${this.item.type}-${this.widgetVersion}`
-				}
-				return `${prefix2}${this.item.type}`
-			}
-			return null
 		},
 	},
 	data() {
@@ -94,10 +102,10 @@ export default {
 		},
 	},
 	watch: {
-		'item.config.widget.widgetVersion': {
+		'widgetBase.version': {
 			deep: true,
 			handler() {
-				if (this.item.market) {
+				if (this.item.widgetMarket) {
 					this.ready = false
 					this.loadMarket()
 				}
@@ -109,12 +117,12 @@ export default {
 				value && this.setAnimation()
 			},
 		},
-		ready(){
+		ready() {
 			this.setAnimation()
 		},
 	},
 	mounted() {
-		if (this.item.market) {
+		if (this.widgetMarket) {
 			this.loadMarket()
 		} else {
 			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {

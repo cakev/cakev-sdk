@@ -1,20 +1,18 @@
 <template lang="pug">
 widget-normal(
-	:value="value",
-	:customConfig="customConfig",
 	:eventTypes="[ { key: 'click', label: '点击' }, { key: 'mouseover', label: '悬停事件' }, ]")
 	.fn-flex.flex-row.h-title-1(v-if="data")
 		.h-title-1-icon
-		h2(@click="__handleEvent__('click', test)", @mouseover="__handleEvent__('mouseover')") 11111{{ data.title }} {{ config.config.title }}
+		h2(@click="__handleEvent__('click', test)", @mouseover="__handleEvent__('mouseover')") {{ data.title }} {{ config.config.title }}
 </template>
 <script lang="ts">
 import widgetMixin from '@/vue2/mixins'
 import widgetNormal from '@/vue2/components-open/Widget/normal'
-import { value, customConfig } from './index.component'
+// import { value, customConfig } from './index.component'
 
 export default {
-	components: { widgetNormal },
 	mixins: [widgetMixin],
+	components: { widgetNormal },
 	data() {
 		return {
 			test: {
@@ -33,18 +31,9 @@ export default {
 					],
 				},
 			},
-			value: value,
-			customConfig: customConfig,
+			// value: value,
+			// customConfig: customConfig,
 		}
-	},
-	watch: {
-		data: {
-			handler(val) {
-				console.log(val)
-			},
-			deep: true,
-			immediate: true,
-		},
 	},
 }
 </script>

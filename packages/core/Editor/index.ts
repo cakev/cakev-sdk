@@ -4,9 +4,8 @@ import { useList } from '@/vue2/api/marketComponent.api'
 import Agent from '@/core/Editor/agent'
 import HttpTask from '@/core/Http/task'
 import { usePath, useProcess } from '@/vue2/utils'
-import Widget from '@/core/Widget/normal'
+import Widget from '@/core/Widget'
 import { Method } from 'axios'
-import LogTask from '@/core/Log/task'
 
 export default class Editor extends Agent {
 	init(res?: any): any {
@@ -53,12 +52,6 @@ export default class Editor extends Agent {
 								script.src = item.componentJsUrl
 								document.head.appendChild(script)
 							} else {
-								this.log.push(
-									new LogTask({
-										code: 'LOAD_COMPONENT_ERROR',
-										errorMessage: `${list[index].widgetType}${list[index].widgetVersion}`,
-									}),
-								)
 								resolve(true)
 							}
 						}),
@@ -89,11 +82,11 @@ export default class Editor extends Agent {
 					scene: screen.screenWidgets[key].scene,
 					hide: screen.screenWidgets[key].config.widget.hide,
 					id: key,
-					zIndex: screen.screenWidgets[key].config.layout.zIndex,
+					zIndex: screen.screenWidgets[key].widgetLayout.zIndex,
 				}
 				delete screen.screenWidgets[key].scene
 				delete screen.screenWidgets[key].config.widget.hide
-				delete screen.screenWidgets[key].config.layout.zIndex
+				delete screen.screenWidgets[key].widgetLayout.zIndex
 			}
 			this.screen.screenWidgetsLays = obj
 		} else {
@@ -159,10 +152,6 @@ export default class Editor extends Agent {
 		return this.currentSceneWidget.length
 			? this.currentSceneWidget[this.currentSceneWidget.length - 1].zIndex - 1
 			: 10
-	}
-	/* 添加组件 */
-	createWidget(offsetX: number, offsetY: number, data: any): void {
-		this.screen.createWidget(offsetX, offsetY, data, this.current.currentSceneIndex, this.currentMaxZIndex)
 	}
 	/* 给组件取消打组 */
 	relieveWidgetGroup(): void {
@@ -285,7 +274,7 @@ export default class Editor extends Agent {
 			}
 		}
 		list.sort((a, b) => {
-			return b.config.layout.zIndex - a.config.layout.zIndex - 1
+			return b.widgetLayout.zIndex - a.widgetLayout.zIndex - 1
 		})
 		return list
 	}
@@ -330,19 +319,6 @@ export default class Editor extends Agent {
 			target.customEventsConfig = val
 		}
 	}
-	/**
-	 * @description 自定义过滤初始化
-	 */
-	dataSetting(id: string, list, data): void {
-		if (list && list.length) {
-			const target = this.screen.screenWidgets[id]
-			if (list.length) target.settingDataHandle = list
-			if (target.settingData) {
-				if (data && Object.keys(target.settingData).length <= 0) target.settingData = data
-			}
-			this.screen.screenWidgets = { ...this.screen.screenWidgets }
-		}
-	}
 
 	/**
 	 * @description 触发事件初始化
@@ -373,17 +349,10 @@ export default class Editor extends Agent {
 		this.http.pushOne(
 			new HttpTask(method, url, params, loopTime)
 				.then(res => {
-					let response = usePath(path, res, errorMessage => {
-						this.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', widget: target, errorMessage }))
-					})
-					response = useProcess(process, response, () => {
-						this.log.push(new LogTask({ code: 'DATA_FILTER_ERROR', widget: target }))
-					})
+					let response = usePath(path, res)
+					response = useProcess(process, response)
 					if (response !== undefined) target.config.api.data = response
 				})
-				.catch(e => {
-					this.log.push(new LogTask({ code: 'HTTP_ERROR', ...e, widget: target }))
-				}),
 			id,
 		)
 	}
@@ -405,38 +374,38 @@ export default class Editor extends Agent {
 		this.currentWidgetList.map(item => {
 			const m = this.screen.screenWidgets[item]
 			if (minLeft === null) {
-				minLeft = Number(m.config.layout.left)
+				minLeft = Number(m.widgetLayout.left)
 			}
 			if (maxLeft === null) {
-				maxLeft = Number(m.config.layout.left)
-				width = Number(m.config.layout.width)
+				maxLeft = Number(m.widgetLayout.left)
+				width = Number(m.widgetLayout.width)
 			}
 			if (minTop === null) {
-				minTop = Number(m.config.layout.top)
+				minTop = Number(m.widgetLayout.top)
 			}
 			if (maxTop === null) {
-				maxTop = Number(m.config.layout.top)
-				height = Number(m.config.layout.height)
+				maxTop = Number(m.widgetLayout.top)
+				height = Number(m.widgetLayout.height)
 			}
-			if (minLeft > Number(m.config.layout.left)) {
-				minLeft = m.config.layout.left
+			if (minLeft > Number(m.widgetLayout.left)) {
+				minLeft = m.widgetLayout.left
 			}
 			if (
 				Number(maxLeft) + Number(width) <
-				Number(m.config.layout.left) + Number(m.config.layout.width)
+				Number(m.widgetLayout.left) + Number(m.widgetLayout.width)
 			) {
-				maxLeft = m.config.layout.left
-				width = m.config.layout.width
+				maxLeft = m.widgetLayout.left
+				width = m.widgetLayout.width
 			}
-			if (minTop > Number(m.config.layout.top)) {
-				minTop = m.config.layout.top
+			if (minTop > Number(m.widgetLayout.top)) {
+				minTop = m.widgetLayout.top
 			}
 			if (
 				Number(maxTop) + Number(height) <
-				Number(m.config.layout.top) + Number(m.config.layout.height)
+				Number(m.widgetLayout.top) + Number(m.widgetLayout.height)
 			) {
-				maxTop = m.config.layout.top
-				height = m.config.layout.height
+				maxTop = m.widgetLayout.top
+				height = m.widgetLayout.height
 			}
 		})
 		this.selectWidgetList({

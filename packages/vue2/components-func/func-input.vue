@@ -1,6 +1,7 @@
 <template lang="pug">
-d-right-control(:label="`${config.label} [${inputKey}]`")
-	i-input(v-model="obj[inputKey]")
+c-control(:label="`${config.label} [${inputKey}]`")
+	template(slot="right")
+		i-input(v-model="obj[inputKey]")
 </template>
 <script lang="ts">
 import func from './func.mx'

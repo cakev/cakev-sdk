@@ -23,15 +23,20 @@ export const customConfig = [
 		],
 	},
 ]
-export const value = {
-	api: {
+import widgetConf from '@/core/Widget/conf'
+
+export default new widgetConf({
+	widgetApi: {
 		data: JSON.stringify({ title: '标题' }),
 	},
-	layout: {
+	widgetLayout: {
 		width: 480,
 		height: 43,
 	},
-	config: {
+	widgetTypeId: '装饰图',
+	widgetIs: 'test-normal',
+	widgetAvatar: require('./snapshot.png'),
+	widgetConfig: {
 		title: 'aaaaa',
 		backgrounds: [
 			{
@@ -40,4 +45,4 @@ export const value = {
 			},
 		],
 	},
-}
+})

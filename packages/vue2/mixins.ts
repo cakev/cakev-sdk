@@ -1,14 +1,10 @@
 import fetch from '@/vue2/fetch'
 import { usePath, createSandbox } from '@/vue2/utils'
 import Editor from '@/core/Editor'
-import LogTask from '@/core/Log/task'
 
 export default {
 	mixins: [fetch],
 	props: {
-		settingData: {
-			type: Object,
-		},
 		zIndex: {},
 		events: {
 			type: Object,
@@ -71,11 +67,7 @@ export default {
 						const coms = Object.values(this.cake_editor.screen.screenWidgets).filter((v: any) =>
 							item.ids.includes(v.id),
 						)
-						let data = usePath('', val, errorMessage => {
-							this.cake_editor.log.push(
-								new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id, errorMessage }),
-							)
-						})
+						let data = usePath('', val)
 						const { enable, methodBody } = item.process
 						if (enable && methodBody.trim()) {
 							try {
@@ -91,9 +83,6 @@ export default {
 									}
 								})
 							} catch (err) {
-								this.cake_editor.log.push(
-									new LogTask({ code: 'DATA_FILTER_ERROR', id: this.cake_widget_id }),
-								)
 							}
 						} else {
 							coms.forEach((v: any) => {
@@ -111,9 +100,8 @@ export default {
 			}
 		},
 		__init__(obj): void {
-			const { value, customConfig, setting, settingData, eventTypes, customEventsConfig } = obj
+			const { value, customConfig, eventTypes, customEventsConfig } = obj
 			this.__eventTypesSetting__(eventTypes)
-			this.cake_editor.dataSetting(this.config.widget.id, setting, settingData)
 			this.cake_editor.setCustomEventConfig(this.config.widget.id, customEventsConfig)
 			this.parseConfigValue(value, customConfig)
 		},
@@ -122,17 +110,6 @@ export default {
 		},
 	},
 	computed: {
-		__settingData__() {
-			return type => {
-				if (this.settingData[type]) {
-					return this.settingData[type].map(child => {
-						return this.data.map(item => item[child])
-					})
-				} else {
-					return []
-				}
-			}
-		},
 		styles() {
 			const { layout } = this.config
 			return {

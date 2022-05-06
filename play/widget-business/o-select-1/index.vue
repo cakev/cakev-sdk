@@ -1,10 +1,10 @@
 <template lang="pug">
-widget-normal(:value="value", :customConfig="customConfig", :eventTypes="eventTypes")
+widget-normal(:eventTypes="eventTypes")
 	ul.list
 		li.pointer(v-for="(k, i) in data", :key="i", @click="change(k)", :class="{ active: k.value === selectValue }") {{ k.label }}
 </template>
 <script lang="ts">
-import { value, customConfig } from './index.component'
+// import { value, customConfig } from './index.component'
 import widgetNormal from '@/vue2/components-open/Widget/normal.vue'
 import widgetMixin from '@/vue2/mixins'
 
@@ -14,8 +14,8 @@ export default {
 	components: { widgetNormal },
 	data() {
 		return {
-			value: value,
-			customConfig: customConfig,
+			// value: value,
+			// customConfig: customConfig,
 			eventTypes: [{ key: 'click1', label: '点击事件' }],
 			selectValue: '',
 			selectLabel: '',

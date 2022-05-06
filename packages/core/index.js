@@ -1,6 +1,6 @@
 import Editor from './Editor/index.ts'
 import { loadCss, loadJs } from '@/core/utils'
-import Widget from '@/core/Widget/normal'
+import Widget from '@/core/Widget'
 
 const cakeV = {
 	Editor,

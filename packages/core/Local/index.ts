@@ -1,80 +1,27 @@
 import Factory from '@/core/Base/factory'
+import WidgetConf from '../Widget/conf'
+
+interface widgetType {
+	widgetTypeName: string
+	widgetTypeId: string
+	children: widgetType[]
+}
 
 export default class Local extends Factory<Local> {
-	widgets = {}
-	components = {}
+	widgets: { [key: string]: WidgetConf[] } = {}
+	widgetType: widgetType[] = []
 
-	setLocalComponents(value): void {
-		this.components = { ...this.components, ...value }
-	}
-	setLocalWidgets(value: any): void {
-		this.widgets = { ...value, ...this.widgets }
+	setWidgetTypes(value): void {
+		this.widgetType = [...this.widgetType, ...value]
 	}
 
-	init(obj: any): void {
-		const components = {}
-		const snapshots = {}
-		const widgetsObject = []
-		const w = {}
-		const conf = obj.conf
-		const component = obj.component
-		const snapshot = obj.avatar
-		snapshot.keys().forEach(name => {
-			const title = name.split('/')[2]
-			snapshots[title] = snapshot(name)
-		})
-		component.keys().forEach(name => {
-			const title = name.split('/')[2]
-			components[title] = component(name).default
-		})
-		conf.keys().forEach(name => {
-			const typeOne = name.split('/')[1]
-			const typeTwo = name.split('/')[2]
-			const componentConfig = {
-				...conf(name).value,
-				widgetType: typeTwo,
-			}
-			const componentAvatar = snapshots[typeTwo]
-			if (componentConfig) {
-				if (w[typeOne]) {
-					widgetsObject[widgetsObject.length - 1].children.push({
-						componentConfig,
-						componentTitle: typeTwo,
-						widgetType: typeTwo,
-						componentAvatar,
-						market: false,
-					})
-				} else {
-					w[typeOne] = true
-					widgetsObject.push({
-						componentTypeName: typeOne,
-						componentTypeEnName: typeOne,
-						componentTypeId: typeOne,
-						market: false,
-						children: [
-							{
-								componentConfig,
-								market: false,
-								componentTitle: typeTwo,
-								widgetType: typeTwo,
-								componentTypeId: typeTwo,
-								componentAvatar,
-							},
-						],
-					})
-				}
+	setWidgets(value) {
+		value.forEach(item => {
+			if (this.widgets[item.widgetTypeId]) {
+				this.widgets[item.widgetTypeId].push(item)
+			} else {
+				this.widgets[item.widgetTypeId] = [item]
 			}
 		})
-		const result = {
-			[obj.name]: {
-				componentTypeName: obj.name,
-				componentTypeEnName: obj.name,
-				componentTypeId: obj.name,
-				market: false,
-				children: widgetsObject,
-			},
-		}
-		this.setLocalComponents(components)
-		this.setLocalWidgets(result)
 	}
 }

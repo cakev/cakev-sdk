@@ -72,7 +72,7 @@ export default {
 			create({
 				componentConfig: widget.config,
 				widgetType: widget.type,
-				componentTitle: widget.config.widget.name,
+				widgetTitle: widget.config.widget.name,
 				widgetVersion: widget.config.widget.widgetVersion,
 			}).then(() => {
 				this.$Modal.info({
@@ -85,11 +85,11 @@ export default {
 			this.hideRightMenu()
 		},
 		handleZIndexTop() {
-			this.editor.currentWidget.config.layout.zIndex = this.editor.currentMaxZIndex
+			this.editor.currentWidget.layout.zIndex = this.editor.currentMaxZIndex
 			this.hideRightMenu()
 		},
 		handleZIndexBottom() {
-			this.editor.currentWidget.config.layout.zIndex = this.editor.currentMinZIndex
+			this.editor.currentWidget.layout.zIndex = this.editor.currentMinZIndex
 			this.hideRightMenu()
 		},
 		hideWidget() {

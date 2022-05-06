@@ -6,16 +6,16 @@ dr(
 	:scale-ratio="editor.zoom",
 	:draggable="widgetEditable(item)",
 	:resizable="widgetEditable(item)",
-	:scale="item.config.layout.scale",
+	:scale="item.widgetLayout.scale",
 	:active="editor.currentWidgetList.includes(id) && widgetEditable(item)",
-	:w="item.config.layout.width",
-	:h="item.config.layout.height",
-	:x="item.config.layout.left",
-	:y="item.config.layout.top",
+	:w="item.widgetLayout.width",
+	:h="item.widgetLayout.height",
+	:x="item.widgetLayout.left",
+	:y="item.widgetLayout.top",
 	:z="zIndex",
 	:snap="editor.current.autoAlignGuide",
 	:item="item",
-	:class="[{ locked: item.config.widget.locked }, `widget-${id}`]",
+	:class="[{ locked: item.widgetBase.locked }, `widget-${id}`]",
 	:snap-to-target="['.d-editor-line', '.dr-unactive', '.d-ruler-guide-x', '.d-ruler-guide-y']",
 	@resizestop="onResizeStop",
 	@refLineParams="params => getRefLineParams(params, item)",
@@ -30,7 +30,6 @@ dr(
 		:events="item.events",
 		:animation="item.animation",
 		:eventTypes="item.eventTypes",
-		:settingData="item.settingData",
 		:config="item.config",
 		:children="editor.screen.screenWidgetsLays[id].children")
 </template>
@@ -38,6 +37,7 @@ dr(
 import dr from '@/vue2/components-base/d-dr/index.vue'
 import dDrKuang from '@/vue2/components-base/d-dr-kuang/index.vue'
 import Editor from '@/core/Editor'
+import Widget from '@/core/Widget'
 
 export default {
 	name: 'item-card',
@@ -51,19 +51,29 @@ export default {
 		}
 	},
 	props: {
-		id: {},
-		zIndex: {},
-		getRefLineParams: {},
+		getRefLineParams:{},
+		widgetId: {
+			type: String,
+		},
+		zIndex: {
+			type: Number,
+		},
+		scene: {
+			type: Number | String,
+		},
+		hide: {
+			type: Boolean,
+		},
 	},
 	computed: {
-		item() {
-			return this.editor.screen.screenWidgets[this.id]
+		item(): Widget {
+			return this.editor.screen.screenWidgets[this.widgetId]
 		},
 		style() {
 			return {
-				transform: `translate3d(${this.item.config.layout.left}px, ${this.item.config.layout.top}px,0)`,
-				width: this.item.config.layout.width + 'px',
-				height: this.item.config.layout.height + 'px',
+				transform: `translate3d(${this.item.widgetLayout.left}px, ${this.item.widgetLayout.top}px,0)`,
+				width: this.item.widgetLayout.width + 'px',
+				height: this.item.widgetLayout.height + 'px',
 				zIndex: this.zIndex,
 			}
 		},
@@ -94,10 +104,10 @@ export default {
 		},
 		onDragStop(left: number, top: number): void {
 			if (this.editor.currentWidget) {
-				const diffLeft = left - this.editor.currentWidget.config.layout.left
-				const diffTop = top - this.editor.currentWidget.config.layout.top
-				this.editor.currentWidget.config.layout.left = left
-				this.editor.currentWidget.config.layout.top = top
+				const diffLeft = left - this.editor.currentWidget.widgetLayout.left
+				const diffTop = top - this.editor.currentWidget.widgetLayout.top
+				this.editor.currentWidget.widgetLayout.left = left
+				this.editor.currentWidget.widgetLayout.top = top
 				this.onGroupDragStop(
 					this.editor.screen.screenWidgetsLays[this.editor.currentWidgetList[0]],
 					diffLeft,
@@ -109,18 +119,18 @@ export default {
 			if (item.children) {
 				if (Object.values(item.children).length > 0)
 					for (let key in item.children) {
-						this.editor.screen.screenWidgets[key].config.layout.left =
-							Number(this.editor.screen.screenWidgets[key].config.layout.left) + diffLeft
-						this.editor.screen.screenWidgets[key].config.layout.top =
-							Number(this.editor.screen.screenWidgets[key].config.layout.top) + diffTop
+						this.editor.screen.screenWidgets[key].widgetLayout.left =
+							Number(this.editor.screen.screenWidgets[key].layout.left) + diffLeft
+						this.editor.screen.screenWidgets[key].layout.top =
+							Number(this.editor.screen.screenWidgets[key].layout.top) + diffTop
 						this.onGroupDragStop(item.children[key], diffLeft, diffTop)
 						this.editor.screen.screenWidgets = { ...this.editor.screen.screenWidgets }
 					}
 			}
 		},
 		onResizeStop(width: number, height: number): void {
-			this.editor.currentWidget.config.layout.width = width
-			this.editor.currentWidget.config.layout.height = height
+			this.editor.currentWidget.layout.width = width
+			this.editor.currentWidget.layout.height = height
 		},
 		widgetEditable({ config }): boolean {
 			return !config.widget.locked

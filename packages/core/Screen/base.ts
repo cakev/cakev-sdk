@@ -1,14 +1,13 @@
-﻿import { getQueryString, uuid } from '@cakev/util'
+﻿import { getQueryString, uuid,versionToNum } from '@cakev/util'
 import Factory from '@/core/Base/factory'
-import Widget from '@/core/Widget/base'
+import Widget from '@/core/Widget'
 import copy from 'fast-copy'
 import commonConfigValue from '@/core/common-config-value.js'
 import { configMerge } from '@/core/utils'
-import { versionToNum } from '@cakev/util'
 
 export default class Screen extends Factory<Screen> {
 	currentVersion = '1.1.0' // 当前系统版本
-	screenId: string // 大屏ID
+	screenId = '' // 大屏ID
 	screenName = '未命名' // 大屏名
 	screenWidgets: { [key: string]: Widget } = {} // 大屏组件配置
 	screenWidgetsLays = {} // 大屏组件嵌套规则
@@ -17,16 +16,14 @@ export default class Screen extends Factory<Screen> {
 	screenAvatar = '' // 大屏缩略图
 	screenVersion = '' // 大屏版本号
 	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
-	remark = '' // 备注
-	sort = 1 // 排序
 	screenWidth = 1920 // 大屏宽度
 	screenHeight = 1080 // 大屏高度
 	screenBackGroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
 	screenBackGroundImage = '' // 大屏背景图片
-	screenMainScene: string | number // 大屏首屏场景
-	screenPlatform: string // 大屏平台类型 PC:PC
-	screenDomain: string // 大屏组件接口Domain
-	screenHeaders: string // 大屏组件接口Headers
+	screenMainScene: string | number = 0 // 大屏首屏场景
+	screenPlatform = 'PC' // 大屏平台类型 PC:PC
+	screenDomain = '' // 大屏组件接口Domain
+	screenHeaders = '' // 大屏组件接口Headers
 	screenFilter = {
 		// 更新大屏组件配置
 		enable: false, // 开启状态
@@ -139,21 +136,47 @@ export default class Screen extends Factory<Screen> {
 	}
 
 	/* 添加组件 */
-	createWidget(
-		offsetX = 0,
-		offsetY = 0,
-		data: any,
-		currentSceneIndex: number | string = 0,
-		currentMaxZIndex = 10,
-	): void {
-		const widgetItem = new Widget(offsetX, offsetY, data, currentSceneIndex, currentMaxZIndex)
+	createWidget({
+		offsetX,
+		offsetY,
+		startX,
+		startY,
+		currentSceneIndex,
+		currentMaxZIndex,
+		widgetLayout,
+		widgetIs,
+		widgetType,
+		widgetAvatar,
+		widgetTitle,
+		widgetMarket,
+		widgetApi,
+		widgetBase,
+		widgetConfig,
+	}): void {
+		const top = offsetY - startY
+		const left = offsetX - startX
+		widgetLayout.top = top
+		widgetLayout.left = left
+		const widgetId = uuid()
+		const widgetItem = new Widget({
+			widgetId,
+			widgetLayout,
+			widgetIs,
+			widgetType,
+			widgetAvatar,
+			widgetTitle,
+			widgetMarket,
+			widgetApi,
+			widgetBase,
+			widgetConfig,
+		})
 		this.screenWidgets = {
 			...this.screenWidgets,
-			[widgetItem.id]: widgetItem,
+			[widgetId]: widgetItem,
 		}
 		this.screenWidgetsLays = {
 			...this.screenWidgetsLays,
-			[widgetItem.id]: { scene: currentSceneIndex, id: widgetItem.id, zIndex: currentMaxZIndex, hide: false },
+			[widgetId]: { scene: currentSceneIndex, widgetId, zIndex: currentMaxZIndex, hide: false },
 		}
 	}
 
@@ -166,7 +189,7 @@ export default class Screen extends Factory<Screen> {
 		newWidget.id = id
 		const config = newWidget.config
 		config.widget.id = id
-		const layout = config.layout
+		const layout = layout
 		layout.left = 10 + Number(layout.left)
 		layout.top = 10 + Number(layout.top)
 		this.screenWidgets = { ...this.screenWidgets, [id]: newWidget }

@@ -1,49 +1,57 @@
 <template lang="pug">
 .d-right-modal.d-scrollbar
-	d-right-control(label="屏幕大小")
-		i-select(v-model="size")
-			i-option(value="1920*1080") 大屏推荐尺寸1920*1080
-			i-option(value="1366*768") web最常见尺寸1366*768
-			i-option(value="1024*768") web最小尺寸1024*768
-			i-option(value="other") 自定义
-	d-right-control
-		d-input(
-			append="W",
-			:value="editor.width",
-			:style="{ width: '100px' }",
-			@on-change="widthChange")
-		d-input(
-			append="H",
-			:value="editor.height",
-			:style="{ marginLeft: '10px', width: '100px' }",
-			@on-change="heightChange")
-	d-right-control(label="背景色")
-		i-color-picker(
-			:alpha="true",
-			v-model="editor.backgroundColor",
-			v-if="editor.backgroundColor")
-		i-input(
-			v-model="editor.backgroundColor",
-			:disabled="true",
-			:style="{ width: '166px', marginLeft: '9px' }")
-	d-right-control(label="背景图", title="支持jpg，png，gif")
+	c-control(label="屏幕大小")
+		template(slot="right")
+			i-select(v-model="size")
+				i-option(value="1920*1080") 大屏推荐尺寸1920*1080
+				i-option(value="1366*768") web最常见尺寸1366*768
+				i-option(value="1024*768") web最小尺寸1024*768
+				i-option(value="other") 自定义
+	c-control
+		template(slot="right")
+			d-input(
+				append="W",
+				:value="editor.width",
+				:style="{ width: '100px' }",
+				@on-change="widthChange")
+			d-input(
+				append="H",
+				:value="editor.height",
+				:style="{ marginLeft: '10px', width: '100px' }",
+				@on-change="heightChange")
+	c-control(label="背景色")
+		template(slot="right")
+			i-color-picker(
+				:alpha="true",
+				v-model="editor.backgroundColor",
+				v-if="editor.backgroundColor")
+			i-input(
+				v-model="editor.backgroundColor",
+				:disabled="true",
+				:style="{ width: '166px', marginLeft: '9px' }")
+	c-control(label="背景图", title="支持jpg，png，gif")
+		template(slot="right")
 		d-upload(v-model="editor.backgroundImage", :data="backGroundFormData")
-	d-right-control(label="适配模式")
-		i-select(v-model="editor.layoutMode")
-			i-option(value="full-size") 充满页面
-			i-option(value="full-width") 100%宽度
-			i-option(value="full-height") 100%高度
-	d-right-control(label="封面", title="支持jpg，png，gif")
-		d-upload(v-model="editor.avatar", :data="screenAvatarFormData")
-	d-right-control
-		i-button(
-			@click="screenAvatar",
-			type="primary",
-			:loading="screenAvatarLoading") 截屏
-	d-right-control(label="首场景")
-		i-select(filterable, v-model="editor.mainScene")
-			i-option(:value="0") 主场景
-			i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
+	c-control(label="适配模式")
+		template(slot="right")
+			i-select(v-model="editor.layoutMode")
+				i-option(value="full-size") 充满页面
+				i-option(value="full-width") 100%宽度
+				i-option(value="full-height") 100%高度
+	c-control(label="封面", title="支持jpg，png，gif")
+		template(slot="right")
+			d-upload(v-model="editor.avatar", :data="screenAvatarFormData")
+	c-control
+		template(slot="right")
+			i-button(
+				@click="screenAvatar",
+				type="primary",
+				:loading="screenAvatarLoading") 截屏
+	c-control(label="首场景")
+		template(slot="right")
+			i-select(filterable, v-model="editor.mainScene")
+				i-option(:value="0") 主场景
+				i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
 </template>
 <script>
 import func from '@/vue2/components-func/func.mx'

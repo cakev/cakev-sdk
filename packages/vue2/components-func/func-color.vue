@@ -1,6 +1,7 @@
 <template lang="pug">
-d-right-control(:label="`${config.label} [${inputKey}]`")
-	i-color-picker(:alpha="true", v-model="obj[inputKey]")
+c-control(:label="`${config.label} [${inputKey}]`")
+	template(slot="right")
+		i-color-picker(:alpha="true", v-model="obj[inputKey]")
 </template>
 <script lang="ts">
 import func from './func.mx'

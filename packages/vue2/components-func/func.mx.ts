@@ -11,13 +11,11 @@ import {
 	Upload,
 	Modal,
 } from 'view-design'
-import dRightControl from '@/vue2/components-right/d-right-control/index.vue'
 import dInput from '@/vue2/components-base/d-input/index.vue'
 import Editor from '@/core/Editor'
 
 export default {
 	components: {
-		dRightControl,
 		dInput,
 		'i-input': Input,
 		'i-upload': Upload,

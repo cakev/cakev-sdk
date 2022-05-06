@@ -15,7 +15,7 @@ export default class ScreenPc extends ScreenBase {
 		this.screenBackGroundImage = ''
 		this.screenAvatar = ''
 		this.screenVersion = ''
-		this.screenMainScene = undefined
+		this.screenMainScene = 0
 		this.screenFilter = {
 			enable: false,
 			grayscale: 0,
@@ -35,7 +35,6 @@ export default class ScreenPc extends ScreenBase {
 		this.screenType = res.screenType || 'CUSTOM'
 		this.screenVersion = res.screenVersion
 		this.screenLayoutMode = res.screenLayoutMode || 'full-size'
-		this.sort = res.sort
 		this.screenWidth = res.screenWidth
 		this.screenHeight = res.screenHeight
 		this.screenBackGroundColor = res.screenBackGroundColor
@@ -47,7 +46,7 @@ export default class ScreenPc extends ScreenBase {
 	/* 序列化children */
 	serialize(screenWidgets): void {
 		for (const key in screenWidgets) {
-			if (screenWidgets[key].market) {
+			if (screenWidgets[key].widgetMarket) {
 				this.marketComponents.push({
 					id: key,
 					type: screenWidgets[key].type,
@@ -74,44 +73,8 @@ export default class ScreenPc extends ScreenBase {
 			if (item.config.eventType) {
 				delete item.config.eventType
 			}
-			delete item.config.widget.remark
-			if (item.config.layout) {
-				delete item.config.layout.value
-			}
-			if (item.config.animation) {
-				item.animation = item.config.animation
-				delete item.config.animation
-			}
-			if (item.config.event) {
-				if (!item.eventTypes) item.eventTypes = []
-				item.eventTypes.push({ key: 'click', label: '点击事件' })
-				if (item.config.event.scene) {
-					if (!item.events) item.events = {}
-					if (!(item.config.event.scene instanceof Array)) {
-						item.config.event.scene = [item.config.event.scene]
-					}
-					item.config.event.scene.forEach(child => {
-						const triggerType = child.type
-						delete child.type
-						if (!item.events.click) item.events.click = []
-						item.events.click.push({ ...child, eventClass: 'scene', eventType: 'click', triggerType })
-					})
-					delete item.config.event.scene
-				}
-				if (item.config.event.component) {
-					if (!item.events) item.events = {}
-					if (!(item.config.event.component instanceof Array)) {
-						item.config.event.component = [item.config.event.component]
-					}
-					item.config.event.component.forEach(child => {
-						const triggerType = child.type
-						delete child.type
-						if (!item.events.click) item.events.click = []
-						item.events.click.push({ ...child, eventClass: 'component', eventType: 'click', triggerType })
-					})
-					delete item.config.event.component
-				}
-				delete item.config.event
+			if (item.widgetLayout) {
+				delete item.widgetLayout.value
 			}
 			screenWidgets[item.id] = item
 		}

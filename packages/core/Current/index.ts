@@ -1,5 +1,5 @@
 import Factory from '@/core/Base/factory'
-import Widget from '@/core/Widget/normal'
+import Widget from '@/core/Widget'
 
 export default class Current extends Factory<Current> {
 	rulerContainerId: string

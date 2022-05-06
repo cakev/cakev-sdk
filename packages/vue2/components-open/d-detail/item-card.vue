@@ -1,24 +1,37 @@
 <template lang="pug">
-.widget-item-wrapper.pos-r
+.widget-item-wrapper.pos-r.fn-flex
 	.fn-flex.flex-column.d-widget-list-card.pointer(
 		draggable="true",
 		@dragstart="dragstart($event)",
 		@click="handleClick")
-		.d-widget-list-img.fn-flex(:style="{ backgroundImage: `url(${componentAvatar})` }")
-		h2.ellipsis(:title="componentTitle") {{ componentTitle }}
+		.d-widget-list-img.fn-flex(:style="{ backgroundImage: `url(${widgetAvatar})` }")
+		h2.ellipsis.text-center(:title="widgetTitle") {{ widgetTitle }}
 </template>
-<script>
+<script lang="ts">
 import Editor from '@/core/Editor'
 
 export default {
 	name: 'item-card',
 	props: {
-		widgetType: {},
-		componentConfig: {},
-		componentAvatar: {},
-		widgetVersion: {},
-		componentTitle: {},
-		market: { type: Boolean },
+		widgetType: {
+			type: String,
+		},
+		widgetIs: {
+			type: String,
+		},
+		widgetAvatar: {
+			type: String,
+		},
+		widgetTitle: {
+			type: String,
+		},
+		widgetMarket: {
+			type: Boolean,
+		},
+		widgetApi: {},
+		widgetBase: {},
+		widgetConfig: {},
+		widgetLayout: {},
 	},
 	data() {
 		return {
@@ -27,33 +40,39 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			this.editor.screen.createWidget(0, 0, {
-				type: this.widgetType,
-				config: this.componentConfig,
-				market: this.market,
-				widgetVersion: this.widgetVersion,
-				startX: 0,
-				startY: 0,
+			this.editor.screen.createWidget({
+				currentSceneIndex: this.editor.current.currentSceneIndex,
+				currentMaxZIndex: this.editor.currentMaxZIndex,
+				widgetLayout: this.widgetLayout,
+				widgetIs: this.widgetIs,
+				widgetType: this.widgetType,
+				widgetAvatar: this.widgetAvatar,
+				widgetTitle: this.widgetTitle,
+				widgetMarket: this.widgetMarket,
+				widgetApi: this.widgetApi,
+				widgetBase: this.widgetBase,
+				widgetConfig: this.widgetConfig,
 			})
 		},
-		/**
-		 * @description h5 原生拖拽事件
-		 */
 		dragstart(e) {
 			e.dataTransfer.setData(
 				'widget-config',
 				JSON.stringify({
-					type: this.widgetType,
-					config: this.componentConfig,
-					market: this.market,
-					widgetVersion: this.widgetVersion,
 					startX: e.offsetX,
 					startY: e.offsetY,
+					currentSceneIndex: this.editor.current.currentSceneIndex,
+					currentMaxZIndex: this.editor.currentMaxZIndex,
+					widgetLayout: this.widgetLayout,
+					widgetIs: this.widgetIs,
+					widgetType: this.widgetType,
+					widgetAvatar: this.widgetAvatar,
+					widgetTitle: this.widgetTitle,
+					widgetMarket: this.widgetMarket,
+					widgetApi: this.widgetApi,
+					widgetBase: this.widgetBase,
+					widgetConfig: this.widgetConfig,
 				}),
 			)
-			setTimeout(() => {
-				this.$parent.widgetShow = false
-			}, 300)
 		},
 	},
 }
@@ -66,8 +85,7 @@ export default {
 		padding: 0 5px;
 		font-size: 12px;
 		line-height: 22px;
-		color: var(--text-1);
-		text-align: center;
+		color: #bfbfbf;
 		white-space: nowrap;
 	}
 }
@@ -75,7 +93,7 @@ export default {
 .d-widget-list-img {
 	width: 100%;
 	height: 60px;
-	background-color: var(--component-background);
+	background-color: #181b24;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-clip: content-box;
@@ -83,7 +101,6 @@ export default {
 }
 
 .widget-item-wrapper {
-	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 100px;

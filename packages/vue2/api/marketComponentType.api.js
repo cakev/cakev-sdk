@@ -52,21 +52,21 @@ export async function market() {
 	const widgetsObject = {}
 	for (const item of level0) {
 		const array = await level({
-			componentTypeParentId: item.componentTypeId,
+			componentTypeParentId: item.widgetTypeId,
 		})
 		if (array.length > 0) {
-			widgetsObject[item.componentTypeId] = {
+			widgetsObject[item.widgetTypeId] = {
 				...item,
-				market: true,
+				widgetMarket: true,
 				children: [],
 			}
 		}
 		array.forEach(child => {
-			widgetsObject[item.componentTypeId].children.push({
+			widgetsObject[item.widgetTypeId].children.push({
 				...child,
-				market: true,
+				widgetMarket: true,
 			})
 		})
-		editor.setLocalWidgets(widgetsObject)
+		editor.local.setLocalWidgets(widgetsObject)
 	}
 }

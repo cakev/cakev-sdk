@@ -61,8 +61,8 @@ module.exports = {
 					},
 					'vue-router': 'VueRouter',
 					echarts: 'echarts',
-					'@cakev/ui': 'cakeV-ui',
-					'@cakev/util': 'cakeV-util',
+					'@cakev/ui': '@cakev/ui',
+					'@cakev/util': '@cakev/util',
 				},
 			]
 		} else {

@@ -27,21 +27,21 @@ export default {
 			return this.editor.screen.screenWidgets[this.id]
 		},
 		styles() {
-			const { layout } = this.item.config
+			const { widgetLayout } = this.item.config
 			return {
-				width: `${layout.width}px`,
-				height: `${layout.height}px`,
+				width: `${widgetLayout.width}px`,
+				height: `${widgetLayout.height}px`,
 				zIndex: `${this.zIndex}`,
-				transform: `translate3d(${layout.left}px, ${layout.top}px,0) ${
-					layout.scale ? 'scale(' + layout.scale + ')' : ''
+				transform: `translate3d(${widgetLayout.left}px, ${widgetLayout.top}px,0) ${
+					widgetLayout.scale ? 'scale(' + widgetLayout.scale + ')' : ''
 				}`,
 			}
 		},
 		stylesR() {
-			const { layout } = this.item.config
+			const { widgetLayout } = this.item.config
 			return {
-				left: `${-layout.left}px`,
-				top: `${-layout.top}px`,
+				left: `${-widgetLayout.left}px`,
+				top: `${-widgetLayout.top}px`,
 			}
 		},
 	},

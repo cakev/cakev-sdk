@@ -1,25 +1,29 @@
 <template lang="pug">
 .d-manage-modal-control-base
 	c-collapse(title="基础属性", :show="true")
-		d-right-control(label="位置")
-			d-input(
-				append="X",
-				v-model="editor.currentWidget.config.layout.left",
-				:style="{ width: '100px', marginRight: '10px' }")
-			d-input(append="Y", v-model="editor.currentWidget.config.layout.top", :style="{ width: '100px' }")
-		d-right-control(label="宽高")
-			d-input(
-				append="W",
-				v-model="editor.currentWidget.config.layout.width",
-				:style="{ width: '100px', marginRight: '10px' }")
-			d-input(append="H", v-model="editor.currentWidget.config.layout.height", :style="{ width: '100px' }")
-		d-right-control(label="场景")
-			i-select(v-model="editor.screen.screenWidgetsLays[editor.currentWidget.id].scene")
-				i-option(:value="0") 主场景
-				i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
-				i-option(:value="-1") 回收站
-		d-right-control(label="缩放比例")
-			i-input(v-model="scale", :style="{ width: '100px' }")
+		c-control(label="位置")
+			template(slot="right")
+				d-input(
+					append="X",
+					v-model="editor.currentWidget.layout.left",
+					:style="{ width: '100px', marginRight: '10px' }")
+				d-input(append="Y", v-model="editor.currentWidget.layout.top", :style="{ width: '100px' }")
+		c-control(label="宽高")
+			template(slot="right")
+				d-input(
+					append="W",
+					v-model="editor.currentWidget.layout.width",
+					:style="{ width: '100px', marginRight: '10px' }")
+				d-input(append="H", v-model="editor.currentWidget.layout.height", :style="{ width: '100px' }")
+		c-control(label="场景")
+			template(slot="right")
+				i-select(v-model="editor.screen.screenWidgetsLays[editor.currentWidget.id].scene")
+					i-option(:value="0") 主场景
+					i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
+					i-option(:value="-1") 回收站
+		c-control(label="缩放比例")
+			template(slot="right")
+				i-input(v-model="scale", :style="{ width: '100px' }")
 </template>
 <script lang="ts">
 import func from './func.mx'
@@ -30,20 +34,20 @@ export default {
 	computed: {
 		scale: {
 			get() {
-				return `${Math.round(this.editor.currentWidget.config.layout.scale * 100)}%`
+				return `${Math.round(this.editor.currentWidget.layout.scale * 100)}%`
 			},
 
 			set(val: any) {
 				if (!isNaN(val)) {
-					this.editor.currentWidget.config.layout.scale = val
+					this.editor.currentWidget.layout.scale = val
 				} else {
-					const back = this.editor.currentWidget.config.layout.scale
+					const back = this.editor.currentWidget.layout.scale
 					if (val.indexOf('%') !== -1) {
 						let v = val.replace('%', '') / 100
 						if (!isNaN(v)) {
-							this.editor.currentWidget.config.layout.scale = v
+							this.editor.currentWidget.layout.scale = v
 						} else {
-							this.editor.currentWidget.config.layout.scale = back
+							this.editor.currentWidget.layout.scale = back
 						}
 					}
 				}

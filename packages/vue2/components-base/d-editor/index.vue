@@ -11,12 +11,10 @@
 		#screen.pos-r(:style="canvasStyle", @drop="createWidget", @click.stop, @dragover.prevent)
 			// 小工具清单
 			item-card(
-				:id="item.id",
-				:key="item.id",
-				:zIndex="item.zIndex",
+				v-bind="item"
+				:key="item.widgetId",
 				v-for="item in showWidgets",
-				:getRefLineParams="getRefLineParams",
-				:ref="item.id")
+				:getRefLineParams="getRefLineParams")
 			dr-more(v-show="editor.currentWidgetList&&editor.currentWidgetList.length>1")
 			.d-editor-line(data-top="0px", data-left="0px")
 			.d-editor-line(:data-top="`${editor.height}px`", data-left="0px")
@@ -78,31 +76,35 @@ export default {
 			const list = []
 			for (const key in this.editor.screen.screenWidgetsLays) {
 				const widget = this.editor.screen.screenWidgetsLays[key]
-				if ((widget.scene === this.editor.current.currentSceneIndex || widget.scene === 0) && !widget.hide) {
+				if ((widget.scene === this.editor.current.currentSceneIndex) && !widget.hide) {
 					list.push(widget)
 				}
 			}
-			return list
+			console.log(list)
 		},
 	},
 	methods: {
-		createWidget(e: any): void {
+		createWidget(e): void {
 			const widgetConfig = e.dataTransfer.getData('widget-config')
 			if (widgetConfig) {
-				this.editor.createWidget(e.offsetX, e.offsetY, JSON.parse(widgetConfig))
+				const data = JSON.parse(widgetConfig)
+				this.editor.screen.createWidget({
+					offsetX: e.offsetX, 
+					offsetY: e.offsetY,
+					...data, 
+				})
 			}
 		},
-
 		getRefLineParams(params: any, item: any): void {
 			const { vLine, hLine } = params
 			this.vLine = vLine.map((child: any) => {
-				child.w = item.config.layout.width
-				child.h = item.config.layout.height
+				child.w = item.layout.width
+				child.h = item.layout.height
 				return child
 			})
 			this.hLine = hLine.map((child: any) => {
-				child.w = item.config.layout.width
-				child.h = item.config.layout.height
+				child.w = item.layout.width
+				child.h = item.layout.height
 				return child
 			})
 		},

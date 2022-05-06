@@ -1,18 +1,16 @@
 <template lang="pug">
-d-right-control(:label="`${config.label} [${inputKey}]`", title="支持jpg，png，gif")
-	d-upload(v-model="obj[inputKey]", :data="formData", accept="image/*")
+c-control(:label="`${config.label} [${inputKey}]`", title="支持jpg，png，gif")
+	template(slot="right")
+		d-upload(v-model="obj[inputKey]", :data="formData", accept="image/*")
 </template>
 <script lang="ts">
 import func from './func.mx'
 import dUpload from '../components-right/d-upload/index.vue'
-import { Tooltip, Icon } from 'view-design'
 
 export default {
 	name: 'func-background',
 	components: {
-		'i-icon': Icon,
 		dUpload,
-		Tooltip,
 	},
 	mixins: [func],
 	computed: {

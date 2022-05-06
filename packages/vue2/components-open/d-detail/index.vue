@@ -5,9 +5,6 @@
 		li.fn-flex.flex-column.pointer(@click.stop="search")
 			c-svg(type="search", :size="18")
 			span 搜索
-		li.fn-flex.flex-column.pointer.pos-r(@click.stop="notice", :class="{ active: Object.keys(this.editor.log.list).length }")
-			c-svg(type="notice", :size="18")
-			span 消息
 		li.fn-flex.flex-column.pointer(@click="preview")
 			c-svg(type="preview", :size="20")
 			span 预览
@@ -27,7 +24,6 @@
 				input#originFile.fn-hide(type="file", accept="application/json", @change="handleFile")
 				label.ivu-btn.ivu-btn-primary.d-detail-import-button(for="originFile") 选择导入文件
 	search(v-model="searchModal", :hide="() => (searchModal = false)")
-	notice(v-model="noticeModal")
 </template>
 <script>
 import { Button, Modal, Form, FormItem, Input } from 'view-design'
@@ -35,7 +31,6 @@ import loadMask from '../load-mask/index.vue'
 import {getQueryString} from '@cakev/util'
 import { downloadFile } from '@/vue2/utils'
 import search from './search.vue'
-import notice from './notice.vue'
 import Editor from '@/core/Editor'
 import { detail, detailFile, create, update } from '@/vue2/api/screen.api'
 import { screenShareUpdate } from '@/vue2/api/screenShare.api'
@@ -51,7 +46,6 @@ export default {
 		'i-form-item': FormItem,
 		'i-input': Input,
 		search,
-		notice,
 		left,
 	},
 	props: {
@@ -68,14 +62,10 @@ export default {
 			searchModal: false,
 			loading: false,
 			importModal: false,
-			noticeModal: false,
 			isNew: true,
 		}
 	},
 	methods: {
-		notice() {
-			this.noticeModal = true
-		},
 		search() {
 			this.searchModal = true
 		},

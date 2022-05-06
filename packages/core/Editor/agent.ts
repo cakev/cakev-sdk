@@ -11,16 +11,6 @@ export default class Agent extends EditorBase {
 	clearGuides(): void {
 		this.ruler.clearGuides()
 	}
-	/* ---------------------------------------------------Local---------------------------------------------------*/
-	localInit(obj: any): void {
-		this.local.init(obj)
-	}
-	setLocalWidgets(obj: any): void {
-		this.local.setLocalWidgets(obj)
-	}
-	setLocalComponents(obj: any): void {
-		this.local.setLocalComponents(obj)
-	}
 	/* ---------------------------------------------------Current---------------------------------------------------*/
 	get currentRightSettingIndex(): number {
 		return this.current.currentRightSettingIndex

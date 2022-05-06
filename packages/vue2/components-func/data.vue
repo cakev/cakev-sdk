@@ -1,63 +1,66 @@
 <template lang="pug">
 .d-manage-modal-control-data
 	c-collapse(title="数据请求", :show="true")
-		d-right-control(label="数据类型")
-			i-select(v-model="apiType", :style="{ width: apiType === '数仓平台' ? '122px' : '208px' }")
-				i-option(value="静态数据") 静态数据
-				i-option(value="API接口") API接口
-		d-right-control(label="接口地址", v-if="apiType === 'API接口'")
-			i-input(v-model="editor.currentWidget.config.api.url")
-		d-right-control(v-if="apiType === 'API接口'")
-			i-select(v-model="editor.currentWidget.config.api.method", :style="{ marginRight: '10px', width: '100px' }")
-				i-option(value="GET") GET
-				i-option(value="POST") POST
-				i-option(value="PUT") PUT
-				i-option(value="DELETE") DELETE
-				i-option(value="PATCH") PATCH
-			i-input(v-model="editor.currentWidget.config.api.path", :style="{ width: '100px' }")
-		d-code(
-			label="请求参数",
-			lang="json",
-			:code="typeof editor.currentWidget.config.api.params === 'string' ? editor.currentWidget.config.api.params : JSON.stringify(editor.currentWidget.config.api.params)",
-			@update:code="value => (editor.currentWidget.config.api.params = JSON.parse(value))")
-		d-code(label="响应数据", lang="json", :code="apiData", @update:code="value => (apiData = value)")
+		c-control(label="数据类型")
+			template(slot="right")
+				i-select(v-model="apiType", :style="{ width: apiType === '数仓平台' ? '122px' : '208px' }")
+					i-option(value="静态数据") 静态数据
+					i-option(value="API接口") API接口
+		c-control(label="接口地址", v-if="apiType === 'API接口'")
+			template(slot="right")
+				i-input(v-model="editor.currentWidget.config.api.url")
+		c-control(v-if="apiType === 'API接口'")
+			template(slot="right")
+				i-select(v-model="editor.currentWidget.config.api.method", :style="{ marginRight: '10px', width: '100px' }")
+					i-option(value="GET") GET
+					i-option(value="POST") POST
+					i-option(value="PUT") PUT
+					i-option(value="DELETE") DELETE
+					i-option(value="PATCH") PATCH
+				i-input(v-model="editor.currentWidget.config.api.path", :style="{ width: '100px' }")
+		c-control(label="请求参数")
+			template(slot="bottom")
+				c-code(
+				lang="json",
+				:code="typeof editor.currentWidget.config.api.params === 'string' ? editor.currentWidget.config.api.params : JSON.stringify(editor.currentWidget.config.api.params)",
+				@update:code="value => (editor.currentWidget.config.api.params = JSON.parse(value))")
+		c-control(label="响应数据")
+			template(slot="bottom")
+				c-code( lang="json", :code="apiData", @update:code="value => (apiData = value)")
 	c-collapse(
 		type="eye"
 		title="数据过滤器",
 		:enable="editor.currentWidget.config.api.process.enable",
 		@open-click="editor.currentWidget.config.api.process.enable = true",
 		@close-click="editor.currentWidget.config.api.process.enable = false")
-		d-code(
-			label="数据过滤器",
-			:code="editor.currentWidget.config.api.process.methodBody",
-			@update:code="value => (editor.currentWidget.config.api.process.methodBody = value)")
-	data-custom-deal
+		c-control(label="数据过滤器",)
+			template(slot="bottom")
+				c-code(
+					:code="editor.currentWidget.config.api.process.methodBody",
+					@update:code="value => (editor.currentWidget.config.api.process.methodBody = value)")
 	c-collapse(
 		type="eye"
 		title="自动更新",
 		:enable="editor.currentWidget.config.api.autoFetch.enable",
 		@open-click="editor.currentWidget.config.api.autoFetch.enable = true",
 		@close-click="editor.currentWidget.config.api.autoFetch.enable = false")
-		d-right-control
-			i-input-number(
-				:min="1",
-				:step="1",
-				:formatter="value => `${value} ms`",
-				v-model="editor.currentWidget.config.api.autoFetch.duration")
+		c-control
+			template(slot="right")
+				i-input-number(
+					:min="1",
+					:step="1",
+					:formatter="value => `${value} ms`",
+					v-model="editor.currentWidget.config.api.autoFetch.duration")
 </template>
 <script lang="ts">
 import func from '@/vue2/components-func/func.mx'
-import dCode from '@/vue2/components-right/d-code/index.vue'
 import DataEvent from '@/vue2/components-right/data-event/index.vue'
-import DataCustomDeal from '@/vue2/components-right/data-custom-deal/index.vue'
 
 export default {
 	name: 'func-data',
 	mixins: [func],
 	components: {
-		DataCustomDeal,
 		DataEvent,
-		dCode,
 	},
 	computed: {
 		apiType: {
