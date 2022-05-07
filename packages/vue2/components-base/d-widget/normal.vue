@@ -1,113 +1,83 @@
 <template lang="pug">
 component.widget-part.animate__animated(
-	:style="{ animationDuration, animationDelay }",
-	:is="widgetIs",
+	:style="{ animationDuration:`${widget.widgetAnimation.duration/1000}s`, animationDelay:`${widget.widgetAnimation.delay/1000}s` }",
+	:is="widget.widgetIs",
 	:class="animationClass",
-	:id="id",
-	v-bind="{ zIndex, ...item, ...$attrs }",
+	:widget="widget"
+	:lay="lay"
 	v-on="$listeners")
 	slot
 </template>
-<script>
+<script lang="ts">
 import Editor from '@/core/Editor'
 import { use } from '@/vue2/api/marketComponent.api'
 
 export default {
 	name: 'd-widget',
 	props: {
-		id: {},
-		zIndex: {},
-		widgetType: {
-			type: String,
-		},
-		widgetIs: {
-			type: String,
-		},
-		widgetAvatar: {
-			type: String,
-		},
-		widgetMarket: {
-			type: Boolean,
-		},
-		widgetApi: {},
-		widgetBase: {},
-		widgetConfig: {},
-		widgetLayout: {},
-	},
-	computed: {
-		item() {
-			return this.editor.screen.screenWidgets[this.id]
-		},
+		widget: {},
+		lay: {},
 	},
 	data() {
 		return {
-			widgetVersion: '',
 			ready: false,
 			animationClass: null,
-			animationDuration: `.6s`,
-			animationDelay: `0s`,
 			editor: Editor.Instance(),
 		}
 	},
 	methods: {
 		setAnimation() {
-			if (!this.item.animation) return
-			if (!this.item.animation.transitionEnable) {
+			if (!this.widget.widgetAnimation) return
+			if (!this.widget.widgetAnimation.transitionEnable) {
 				this.removeAnimation()
 				return
 			}
-			const { duration, enter, delay } = this.item.animation
-			this.animationDuration = `${duration / 1000}s`
-			this.animationDelay = `${delay / 1000}s`
+			const { enter } = this.widget.widgetAnimation
 			enter ? (this.animationClass = `animate__${enter}`) : void 0
 		},
 		removeAnimation() {
 			this.animationClass = null
 		},
 		loadMarket() {
-			this.widgetVersion = this.item.config.widget.widgetVersion
-			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
+			const version = this.widget.widgetBase.version
+			const widgetIs = this.widget.widgetIs
+			if (this.editor.widgetLoaded[`${widgetIs}${version}`]) {
 				this.ready = true
 			} else {
 				use({
-					widgetType: this.item.type,
-					widgetVersion: this.item.config.widget.widgetVersion,
+					widgetType: widgetIs,
+					widgetVersion: version,
 				})
 					.then(res => {
 						const script = document.createElement('script')
 						script.onload = () => {
 							this.ready = true
-							this.editor.updateWidgetLoaded(`${this.item.type}${this.widgetVersion}`)
-							if (res.isCollection) {
-								res.componentConfig.widget.id = this.item.config.widget.id
-								this.editor.screen.screenWidgets[this.item.config.widget.id].config =
-									res.componentConfig
-							}
+							this.editor.updateWidgetLoaded(`${widgetIs}${version}`)
 						}
 						if (res) {
 							script.src = res.componentJsUrl
 							document.head.appendChild(script)
 						} else {
-							console.error(`${this.item.type}${this.widgetVersion}加载组件失败`)
+							console.error(`${widgetIs}${version}加载组件失败`)
 						}
 					})
 					.catch(() => {
-						console.error(`${this.item.type}${this.widgetVersion}加载组件失败`)
+						console.error(`${widgetIs}${version}加载组件失败`)
 					})
 			}
 		},
 	},
 	watch: {
-		'widgetBase.version': {
+		'widget.widgetBase.version': {
 			deep: true,
 			handler() {
-				if (this.item.widgetMarket) {
+				if (this.widget.widgetMarket) {
 					this.ready = false
 					this.loadMarket()
 				}
 			},
 		},
-		'item.animation.transitionEnable': {
+		'widget.animation.transitionEnable': {
 			deep: true,
 			handler(value) {
 				value && this.setAnimation()
@@ -118,13 +88,15 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.widgetMarket) {
+		const version = this.widget.widgetBase.version
+		const widgetIs = this.widget.widgetIs
+		if (this.widget.widgetMarket) {
 			this.loadMarket()
 		} else {
-			if (this.editor.widgetLoaded[`${this.item.type}${this.widgetVersion}`]) {
+			if (this.editor.widgetLoaded[`${widgetIs}${version}`]) {
 				this.ready = true
 			} else {
-				// Vue.component(`${prefix2}${this.item.type}`, this.editor.local.components[this.item.type])
+				// Vue.component(`${prefix2}${this.widget.type}`, this.editor.local.components[this.widget.type])
 				this.ready = true
 			}
 		}

@@ -1,4 +1,4 @@
-export default class Widget {
+export default class WidgetTask {
 	widgetId = ''
 	widgetLayout = {}
 	widgetIs = ''

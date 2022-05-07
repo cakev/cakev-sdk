@@ -22,7 +22,7 @@
 			template(slot="bottom")
 				c-code(
 				lang="json",
-				:code="typeof editor.current.widget.widgetApi.params === 'string' ? editor.current.widget.widgetApi.params : JSON.stringify(editor.current.widget.widgetApi.params)",
+				:code="editor.current.widget.widgetApi.params",
 				@update:code="value => (editor.current.widget.widgetApi.params = JSON.parse(value))")
 		c-control(label="响应数据")
 			template(slot="bottom")
@@ -81,43 +81,6 @@ export default {
 					this.editor.current.widget.widgetApi.url = ''
 				} else {
 					this.editor.current.widget.widgetApi.url = '/'
-				}
-			},
-		},
-		apiData: {
-			get() {
-				const req = this.getItemValue('widgetApi.data')
-				if (typeof req === 'object') {
-					try {
-						return JSON.stringify(req, null, '\t')
-					} catch (e) {
-						// @ts-ignore
-					}
-				} else {
-					if (req) {
-						try {
-							return JSON.stringify(JSON.parse(req), null, '\t')
-						} catch (e) {
-							// @ts-ignore
-						}
-					}
-					return ''
-				}
-			},
-			set(v) {
-				const data = this.getItemObj('widgetApi.data')
-				const prop = 'widgetApi.data'.split('.').reverse()[0]
-				if (v) {
-					try {
-						data[prop] = JSON.stringify(JSON.parse(v))
-					} catch (err) {
-						console.log(
-							`${this.editor.current.widget.widgetBase.name} ${this.editor.current.widget.widgetBase.version} JSON 格式化 响应数据有错误信息！！！`,
-						)
-						console.log(err.stack)
-					}
-				} else {
-					data[prop] = ''
 				}
 			},
 		},

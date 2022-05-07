@@ -9,14 +9,11 @@
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
-import WidgetTask from '@/core/Widget/task'
 
 export default {
 	name: 'item-card',
 	props: {
-		widget: {
-			type: WidgetTask,
-		},
+		widget: {},
 	},
 	data() {
 		return {

@@ -11,9 +11,9 @@
 		#screen.pos-r(:style="canvasStyle", @drop="createWidget", @click.stop, @dragover.prevent)
 			// 小工具清单
 			item-card(
-				v-bind="item"
-				:key="item.widgetId",
-				v-for="item in showWidgets",
+				:lay="lay"
+				:key="lay.widgetId",
+				v-for="lay in showWidgets",
 				:getRefLineParams="getRefLineParams")
 			//dr-more(v-show="editor.currentWidgetList&&editor.currentWidgetList.length>1")
 			.d-editor-line(data-top="0px", data-left="0px")
@@ -42,6 +42,7 @@ import drMore from '@/vue2/components-base/d-dr-more/index.vue'
 import dFooter from '../d-footer/index.vue'
 import ItemCard from './item-card.vue'
 import Editor from '@/core/Editor'
+import WidgetTask from '@/core/Widget/task'
 
 export default {
 	name: 'd-editor',
@@ -76,7 +77,7 @@ export default {
 			const list = []
 			for (const key in this.editor.screen.screenWidgetsLays) {
 				const widget = this.editor.screen.screenWidgetsLays[key]
-				if ((widget.scene === this.editor.current.currentSceneIndex) && !widget.hide) {
+				if (widget.scene === this.editor.current.currentSceneIndex && !widget.hide) {
 					list.push(widget)
 				}
 			}
@@ -89,22 +90,22 @@ export default {
 			if (widgetConfig) {
 				const data = JSON.parse(widgetConfig)
 				this.editor.screen.createWidget({
-					offsetX: e.offsetX, 
+					offsetX: e.offsetX,
 					offsetY: e.offsetY,
-					...data, 
+					...data,
 				})
 			}
 		},
-		getRefLineParams(params: any, item: any): void {
+		getRefLineParams(params: any, widget: WidgetTask): void {
 			const { vLine, hLine } = params
 			this.vLine = vLine.map((child: any) => {
-				child.w = item.layout.width
-				child.h = item.layout.height
+				child.w = widget.widgetLayout.width
+				child.h = widget.widgetLayout.height
 				return child
 			})
 			this.hLine = hLine.map((child: any) => {
-				child.w = item.layout.width
-				child.h = item.layout.height
+				child.w = widget.widgetLayout.width
+				child.h = widget.widgetLayout.height
 				return child
 			})
 		},

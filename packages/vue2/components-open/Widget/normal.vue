@@ -20,13 +20,5 @@ export default {
 			return (this.$parent as any).styles
 		},
 	},
-	created(): void {
-		;(this.$parent as any).__init__({
-			value: this.value,
-			customConfig: this.customConfig,
-			eventTypes: this.eventTypes,
-			customEventsConfig: this.customEventsConfig,
-		})
-	},
 }
 </script>

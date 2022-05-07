@@ -34,7 +34,6 @@
 import { addEvent, removeEvent } from './dom'
 import dDrKuang from '../d-dr-kuang/index.vue'
 import Editor from '@/core/Editor'
-import WidgetTask from '@/core/Widget/task'
 
 export default {
 	components: {
@@ -43,9 +42,7 @@ export default {
 	replace: true,
 	name: 'd-dr',
 	props: {
-		widget: {
-			type: WidgetTask,
-		},
+		widget: {},
 		active: {
 			type: Boolean,
 			default: false,
@@ -82,11 +79,6 @@ export default {
 		z: {
 			type: [String, Number],
 			default: 'auto',
-		},
-		axis: {
-			type: String,
-			default: 'both',
-			validator: val => ['x', 'y', 'both'].includes(val),
 		},
 		// 元素对齐
 		snap: {
@@ -266,12 +258,9 @@ export default {
 		},
 		// 元素移动
 		elementMove(e): void {
-			const axis = this.axis
 			const mouseClickPosition = this.mouseClickPosition
-			const tmpDeltaX =
-				axis && axis !== 'y' ? mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX) : 0
-			const tmpDeltaY =
-				axis && axis !== 'x' ? mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY) : 0
+			const tmpDeltaX = mouseClickPosition.mouseX - (e.touches ? e.touches[0].pageX : e.pageX)
+			const tmpDeltaY = mouseClickPosition.mouseY - (e.touches ? e.touches[0].pageY : e.pageY)
 			const deltaX = Math.round(tmpDeltaX / this.scaleRatio)
 			const deltaY = Math.round(tmpDeltaY / this.scaleRatio)
 			this.rawTop = mouseClickPosition.top - deltaY

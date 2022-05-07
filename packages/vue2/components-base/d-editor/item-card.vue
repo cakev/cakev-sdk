@@ -1,21 +1,21 @@
 ﻿<template lang="pug">
 dr(
-	:key="id",
-	:ref="`widget_${id}`",
-	:id="id",
+	:key="lay.widgetId",
+	:ref="`widget_${lay.widgetId}`",
+	:id="lay.widgetId",
 	:scale-ratio="editor.zoom",
 	:draggable="widgetEditable(widget)",
 	:resizable="widgetEditable(widget)",
 	:scale="widget.widgetLayout.scale",
-	:active="editor.currentWidgetList.includes(id) && widgetEditable(widget)",
+	:active="editor.currentWidgetList.includes(lay.widgetId) && widgetEditable(widget)",
 	:w="widget.widgetLayout.width",
 	:h="widget.widgetLayout.height",
 	:x="widget.widgetLayout.left",
 	:y="widget.widgetLayout.top",
-	:z="zIndex",
+	:z="lay.zIndex",
 	:snap="editor.current.autoAlignGuide",
 	:widget="widget",
-	:class="[{ locked: widget.widgetBase.locked }, `widget-${id}`]",
+	:class="[{ locked: widget.widgetBase.locked }, `widget-${lay.widgetId}`]",
 	:snap-to-target="['.d-editor-line', '.dr-unactive', '.d-ruler-guide-x', '.d-ruler-guide-y']",
 	@resizestop="onResizeStop",
 	@refLineParams="params => getRefLineParams(params, widget)",
@@ -23,15 +23,9 @@ dr(
 	@on-click="handleClick($event, widget)",
 	@contextmenu.native.stop="showRightMenu($event, widget)")
 	cakev-widget(
-		:id="id",
-		:zIndex="zIndex",
-		:widgetType="widget.widgetType",
-		:type="widget.type",
-		:events="widget.events",
-		:animation="widget.animation",
-		:eventTypes="widget.eventTypes",
-		:config="widget.config",
-		:children="editor.screen.screenWidgetsLays[id].children")
+		:widget="widget",
+		:lay="lay",
+		:children="editor.screen.screenWidgetsLays[lay.widgetId].children")
 </template>
 <script lang="ts">
 import dr from '@/vue2/components-base/d-dr/index.vue'
@@ -52,22 +46,11 @@ export default {
 	},
 	props: {
 		getRefLineParams: {},
-		widgetId: {
-			type: String,
-		},
-		zIndex: {
-			type: Number,
-		},
-		scene: {
-			type: Number | String,
-		},
-		hide: {
-			type: Boolean,
-		},
+		lay: {},
 	},
 	computed: {
 		widget(): WidgetTask {
-			return this.editor.screen.screenWidgets[this.widgetId]
+			return this.editor.screen.screenWidgets[this.lay.widgetId]
 		},
 		style() {
 			return {

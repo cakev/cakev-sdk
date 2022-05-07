@@ -7,10 +7,6 @@
 		item-card(@click="handleZIndexBottom")
 			i-icon(type="md-arrow-round-down")
 			span 置底
-	ul.list(v-if="!isGroup")
-		item-card(@click="handleCollection")
-			i-icon(type="md-heart-outline")
-			span 收藏
 	ul.list(v-if="isGroup")
 		item-card(@click="handleRelieveGroup")
 			i-icon(type="md-apps")
@@ -66,18 +62,6 @@ export default {
 			this.editor.relieveWidgetGroup()
 			this.hideRightMenu()
 			this.handleUnActive()
-		},
-		handleCollection() {
-			const widget = this.editor.currentWidget
-			create({
-				componentConfig: widget.config,
-				widgetType: widget.type,
-				widgetVersion: widget.config.widget.widgetVersion,
-			}).then(() => {
-				this.$Modal.info({
-					content: '收藏成功',
-				})
-			})
 		},
 		handleSync() {
 			this.editor.refreshWidget()

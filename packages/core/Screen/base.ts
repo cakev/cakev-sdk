@@ -3,7 +3,6 @@ import Factory from '@/core/Base/factory'
 import WidgetTask from '@/core/Widget/task'
 import LayTask from '@/core/Lay/task'
 import copy from 'fast-copy'
-import { configMerge } from '@/core/utils'
 
 export default class Screen extends Factory<Screen> {
 	currentVersion = '1.1.0' // 当前系统版本

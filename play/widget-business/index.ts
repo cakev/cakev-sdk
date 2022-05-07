@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import Editor from '@/core/Editor'
 import WidgetConf from '@/core/Widget/conf'
 
@@ -6,11 +7,14 @@ const widgetsContext = require.context('../widget-business', true, /\.(widget.ts
 const widgets: WidgetConf[] = []
 
 widgetsContext.keys().forEach(name => {
-	widgets.push({
-		...widgetsContext(name).default,
-	})
+	const widget = widgetsContext(name).default
+	widgets.push(widget)
 })
-// const conf = require.context('../widget-business', true, /index\.(vue)$/)
+const componentContext = require.context('../widget-business', true, /index\.(vue)$/)
+componentContext.keys().forEach((name, index) => {
+	const component = componentContext(name).default
+	Vue.component(widgets[index].widgetIs, component)
+})
 
 editor.local.setWidgetTypes([
 	{

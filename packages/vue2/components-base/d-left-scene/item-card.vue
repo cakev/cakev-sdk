@@ -1,23 +1,23 @@
 <template lang="pug">
 li.pointer.pos-r.d-left-scene-list-li(
-	:class="{ active: editor.currentWidgetList.includes(widgetId) }",
+	:class="{ active: editor.currentWidgetList.includes(lay.widgetId) }",
 	@click.stop="handleClick")
 	.parent.fn-flex
 		.d-left-scene-left
-			h2 {{ editor.screen.screenWidgets[widgetId].widgetBase.name }}
+			h2 {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
 		.d-left-scene-right
 			i-icon(
-				v-if="hide",
+				v-if="lay.hide",
 				type="md-eye-off",
 				title="显示",
-				@click="handleTaggerHide(widgetId)",
+				@click="handleTaggerHide(lay.widgetId)",
 				@click.stop)
 			i-icon(
 				style="margin-left: 10px",
-				v-if="editor.screen.screenWidgets[widgetId].widgetBase.locked",
+				v-if="editor.screen.screenWidgets[lay.widgetId].widgetBase.locked",
 				type="md-unlock",
 				title="解锁",
-				@click="handleUnLock(widgetId)",
+				@click="handleUnLock(lay.widgetId)",
 				@click.stop)
 	//scene-group(:childList="item.children")
 </template>
@@ -38,26 +38,15 @@ export default {
 		}
 	},
 	props: {
-		hide: {
-			type: Boolean,
-		},
-		scene: {
-			type: Number | String,
-		},
-		widgetId: {
-			type: String,
-		},
-		zIndex: {
-			type: Number,
-		},
+		lay: {},
 	},
 	methods: {
 		handleClick(e): void {
 			if (e.shiftKey) {
-				this.editor.selectWidget(this.editor.screen.screenWidgets[this.widgetId])
+				this.editor.selectWidget(this.editor.screen.screenWidgets[this.lay.widgetId])
 			} else {
 				this.editor.unSelectWidget()
-				this.editor.selectWidget(this.editor.screen.screenWidgets[this.widgetId])
+				this.editor.selectWidget(this.editor.screen.screenWidgets[this.lay.widgetId])
 			}
 		},
 		handleUnLock(widgetId: string): void {

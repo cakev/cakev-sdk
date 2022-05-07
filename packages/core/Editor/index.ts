@@ -320,21 +320,21 @@ export default class Editor extends Agent {
 		}
 	}
 
-	request(method: Method, url: string, params: any, id): void {
-		const target = this.screen.screenWidgets[id]
-		const path = target.config.api.path
-		const process = target.config.api.process
-		const loopTime = target.config.api.autoFetchEnable ? target.config.api.autoFetchDuration : 0
+	request(widget: WidgetTask): void {
+		const target = this.screen.screenWidgets[widget.widgetId]
+		const url = target.widgetApi.url
+		const method = target.widgetApi.method
+		const path = target.widgetApi.path
+		const process = target.widgetApi.process
+		const loopTime = target.widgetApi.autoFetchEnable ? target.widgetApi.autoFetchDuration : 0
 		this.http.screenDomain = this.screen.screenDomain
 		this.http.screenHeaders = this.screen.screenHeaders
 		this.http.pushOne(
-			new HttpTask(method, url, params, loopTime)
-				.then(res => {
-					let response = usePath(path, res)
-					response = useProcess(process, response)
-					if (response !== undefined) target.config.api.data = response
-				})
-			id,
+			new HttpTask(method, url, params, loopTime).then(res => {
+				let response = usePath(path, res)
+				response = useProcess(process, response)
+				if (response !== undefined) target.widgetApi.data = JSON.stringify(response)
+			}),
 		)
 	}
 	/* 添加到选中组件集合 */
@@ -371,20 +371,14 @@ export default class Editor extends Agent {
 			if (minLeft > Number(m.widgetLayout.left)) {
 				minLeft = m.widgetLayout.left
 			}
-			if (
-				Number(maxLeft) + Number(width) <
-				Number(m.widgetLayout.left) + Number(m.widgetLayout.width)
-			) {
+			if (Number(maxLeft) + Number(width) < Number(m.widgetLayout.left) + Number(m.widgetLayout.width)) {
 				maxLeft = m.widgetLayout.left
 				width = m.widgetLayout.width
 			}
 			if (minTop > Number(m.widgetLayout.top)) {
 				minTop = m.widgetLayout.top
 			}
-			if (
-				Number(maxTop) + Number(height) <
-				Number(m.widgetLayout.top) + Number(m.widgetLayout.height)
-			) {
+			if (Number(maxTop) + Number(height) < Number(m.widgetLayout.top) + Number(m.widgetLayout.height)) {
 				maxTop = m.widgetLayout.top
 				height = m.widgetLayout.height
 			}

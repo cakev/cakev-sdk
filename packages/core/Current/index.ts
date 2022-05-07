@@ -89,10 +89,10 @@ export default class Current extends Factory<Current> {
 	}
 	/* 选中组件 */
 	selectWidget(widget: WidgetTask): void {
-		if (this.currentWidgetList.includes(widget.id)) {
-			this.currentWidgetList.splice(this.currentWidgetList.indexOf(widget.id), 1)
+		if (this.currentWidgetList.includes(widget.widgetId)) {
+			this.currentWidgetList.splice(this.currentWidgetList.indexOf(widget.widgetId), 1)
 		} else {
-			this.currentWidgetList = [...this.currentWidgetList, widget.id]
+			this.currentWidgetList = [...this.currentWidgetList, widget.widgetId]
 		}
 		if (this.currentWidgetList.length == 1) {
 			this.widget = widget
