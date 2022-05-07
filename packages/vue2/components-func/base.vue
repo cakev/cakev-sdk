@@ -3,18 +3,18 @@
 	c-collapse(title="基础属性", :show="true")
 		c-control(label="位置")
 			template(slot="right")
-				d-input(
+				c-input(
 					append="X",
 					v-model="editor.current.widget.widgetLayout.left",
 					:style="{ width: '100px', marginRight: '10px' }")
-				d-input(append="Y", v-model="editor.current.widget.widgetLayout.top", :style="{ width: '100px' }")
+				c-input(append="Y", v-model="editor.current.widget.widgetLayout.top", :style="{ width: '100px' }")
 		c-control(label="宽高")
 			template(slot="right")
-				d-input(
+				c-input(
 					append="W",
 					v-model="editor.current.widget.widgetLayout.width",
 					:style="{ width: '100px', marginRight: '10px' }")
-				d-input(append="H", v-model="editor.current.widget.widgetLayout.height", :style="{ width: '100px' }")
+				c-input(append="H", v-model="editor.current.widget.widgetLayout.height", :style="{ width: '100px' }")
 		c-control(label="场景")
 			template(slot="right")
 				i-select(v-model="editor.screen.screenWidgetsLays[editor.current.widget.widgetId].scene")
@@ -23,7 +23,7 @@
 					i-option(:value="-1") 回收站
 		c-control(label="缩放比例")
 			template(slot="right")
-				i-input(v-model="scale", :style="{ width: '100px' }")
+				c-input(v-model="scale" append="%")
 </template>
 <script lang="ts">
 import func from './func.mx'
@@ -34,22 +34,13 @@ export default {
 	computed: {
 		scale: {
 			get() {
-				return `${Math.round(this.editor.current.widget.widgetLayout.scale * 100)}%`
+				return `${Math.round(this.editor.current.widget.widgetLayout.scale * 100)}`
 			},
-
 			set(val: any) {
-				if (!isNaN(val)) {
-					this.editor.current.widget.widgetLayout.scale = val
+				if (isNaN(val)) {
+					this.editor.current.widget.widgetLayout.scale = 0
 				} else {
-					const back = this.editor.current.widget.widgetLayout.scale
-					if (val.indexOf('%') !== -1) {
-						let v = val.replace('%', '') / 100
-						if (!isNaN(v)) {
-							this.editor.current.widget.widgetLayout.scale = v
-						} else {
-							this.editor.current.widget.widgetLayout.scale = back
-						}
-					}
+					this.editor.current.widget.widgetLayout.scale = val / 100
 				}
 			},
 		},

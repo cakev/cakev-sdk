@@ -1,11 +1,10 @@
-﻿import { getQueryString, uuid, versionToNum } from '@cakev/util'
+﻿import { getQueryString, uuid } from '@cakev/util'
 import Factory from '@/core/Base/factory'
 import WidgetTask from '@/core/Widget/task'
 import LayTask from '@/core/Lay/task'
 import copy from 'fast-copy'
 
-export default class Screen extends Factory<Screen> {
-	currentVersion = '1.1.0' // 当前系统版本
+export default class ScreenTask extends Factory<ScreenTask> {
 	screenId = '' // 大屏ID
 	screenName = '未命名' // 大屏名
 	screenWidgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
@@ -22,7 +21,7 @@ export default class Screen extends Factory<Screen> {
 	screenMainScene: string | number = 0 // 大屏首屏场景
 	screenPlatform = 'PC' // 大屏平台类型 PC:PC
 	screenDomain = '' // 大屏组件接口Domain
-	screenHeaders = '' // 大屏组件接口Headers
+	screenHeaders = '{}' // 大屏组件接口Headers
 	screenFilter = {
 		// 更新大屏组件配置
 		enable: false, // 开启状态
@@ -33,7 +32,50 @@ export default class Screen extends Factory<Screen> {
 		saturate: 0, // 饱和度
 		hueRotate: 0, // 色相
 	}
+	marketComponents = []
 
+	clear(): void {
+		this.screenWidgets = {}
+		this.screenWidgetsLays = {}
+		this.screenType = 'CUSTOM'
+		this.screenLayoutMode = 'full-size'
+		this.screenName = '未命名'
+		this.screenWidth = 1920
+		this.screenHeight = 1080
+		this.screenBackGroundColor = 'rgba(24, 27, 36,1)'
+		this.screenBackGroundImage = ''
+		this.screenAvatar = ''
+		this.screenVersion = ''
+		this.screenMainScene = 0
+		this.screenFilter = {
+			enable: false,
+			grayscale: 0,
+			opacity: 100,
+			contrast: 0,
+			brightness: 0,
+			saturate: 0,
+			hueRotate: 0,
+		}
+	}
+	init(res: ScreenTask): ScreenTask {
+		this.screenId = res.screenId
+		this.screenName = res.screenName
+		this.screenAvatar = res.screenAvatar
+		this.screenPublish = res.screenPublish
+		this.screenType = res.screenType || 'CUSTOM'
+		this.screenVersion = res.screenVersion
+		this.screenLayoutMode = res.screenLayoutMode || 'full-size'
+		this.screenWidth = res.screenWidth
+		this.screenHeight = res.screenHeight
+		this.screenBackGroundColor = res.screenBackGroundColor
+		this.screenBackGroundImage = res.screenBackGroundImage
+		this.screenMainScene = res.screenMainScene
+		this.screenPlatform = res.screenPlatform
+		this.screenWidgets = res.screenWidgets
+		this.screenWidgetsLays = res.screenWidgetsLays
+		return this
+	}
+	
 	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
 		// const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
 		// const target = this.screenWidgets[id]
@@ -128,7 +170,6 @@ export default class Screen extends Factory<Screen> {
 			screenName: this.screenName,
 			screenPlatform: this.screenPlatform,
 			screenWidgetsLays: this.screenWidgetsLays,
-			screenVersion: versionToNum(this.currentVersion),
 			screenLayoutMode: this.screenLayoutMode,
 			screenMainScene: this.screenMainScene,
 		}

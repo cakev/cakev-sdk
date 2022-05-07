@@ -1,16 +1,6 @@
-import { usePath, createSandbox, useProcess } from '@/vue2/utils'
+import { usePath, useProcess } from '@/vue2/utils'
 import Editor from '@/core/Editor'
 
-const parseParams = (params = {}) => {
-	if (typeof params === 'string' && params !== '') {
-		try {
-			return JSON.parse(params)
-		} catch (e) {
-			// @ts-ignore
-		}
-	}
-	return params
-}
 export default {
 	props: {
 		widget: {},
@@ -29,16 +19,13 @@ export default {
 	data() {
 		return {
 			cake_data: null,
-			time: Date.now(),
-			output: null,
 			cake_editor: Editor.Instance(),
 		}
 	},
 	watch: {
 		'widget.widgetApi.data': {
-			handler(newVal) {
-				if (newVal === undefined) return
-				this.cake_init_data(newVal)
+			handler() {
+				this.cake_init_data()
 			},
 			immediate: true,
 			deep: true,
@@ -50,10 +37,30 @@ export default {
 			immediate: true,
 			deep: true,
 		},
-		'widget.widgetApi': {
+		'widget.widgetApi.url': {
 			handler() {
-				if (!this.widget.widgetApi.url) return
-				this.editor.request(this.widget)
+				this.cake_request()
+			},
+			immediate: true,
+			deep: true,
+		},
+		'widget.widgetApi.params': {
+			handler() {
+				this.cake_request()
+			},
+			immediate: true,
+			deep: true,
+		},
+		'widget.widgetApi.method': {
+			handler() {
+				this.cake_request()
+			},
+			immediate: true,
+			deep: true,
+		},
+		'widget.widgetApi.path': {
+			handler() {
+				this.cake_request()
 			},
 			immediate: true,
 			deep: true,
@@ -63,12 +70,19 @@ export default {
 		this.cake_editor.http.abortOne(this.widget.widgetId)
 	},
 	methods: {
-		cake_init_data(value) {
-			if (value !== '') {
+		cake_request() {
+			if (!this.widget.widgetApi.url) return
+			this.cake_editor.http.request(this.widget, {
+				domain: this.cake_editor.screen.screenDomain,
+				headers: JSON.parse(this.cake_editor.screen.screenHeaders),
+			})
+		},
+		cake_init_data() {
+			if (this.widget.widgetApi.data !== '') {
 				try {
-					this.cake_data = JSON.parse(value)
+					this.cake_data = JSON.parse(this.widget.widgetApi.data)
 				} catch (e) {
-					this.cake_data = value
+					this.cake_data = this.widget.widgetApi.data
 				}
 			}
 		},

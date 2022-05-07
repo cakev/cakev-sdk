@@ -2,10 +2,7 @@
 import { uuid } from '@cakev/util'
 import { useList } from '@/vue2/api/marketComponent.api'
 import Agent from '@/core/Editor/agent'
-import HttpTask from '@/core/Http/task'
-import { usePath, useProcess } from '@/vue2/utils'
 import WidgetTask from '@/core/Widget/task'
-import { Method } from 'axios'
 
 export default class Editor extends Agent {
 	init(res?: any): any {
@@ -319,24 +316,7 @@ export default class Editor extends Agent {
 			}
 		}
 	}
-
-	request(widget: WidgetTask): void {
-		const target = this.screen.screenWidgets[widget.widgetId]
-		const url = target.widgetApi.url
-		const method = target.widgetApi.method
-		const path = target.widgetApi.path
-		const process = target.widgetApi.process
-		const loopTime = target.widgetApi.autoFetchEnable ? target.widgetApi.autoFetchDuration : 0
-		this.http.screenDomain = this.screen.screenDomain
-		this.http.screenHeaders = this.screen.screenHeaders
-		this.http.pushOne(
-			new HttpTask(method, url, params, loopTime).then(res => {
-				let response = usePath(path, res)
-				response = useProcess(process, response)
-				if (response !== undefined) target.widgetApi.data = JSON.stringify(response)
-			}),
-		)
-	}
+	
 	/* 添加到选中组件集合 */
 	selectWidget(widget: WidgetTask) {
 		this.current.selectWidget(widget)

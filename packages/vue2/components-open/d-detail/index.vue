@@ -28,7 +28,7 @@
 <script>
 import { Button, Modal, Form, FormItem, Input } from 'view-design'
 import loadMask from '../load-mask/index.vue'
-import {getQueryString} from '@cakev/util'
+import { getQueryString } from '@cakev/util'
 import { downloadFile } from '@/vue2/utils'
 import search from './search.vue'
 import Editor from '@/core/Editor'
@@ -170,22 +170,17 @@ export default {
 		const templateId = this.$route.query.templateId
 		const id = this.$route.params.id || templateId
 		const shareScreenId = this.$route.params.shareScreenId
-		const file = this.$route.params.file
 		this.isNew = !id
 		if (id) {
 			if (id === 'preview') {
 				this.editor.screenCache.get('previewData').then(res => {
-					this.editor.init(res)
+					this.editor.screen.init(res)
 				})
 			} else {
 				detail({ screenId: id }).then(res => {
 					this.editor.init(res)
 				})
 			}
-		} else if (file) {
-			detailFile(decodeURIComponent(file)).then(res => {
-				this.editor.init(res)
-			})
 		} else if (!shareScreenId) {
 			this.editor.init()
 		}

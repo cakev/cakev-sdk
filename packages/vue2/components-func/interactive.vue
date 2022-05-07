@@ -13,10 +13,10 @@
 					i-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
 		c-control(label="延时时长")
 			template(slot="right")
-				d-input(append="ms", v-model="editor.current.widget.widgetAnimation.delay")
+				c-input(append="ms", v-model="editor.current.widget.widgetAnimation.delay")
 		c-control(label="动画时长")
 			template(slot="right")
-				d-input(append="ms", v-model="editor.current.widget.widgetAnimation.duration")
+				c-input(append="ms", v-model="editor.current.widget.widgetAnimation.duration")
 	data-event
 </template>
 <script lang="ts">

@@ -15,8 +15,12 @@ import { use } from '@/vue2/api/marketComponent.api'
 export default {
 	name: 'd-widget',
 	props: {
-		widget: {},
 		lay: {},
+	},
+	computed:{
+		widget(){
+			return this.editor.screen.screenWidgets[this.lay.widgetId]
+		}	
 	},
 	data() {
 		return {

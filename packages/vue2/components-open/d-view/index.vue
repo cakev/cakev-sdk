@@ -2,18 +2,16 @@
 #screen(ref="canvas-wrapper", :style="editor.screen.screenStyle")
 	d-scene(:zIndex="1")
 		cakev-widget(
-			v-for="item in sceneWidgets(0)",
-			:id="item.id",
-			:key="item.id",
-			:children="item.children",
-			readonly,
-			:zIndex="item.zIndex")
+			v-for="lay in sceneWidgets(0)",
+			:lay="lay",
+			:key="lay.widgetId",
+			:children="lay.children",
+			readonly,)
 		cakev-widget(
-			v-for="item in editor.current.currentSceneIndex === 0 ? [] : sceneWidgets(editor.current.currentSceneIndex)",
-			:id="item.id",
-			:key="item.id",
-			:zIndex="item.zIndex",
-			:children="item.children",
+			v-for="lay in editor.current.currentSceneIndex === 0 ? [] : sceneWidgets(editor.current.currentSceneIndex)",
+			:lay="lay",
+			:key="lay.widgetId",
+			:children="lay.children",
 			readonly)
 	d-scene(
 		v-for="(sceneId, index) in editor.current.currentCreateSceneList",
@@ -21,11 +19,10 @@
 		:sceneId="sceneId",
 		:zIndex="index + 2")
 		cakev-widget(
-			v-for="item in sceneWidgets(sceneId)",
-			:id="item.id",
-			:zIndex="item.zIndex",
-			:key="item.id",
-			:children="item.children",
+			v-for="lay in sceneWidgets(sceneId)",
+			:lay="lay",
+			:key="lay.widgetId",
+			:children="lay.children",
 			readonly)
 	slot(v-if="editor.marketComponentLoading", name="loading")
 		load-mask(:show="true") 加载中...
@@ -47,7 +44,7 @@ export default {
 	data() {
 		return {
 			editor: Editor.Instance(),
-			currentwidgetLayoutMode: getQueryString('widgetLayoutMode'),
+			currentLayoutMode: getQueryString('widgetLayoutMode'),
 		}
 	},
 	computed: {

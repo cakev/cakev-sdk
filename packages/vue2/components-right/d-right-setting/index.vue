@@ -2,7 +2,7 @@
 .d-right-modal-box.z-index-999(:style="{ width: `${editor.xRoomR1}px` }")
 	.d-right-modal-name.fn-flex.flex-row(v-click-outside="close")
 		span.widget-name-text(v-if="!editName") {{ editor.current.widget.widgetBase.name }}_{{ editor.current.widget.widgetId }}
-		i-input.widget-name(
+		c-input.widget-name(
 			v-if="editName",
 			v-model="editor.current.widget.widgetBase.name")
 		c-svg.pointer.widget-name-icon(
@@ -26,7 +26,6 @@
 </template>
 <script lang="ts">
 import itemList from './item-list.vue'
-import { Icon, Input } from 'view-design'
 // @ts-ignore
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
@@ -35,8 +34,6 @@ export default {
 	name: 'd-right-setting',
 	components: {
 		itemList,
-		'i-icon': Icon,
-		'i-input': Input,
 	},
 	directives: { ClickOutside },
 	data() {

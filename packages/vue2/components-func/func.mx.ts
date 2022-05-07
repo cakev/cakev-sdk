@@ -1,6 +1,4 @@
 import {
-	Input,
-	InputNumber,
 	Select,
 	Option,
 	ColorPicker,
@@ -11,16 +9,12 @@ import {
 	Upload,
 	Modal,
 } from 'view-design'
-import dInput from '@/vue2/components-base/d-input/index.vue'
 import Editor from '@/core/Editor'
 
 export default {
 	components: {
-		dInput,
-		'i-input': Input,
 		'i-upload': Upload,
 		'i-icon': Icon,
-		'i-input-number': InputNumber,
 		'i-select': Select,
 		'i-option': Option,
 		'i-color-picker': ColorPicker,

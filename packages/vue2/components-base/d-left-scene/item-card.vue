@@ -40,13 +40,18 @@ export default {
 	props: {
 		lay: {},
 	},
+	computed:{
+		widget(){
+			return this.editor.screen.screenWidgets[this.lay.widgetId]
+		}	
+	},
 	methods: {
 		handleClick(e): void {
 			if (e.shiftKey) {
-				this.editor.selectWidget(this.editor.screen.screenWidgets[this.lay.widgetId])
+				this.editor.selectWidget(this.widget)
 			} else {
 				this.editor.unSelectWidget()
-				this.editor.selectWidget(this.editor.screen.screenWidgets[this.lay.widgetId])
+				this.editor.selectWidget(this.widget)
 			}
 		},
 		handleUnLock(widgetId: string): void {

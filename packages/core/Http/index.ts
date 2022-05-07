@@ -1,22 +1,30 @@
-import Emitter from './emitter'
 import Task from './task'
+import Factory from '../Base/factory'
+import WidgetTask from '../Widget/task'
+import HttpTask from './task'
+import { usePath, useProcess } from '@/vue2/utils'
 
-export default class Http extends Emitter {
+export default class Http extends Factory<Http> {
 	limit = 1
-	screenDomain: string // 大屏组件接口Domain
-	screenHeaders: string // 大屏组件接口Headers
 	loopPool: { [key: string]: Task } = {} // 时间loop任务队列
 	waitPool: Array<Task> = [] // 待请求任务队列
 	currentPool: Array<Task> = [] // 请求任务队列
 	loading = false
-	static POOL_START = 'POOL_START'
-	static POOL_ADD = 'POOL_ADD'
-	static POOL_UPDATE = 'POOL_UPDATE'
-	static POOL_STOP = 'POOL_STOP'
 
 	timer: any = null
-	constructor() {
-		super()
+
+	request(widget: WidgetTask, { domain, headers }): void {
+		const { url, method, path, processEnable, processBody, params, autoFetchEnable, autoFetchDuration } =
+			widget.widgetApi
+		const loopTime = autoFetchEnable ? autoFetchDuration : 0
+		this.pushOne(
+			new HttpTask({ method, url, params, loopTime, domain, headers }).then(res => {
+				let response = usePath(path, res)
+				if (processEnable) response = useProcess(processBody, response)
+				if (response !== undefined) widget.widgetApi.data = JSON.stringify(response)
+			}),
+			widget.widgetId,
+		)
 	}
 
 	pushOne(task: Task, id: string): void {
@@ -30,9 +38,7 @@ export default class Http extends Emitter {
 	push2Wait(task: Task) {
 		this.waitPool.push(task)
 		task.status = Task.STATUS_WAIT
-		this.emit(Http.POOL_ADD)
 		if (!this.loading) {
-			this.emit(Http.POOL_START)
 			this.run()
 		}
 	}
@@ -43,7 +49,7 @@ export default class Http extends Emitter {
 			t.status = Task.STATUS_RETRY
 			this.push2Wait(t)
 		} else {
-			t.catchCallBack(res)
+			typeof t.catchCallBack === 'function' && t.catchCallBack(res)
 		}
 	}
 
@@ -65,10 +71,9 @@ export default class Http extends Emitter {
 			const list: Array<Promise<any>> = []
 			this.currentPool.forEach(task => {
 				task.status = Task.STATUS_READY
-				list.push(task.request({ screenDomain: this.screenDomain, screenHeaders: this.screenHeaders }))
+				list.push(task.create())
 			})
 			Promise.allSettled(list).then(result => {
-				this.emit(Http.POOL_UPDATE)
 				result.forEach((res, index) => {
 					const task: Task = this.currentPool[index]
 					if (res.status === 'rejected') {
@@ -77,7 +82,7 @@ export default class Http extends Emitter {
 						}
 					} else {
 						task.status = Task.STATUS_FINISH
-						task.thenCallBack(res.value)
+						typeof task.thenCallBack === 'function' && task.thenCallBack(res.value)
 					}
 					task.lastTime = Date.now()
 				})
@@ -87,13 +92,11 @@ export default class Http extends Emitter {
 			this.stop()
 		}
 	}
-	
-	// 停止某一个请求
+
 	abortOne(id: string): void {
 		delete this.loopPool[id]
 	}
 
-	// 清空队列中的请求
 	abortAll(): void {
 		this.waitPool = []
 		this.loopPool = {}
@@ -104,9 +107,8 @@ export default class Http extends Emitter {
 
 	stop() {
 		this.loading = false
-		this.emit(Http.POOL_STOP)
 	}
-	
+
 	stopLoop() {
 		if (this.timer) {
 			clearInterval(this.timer)

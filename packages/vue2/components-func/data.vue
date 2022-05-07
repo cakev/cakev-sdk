@@ -8,7 +8,7 @@
 					i-option(value="API接口") API接口
 		c-control(label="接口地址", v-if="apiType === 'API接口'")
 			template(slot="right")
-				i-input(v-model="editor.current.widget.widgetApi.url")
+				c-input(v-model="editor.current.widget.widgetApi.url")
 		c-control(v-if="apiType === 'API接口'")
 			template(slot="right")
 				i-select(v-model="editor.current.widget.widgetApi.method", :style="{ marginRight: '10px', width: '100px' }")
@@ -17,7 +17,7 @@
 					i-option(value="PUT") PUT
 					i-option(value="DELETE") DELETE
 					i-option(value="PATCH") PATCH
-				i-input(v-model="editor.current.widget.widgetApi.path", :style="{ width: '100px' }")
+				c-input(v-model="editor.current.widget.widgetApi.path", :style="{ width: '100px' }")
 		c-control(label="请求参数")
 			template(slot="bottom")
 				c-code(
@@ -46,10 +46,8 @@
 		@close-click="editor.current.widget.widgetApi.autoFetchEnable = false")
 		c-control
 			template(slot="right")
-				i-input-number(
-					:min="1",
-					:step="1",
-					:formatter="value => `${value} ms`",
+				c-input(
+					append="ms"
 					v-model="editor.current.widget.widgetApi.autoFetchDuration")
 </template>
 <script lang="ts">

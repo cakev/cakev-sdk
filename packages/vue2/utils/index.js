@@ -59,15 +59,12 @@ export const createSandbox = source => {
 		return buildWall(source).call({ ...arguments[0] }, { ...arguments[0] })
 	}
 }
-export const useProcess = (process = {}, data, callback) => {
-	const { enable, methodBody } = process
-	if (enable && methodBody.trim()) {
-		try {
-			const processor = createSandbox(methodBody)
-			data = processor({ data })
-		} catch (err) {
-			typeof callback === 'function' && callback()
-		}
+export const useProcess = (methodBody, data, callback) => {
+	try {
+		const processor = createSandbox(methodBody)
+		data = processor({ data })
+	} catch (err) {
+		typeof callback === 'function' && callback()
 	}
 	return data
 }

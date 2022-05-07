@@ -2,8 +2,11 @@
 .d-left-scene.pos-a.fn-flex.flex-column(:style="{ width: `${editor.xRoomL2}px` }")
 	.d-modal-title 场景区
 	header.fn-flex.flex-row
-		i-input(:value="editor.sceneObj[editor.currentSceneIndex].name", @on-change="handleSceneName", v-if="editScene")
-			i-icon(type="md-checkmark", slot="suffix", @click="editScene = false")
+		c-input(
+			icon-append="checkmark"
+			@icon-append-click="editScene = false"
+			:value="editor.sceneObj[editor.currentSceneIndex].name", 
+			@on-change="handleSceneName", v-if="editScene")
 		i-select(:value="editor.currentSceneIndex", v-if="!editScene", filterable, @on-change="changeSceneIndex")
 			i-option(:value="0") 主场景
 			i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
@@ -23,7 +26,7 @@
 			:class="{ disabled: editor.currentSceneIndex === 0 }") 删除
 </template>
 <script lang="ts">
-import { Icon, Input, Select, Option } from 'view-design'
+import { Select, Option } from 'view-design'
 import ItemCard from './item-card.vue'
 import draggable from 'vuedraggable'
 import Editor from '@/core/Editor'
@@ -33,8 +36,6 @@ export default {
 	components: {
 		draggable,
 		ItemCard,
-		'i-icon': Icon,
-		'i-input': Input,
 		'i-select': Select,
 		'i-option': Option,
 	},
@@ -130,7 +131,7 @@ export default {
 
 .d-left-scene-list {
 	flex: 1;
-	padding-left: 8px;
+	padding: 0 10px;
 }
 
 .d-left-scene {

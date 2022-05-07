@@ -22,9 +22,10 @@ export default class Task {
 	loopTime = 0 //定时刷新 单位 ms
 	lastTime = 0 //上一次请求返回时间
 
+	domain = ''
 	method: Method = 'get'
 	url = ''
-	headers = {}
+	headers: { [key: string]: string } = {}
 	params: any = ''
 
 	// @ts-ignore
@@ -32,8 +33,24 @@ export default class Task {
 	// @ts-ignore
 	catchCallBack: Function
 
-	constructor(method: Method, url: string, params: any, loopTime: number) {
+	constructor({
+		method,
+		url,
+		params,
+		loopTime,
+		domain,
+		headers,
+	}: {
+		domain: string
+		headers: { [key: string]: string }
+		method: Method
+		url: string
+		params: any
+		loopTime: number
+	}) {
 		this.method = method
+		this.headers = headers
+		this.domain = domain
 		this.url = url
 		this.params = params
 		this.loopTime = loopTime
@@ -51,27 +68,19 @@ export default class Task {
 		return this
 	}
 
-	request(config: any): Promise<any> {
+	create(): Promise<any> {
 		const request = axios.create()
 		return new Promise<any>((resolve, reject) => {
 			let url = this.url
-			let headers = this.headers
-			if (config.screenHeaders) {
-				try {
-					headers = { ...JSON.parse(config.screenHeaders), ...headers }
-				} catch (e) {
-					console.warn('全局请求头格式不正确')
-				}
-			}
-			if (config.screenDomain) {
-				url = config.screenDomain + this.url
+			if (this.domain) {
+				url = this.domain + this.url
 			}
 			const requestConfig: AxiosRequestConfig = {
 				method: this.method,
 				url,
 				params: this.params,
 				data: this.params,
-				headers,
+				headers: this.headers,
 			}
 			request
 				.request(requestConfig)

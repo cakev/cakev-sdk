@@ -25,10 +25,10 @@
 	i-modal(v-model="createModal", :closable="false", @on-ok="createGuide")
 		.fn-flex.flex-row
 			label(:style="{ marginRight: '10px', width: '100px' }") {{ guideType }}轴坐标值
-			i-input(v-model="guide")
+			c-input(v-model="guide")
 </template>
 <script>
-import { Icon, Input, Modal } from 'view-design'
+import { Icon, Modal } from 'view-design'
 import Editor from '@/core/Editor'
 import ClickOutside from 'vue-click-outside'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
@@ -39,7 +39,6 @@ export default {
 	components: {
 		ItemCard,
 		'i-icon': Icon,
-		'i-input': Input,
 		'i-modal': Modal,
 	},
 	directives: { ClickOutside },

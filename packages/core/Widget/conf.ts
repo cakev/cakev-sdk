@@ -1,3 +1,5 @@
+import { Method } from 'axios'
+
 export default class {
 	widgetLayout = {
 		width: 300,
@@ -16,7 +18,7 @@ export default class {
 	}
 	widgetApi = {
 		url: '',
-		method: 'GET',
+		method: 'GET' as Method,
 		params: '',
 		path: 'data',
 		data: '',

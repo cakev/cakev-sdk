@@ -1,5 +1,5 @@
 import Factory from '@/core/Base/factory'
-import ScreenPc from '@/core/Screen/pc'
+import ScreenTask from '@/core/Screen/task'
 import Current from '@/core/Current'
 import Scene from '@/core/Scene'
 import Http from '@/core/Http'
@@ -11,7 +11,7 @@ import IndexDB from '@/core/IndexDB'
 const db = new IndexDB()
 const rulerContainerId = `drag-content-${+new Date()}`
 export default class EditorBase extends Factory<EditorBase> {
-	screen: ScreenPc = ScreenPc.Instance()
+	screen: ScreenTask = ScreenTask.Instance()
 	current: Current = Current.Instance({
 		rulerContainerId,
 	})

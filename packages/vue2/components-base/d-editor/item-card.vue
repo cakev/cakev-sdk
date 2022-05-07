@@ -23,7 +23,6 @@ dr(
 	@on-click="handleClick($event, widget)",
 	@contextmenu.native.stop="showRightMenu($event, widget)")
 	cakev-widget(
-		:widget="widget",
 		:lay="lay",
 		:children="editor.screen.screenWidgetsLays[lay.widgetId].children")
 </template>

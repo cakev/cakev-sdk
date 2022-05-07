@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-right-modal.d-scrollbar
+.d-right-modal.d-scrollbar(:style="{padding:'10px'}")
 	c-control(label="屏幕大小")
 		template(slot="right")
 			i-select(v-model="size")
@@ -9,12 +9,12 @@
 				i-option(value="other") 自定义
 	c-control
 		template(slot="right")
-			d-input(
+			c-input(
 				append="W",
 				:value="editor.width",
 				:style="{ width: '100px' }",
 				@on-change="widthChange")
-			d-input(
+			c-input(
 				append="H",
 				:value="editor.height",
 				:style="{ marginLeft: '10px', width: '100px' }",
@@ -25,7 +25,7 @@
 				:alpha="true",
 				v-model="editor.backgroundColor",
 				v-if="editor.backgroundColor")
-			i-input(
+			c-input(
 				v-model="editor.backgroundColor",
 				:disabled="true",
 				:style="{ width: '166px', marginLeft: '9px' }")
