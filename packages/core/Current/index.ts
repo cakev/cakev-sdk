@@ -18,7 +18,7 @@ export default class Current extends Factory<Current> {
 	zoomStep = 0.02 // 当前标尺zoom步长
 	offsetX = 0 // 当前位置x
 	offsetY = 0 // 当前位置y
-	widget = {} // 当前组件
+	widget: WidgetTask | null = null // 当前组件
 	currentWidgetList: string[] = [] // 当前选中组件-多组件
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
@@ -44,7 +44,7 @@ export default class Current extends Factory<Current> {
 		this.currentRightSettingIndex = 0
 		this.activeWidgetId = ''
 		this.sceneAnimate = ''
-		this.widget = {}
+		this.widget = null
 		this.currentSceneIndex = 0
 		this.currentWidgetList = []
 		this.currentCreateSceneList = []
@@ -117,9 +117,6 @@ export default class Current extends Factory<Current> {
 		if (val === undefined || val === null) return
 		this.currentSceneIndex = val
 		this.activeSceneId = val
-		let event = new CustomEvent('SceneIndex', { detail: { index: val } })
-		document.dispatchEvent(event)
-		event = null
 	}
 	/* 打开场景 */
 	openScene(id: number | string, animate?: string): void {

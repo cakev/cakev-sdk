@@ -6,8 +6,7 @@ widget-normal(
 		h2(@click="__handleEvent__('click', test)", @mouseover="__handleEvent__('mouseover')") 11111{{ data.title }} {{ config.config.title }}
 </template>
 <script lang="ts">
-import widgetMixin from '@/vue2/mixins'
-import widgetNormal from '@/vue2/components-open/Widget/normal'
+import { widgetMixin, widgetNormal } from '@'
 // import { value, customConfig } from './index.component'
 
 export default {

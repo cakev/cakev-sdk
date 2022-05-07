@@ -7,17 +7,13 @@
 		item-card(@click="handleZIndexBottom")
 			i-icon(type="md-arrow-round-down")
 			span 置底
-	ul.list(v-if="isGroup")
-		item-card(@click="handleRelieveGroup")
-			i-icon(type="md-apps")
-			span 取消组合
 	ul.list
 		item-card(@click="hideWidget")
-			i-icon(type="md-eye-off")
-			span 隐藏
+			c-svg(type="eye-off" :size="14")
+			span 显示/隐藏
 		item-card(@click="handleLock")
-			i-icon(:type="isLock ? 'md-lock' : 'md-unlock'")
-			span {{ isLock ? '解锁' : '锁定' }}
+			c-svg(type="lock" :size="14")
+			span 锁定/解锁
 	ul.list
 		item-card(@click="copyWidget")
 			i-icon(type="ios-copy")
@@ -29,12 +25,12 @@
 			i-icon(type="md-trash")
 			span 删除
 </template>
-<script>
+<script lang="ts">
 import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
+// @ts-ignore
 import ClickOutside from 'vue-click-outside'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
-import { create } from '@/vue2/api/collectionComponent.api.js'
 
 export default {
 	name: 'right-menu',
@@ -45,50 +41,42 @@ export default {
 	directives: { ClickOutside },
 	data() {
 		return {
-			isLock: false,
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
-	computed: {
-		isGroup() {
-			if (this.editor.currentWidget) {
-				return this.editor.current.widget.widgetType === 'group'
-			}
-			return false
-		},
-	},
 	methods: {
-		handleRelieveGroup() {
-			this.editor.relieveWidgetGroup()
+		handleSync(): void {
+			const widgetId = this.editor.current.widget.widgetId
+			this.editor.current.unSelectWidget()
+			this.editor.screen.refreshWidget(widgetId)
+			this.hideRightMenu()
+		},
+		handleZIndexTop(): void {
+			const widgetId = this.editor.current.widget.widgetId
+			this.editor.screen.setWidgetZIndex(widgetId, this.editor.currentMaxZIndex)
+			this.hideRightMenu()
+		},
+		handleZIndexBottom(): void {
+			const widgetId = this.editor.current.widget.widgetId
+			this.editor.screen.setWidgetZIndex(widgetId, this.editor.currentMinZIndex)
+			this.hideRightMenu()
+		},
+		hideWidget(): void {
+			const widgetId = this.editor.current.widget.widgetId
 			this.hideRightMenu()
 			this.handleUnActive()
+			this.editor.current.unSelectWidget()
+			this.editor.screen.hideWidget(widgetId)
 		},
-		handleSync() {
-			this.editor.refreshWidget()
-			this.hideRightMenu()
-		},
-		handleZIndexTop() {
-			this.editor.current.widget.layout.zIndex = this.editor.currentMaxZIndex
-			this.hideRightMenu()
-		},
-		handleZIndexBottom() {
-			this.editor.current.widget.layout.zIndex = this.editor.currentMinZIndex
-			this.hideRightMenu()
-		},
-		hideWidget() {
-			const id = this.editor.current.widget.id
-			this.hideRightMenu()
-			this.handleUnActive()
-			this.editor.screen.screenWidgetsLays[id].hide = true
-		},
-		deleteWidget() {
-			const id = this.editor.currentWidgetList[0]
+		deleteWidget(): void {
+			const widgetId = this.editor.currentWidgetList[0]
 			if (this.editor.currentSceneIndex === -1) {
 				this.$Modal.confirm({
 					title: '是否删除当前组件？',
-					content: '该组件将自动进入回收站！',
+					content: '该组件将永久消失！',
 					onOk: () => {
-						this.editor.deleteWidget(id)
+						this.editor.screen.deleteWidget(widgetId)
+						this.editor.current.unSelectWidget()
 						this.hideRightMenu()
 					},
 					onCancel: () => {
@@ -100,7 +88,8 @@ export default {
 					title: '是否删除当前组件？',
 					content: '该组件将自动进入回收站！',
 					onOk: () => {
-						this.editor.deleteWidget(id)
+						this.editor.screen.dropWidget(widgetId)
+						this.editor.current.unSelectWidget()
 						this.hideRightMenu()
 					},
 					onCancel: () => {
@@ -109,21 +98,22 @@ export default {
 				})
 			}
 		},
-		copyWidget() {
-			this.editor.copyWidget()
+		copyWidget(): void {
+			const widgetId = this.editor.currentWidgetList[0]
+			this.editor.screen.copyWidget(widgetId)
 			this.handleUnActive()
 			this.hideRightMenu()
 		},
-		hideRightMenu() {
+		hideRightMenu(): void {
 			const rightMenu = document.getElementById('widget-right-menu')
 			rightMenu.classList.remove('active')
 		},
-		handleUnActive() {
+		handleUnActive(): void {
 			this.editor.unSelectWidget()
 		},
-		handleLock() {
-			this.isLock = !this.isLock
-			this.editor.current.widget.config.widget.locked = this.isLock
+		handleLock(): void {
+			const widgetId = this.editor.currentWidgetList[0]
+			this.editor.screen.lockWidget(widgetId)
 			this.hideRightMenu()
 		},
 	},

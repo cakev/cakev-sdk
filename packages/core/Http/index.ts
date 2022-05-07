@@ -14,9 +14,14 @@ export default class Http extends Factory<Http> {
 	timer: any = null
 
 	request(widget: WidgetTask, { domain, headers }): void {
-		const { url, method, path, processEnable, processBody, params, autoFetchEnable, autoFetchDuration } =
-			widget.widgetApi
+		const { url, method, path, processEnable, processBody, autoFetchEnable, autoFetchDuration } = widget.widgetApi
+		let { params } = widget.widgetApi
 		const loopTime = autoFetchEnable ? autoFetchDuration : 0
+		try {
+			params = JSON.parse(params)
+		} catch (e) {
+			// console.log(e)
+		}
 		this.pushOne(
 			new HttpTask({ method, url, params, loopTime, domain, headers }).then(res => {
 				let response = usePath(path, res)

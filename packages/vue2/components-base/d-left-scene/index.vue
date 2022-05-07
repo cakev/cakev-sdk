@@ -41,7 +41,7 @@ export default {
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 			editScene: false,
 		}
 	},
@@ -91,19 +91,18 @@ export default {
 			this.editor.setSceneName(e.target.value)
 		},
 		sceneWidgetDragEnd(e): void {
-			debugger
-			const oldItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.oldIndex].id]
-			const newItem = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.newIndex].id]
-			if (oldItem.zIndex === newItem.zIndex) {
+			const oldLay = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.oldIndex].widgetId]
+			const newLay = this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.newIndex].widgetId]
+			if (oldLay.zIndex === newLay.zIndex) {
 				if (e.moved.newIndex > e.moved.oldIndex) {
-					newItem.zIndex++
+					newLay.zIndex++
 				} else {
-					oldItem.zIndex++
+					oldLay.zIndex++
 				}
 			} else {
-				let zIndex = newItem.zIndex
-				newItem.zIndex = oldItem.zIndex
-				oldItem.zIndex = zIndex
+				let zIndex = newLay.zIndex
+				newLay.zIndex = oldLay.zIndex
+				oldLay.zIndex = zIndex
 			}
 			this.editor.screen.screenWidgetsLays = { ...this.editor.screen.screenWidgetsLays }
 		},

@@ -25,14 +25,14 @@
 				label.ivu-btn.ivu-btn-primary.d-detail-import-button(for="originFile") 选择导入文件
 	search(v-model="searchModal", :hide="() => (searchModal = false)")
 </template>
-<script>
+<script lang="ts">
 import { Button, Modal, Form, FormItem, Input } from 'view-design'
 import loadMask from '../load-mask/index.vue'
 import { getQueryString } from '@cakev/util'
 import { downloadFile } from '@/vue2/utils'
 import search from './search.vue'
 import Editor from '@/core/Editor'
-import { detail, detailFile, create, update } from '@/vue2/api/screen.api'
+import { detail, create, update } from '@/vue2/api/screen.api'
 import { screenShareUpdate } from '@/vue2/api/screenShare.api'
 import left from './left.vue'
 
@@ -56,7 +56,7 @@ export default {
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 			loadingMsg: 'loading…',
 			shareModal: false,
 			searchModal: false,
@@ -82,9 +82,9 @@ export default {
 			}
 		},
 		handleExport() {
-			const screenData = this.editor.screenData()
+			const screenData = this.editor.screen
 			const sceneData = this.editor.sceneData()
-			const fileName = `${this.editor.name}`
+			const fileName = this.editor.screen.screenName
 			this.$Modal.confirm({
 				title: `导出文件：${fileName}.json`,
 				content: '可用于看板数据备份、迁移。',
@@ -104,7 +104,7 @@ export default {
 				cancelText: '取消',
 				onOk: () => {
 					this.loading = true
-					const screenData = this.editor.screenData()
+					const screenData = this.editor.screen
 					const sceneData = this.editor.sceneData()
 					if (this.isNew || isNew) {
 						create({

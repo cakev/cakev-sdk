@@ -2,15 +2,12 @@
 import Factory from '@/core/Base/factory'
 import WidgetTask from '@/core/Widget/task'
 import LayTask from '@/core/Lay/task'
-import copy from 'fast-copy'
 
 export default class ScreenTask extends Factory<ScreenTask> {
 	screenId = '' // 大屏ID
-	screenName = '未命名' // 大屏名
+	screenName = '未命名大屏' // 大屏名
 	screenWidgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
-	screenWidgetsLays = {} // 大屏组件嵌套规则
-	screenType = 'CUSTOM' // 大屏类型 CUSTOM:大屏 TEMPLATE:模版
-	screenPublish = '' // 大屏发布情况 EDIT:未发布 COMPLETE:已发布
+	screenWidgetsLays: { [key: string]: LayTask } = {} // 大屏组件嵌套规则
 	screenAvatar = '' // 大屏缩略图
 	screenVersion = '' // 大屏版本号
 	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
@@ -19,9 +16,8 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	screenBackGroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
 	screenBackGroundImage = '' // 大屏背景图片
 	screenMainScene: string | number = 0 // 大屏首屏场景
-	screenPlatform = 'PC' // 大屏平台类型 PC:PC
-	screenDomain = '' // 大屏组件接口Domain
-	screenHeaders = '{}' // 大屏组件接口Headers
+	screenDomain = ''
+	screenHeaders = '{"Content-Type":"application/json"}'
 	screenFilter = {
 		// 更新大屏组件配置
 		enable: false, // 开启状态
@@ -32,12 +28,10 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		saturate: 0, // 饱和度
 		hueRotate: 0, // 色相
 	}
-	marketComponents = []
 
 	clear(): void {
 		this.screenWidgets = {}
 		this.screenWidgetsLays = {}
-		this.screenType = 'CUSTOM'
 		this.screenLayoutMode = 'full-size'
 		this.screenName = '未命名'
 		this.screenWidth = 1920
@@ -57,12 +51,11 @@ export default class ScreenTask extends Factory<ScreenTask> {
 			hueRotate: 0,
 		}
 	}
+
 	init(res: ScreenTask): ScreenTask {
 		this.screenId = res.screenId
 		this.screenName = res.screenName
 		this.screenAvatar = res.screenAvatar
-		this.screenPublish = res.screenPublish
-		this.screenType = res.screenType || 'CUSTOM'
 		this.screenVersion = res.screenVersion
 		this.screenLayoutMode = res.screenLayoutMode || 'full-size'
 		this.screenWidth = res.screenWidth
@@ -70,29 +63,28 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		this.screenBackGroundColor = res.screenBackGroundColor
 		this.screenBackGroundImage = res.screenBackGroundImage
 		this.screenMainScene = res.screenMainScene
-		this.screenPlatform = res.screenPlatform
 		this.screenWidgets = res.screenWidgets
 		this.screenWidgetsLays = res.screenWidgetsLays
 		return this
 	}
-	
-	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
-		// const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
-		// const target = this.screenWidgets[id]
-		// const inputConfig = Object.freeze(target.config || {})
-		// const res = configMerge(inputConfig, mergedValue)
-		// console.log(res)
-		// res.widget.name = res.widget.name || '未知组件'
-		// if (customConfig) {
-		// 	customConfig.map(item => {
-		// 		if (!item.prop.includes('config.config')) {
-		// 			item.prop = `config.config.${item.prop}`
-		// 		}
-		// 	})
-		// 	res.customConfig = [{ type: 'custom' }, ...customConfig]
-		// }
-		// target.config = res
-	}
+
+	// updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
+	// const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
+	// const target = this.screenWidgets[id]
+	// const inputConfig = Object.freeze(target.config || {})
+	// const res = configMerge(inputConfig, mergedValue)
+	// console.log(res)
+	// res.widget.name = res.widget.name || '未知组件'
+	// if (customConfig) {
+	// 	customConfig.map(item => {
+	// 		if (!item.prop.includes('config.config')) {
+	// 			item.prop = `config.config.${item.prop}`
+	// 		}
+	// 	})
+	// 	res.customConfig = [{ type: 'custom' }, ...customConfig]
+	// }
+	// target.config = res
+	// }
 
 	changeLayoutMode(value: string | null): string {
 		let scaleX = 0,
@@ -154,27 +146,6 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		}
 	}
 
-	/* 获取大屏数据 */
-	screenData(): any {
-		return {
-			screenFilter: this.screenFilter,
-			screenWidgets: this.screenWidgets,
-			screenType: this.screenType,
-			screenAvatar: this.screenAvatar,
-			screenDomain: this.screenDomain,
-			screenHeaders: this.screenHeaders,
-			screenBackGroundColor: this.screenBackGroundColor,
-			screenBackGroundImage: this.screenBackGroundImage,
-			screenHeight: this.screenHeight,
-			screenWidth: this.screenWidth,
-			screenName: this.screenName,
-			screenPlatform: this.screenPlatform,
-			screenWidgetsLays: this.screenWidgetsLays,
-			screenLayoutMode: this.screenLayoutMode,
-			screenMainScene: this.screenMainScene,
-		}
-	}
-
 	/* 添加组件 */
 	createWidget({
 		offsetX,
@@ -197,17 +168,21 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		widgetLayout.top = top
 		widgetLayout.left = left
 		const widgetId = uuid()
-		const widget = new WidgetTask({
-			widgetId,
-			widgetLayout,
-			widgetIs,
-			widgetType,
-			widgetAvatar,
-			widgetMarket,
-			widgetApi,
-			widgetBase,
-			widgetConfig,
-		})
+		const widget = new WidgetTask(
+			JSON.parse(
+				JSON.stringify({
+					widgetId,
+					widgetLayout,
+					widgetIs,
+					widgetType,
+					widgetAvatar,
+					widgetMarket,
+					widgetApi,
+					widgetBase,
+					widgetConfig,
+				}),
+			),
+		)
 		this.screenWidgets = {
 			...this.screenWidgets,
 			[widgetId]: widget,
@@ -218,59 +193,95 @@ export default class ScreenTask extends Factory<ScreenTask> {
 			[widgetId]: lay,
 		}
 	}
-
-	/* 复制组件 */
-	copyWidget(copyId: string): void {
-		const widget = this.screenWidgets[copyId]
-		if (!widget) return
-		const newWidget = copy(widget)
-		const id = uuid()
-		newWidget.id = id
-		const config = newWidget.config
-		config.widget.id = id
-		const layout = layout
-		layout.left = 10 + Number(layout.left)
-		layout.top = 10 + Number(layout.top)
-		this.screenWidgets = { ...this.screenWidgets, [id]: newWidget }
+	/* 刷新当前组件 */
+	refreshWidget(widgetId: string): void {
+		const widget = this.screenWidgets[widgetId]
+		const lay = this.screenWidgetsLays[widgetId]
+		delete this.screenWidgetsLays[widgetId]
+		delete this.screenWidgets[widgetId]
+		this.screenWidgetsLays = { ...this.screenWidgetsLays }
+		this.screenWidgets = { ...this.screenWidgets }
+		setTimeout(() => {
+			this.screenWidgets[widget.widgetId] = widget
+			this.screenWidgetsLays[widget.widgetId] = lay
+			this.screenWidgets = { ...this.screenWidgets }
+			this.screenWidgetsLays = { ...this.screenWidgetsLays }
+		})
 	}
-
+	// 锁定/解锁组件
+	lockWidget(widgetId: string) {
+		this.screenWidgets[widgetId].widgetBase.locked = !this.screenWidgets[widgetId].widgetBase.locked
+		this.screenWidgets = { ...this.screenWidgets }
+	}
+	// 隐藏/显示组件
+	hideWidget(widgetId: string) {
+		this.screenWidgetsLays[widgetId].hide = !this.screenWidgetsLays[widgetId].hide
+	}
+	// 组件 移入回收站
+	dropWidget(widgetId: string): void {
+		this.screenWidgetsLays[widgetId].scene = -1
+		this.screenWidgetsLays = { ...this.screenWidgetsLays }
+	}
+	// 删除组件
+	deleteWidget(widgetId: string): void {
+		delete this.screenWidgets[widgetId]
+		delete this.screenWidgetsLays[widgetId]
+		this.screenWidgets = { ...this.screenWidgets }
+		this.screenWidgetsLays = { ...this.screenWidgetsLays }
+	}
+	// 复制组件
+	copyWidget(widgetId: string): void {
+		const widget = this.screenWidgets[widgetId]
+		const lay = this.screenWidgetsLays[widgetId]
+		const newWidgetId = uuid()
+		const newWidget = new WidgetTask({ ...JSON.parse(JSON.stringify(widget)), widgetId: newWidgetId })
+		newWidget.widgetLayout.left += 10
+		newWidget.widgetLayout.top += 10
+		const newLay = new LayTask({ ...lay, widgetId: newWidgetId })
+		this.screenWidgetsLays = { ...this.screenWidgetsLays, [newWidgetId]: newLay }
+		this.screenWidgets = { ...this.screenWidgets, [newWidgetId]: newWidget }
+	}
+	// 设定组件 zIndex
+	setWidgetZIndex(widgetId: string, zIndex: number) {
+		this.screenWidgetsLays[widgetId].zIndex = zIndex
+	}
 	/* 更新组件 */
-	updateComponentTarget(id, target, value): void {
-		switch (target) {
-			case 'config.api.params':
-				this.screenWidgets[id].config.api.params = {
-					...this.screenWidgets[id].config.api.params,
-					...value,
-				}
-				break
-			case 'config.api.data':
-				this.screenWidgets[id].config.api.data = value
-				break
-			case 'config.config':
-				this.screenWidgets[id].config.config = {
-					...this.screenWidgets[id].config.config,
-					...value,
-				}
-				break
-		}
-	}
+	// updateComponentTarget(id, target, value): void {
+	// 	switch (target) {
+	// 		case 'config.api.params':
+	// 			this.screenWidgets[id].config.api.params = {
+	// 				...this.screenWidgets[id].config.api.params,
+	// 				...value,
+	// 			}
+	// 			break
+	// 		case 'config.api.data':
+	// 			this.screenWidgets[id].config.api.data = value
+	// 			break
+	// 		case 'config.config':
+	// 			this.screenWidgets[id].config.config = {
+	// 				...this.screenWidgets[id].config.config,
+	// 				...value,
+	// 			}
+	// 			break
+	// 	}
+	// }
 	/* 更新组件 */
-	updateComponent(id, config): void {
-		const widgetConfig = this.screenWidgets[id].config.api
-		if (config.params) {
-			widgetConfig.params = JSON.stringify(config.params)
-		}
-		if (config.data) {
-			widgetConfig.data = JSON.stringify(config.data)
-		}
-		if (config.url) {
-			widgetConfig.url = config.url
-		}
-		if (config.path) {
-			widgetConfig.path = config.path
-		}
-		if (config.method) {
-			widgetConfig.method = config.method
-		}
-	}
+	// updateComponent(id, config): void {
+	// 	const widgetConfig = this.screenWidgets[id].config.api
+	// 	if (config.params) {
+	// 		widgetConfig.params = JSON.stringify(config.params)
+	// 	}
+	// 	if (config.data) {
+	// 		widgetConfig.data = JSON.stringify(config.data)
+	// 	}
+	// 	if (config.url) {
+	// 		widgetConfig.url = config.url
+	// 	}
+	// 	if (config.path) {
+	// 		widgetConfig.path = config.path
+	// 	}
+	// 	if (config.method) {
+	// 		widgetConfig.method = config.method
+	// 	}
+	// }
 }

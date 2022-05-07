@@ -1,21 +1,23 @@
 <template lang="pug">
 widget-normal
-	span.hello-world {{ cake_data }}
+	#chart
 </template>
 <script lang="ts">
+import getOption from './options'
 import { widgetMixin, widgetNormal } from '@'
 
 export default {
 	mixins: [widgetMixin],
 	components: { widgetNormal },
 	mounted() {
-		console.log('111')
-	}
+		const instance = window.echarts.init(document.getElementById('#chart'))
+		instance.setOption(this.cake_data)
+	},
 }
 </script>
 <style lang="scss" scoped>
-.hello-world {
-	color: #fff;
-	line-height: 32px;
+#chart {
+	width: 100%;
+	height: 100%;
 }
 </style>

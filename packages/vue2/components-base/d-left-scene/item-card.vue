@@ -3,38 +3,33 @@ li.pointer.pos-r.d-left-scene-list-li(
 	:class="{ active: editor.currentWidgetList.includes(lay.widgetId) }",
 	@click.stop="handleClick")
 	.parent.fn-flex
-		.d-left-scene-left
+		c-row.d-left-scene-left
 			h2 {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
-		.d-left-scene-right
-			i-icon(
+		c-row.d-left-scene-right
+			c-svg(
 				v-if="lay.hide",
-				type="md-eye-off",
-				title="显示",
-				@click="handleTaggerHide(lay.widgetId)",
+				:size="14"
+				type="eye",
+				@click="editor.screen.hideWidget(lay.widgetId)",
 				@click.stop)
-			i-icon(
+			c-svg(
 				style="margin-left: 10px",
+				:size="14"
 				v-if="editor.screen.screenWidgets[lay.widgetId].widgetBase.locked",
-				type="md-unlock",
-				title="解锁",
-				@click="handleUnLock(lay.widgetId)",
+				type="lock",
+				@click="editor.screen.lockWidget(lay.widgetId)",
 				@click.stop)
-	//scene-group(:childList="item.children")
 </template>
 <script lang="ts">
-import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
 
 export default {
-	components: {
-		'i-icon': Icon,
-	},
 	name: 'd-left-scene-item',
 	data() {
 		return {
 			editScene: false,
 			copyModel: false,
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	props: {
@@ -53,12 +48,6 @@ export default {
 				this.editor.unSelectWidget()
 				this.editor.selectWidget(this.widget)
 			}
-		},
-		handleUnLock(widgetId: string): void {
-			this.editor.screen.screenWidgets[widgetId].widgetBase.locked = false
-		},
-		handleTaggerHide(widgetId: string): void {
-			this.editor.screen.screenWidgetsLays[widgetId].hide = !this.editor.screen.screenWidgetsLays[widgetId].hide
 		},
 	},
 }
@@ -100,11 +89,6 @@ export default {
 	&:hover {
 		border-color: var(--themeColor);
 	}
-}
-
-.d-left-scene-left,
-.d-left-scene-right {
-	align-items: center;
 }
 
 .d-left-scene-left {

@@ -1,61 +1,34 @@
 <template lang="pug">
 .d-detail-left.fn-flex
-	.d-detail-left-icon-box.fn-flex
-		.d-detail-left-icon.fn-flex.pointer(@click="backHandler")
-			i-icon(type="ios-arrow-dropleft", size="22")
-	.d-detail-title.fn-flex.pointer(:title="editor.name", @click="editName = true")
-		c-input(width="152px" v-model="editor.name", v-if="editName", @blur="editName = false", :autofocus="true")
-		span.fn-flex.d-detail-title.ellipsis(v-else) {{ editor.name }}
+	.d-detail-title.fn-flex.pointer(:title="editor.screen.screenName", @click="editName = true")
+		c-input(width="152px" v-model="editor.screen.screenName", v-if="editName", @blur="editName = false", :autofocus="true")
+		span.fn-flex.ellipsis(v-else) {{ editor.screen.screenName }}
 	widget
 </template>
-<script>
-import { Icon } from 'view-design'
+<script lang="ts">
 import Editor from '@/core/Editor'
 import widget from './widget.vue'
 
 export default {
 	name: 'd-detail',
 	components: {
-		'i-icon': Icon,
 		widget,
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 			editName: false,
 		}
-	},
-	methods: {
-		backHandler() {
-			this.$router.push('/editor/manger')
-		},
 	},
 }
 </script>
 <style lang="scss" scoped>
-.d-detail-left-icon-box {
-	align-items: center;
-	height: 100%;
-}
-
-.d-detail-left-icon {
-	align-items: center;
-	height: 100%;
-	padding: 0 20px;
-	color: var(--text-tab);
-
-	&:hover {
-		color: #4fb0ff;
-		background-color: #30333d;
-	}
-}
-
 .d-detail-title {
 	align-items: center;
 	margin-right: auto;
 	font-size: 15px;
 	color: var(--text-tab);
-
+	margin-left: 20px;
 	span {
 		align-items: center;
 		width: 152px;

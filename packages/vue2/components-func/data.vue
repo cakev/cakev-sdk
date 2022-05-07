@@ -20,13 +20,10 @@
 				c-input(v-model="editor.current.widget.widgetApi.path", :style="{ width: '100px' }")
 		c-control(label="请求参数")
 			template(slot="bottom")
-				c-code(
-				lang="json",
-				:code="editor.current.widget.widgetApi.params",
-				@update:code="value => (editor.current.widget.widgetApi.params = JSON.parse(value))")
+				c-code(lang="json", v-model="editor.current.widget.widgetApi.params")
 		c-control(label="响应数据")
 			template(slot="bottom")
-				c-code( lang="json", :code="editor.current.widget.widgetApi.data", @update:code="updateData")
+				c-code(lang="json", v-model="editor.current.widget.widgetApi.data")
 	c-collapse(
 		type="eye"
 		title="数据过滤器",
@@ -35,9 +32,7 @@
 		@close-click="editor.current.widget.widgetApi.processEnable = false")
 		c-control(label="数据过滤器",)
 			template(slot="bottom")
-				c-code(
-					:code="editor.current.widget.widgetApi.processBody",
-					@update:code="value => (editor.current.widget.widgetApi.processBody = value)")
+				c-code(v-model="editor.current.widget.widgetApi.processBody")
 	c-collapse(
 		type="eye"
 		title="自动更新",

@@ -8,7 +8,7 @@ export default new widgetConf({
 		width: 250,
 		height: 32,
 	},
-	widgetTypeId: '柱形图',
+	widgetTypeId: '示例一',
 	widgetIs: 'hello-world',
 	widgetAvatar: require('./snapshot.png'),
 })

@@ -16,17 +16,6 @@
 		cursor: move;
 	}
 
-	&::after {
-		right: -3px;
-		left: unset;
-		content: '\1F512';
-		opacity: 0;
-	}
-
-	&.locked::after {
-		opacity: 0.5;
-	}
-
 	&.dr-active {
 		cursor: move;
 	}

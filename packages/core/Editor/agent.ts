@@ -108,16 +108,6 @@ export default class Agent extends EditorBase {
 		this.current.taggerXRoomR1()
 	}
 	/* ---------------------------------------------------Screen---------------------------------------------------*/
-	get screenType(): any {
-		return this.screen.screenType
-	}
-	/* 大屏名 */
-	get name(): string {
-		return this.screen.screenName
-	}
-	set name(screenName: string) {
-		this.screen.screenName = screenName
-	}
 	/* 大屏缩略图 */
 	get avatar(): string {
 		return this.screen.screenAvatar
@@ -162,23 +152,8 @@ export default class Agent extends EditorBase {
 		this.screen.screenMainScene = screenMainScene
 	}
 	/* 获取大屏数据 */
-	screenData(): any {
-		return this.screen.screenData()
-	}
 	changeLayoutMode(value: string): string {
 		return this.screen.changeLayoutMode(value)
-	}
-	/* 更新组件 */
-	updateComponentTarget(id, target, value): void {
-		this.screen.updateComponentTarget(id, target, value)
-	}
-	/* 更新组件 */
-	updateComponent(id, config): void {
-		this.screen.updateComponent(id, config)
-	}
-	/* 复制组件 */
-	copyWidget(): void {
-		this.screen.copyWidget(this.current.currentWidgetList[0])
 	}
 	/* 更新大屏组件配置 */
 	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {

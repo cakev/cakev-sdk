@@ -29,9 +29,7 @@
 			template(slot="bottom")
 				c-code(
 					v-if="isComponentClass",
-					:code="editor.current.widget.events[eventType][activeIndex].processBody",
-					:show="editor.current.widget.events[eventType][activeIndex].processEnable",
-					@update:code="value => (editor.current.widget.events[eventType][activeIndex].processBody = value)")
+					v-model="editor.current.widget.events[eventType][activeIndex].processBody",)
 			template(slot="right")
 				c-switch(v-model="editor.current.widget.events[eventType][activeIndex].processEnable")
 		i-select(

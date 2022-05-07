@@ -37,9 +37,6 @@ export default {
 				this.$emit('beforeSceneDestroy')
 				this.editor.current.currentCreateSceneList.splice(this.sceneId, 1)
 				this.editor.current.sceneAnimate = ''
-				let event = new CustomEvent('DestroyScene', { detail: { index: this.sceneId } })
-				document.dispatchEvent(event)
-				event = null
 			}
 		},
 	},

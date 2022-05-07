@@ -1,4 +1,3 @@
-import { usePath, useProcess } from '@/vue2/utils'
 import Editor from '@/core/Editor'
 
 export default {
@@ -25,7 +24,13 @@ export default {
 	watch: {
 		'widget.widgetApi.data': {
 			handler() {
-				this.cake_init_data()
+				if (this.widget.widgetApi.data !== '') {
+					try {
+						this.cake_data = JSON.parse(this.widget.widgetApi.data)
+					} catch (e) {
+						this.cake_data = this.widget.widgetApi.data
+					}
+				}
 			},
 			immediate: true,
 			deep: true,
@@ -76,23 +81,6 @@ export default {
 				domain: this.cake_editor.screen.screenDomain,
 				headers: JSON.parse(this.cake_editor.screen.screenHeaders),
 			})
-		},
-		cake_init_data() {
-			if (this.widget.widgetApi.data !== '') {
-				try {
-					this.cake_data = JSON.parse(this.widget.widgetApi.data)
-				} catch (e) {
-					this.cake_data = this.widget.widgetApi.data
-				}
-			}
-		},
-		parseQueryResult(response) {
-			if (!response.data || typeof response.data !== 'object') {
-				return
-			}
-			response = usePath(this.widget.widgetApi.path, response)
-			response = useProcess(this.widget.widgetApi.process, response)
-			this.cake_data = response
 		},
 		// __eventTypesSetting__(eventTypes): void {
 		// 	this.cake_editor.eventTypesSetting(this.widget.widgetId, eventTypes)
