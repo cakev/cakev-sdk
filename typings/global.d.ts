@@ -1,7 +1,7 @@
-export {};
+export {}
 declare global {
 	interface Window {
-		echarts: any;
+		G2: any
 		loadJS: any
 		loadCSS: any
 		cakeVEditorInstance: any

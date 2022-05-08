@@ -35,10 +35,10 @@ export default {
 	props: {
 		lay: {},
 	},
-	computed:{
-		widget(){
+	computed: {
+		widget() {
 			return this.editor.screen.screenWidgets[this.lay.widgetId]
-		}	
+		},
 	},
 	methods: {
 		handleClick(e): void {

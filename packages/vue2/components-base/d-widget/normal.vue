@@ -107,15 +107,11 @@ export default {
 	},
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .widget-part {
 	position: absolute;
 	top: 0;
 	left: 0;
-	font-size: 15px;
-	line-height: 1.5em;
-	color: rgb(0, 0, 0);
-	text-align: center;
 	backface-visibility: hidden;
 	pointer-events: auto;
 }
