@@ -1,6 +1,4 @@
 import {
-	Select,
-	Option,
 	ColorPicker,
 	Button,
 	CheckboxGroup,
@@ -15,8 +13,6 @@ export default {
 	components: {
 		'i-upload': Upload,
 		'i-icon': Icon,
-		'i-select': Select,
-		'i-option': Option,
 		'i-color-picker': ColorPicker,
 		'i-button': Button,
 		'i-modal': Modal,

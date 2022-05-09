@@ -2,10 +2,8 @@
 .d-ruler-wrapper.pos-r(
 	:id="editor.rulerContainerId",
 	@mousedown="mouseDown",
-	@contextmenu="showRightMenu",
 	@wheel="wheel",
 	@mousemove="mouseMove")
-	ruler-right-menu
 	.content-body.pos-a(:style="editor.rulerStyle")
 		slot
 		.content-body-tip.pos-a(
@@ -15,13 +13,9 @@
 </template>
 <script>
 import Editor from '@/core/Editor'
-import rulerRightMenu from '@/vue2/components-base/right-menu/ruler.vue'
 
 export default {
 	name: 'd-ruler',
-	components: {
-		rulerRightMenu,
-	},
 	data(){
 		return {
 			editor:  Editor.Instance(),
@@ -50,19 +44,6 @@ export default {
 	methods:{
 		windowResize() {
 			this.editor.resetZoom()
-		},
-
-		showRightMenu(e) {
-			const rightMenu = document.getElementById('ruler-right-menu')
-			rightMenu.classList.add('active')
-			const widgetRightMenu = document.getElementById('widget-right-menu')
-			widgetRightMenu.classList.remove('active')
-			if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
-				rightMenu.style.top = e.clientY - rightMenu.scrollHeight + 'px'
-			} else {
-				rightMenu.style.top = e.clientY + 'px'
-			}
-			rightMenu.style.left = e.clientX + 'px'
 		},
 		mouseUp(e) {
 			if (this.contentDrag) {

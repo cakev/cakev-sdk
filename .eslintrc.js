@@ -4,7 +4,6 @@ module.exports = {
 		node: true,
 	},
 	globals: {
-		echarts: true,
 	},
 	extends: [
 		'plugin:vue/essential',

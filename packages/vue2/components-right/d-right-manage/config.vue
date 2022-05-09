@@ -2,11 +2,11 @@
 .d-right-modal.d-scrollbar(:style="{padding:'10px'}")
 	c-control(label="屏幕大小")
 		template(slot="right")
-			i-select(v-model="size")
-				i-option(value="1920*1080") 大屏推荐尺寸1920*1080
-				i-option(value="1366*768") web最常见尺寸1366*768
-				i-option(value="1024*768") web最小尺寸1024*768
-				i-option(value="other") 自定义
+			c-select(v-model="size")
+				c-select-option(value="1920*1080" label="大屏推荐尺寸1920*1080") 
+				c-select-option(value="1366*768" label="web最常见尺寸1366*768") 
+				c-select-option(value="1024*768" label="web最小尺寸1024*768") 
+				c-select-option(value="other" label="自定义") 
 	c-control
 		template(slot="right")
 			c-input(
@@ -34,10 +34,10 @@
 		d-upload(v-model="editor.backgroundImage", :data="backGroundFormData")
 	c-control(label="适配模式")
 		template(slot="right")
-			i-select(v-model="editor.layoutMode")
-				i-option(value="full-size") 充满页面
-				i-option(value="full-width") 100%宽度
-				i-option(value="full-height") 100%高度
+			c-select(v-model="editor.layoutMode")
+				c-select-option(value="full-size" label="充满页面")
+				c-select-option(value="full-width" label="100%宽度")
+				c-select-option(value="full-height" label="100%高度") 
 	c-control(label="封面", title="支持jpg，png，gif")
 		template(slot="right")
 			d-upload(v-model="editor.avatar", :data="screenAvatarFormData")
@@ -49,9 +49,9 @@
 				:loading="screenAvatarLoading") 截屏
 	c-control(label="首场景")
 		template(slot="right")
-			i-select(filterable, v-model="editor.mainScene")
-				i-option(:value="0") 主场景
-				i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
+			c-select(filterable, v-model="editor.mainScene")
+				c-select-option(:value="0" label="主场景")
+				c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" label="item.name")
 </template>
 <script>
 import func from '@/vue2/components-func/func.mx'

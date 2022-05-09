@@ -1,14 +1,14 @@
 <template lang="pug">
 .d-suspension.fn-flex.flex-column.pos-a.z-index-999(:style="{ right: `${editor.xRoomR1 + 20}px` }")
-	item-card(
+	c-badge(
 		title="全局请求设置",
-		icon="md-planet",
+		type="global",
 		@click="globalRequestConfigShow = true",
 		:active="editor.screen.screenDomain || editor.screen.screenHeaders")
 	globalRequestConfig(v-model="globalRequestConfigShow")
-	item-card(
+	c-badge(
 		title="全局滤镜",
-		icon="ios-color-filter",
+		type="color",
 		@click="filterShow = true",
 		:active="editor.screen.screenFilter.enable")
 	global-filter(v-model="filterShow")
@@ -17,12 +17,10 @@
 import globalRequestConfig from './globalRequestConfig.vue'
 import globalFilter from './globalFilter.vue'
 import Editor from '@/core/Editor'
-import ItemCard from '@/vue2/components-base/d-suspension/item-card.vue'
 
 export default {
 	name: 'd-suspension',
 	components: {
-		ItemCard,
 		globalRequestConfig,
 		globalFilter,
 	},

@@ -2,10 +2,10 @@
 .d-manage-modal-control-base
 	c-right-control(label="组件市场")
 		template(slot="right")
-			i-select(
+			c-select(
 				v-model="editor.current.widget.config.widget.widgetVersion",
 				:style="{ marginRight: '10px', width: '156px' }")
-				i-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i") {{ item.widgetVersion }}
+				c-select-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i" :label="item.widgetVersion")
 			c-switch(v-model="editor.current.widget.widgetMarket")
 </template>
 <script lang="ts">

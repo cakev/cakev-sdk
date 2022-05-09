@@ -9,8 +9,8 @@
 		:enable="editor.current.widget.widgetAnimation.transitionEnable")
 		c-control(label="动画形式")
 			template(slot="right")
-				i-select(v-model="editor.current.widget.widgetAnimation.enter")
-					i-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
+				c-select(v-model="editor.current.widget.widgetAnimation.enter")
+					c-select-option(:value="k.value", v-for="k in animationEnterNames", :key="k.value") {{ k.label }}
 		c-control(label="延时时长")
 			template(slot="right")
 				c-input(append="ms", v-model="editor.current.widget.widgetAnimation.delay")

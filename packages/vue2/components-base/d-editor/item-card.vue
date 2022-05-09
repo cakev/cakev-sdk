@@ -75,8 +75,6 @@ export default {
 			this.editor.selectWidget(widget)
 			const rightMenu = document.getElementById('widget-right-menu')
 			rightMenu.classList.add('active')
-			const rulerRightMenu = document.getElementById('ruler-right-menu')
-			rulerRightMenu.classList.remove('active')
 			if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
 				rightMenu.style.top = e.clientY - rightMenu.scrollHeight + 'px'
 			} else {

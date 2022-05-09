@@ -17,10 +17,10 @@
 				c-input(append="H", v-model="editor.current.widget.widgetLayout.height", :style="{ width: '100px' }")
 		c-control(label="场景")
 			template(slot="right")
-				i-select(v-model="editor.screen.screenWidgetsLays[editor.current.widget.widgetId].scene")
-					i-option(:value="0") 主场景
-					i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
-					i-option(:value="-1") 回收站
+				c-select(v-model="editor.screen.screenWidgetsLays[editor.current.widget.widgetId].scene")
+					c-select-option(:value="0" label="主场景")
+					c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
+					c-select-option(:value="-1" label="回收站") 
 		c-control(label="缩放比例")
 			template(slot="right")
 				c-input(v-model="scale" append="%")

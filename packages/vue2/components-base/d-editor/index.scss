@@ -1,6 +1,5 @@
 .d-left-scene {
 	.ivu-input,
-	.ivu-select-selection,
 	.ivu-input-number-input {
 		color: #fafafa;
 		background-color: #181b24;
@@ -12,20 +11,6 @@
 		}
 	}
 
-	.ivu-select-dropdown {
-		padding: 0;
-		margin: 0;
-		background-color: #2d2f38;
-		border-radius: 2px;
-
-		li {
-			&:hover,
-			&.ivu-select-item-focus {
-				color: var(--themeColor);
-				background-color: #22242b;
-			}
-		}
-	}
 }
 
 .d-modal-title {

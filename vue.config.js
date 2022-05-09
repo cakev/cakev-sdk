@@ -13,6 +13,7 @@ module.exports = {
 			entry: './play/main.ts',
 		},
 	},
+	productionSourceMap: false,
 	assetsDir: './',
 	devServer: {
 		port: 3000,
@@ -60,9 +61,6 @@ module.exports = {
 						amd: 'vue',
 					},
 					'vue-router': 'VueRouter',
-					echarts: 'echarts',
-					'@cakev/ui': '@cakev/ui',
-					'@cakev/util': '@cakev/util',
 				},
 			]
 		} else {
@@ -70,7 +68,6 @@ module.exports = {
 				{
 					vue: 'Vue',
 					'vue-router': 'VueRouter',
-					echarts: 'echarts',
 				},
 			]
 		}

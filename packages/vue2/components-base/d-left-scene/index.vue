@@ -7,10 +7,10 @@
 			@icon-append-click="editScene = false"
 			:value="editor.sceneObj[editor.currentSceneIndex].name", 
 			@on-change="handleSceneName", v-if="editScene")
-		i-select(:value="editor.currentSceneIndex", v-if="!editScene", filterable, @on-change="changeSceneIndex")
-			i-option(:value="0") 主场景
-			i-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
-			i-option(:value="-1") 回收站
+		c-select(:value="editor.currentSceneIndex", v-if="!editScene", @on-change="changeSceneIndex")
+			c-select-option(:value="0" label="主场景")
+			c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
+			c-select-option(:value="-1" label="回收站") 
 	ul.d-scrollbar.d-left-scene-list
 		draggable(:value="editor.currentSceneWidget", @change="sceneWidgetDragEnd")
 			transition-group
@@ -26,7 +26,6 @@
 			:class="{ disabled: editor.currentSceneIndex === 0 }") 删除
 </template>
 <script lang="ts">
-import { Select, Option } from 'view-design'
 import ItemCard from './item-card.vue'
 import draggable from 'vuedraggable'
 import Editor from '@/core/Editor'
@@ -36,8 +35,6 @@ export default {
 	components: {
 		draggable,
 		ItemCard,
-		'i-select': Select,
-		'i-option': Option,
 	},
 	data() {
 		return {
