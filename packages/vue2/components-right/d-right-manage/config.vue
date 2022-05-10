@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-right-modal.d-scrollbar(:style="{padding:'10px'}")
+.d-right-modal(:style="{padding:'10px'}")
 	c-control(label="屏幕大小")
 		template(slot="right")
 			c-select(v-model="size")
@@ -21,17 +21,12 @@
 				@on-change="heightChange")
 	c-control(label="背景色")
 		template(slot="right")
-			i-color-picker(
-				:alpha="true",
+			c-color(
 				v-model="editor.backgroundColor",
 				v-if="editor.backgroundColor")
-			c-input(
-				v-model="editor.backgroundColor",
-				:disabled="true",
-				:style="{ width: '166px', marginLeft: '9px' }")
 	c-control(label="背景图", title="支持jpg，png，gif")
 		template(slot="right")
-		d-upload(v-model="editor.backgroundImage", :data="backGroundFormData")
+			d-upload(v-model="editor.backgroundImage", :data="backGroundFormData")
 	c-control(label="适配模式")
 		template(slot="right")
 			c-select(v-model="editor.layoutMode")
@@ -51,7 +46,7 @@
 		template(slot="right")
 			c-select(filterable, v-model="editor.mainScene")
 				c-select-option(:value="0" label="主场景")
-				c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" label="item.name")
+				c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
 </template>
 <script>
 import func from '@/vue2/components-func/func.mx'

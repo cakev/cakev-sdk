@@ -11,7 +11,7 @@
 			c-select-option(:value="0" label="主场景")
 			c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
 			c-select-option(:value="-1" label="回收站") 
-	ul.d-scrollbar.d-left-scene-list
+	ul.d-left-scene-list
 		draggable(:value="editor.currentSceneWidget", @change="sceneWidgetDragEnd")
 			transition-group
 				item-card(v-for="lay in editor.currentSceneWidget", :key="lay.widgetId", :lay="lay")

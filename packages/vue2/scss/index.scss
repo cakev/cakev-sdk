@@ -98,48 +98,6 @@ body {
 	-webkit-box-orient: vertical;
 }
 
-.d-scrollbar {
-	overflow-y: auto;
-
-	&::-webkit-scrollbar {
-		width: 4px;
-		height: 1px;
-		transition: all 0.3s;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: rgba(83, 83, 83, 0);
-		border-radius: 10px;
-		transition: all 0.3s;
-	}
-
-	&::-webkit-scrollbar-track {
-		background: rgba(237, 237, 237, 0);
-		border-radius: 10px;
-		transition: all 0.3s;
-	}
-
-	&:hover {
-		&::-webkit-scrollbar-thumb {
-			background: rgba(83, 83, 83, 1);
-		}
-
-		&::-webkit-scrollbar-track {
-			background: rgba(237, 237, 237, 1);
-		}
-	}
-}
-
-.d-scrollbar-none {
-	overflow-y: auto;
-
-	&::-webkit-scrollbar {
-		width: 0;
-		height: 0;
-		transition: all 0.3s;
-	}
-}
-
 .fade-enter {
 	opacity: 0;
 }
@@ -155,13 +113,6 @@ body {
 .fade-leave-active {
 	opacity: 0;
 	transition: opacity 0.5s;
-}
-
-/**
- * @description 去掉百度API 左下角logo
- */
-.anchorBL {
-	display: none !important;
 }
 
 .ivu-modal-content {
@@ -207,52 +158,6 @@ body {
 
 	.ivu-form-item-label {
 		color: var(--white);
-	}
-
-	.ivu-input-number {
-		border: none;
-		border-radius: 2px;
-	}
-
-	.ivu-input-number-handler-wrap {
-		background-color: #181b24;
-	}
-
-	.ivu-input,
-	.ivu-input-number-input {
-		color: #fafafa;
-		background-color: #181b24;
-		border: 1px solid #393b4a;
-		border-radius: 2px;
-
-		&:focus {
-			border: 1px solid var(--themeColor);
-		}
-	}
-
-	.ivu-input-disabled {
-		background-color: #181b24 !important;
-
-		&:hover {
-			border: 1px solid var(--themeColor) !important;
-		}
-	}
-
-	.ivu-color-picker {
-		display: block;
-		cursor: pointer;
-
-		.ivu-icon {
-			display: none;
-		}
-
-		.ivu-input-icon-normal + .ivu-input {
-			padding-right: 7px;
-		}
-	}
-
-	.ivu-input-number {
-		display: block;
 	}
 
 	.ivu-radio-group-button {

@@ -5,7 +5,6 @@
 </template>
 <script>
 import config from './config.vue'
-import { Icon, Input } from 'view-design'
 import ClickOutside from 'vue-click-outside'
 import Editor from '@/core/Editor'
 
@@ -13,8 +12,6 @@ export default {
 	name: 'd-right-manage',
 	components: {
 		config,
-		'i-icon': Icon,
-		'i-input': Input,
 	},
 	directives: { ClickOutside },
 	data() {

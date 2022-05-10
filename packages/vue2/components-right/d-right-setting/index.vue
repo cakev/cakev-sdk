@@ -18,7 +18,7 @@
 			@click="handleClick(index)",
 			:key="item",
 			:class="{ active: index === editor.currentRightSettingIndex }") {{ item }}
-	.d-right-modal.d-scrollbar-none
+	.d-right-modal
 		itemList(
 			v-for="(item, index) in chooseList",
 			:list="item.key",
@@ -78,22 +78,5 @@ export default {
 
 .d-right-modal-name {
 	line-height: 32px;
-}
-
-.widget-name {
-	&::v-deep {
-		.ivu-input {
-			padding: 0;
-			font-size: 20px;
-			line-height: 20px;
-			color: #fff;
-			background-color: transparent;
-			border: none;
-			border-bottom: 1px solid var(--borderGray);
-			border-radius: 0;
-			outline: none;
-			box-shadow: none;
-		}
-	}
 }
 </style>

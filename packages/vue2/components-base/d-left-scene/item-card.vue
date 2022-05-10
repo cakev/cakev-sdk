@@ -62,12 +62,6 @@ export default {
 		padding: 10px;
 	}
 
-	/deep/ {
-		.ivu-input {
-			font-size: 12px;
-		}
-	}
-
 	h3,
 	p {
 		font-size: 12px;
@@ -93,15 +87,6 @@ export default {
 
 .d-left-scene-left {
 	width: 150px;
-
-	.ivu-icon {
-		margin-right: 4px;
-		font-size: 14px;
-
-		&:hover {
-			color: var(--themeColor);
-		}
-	}
 }
 
 .d-left-scene-right {

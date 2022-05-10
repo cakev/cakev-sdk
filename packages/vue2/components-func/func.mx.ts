@@ -1,9 +1,7 @@
 import {
-	ColorPicker,
 	Button,
 	CheckboxGroup,
 	Checkbox,
-	Icon,
 	Upload,
 	Modal,
 } from 'view-design'
@@ -12,8 +10,6 @@ import Editor from '@/core/Editor'
 export default {
 	components: {
 		'i-upload': Upload,
-		'i-icon': Icon,
-		'i-color-picker': ColorPicker,
 		'i-button': Button,
 		'i-modal': Modal,
 		CheckboxGroup,

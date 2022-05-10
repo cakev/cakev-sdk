@@ -15,7 +15,7 @@ export default {
 		}
 	},
 	watch: {
-		cake_data(val):void {
+		cake_data(val): void {
 			this.chart.changeData(val)
 		},
 	},
@@ -24,44 +24,28 @@ export default {
 			container: this.id,
 			autoFit: true,
 			height: 500,
+			supportCSSTransform: true,
 		})
 		this.chart.data(this.cake_data)
-		this.chart.scale({
-			value: {
-				max: 1400,
-				min: 0,
-				alias: '销量（百万）',
-			},
+		this.chart.scale('月均降雨量', {
+			nice: true,
 		})
-		this.chart.axis('type', {
-			title: null,
-			tickLine: null,
-			line: null,
+		this.chart.tooltip({
+			showMarkers: false,
+			shared: true,
 		})
 
-		this.chart.axis('value', {
-			label: null,
-			title: {
-				offset: 30,
-				style: {
-					fontSize: 12,
-					fontWeight: 300,
-				},
-			},
-		})
-		this.chart.legend(false)
-		this.chart.coordinate().transpose()
 		this.chart
 			.interval()
-			.position('type*value')
-			.size(26)
-			.label('value', {
-				style: {
-					fill: '#8d8d8d',
+			.position('月份*月均降雨量')
+			.color('name')
+			.adjust([
+				{
+					type: 'dodge',
+					marginRatio: 0,
 				},
-				offset: 10,
-			})
-		this.chart.interaction('element-active')
+			])
+		this.chart.interaction('element-highlight-by-x')
 		this.chart.render()
 	},
 }

@@ -1,18 +1,3 @@
-.d-left-scene {
-	.ivu-input,
-	.ivu-input-number-input {
-		color: #fafafa;
-		background-color: #181b24;
-		border: 1px solid #393b4a;
-		border-radius: 2px;
-
-		&:focus {
-			border: 1px solid var(--themeColor);
-		}
-	}
-
-}
-
 .d-modal-title {
 	height: 40px;
 	font-size: 14px;
@@ -58,7 +43,6 @@
 }
 
 .d-right-modal-box {
-	overflow: hidden;
 	background-color: #22242b;
 }
 
@@ -79,11 +63,6 @@
 	span {
 		margin-right: 5px;
 		outline: none;
-	}
-
-	.ivu-icon {
-		margin-left: 5px;
-		font-size: 12px;
 	}
 }
 

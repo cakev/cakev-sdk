@@ -2,10 +2,8 @@
 #widget-right-menu.right-menu.pos-f.z-index-99(@contextmenu.stop.prevent, v-click-outside="hideRightMenu")
 	ul.list
 		item-card(@click="handleZIndexTop")
-			i-icon(type="md-arrow-round-up")
 			span 置顶
 		item-card(@click="handleZIndexBottom")
-			i-icon(type="md-arrow-round-down")
 			span 置底
 	ul.list
 		item-card(@click="hideWidget")
@@ -16,17 +14,13 @@
 			span 锁定/解锁
 	ul.list
 		item-card(@click="copyWidget")
-			i-icon(type="ios-copy")
 			span 复制
 		item-card(@click="handleSync")
-			i-icon(type="md-refresh")
 			span 刷新
 		item-card(@click="deleteWidget")
-			i-icon(type="md-trash")
 			span 删除
 </template>
 <script lang="ts">
-import { Icon } from 'view-design'
 import Editor from '@/core/Editor'
 // @ts-ignore
 import ClickOutside from 'vue-click-outside'
@@ -35,7 +29,6 @@ import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
 export default {
 	name: 'right-menu',
 	components: {
-		'i-icon': Icon,
 		ItemCard,
 	},
 	directives: { ClickOutside },

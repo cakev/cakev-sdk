@@ -33,7 +33,7 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 			span(slot="append") 小时
 		.deadline(v-if="shareType === 'TIME'", :style="{ marginLeft: '10px' }") 到期时间：{{ deadline }}
 	.fn-flex.flex-row(v-if="openShare")
-		i-input(
+		c-input(
 			search,
 			readonly,
 			enter-button="复制",
@@ -41,7 +41,7 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 			v-model="shareUrl")
 </template>
 <script>
-import { Modal, Button, Input } from 'view-design'
+import { Modal, Button } from 'view-design'
 import shareMx from './share.mx'
 
 export default {
@@ -49,7 +49,6 @@ export default {
 	components: {
 		'i-button': Button,
 		'i-modal': Modal,
-		'i-input': Input,
 	},
 	mixins: [shareMx],
 	props: {
