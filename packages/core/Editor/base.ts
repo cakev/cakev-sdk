@@ -1,8 +1,8 @@
 import Factory from '@/core/Base/factory'
 import ScreenTask from '@/core/Screen/task'
 import Current from '@/core/Current'
-import Scene from '@/core/Scene'
 import Http from '@/core/Http'
+import Config from '@/core/Config'
 import Local from '@/core/Local'
 import Ruler from '@/core/ui/Ruler'
 import ScreenCache from '@/core/IndexDB/screenCache'
@@ -15,15 +15,14 @@ export default class EditorBase extends Factory<EditorBase> {
 	current: Current = Current.Instance({
 		rulerContainerId,
 	})
-	indexDB = db
-	scene: Scene = Scene.Instance()
 	http: Http = Http.Instance()
+	config: Config = Config.Instance()
 	local: Local = Local.Instance()
 	screenCache: ScreenCache = ScreenCache.Instance(db)
-	ruler: Ruler | null
+	ruler: Ruler | null=null
 	rulerContainerId = rulerContainerId
 	/* 大屏ID */
-	screenId: string
+	screenId=''
 	/* 大屏状态 inEdit  在编辑器中  inPreview 在预览中 */
 	editorStatus = 'inPreview'
 	/* 组件加载 */
@@ -37,6 +36,44 @@ export default class EditorBase extends Factory<EditorBase> {
 	/* 更新大屏状态 */
 	updateEditorStatus(status: string): void {
 		this.editorStatus = status
+	}
+
+	createGuide(num: string | number, type: string): void {
+		this.ruler.createGuide(num, type)
+	}
+	clearGuides(): void {
+		this.ruler.clearGuides()
+	}
+	/* ---------------------------------------------------Current---------------------------------------------------*/
+	selectRightSettingIndex(index: number): void {
+		this.current.currentRightSettingIndex = index
+	}
+	// get activeWidgetId(): string {
+	// 	return this.current.activeWidgetId
+	// }
+	// set activeWidgetId(val: string) {
+	// 	this.current.activeWidgetId = val
+	// }
+	// get activeSceneId(): number | string {
+	// 	return this.current.activeSceneId
+	// }
+	// set activeSceneId(val: number | string) {
+	// 	this.current.activeSceneId = val
+	// }
+	/* 当前场景 */
+	get currentSceneIndex(): string | number {
+		return this.current.currentSceneIndex
+	}
+	/* 打开场景 */
+	openScene(id: string): void {
+		if (this.editorStatus === 'inPreview') this.current.openScene(id)
+	}
+	/* 关闭场景 */
+	closeScene(id: string): void {
+		if (this.editorStatus === 'inPreview') this.current.closeScene(id)
+	}
+	get zoom(): number {
+		return this.current.zoom
 	}
 	constructor() {
 		super()

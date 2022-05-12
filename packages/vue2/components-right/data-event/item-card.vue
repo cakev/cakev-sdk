@@ -39,7 +39,7 @@
 			filterable,
 			placeholder="目标场景")
 			c-select-option(:value="0") 主场景
-			c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key") {{ item.name }}
+			c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key") {{ item.name }}
 		c-select(
 			v-if="isSceneClass",
 			:style="{ marginBottom: '10px' }",

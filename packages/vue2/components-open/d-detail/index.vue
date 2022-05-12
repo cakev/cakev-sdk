@@ -1,44 +1,27 @@
 <template lang="pug">
 .d-detail.fn-flex(v-if="show")
 	left
+	input#originFile.fn-hide(type="file", accept="application/json", @change="handleFile")
 	ul.d-detail-right.fn-flex
-		li.fn-flex.flex-column.pointer(@click="preview")
-			c-svg(type="preview", :size="20")
-			span 预览
 		li.fn-flex.flex-column.pointer(@click="handleExport")
 			c-svg(type="export", :size="20")
 			span 导出
-		li.fn-flex.flex-column.pointer(@click="importModal = true")
+		label.fn-flex.flex-column.pointer(for="originFile")
 			c-svg(type="import", :size="20")
 			span 导入
-		li.fn-flex.flex-column.pointer(@click="handleSave")
-			c-svg(type="save", :size="20")
-			span 保存
-	load-mask(:show="loading") {{ loadingMsg }}
-	i-modal(v-model="importModal", :footer-hide="true")
-		i-form
-			i-form-item
-				input#originFile.fn-hide(type="file", accept="application/json", @change="handleFile")
-				label.ivu-btn.ivu-btn-primary.d-detail-import-button(for="originFile") 选择导入文件
+		li.fn-flex.flex-column.pointer(@click="preview")
+			c-svg(type="preview", :size="20")
+			span 预览
+	c-loading(:show="loading")
 </template>
 <script lang="ts">
-import { Button, Modal, Form, FormItem } from 'view-design'
-import loadMask from '../load-mask/index.vue'
-import { getQueryString } from '@cakev/util'
-import { downloadFile } from '@/vue2/utils'
+import { downloadFile } from '@cakev/util'
 import Editor from '@/core/Editor'
-import { detail, create, update } from '@/vue2/api/screen.api'
-import { screenShareUpdate } from '@/vue2/api/screenShare.api'
 import left from './left.vue'
 
 export default {
 	name: 'd-detail',
 	components: {
-		'i-button': Button,
-		loadMask,
-		'i-modal': Modal,
-		'i-form': Form,
-		'i-form-item': FormItem,
 		left,
 	},
 	props: {
@@ -50,83 +33,27 @@ export default {
 	data() {
 		return {
 			editor: Editor.Instance() as Editor,
-			loadingMsg: 'loading…',
-			shareModal: false,
 			loading: false,
-			importModal: false,
-			isNew: true,
 		}
 	},
 	methods: {
 		preview() {
-			const scene = this.editor.mainScene ? `&scene=${this.editor.mainScene}` : ''
-			if (this.isNew) {
-				this.editor.screenCache.add('previewData', this.editor.screen).then(() => {
-					window.open(`${location.origin}/detail/preview?layoutMode=${this.editor.layoutMode}${scene}`)
-				})
-			} else {
-				window.open(
-					`${location.origin}/detail/${this.$route.params.id}?layoutMode=${this.editor.layoutMode}${scene}`,
-				)
-			}
+			const scene = this.editor.screen.screenMainScene ? `&scene=${this.editor.screen.screenMainScene}` : ''
+			this.editor.screenCache.add('previewData', this.editor.screen).then(() => {
+				window.open(`${location.origin}/detail/preview?layoutMode=${this.editor.screen.screenLayoutMode}${scene}`)
+			})
 		},
 		handleExport() {
-			const screenData = this.editor.screen
-			const sceneData = this.editor.sceneData()
 			const fileName = this.editor.screen.screenName
 			this.$Modal.confirm({
 				title: `导出文件：${fileName}.json`,
 				content: '可用于看板数据备份、迁移。',
 				onOk: () => {
-					const config = { ...screenData, ...sceneData }
+					const config = this.editor.screen
 					downloadFile(config, fileName, 'json')
 				},
 				okText: '确定',
 				cancelText: '取消',
-			})
-		},
-		handleSave() {
-			let isNew = false
-			this.$Modal.confirm({
-				title: `确定${this.isNew || isNew ? '创建' : '更新'}大屏吗？`,
-				okText: '确定',
-				cancelText: '取消',
-				onOk: () => {
-					this.loading = true
-					const screenData = this.editor.screen
-					const sceneData = this.editor.sceneData()
-					if (this.isNew || isNew) {
-						create({
-							...screenData,
-							...sceneData,
-						})
-							.then(res => {
-								this.$Message.success('保存成功！')
-								screenShareUpdate({
-									screenId: res.screenId,
-									screenGuide: this.editor.ruler.guideLines,
-								})
-								this.loading = false
-								this.$router.back()
-							})
-							.catch(() => {
-								this.loading = false
-							})
-					} else {
-						update({
-							...screenData,
-							...sceneData,
-							screenId: this.editor.screenId,
-						})
-							.then(() => {
-								this.$Message.success('修改成功')
-								this.loading = false
-							})
-							.catch(() => {
-								this.loading = false
-							})
-					}
-				},
 			})
 		},
 		handleFile(e) {
@@ -135,10 +62,8 @@ export default {
 			reader.onload = e => {
 				try {
 					this.loading = true
-					const result = JSON.parse(e.target.result)
-					this.editor.init(result)
-					this.importModal = false
-					this.loading = false
+					this.editor.init(JSON.parse(e.target.result))
+					// this.loading = false
 				} catch (e) {
 					console.error(e)
 					this.loading = false
@@ -156,25 +81,7 @@ export default {
 		this.editor.clear()
 	},
 	mounted() {
-		const templateId = this.$route.query.templateId
-		const id = this.$route.params.id || templateId
-		const shareScreenId = this.$route.params.shareScreenId
-		this.isNew = !id
-		if (id) {
-			if (id === 'preview') {
-				this.editor.screenCache.get('previewData').then(res => {
-					this.editor.screen.init(res)
-				})
-			} else {
-				detail({ screenId: id }).then(res => {
-					this.editor.init(res)
-				})
-			}
-		} else if (!shareScreenId) {
-			this.editor.init()
-		}
-		const sceneIndex = getQueryString('scene')
-		this.editor.selectSceneIndex(sceneIndex)
+		this.editor.init()
 	},
 }
 </script>
@@ -182,7 +89,8 @@ export default {
 .d-detail-right {
 	height: 100%;
 
-	li {
+	li,
+	label {
 		align-items: center;
 		justify-content: center;
 		height: 100%;

@@ -5,10 +5,10 @@
 	ul.d-footer-view-modal.pos-a(v-show="viewModal", v-click-outside="hideView")
 		li.fn-flex.pointer(@click="taggerXRoomL2")
 			span 场景区
-			c-svg.pointer(type="checkmark", :size="12" v-show="editor.xRoomL2 > 0")
+			c-svg.pointer(type="checkmark", :size="12" v-show="editor.current.xRoomL2 > 0")
 		li.fn-flex.pointer(@click="taggerXRoomR1")
 			span 设置区
-			c-svg.pointer(type="checkmark", :size="12" v-show="editor.xRoomR1 > 0")
+			c-svg.pointer(type="checkmark", :size="12" v-show="editor.current.xRoomR1 > 0")
 	.d-footer-bar.fn-flex
 		label.d-footer-hot-keys.fn-flex.flex-row
 			.d-footer-bar-text.pointer.ellipsis(@click="showHotKey = !showHotKey", v-click-outside="hideHotKey") 快捷键
@@ -22,14 +22,14 @@
 import Editor from '@/core/Editor'
 import ItemCard from '@/vue2/components-base/d-footer/item-card.vue'
 import { hotKeys } from '@/vue2/utils'
-import ClickOutside from 'vue-click-outside'
+import { clickOutside } from '@cakev/util'
 
 export default {
 	name: 'left',
 	components: {
 		ItemCard,
 	},
-	directives: { ClickOutside },
+	directives: { clickOutside },
 	data() {
 		return {
 			showHotKey: false,
@@ -40,11 +40,11 @@ export default {
 	},
 	methods: {
 		taggerXRoomL2() {
-			this.editor.taggerXRoomL2()
+			this.editor.current.taggerXRoomL2()
 			this.viewModal = false
 		},
 		taggerXRoomR1() {
-			this.editor.taggerXRoomR1()
+			this.editor.current.taggerXRoomR1()
 			this.viewModal = false
 		},
 		hideHotKey() {

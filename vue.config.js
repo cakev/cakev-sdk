@@ -52,25 +52,8 @@ module.exports = {
 	configureWebpack: config => {
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
 		if (process.env.VUE_APP_BUILD_MODE === 'NPM') {
-			config.externals = [
-				{
-					vue: {
-						root: 'Vue',
-						commonjs: 'vue',
-						commonjs2: 'vue',
-						amd: 'vue',
-					},
-					'vue-router': 'VueRouter',
-				},
-			]
-		} else {
-			config.externals = [
-				{
-					vue: 'Vue',
-					'vue-router': 'VueRouter',
-				},
-			]
-		}
+			// config.externals = [{}]
+		} 
 	},
 	chainWebpack: config => {
 		config.resolve.alias.set('@', resolve('packages'))

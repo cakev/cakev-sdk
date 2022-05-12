@@ -9,8 +9,6 @@ export default class Current extends Factory<Current> {
 	autoAlignGuide = true // 大屏平台状态 是否自动贴靠参考线
 	currentEventDisabled = true // 拖动模式/预览模式 控制组件内部事件关闭
 	sceneAnimate = '' // 当前场景动画
-	activeWidgetId = '' // 被激活的场景对应组件
-	activeSceneId: number | string = 0 // 被激活的场景id
 	contentMove = false // 是否按下了 空格 键，启动内容区拖动
 	widgetMove = false // 组件点击开始拖拽
 	fullscreen = false // 大屏平台状态 是否全屏
@@ -22,14 +20,6 @@ export default class Current extends Factory<Current> {
 	currentWidgetList: string[] = [] // 当前选中组件-多组件
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
-	currentWidgetListConfig = {
-		// 当前选中组件-多组件配置
-		left: 0,
-		top: 0,
-		width: 0,
-		height: 0,
-		z: 0,
-	}
 	currentRightSettingIndex = 0
 
 	constructor(obj: any) {
@@ -40,21 +30,12 @@ export default class Current extends Factory<Current> {
 	clear(): void {
 		this.contentMove = false
 		this.widgetMove = false
-		this.activeSceneId = 0
 		this.currentRightSettingIndex = 0
-		this.activeWidgetId = ''
 		this.sceneAnimate = ''
 		this.widget = null
 		this.currentSceneIndex = 0
 		this.currentWidgetList = []
 		this.currentCreateSceneList = []
-		this.currentWidgetListConfig = {
-			left: 0,
-			top: 0,
-			width: 0,
-			height: 0,
-			z: 0,
-		}
 	}
 
 	taggerXRoomL2(): void {
@@ -109,26 +90,19 @@ export default class Current extends Factory<Current> {
 	unSelectWidgetList(): void {
 		this.currentWidgetList = []
 	}
-	selectWidgetList(config: any): void {
-		this.currentWidgetListConfig = config
-	}
 	/* 选中场景 */
 	selectSceneIndex(val: number | string): void {
 		if (val === undefined || val === null) return
 		this.currentSceneIndex = val
-		this.activeSceneId = val
 	}
 	/* 打开场景 */
 	openScene(id: number | string, animate?: string): void {
 		this.sceneAnimate = animate || this.sceneAnimate
-		this.activeSceneId = id
 		this.currentCreateSceneList.push(id)
 	}
 	/* 关闭场景 */
 	closeScene(id: string): void {
 		const index = this.currentCreateSceneList.findIndex(v => v === id)
 		if (index === -1) return
-		this.activeSceneId = id
-		this.activeWidgetId = ''
 	}
 }

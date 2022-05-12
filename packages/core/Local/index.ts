@@ -1,5 +1,5 @@
 import Factory from '@/core/Base/factory'
-import WidgetConf from '../Widget/conf'
+import WidgetTask from '../Widget/task'
 
 interface widgetType {
 	widgetTypeName: string
@@ -8,14 +8,14 @@ interface widgetType {
 }
 
 export default class Local extends Factory<Local> {
-	widgets: { [key: string]: WidgetConf[] } = {}
+	widgets: { [key: string]: WidgetTask[] } = {}
 	widgetType: widgetType[] = []
 
 	setWidgetTypes(value: widgetType[]): void {
 		this.widgetType = [...this.widgetType, ...value]
 	}
 
-	setWidgets(value: WidgetConf[]): void {
+	setWidgets(value: WidgetTask[]): void {
 		value.forEach(item => {
 			if (this.widgets[item.widgetTypeId]) {
 				this.widgets[item.widgetTypeId].push(item)

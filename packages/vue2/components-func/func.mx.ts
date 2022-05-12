@@ -1,7 +1,4 @@
 import {
-	Button,
-	CheckboxGroup,
-	Checkbox,
 	Upload,
 	Modal,
 } from 'view-design'
@@ -10,14 +7,11 @@ import Editor from '@/core/Editor'
 export default {
 	components: {
 		'i-upload': Upload,
-		'i-button': Button,
 		'i-modal': Modal,
-		CheckboxGroup,
-		Checkbox,
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	props: {

@@ -3,7 +3,7 @@
 #d-editor.d-editor.pos-r(
 	ref="canvas-wrapper",
 	:class="{ fullscreen: editor.current.fullscreen }",
-	:style="{ width: `calc(100% - ${editor.xRoomL2 + editor.xRoomR1}px)`, marginLeft: `${editor.xRoomL2}px` }",
+	:style="{ width: `calc(100% - ${editor.current.xRoomL2 + editor.current.xRoomR1}px)`, marginLeft: `${editor.current.xRoomL2}px` }",
 	@contextmenu.stop.prevent)
 	// 标尺容器
 	d-ruler(ref="rulerCanvas")
@@ -15,13 +15,12 @@
 				:key="lay.widgetId",
 				v-for="lay in showWidgets",
 				:getRefLineParams="getRefLineParams")
-			//dr-more(v-show="editor.currentWidgetList&&editor.currentWidgetList.length>1")
 			.d-editor-line(data-top="0px", data-left="0px")
 			.d-editor-line(:data-top="`${editor.height}px`", data-left="0px")
 			.d-editor-line(
 				data-top="0px",
 				:style="{ width: 0, height: `${editor.height}px` }",
-				:data-left="`${editor.width}px`")
+				:data-left="`${editor.screen.screenWidth}px`")
 			.d-editor-line(data-top="0px", data-left="0px", :style="{ height: `${editor.height}px`, width: 0 }")
 			// 参考线
 			span.ref-line.v-line.pos-a(
@@ -38,11 +37,11 @@
 <script lang="ts">
 import widgetRightMenu from '../right-menu/widget.vue'
 import dRuler from '../d-ruler/index.vue'
-import drMore from '@/vue2/components-base/d-dr-more/index.vue'
 import dFooter from '../d-footer/index.vue'
 import ItemCard from './item-card.vue'
 import Editor from '@/core/Editor'
 import WidgetTask from '@/core/Widget/task'
+import { on, off } from '@cakev/util'
 
 export default {
 	name: 'd-editor',
@@ -50,12 +49,11 @@ export default {
 		ItemCard,
 		dRuler,
 		dFooter,
-		drMore,
 		widgetRightMenu,
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 			vLine: [],
 			hLine: [],
 		}
@@ -64,10 +62,10 @@ export default {
 		canvasStyle(): any {
 			if (this.editor) {
 				return {
-					width: `${this.editor.width}px`,
-					height: `${this.editor.height}px`,
-					backgroundColor: this.editor.backgroundColor,
-					backgroundImage: `url(${this.editor.backgroundImage})`,
+					width: `${this.editor.screen.screenWidth}px`,
+					height: `${this.editor.screen.screenHeight}px`,
+					backgroundColor: this.editor.screen.screenBackGroundColor,
+					backgroundImage: `url(${this.editor.screen.screenBackGroundImage})`,
 					...this.editor.screen.screenFilterStyle,
 				}
 			}
@@ -117,13 +115,13 @@ export default {
 	beforeDestroy(): void {
 		this.editor.current.fullscreen = false
 		this.editor.ruler = null
-		document.removeEventListener('fullscreenchange', this.fullscreenchange)
+		off(document, 'fullscreenchange', this.fullscreenchange)
 	},
 	created() {
 		this.editor.updateEditorStatus('inEdit')
 	},
 	mounted(): void {
-		document.addEventListener('fullscreenchange', this.fullscreenchange)
+		on(document, 'fullscreenchange', this.fullscreenchange)
 	},
 }
 </script>

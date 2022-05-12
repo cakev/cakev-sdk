@@ -1,6 +1,6 @@
-import widgetConf from '@/core/Widget/conf'
+import { WidgetTask } from '@/index'
 
-export default new widgetConf({
+export default new WidgetTask({
 	widgetApi: {
 		data: 'hello world',
 	},

@@ -23,9 +23,9 @@ export const customConfig = [
 		],
 	},
 ]
-import widgetConf from '@/core/Widget/conf'
+import { WidgetTask } from '@/index'
 
-export default new widgetConf({
+export default new WidgetTask({
 	widgetApi: {
 		data: JSON.stringify({ title: '标题' }),
 	},

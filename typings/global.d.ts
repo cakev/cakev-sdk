@@ -1,9 +1,7 @@
 export {}
 declare global {
-	interface Window {
+	interface window {
 		G2: any
-		loadJS: any
-		loadCSS: any
 		cakeVEditorInstance: any
 		cakeV: any
 	}

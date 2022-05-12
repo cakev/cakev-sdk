@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-right-modal-box.z-index-999(:style="{ width: `${editor.xRoomR1}px` }")
+.d-right-modal-box.z-index-999(:style="{ width: `${editor.current.xRoomR1}px` }")
 	.d-right-modal-name.fn-flex.flex-row(v-click-outside="close")
 		span.widget-name-text(v-if="!editName") {{ editor.current.widget.widgetBase.name }}_{{ editor.current.widget.widgetId }}
 		c-input.widget-name(
@@ -17,17 +17,16 @@
 			v-for="(item, index) in title",
 			@click="handleClick(index)",
 			:key="item",
-			:class="{ active: index === editor.currentRightSettingIndex }") {{ item }}
+			:class="{ active: index === editor.current.currentRightSettingIndex }") {{ item }}
 	.d-right-modal
 		itemList(
 			v-for="(item, index) in chooseList",
 			:list="item.key",
-			v-if="editor.currentRightSettingIndex === index")
+			v-if="editor.current.currentRightSettingIndex === index")
 </template>
 <script lang="ts">
 import itemList from './item-list.vue'
-// @ts-ignore
-import ClickOutside from 'vue-click-outside'
+import {clickOutside} from '@cakev/util'
 import Editor from '@/core/Editor'
 
 export default {
@@ -35,11 +34,11 @@ export default {
 	components: {
 		itemList,
 	},
-	directives: { ClickOutside },
+	directives: { clickOutside },
 	data() {
 		return {
 			editName: false,
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 			title: ['基础', '数据', '交互', '自定义'],
 			chooseList: [
 				{

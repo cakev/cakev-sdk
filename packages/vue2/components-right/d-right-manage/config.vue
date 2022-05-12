@@ -11,42 +11,42 @@
 		template(slot="right")
 			c-input(
 				append="W",
-				:value="editor.width",
+				:value="editor.screen.screenWidth",
 				:style="{ width: '100px' }",
-				@on-change="widthChange")
+				@input="widthChange")
 			c-input(
 				append="H",
-				:value="editor.height",
+				:value="editor.screen.screenHeight",
 				:style="{ marginLeft: '10px', width: '100px' }",
-				@on-change="heightChange")
+				@input="heightChange")
 	c-control(label="背景色")
 		template(slot="right")
 			c-color(
-				v-model="editor.backgroundColor",
-				v-if="editor.backgroundColor")
+				v-model="editor.screen.screenBackGroundColor",
+				v-if="editor.screen.screenBackGroundColor")
 	c-control(label="背景图", title="支持jpg，png，gif")
 		template(slot="right")
-			d-upload(v-model="editor.backgroundImage", :data="backGroundFormData")
+			d-upload(v-model="editor.screen.screenBackGroundImage", :data="backGroundFormData")
 	c-control(label="适配模式")
 		template(slot="right")
-			c-select(v-model="editor.layoutMode")
+			c-select(v-model="editor.screen.screenLayoutMode")
 				c-select-option(value="full-size" label="充满页面")
 				c-select-option(value="full-width" label="100%宽度")
 				c-select-option(value="full-height" label="100%高度") 
 	c-control(label="封面", title="支持jpg，png，gif")
 		template(slot="right")
-			d-upload(v-model="editor.avatar", :data="screenAvatarFormData")
+			d-upload(v-model="editor.screen.screenAvatar", :data="screenAvatarFormData")
 	c-control
 		template(slot="right")
-			i-button(
+			c-button(
+				type="primary"
 				@click="screenAvatar",
-				type="primary",
 				:loading="screenAvatarLoading") 截屏
 	c-control(label="首场景")
 		template(slot="right")
-			c-select(filterable, v-model="editor.mainScene")
+			c-select(filterable, v-model="editor.screen.screenMainScene")
 				c-select-option(:value="0" label="主场景")
-				c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
+				c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 </template>
 <script>
 import func from '@/vue2/components-func/func.mx'
@@ -76,8 +76,8 @@ export default {
 	computed: {
 		size: {
 			get() {
-				const width = this.editor.width
-				const height = this.editor.height
+				const width = this.editor.screen.screenWidth
+				const height = this.editor.screen.screenHeight
 				if (width !== 1920 && width !== 1366 && width !== 1024) {
 					return 'other'
 				}
@@ -89,17 +89,21 @@ export default {
 			set(value) {
 				if (value !== 'other' && value) {
 					const [width, height] = value.split('*')
-					this.editor.screenSizeChange({ width: +width, height: +height })
+					this.editor.screen.screenWidth = +width
+					this.editor.screen.screenHeight = +height
+					this.editor.resetZoom()
 				}
 			},
 		},
 	},
 	methods: {
-		widthChange(e) {
-			this.editor.screenSizeChange({ width: +e.target.value })
+		widthChange(value) {
+			this.editor.screen.screenWidth = +value
+			this.editor.resetZoom()
 		},
-		heightChange(e) {
-			this.editor.screenSizeChange({ height: +e.target.value })
+		heightChange(value) {
+			this.editor.screen.screenHeight = +value
+			this.editor.resetZoom()
 		},
 		async screenAvatar() {
 			this.screenAvatarLoading = true
@@ -108,7 +112,7 @@ export default {
 			})
 				.then(res => {
 					this.screenAvatarLoading = false
-					this.editor.avatar = res.url
+					this.editor.screen.screenAvatar = res.url
 				})
 				.catch(e => {
 					console.warnning(e)

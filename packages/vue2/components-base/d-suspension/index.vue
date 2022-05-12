@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-suspension.fn-flex.flex-column.pos-a.z-index-999(:style="{ right: `${editor.xRoomR1 + 20}px` }")
+.d-suspension.fn-flex.flex-column.pos-a.z-index-999(:style="{ right: `${editor.current.xRoomR1 + 20}px` }")
 	c-badge(
 		title="全局请求设置",
 		type="global",

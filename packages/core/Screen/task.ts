@@ -2,12 +2,15 @@
 import Factory from '@/core/Base/factory'
 import WidgetTask from '@/core/Widget/task'
 import LayTask from '@/core/Lay/task'
+import SceneTask from '@/core/Scene/task'
+import Task from '../Scene/task'
 
 export default class ScreenTask extends Factory<ScreenTask> {
 	screenId = '' // 大屏ID
 	screenName = '未命名大屏' // 大屏名
 	screenWidgets: { [key: string]: WidgetTask } = {} // 大屏组件配置
 	screenWidgetsLays: { [key: string]: LayTask } = {} // 大屏组件嵌套规则
+	screenScene: { [key: string]: SceneTask } = {} // 大屏场景
 	screenAvatar = '' // 大屏缩略图
 	screenVersion = '' // 大屏版本号
 	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
@@ -32,6 +35,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	clear(): void {
 		this.screenWidgets = {}
 		this.screenWidgetsLays = {}
+		this.screenScene = {}
 		this.screenLayoutMode = 'full-size'
 		this.screenName = '未命名'
 		this.screenWidth = 1920
@@ -65,26 +69,9 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		this.screenMainScene = res.screenMainScene
 		this.screenWidgets = res.screenWidgets
 		this.screenWidgetsLays = res.screenWidgetsLays
+		this.screenScene = res.screenScene
 		return this
 	}
-
-	// updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
-	// const mergedValue = configMerge(localConfigValue, commonConfigValue(localConfigValue.widgetType))
-	// const target = this.screenWidgets[id]
-	// const inputConfig = Object.freeze(target.config || {})
-	// const res = configMerge(inputConfig, mergedValue)
-	// console.log(res)
-	// res.widget.name = res.widget.name || '未知组件'
-	// if (customConfig) {
-	// 	customConfig.map(item => {
-	// 		if (!item.prop.includes('config.config')) {
-	// 			item.prop = `config.config.${item.prop}`
-	// 		}
-	// 	})
-	// 	res.customConfig = [{ type: 'custom' }, ...customConfig]
-	// }
-	// target.config = res
-	// }
 
 	changeLayoutMode(value: string | null): string {
 		let scaleX = 0,
@@ -146,6 +133,20 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		}
 	}
 
+	// 创建场景
+	createScene(): string {
+		const name = uuid()
+		const scene = new Task(name)
+		this.screenScene = { ...this.screenScene, [name]: scene }
+		return name
+	}
+	/* 删除场景 */
+	destroyScene(index: number | string): void {
+		console.log(index)
+		delete this.screenScene[index]
+		this.screenScene = { ...this.screenScene }
+	}
+	
 	/* 添加组件 */
 	createWidget({
 		offsetX,
@@ -193,7 +194,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 			[widgetId]: lay,
 		}
 	}
-	/* 刷新当前组件 */
+	// 刷新当前组件
 	refreshWidget(widgetId: string): void {
 		const widget = this.screenWidgets[widgetId]
 		const lay = this.screenWidgetsLays[widgetId]
@@ -235,8 +236,8 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		const lay = this.screenWidgetsLays[widgetId]
 		const newWidgetId = uuid()
 		const newWidget = new WidgetTask({ ...JSON.parse(JSON.stringify(widget)), widgetId: newWidgetId })
-		newWidget.widgetLayout.left += 10
-		newWidget.widgetLayout.top += 10
+		newWidget.widgetLayout.left = 10 + Number(newWidget.widgetLayout.left)
+		newWidget.widgetLayout.top = 10 + Number(newWidget.widgetLayout.top)
 		const newLay = new LayTask({ ...lay, widgetId: newWidgetId })
 		this.screenWidgetsLays = { ...this.screenWidgetsLays, [newWidgetId]: newLay }
 		this.screenWidgets = { ...this.screenWidgets, [newWidgetId]: newWidget }
@@ -245,7 +246,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	setWidgetZIndex(widgetId: string, zIndex: number) {
 		this.screenWidgetsLays[widgetId].zIndex = zIndex
 	}
-	/* 更新组件 */
+	// 更新组件
 	// updateComponentTarget(id, target, value): void {
 	// 	switch (target) {
 	// 		case 'config.api.params':
@@ -265,7 +266,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	// 			break
 	// 	}
 	// }
-	/* 更新组件 */
+	// 更新组件
 	// updateComponent(id, config): void {
 	// 	const widgetConfig = this.screenWidgets[id].config.api
 	// 	if (config.params) {

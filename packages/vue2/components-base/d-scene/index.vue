@@ -18,12 +18,6 @@ export default {
 	},
 	computed: {
 		currentAnimate(): string {
-			if (
-				this.editor.current.activeSceneId === this.sceneId ||
-				this.editor.current.currentSceneIndex === this.sceneId
-			) {
-				return `scene-container animated ${this.editor.current.sceneAnimate}`
-			}
 			return 'scene-container'
 		},
 	},

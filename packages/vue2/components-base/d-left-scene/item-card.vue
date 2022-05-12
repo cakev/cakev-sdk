@@ -1,6 +1,6 @@
 <template lang="pug">
 li.pointer.pos-r.d-left-scene-list-li(
-	:class="{ active: editor.currentWidgetList.includes(lay.widgetId) }",
+	:class="{ active: editor.current.currentWidgetList.includes(lay.widgetId) }",
 	@click.stop="handleClick")
 	.parent.fn-flex
 		c-row.d-left-scene-left
@@ -43,10 +43,10 @@ export default {
 	methods: {
 		handleClick(e): void {
 			if (e.shiftKey) {
-				this.editor.selectWidget(this.widget)
+				this.editor.current.selectWidget(this.widget)
 			} else {
-				this.editor.unSelectWidget()
-				this.editor.selectWidget(this.widget)
+				this.editor.current.unSelectWidget()
+				this.editor.current.selectWidget(this.widget)
 			}
 		},
 	},

@@ -22,8 +22,7 @@
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
-// @ts-ignore
-import ClickOutside from 'vue-click-outside'
+import {clickOutside} from '@cakev/util'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
 
 export default {
@@ -31,7 +30,7 @@ export default {
 	components: {
 		ItemCard,
 	},
-	directives: { ClickOutside },
+	directives: { clickOutside },
 	data() {
 		return {
 			editor: Editor.Instance() as Editor,
@@ -62,7 +61,7 @@ export default {
 			this.editor.screen.hideWidget(widgetId)
 		},
 		deleteWidget(): void {
-			const widgetId = this.editor.currentWidgetList[0]
+			const widgetId = this.editor.current.currentWidgetList[0]
 			if (this.editor.currentSceneIndex === -1) {
 				this.$Modal.confirm({
 					title: '是否删除当前组件？',
@@ -92,7 +91,7 @@ export default {
 			}
 		},
 		copyWidget(): void {
-			const widgetId = this.editor.currentWidgetList[0]
+			const widgetId = this.editor.current.currentWidgetList[0]
 			this.editor.screen.copyWidget(widgetId)
 			this.handleUnActive()
 			this.hideRightMenu()
@@ -102,10 +101,10 @@ export default {
 			rightMenu.classList.remove('active')
 		},
 		handleUnActive(): void {
-			this.editor.unSelectWidget()
+			this.editor.current.unSelectWidget()
 		},
 		handleLock(): void {
-			const widgetId = this.editor.currentWidgetList[0]
+			const widgetId = this.editor.current.currentWidgetList[0]
 			this.editor.screen.lockWidget(widgetId)
 			this.hideRightMenu()
 		},

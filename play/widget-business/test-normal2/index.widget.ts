@@ -3,29 +3,12 @@ export const customConfig = [
 		prop: 'title',
 		label: '标题',
 		type: 'func-select',
-		options: ['aaaaa', 'hhhhhhh'],
-	},
-	{
-		prop: 'backgrounds',
-		label: '组',
-		type: 'func-group',
-		children: [
-			{
-				prop: 'background',
-				label: '图片',
-				type: 'func-image',
-			},
-			{
-				prop: 'title',
-				label: '标题',
-				type: 'func-input',
-			},
-		],
+		options: ['a', 'b'],
 	},
 ]
-import widgetConf from '@/core/Widget/conf'
+import { WidgetTask } from '@/index'
 
-export default new widgetConf({
+export default new WidgetTask({
 	widgetApi: {
 		data: JSON.stringify({ title: '标题' }),
 	},
@@ -37,7 +20,7 @@ export default new widgetConf({
 	widgetIs: 'test-normal2',
 	widgetAvatar: require('./snapshot.png'),
 	widgetConfig: {
-		title: 'aaaaa',
+		title: 'a',
 		backgrounds: [
 			{
 				background: '/static/icons/s-progress1-1.svg',

@@ -1,17 +1,10 @@
 <template lang="pug">
-widget-normal(
-	:eventTypes="[ { key: 'click', label: '点击' }, { key: 'mouseover', label: '悬停事件' }, ]")
-	.fn-flex.flex-row.h-title-1(v-if="data")
-		.h-title-1-icon
-		h2(@click="__handleEvent__('click', test)", @mouseover="__handleEvent__('mouseover')") {{ data.title }} {{ config.config.title }}
+.fn-flex.flex-row.h-title-1(v-if="data")
+	.h-title-1-icon
+	h2(@click="__handleEvent__('click', test)", @mouseover="__handleEvent__('mouseover')") {{ data.title }} {{ config.config.title }}
 </template>
 <script lang="ts">
-import { widgetMixin, widgetNormal } from '@'
-// import { value, customConfig } from './index.component'
-
 export default {
-	mixins: [widgetMixin],
-	components: { widgetNormal },
 	data() {
 		return {
 			test: {

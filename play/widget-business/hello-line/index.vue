@@ -1,13 +1,8 @@
 <template lang="pug">
-widget-normal
-	div(:id='id')
+div(:id='id')
 </template>
 <script lang="ts">
-import { widgetMixin, widgetNormal } from '@'
-
 export default {
-	mixins: [widgetMixin],
-	components: { widgetNormal },
 	data() {
 		return {
 			id: `chart${Date.now()}`,
@@ -19,6 +14,7 @@ export default {
 			this.chart.changeData(val)
 		},
 	},
+	props:['cake_data'],
 	mounted(): void {
 		this.chart = new window.G2.Chart({
 			container: this.id,

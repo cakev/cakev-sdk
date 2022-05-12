@@ -9,10 +9,11 @@
 		.content-body-tip.pos-a(
 			:style="{ fontSize: `${(1 / editor.zoom) * 12}px`, bottom: `-${(1 / editor.zoom) * 12 + 24}px` }")
 			span 按住空格可拖动画布
-			label {{ editor.width }}×{{ editor.height }} {{ zoom }}
+			label {{ editor.screen.screenWidth }}×{{ editor.screen.screenHeight }} {{ zoom }}
 </template>
 <script>
 import Editor from '@/core/Editor'
+import { on, off } from '@cakev/util'
 
 export default {
 	name: 'd-ruler',
@@ -48,20 +49,20 @@ export default {
 		mouseUp(e) {
 			if (this.contentDrag) {
 				this.contentDrag = false
-				if (this.editor.contentMove) {
+				if (this.editor.current.contentMove) {
 					document.getElementById(this.editor.rulerContainerId).style.cursor = 'grab'
 				}
 				return
 			}
-			if (this.editor.widgetMove) {
-				this.editor.widgetMove = false
+			if (this.editor.current.widgetMove) {
+				this.editor.current.widgetMove = false
 				return
 			}
 			if (this.kuangMove) {
 				document.getElementById('d-kuang').style.display = 'none'
 				this.kuangMove = false
-				const diffX = (this.editor.width * (1 - this.editor.zoom)) / 2 + this.editor.offsetX
-				const diffY = (this.editor.height * (1 - this.editor.zoom)) / 2 + this.editor.offsetY
+				const diffX = (this.editor.screen.screenWidth * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetX
+				const diffY = (this.editor.screen.screenHeight * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetY
 				const endPointerX = (e.layerX - diffX) / this.editor.zoom
 				const endPointerY = (e.layerY - diffY) / this.editor.zoom
 				if (this.startPointerX === endPointerX || this.startPointerY === endPointerY) return
@@ -69,7 +70,7 @@ export default {
 				const minPointerY = Math.min(this.startPointerY, endPointerY)
 				const maxPointerX = Math.max(this.startPointerX, endPointerX)
 				const maxPointerY = Math.max(this.startPointerY, endPointerY)
-				this.editor.unSelectWidgetList()
+				this.editor.current.unSelectWidgetList()
 				Object.values(this.editor.screen.screenWidgets).forEach((v) => {
 					// 只能框选当前场景下的组件
 					if (this.editor.screen.screenWidgetsLays[v.id].scene === this.editor.currentSceneIndex) {
@@ -87,7 +88,7 @@ export default {
 							minPointerY < widgetEndY &&
 							widgetEndY < maxPointerY
 						) {
-							this.editor.selectWidget(v)
+							this.editor.current.selectWidget(v)
 						}
 					}
 				})
@@ -99,22 +100,22 @@ export default {
 			if (e.buttons !== 1 || e.which !== 1) return
 			this.startX = e.clientX
 			this.startY = e.clientY
-			const diffX = (this.editor.width * (1 - this.editor.zoom)) / 2 + this.editor.offsetX
-			const diffY = (this.editor.height * (1 - this.editor.zoom)) / 2 + this.editor.offsetY
+			const diffX = (this.editor.screen.screenWidth * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetX
+			const diffY = (this.editor.screen.screenHeight * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetY
 			this.startPointerX = (e.layerX - diffX) / this.editor.zoom
 			this.startPointerY = (e.layerY - diffY) / this.editor.zoom
-			if (this.editor.contentMove) {
+			if (this.editor.current.contentMove) {
 				this.contentDrag = true
 				document.getElementById(this.editor.rulerContainerId).style.cursor = 'grabbing'
 			}
-			if (!this.editor.widgetMove && !e.shiftKey) {
-				this.editor.unSelectWidget()
+			if (!this.editor.current.widgetMove && !e.shiftKey) {
+				this.editor.current.unSelectWidget()
 			}
-			if (!this.editor.widgetMove) {
+			if (!this.editor.current.widgetMove) {
 				const rightMenu = document.getElementById('widget-right-menu')
 				rightMenu.classList.remove('active')
 			}
-			if (!this.editor.contentMove && !this.editor.widgetMove && !e.shiftKey) {
+			if (!this.editor.current.contentMove && !this.editor.current.widgetMove && !e.shiftKey) {
 				this.kuangMove = true
 				let kuang = document.getElementById('d-kuang')
 				if (!kuang) {
@@ -139,12 +140,12 @@ export default {
 					this.clientY = clientY
 				}
 				this.contentScrollLeft = Math.ceil(clientX - this.startX)
-				this.editor.offsetX += this.contentScrollLeft
+				this.editor.current.offsetX += this.contentScrollLeft
 				this.contentScrollTop = Math.ceil(clientY - this.startY)
-				this.editor.offsetY += this.contentScrollTop
+				this.editor.current.offsetY += this.contentScrollTop
 				this.editor.ruler.draw({
-					offsetY: this.editor.offsetY,
-					offsetX: this.editor.offsetX,
+					offsetY: this.editor.current.offsetY,
+					offsetX: this.editor.current.offsetX,
 				})
 				this.startX = clientX
 				this.startY = clientY
@@ -173,20 +174,20 @@ export default {
 				}
 			} else {
 				if (e.shiftKey) {
-					this.editor.offsetX += e.wheelDelta > 0 ? 10 : -10
+					this.editor.current.offsetX += e.wheelDelta > 0 ? 10 : -10
 				} else {
-					this.editor.offsetY += e.wheelDelta > 0 ? 10 : -10
+					this.editor.current.offsetY += e.wheelDelta > 0 ? 10 : -10
 				}
 			}
 			this.editor.ruler.draw({
-				offsetY: this.editor.offsetY,
-				offsetX: this.editor.offsetX,
+				offsetY: this.editor.current.offsetY,
+				offsetX: this.editor.current.offsetX,
 				zoom: this.editor.zoom,
 			})
 		},
 
 		keyup() {
-			this.editor.contentMove = false
+			this.editor.current.contentMove = false
 			document.getElementById(this.editor.rulerContainerId).style.cursor = 'auto'
 			// if (e.keyCode === 8 || e.keyCode === 46) {
 			// delete 键 删除
@@ -211,23 +212,23 @@ export default {
 			if (e.keyCode === 187) {
 				this.editor.zoomIn()
 			}
-			if (e.keyCode === 32 && !this.editor.contentMove) {
-				this.editor.contentMove = true
+			if (e.keyCode === 32 && !this.editor.current.contentMove) {
+				this.editor.current.contentMove = true
 				document.getElementById(this.editor.rulerContainerId).style.cursor = 'grab'
 			}
 		},
 	},
 	beforeDestroy() {
-		window.removeEventListener('resize', this.windowResize)
-		document.documentElement.removeEventListener('keydown', this.keydown)
-		document.documentElement.removeEventListener('keyup', this.keyup)
-		document.documentElement.removeEventListener('mouseup', this.mouseUp)
+		off(window,'resize', this.windowResize)
+		off(document,'keydown', this.keydown)
+		off(document,'keyup', this.keyup)
+		off(document,'mouseup', this.mouseUp)
 	},
 	mounted() {
-		window.addEventListener('resize', this.windowResize)
-		document.documentElement.addEventListener('keydown', this.keydown)
-		document.documentElement.addEventListener('keyup', this.keyup)
-		document.documentElement.addEventListener('mouseup', this.mouseUp)
+		on(window,'resize', this.windowResize)
+		on(document,'keydown', this.keydown)
+		on(document,'keyup', this.keyup)
+		on(document,'mouseup', this.mouseUp)
 	},
 }
 </script>

@@ -1,6 +1,6 @@
 <template lang="pug">
 .d-manage-modal-control-base
-	c-collapse(title="基础属性", :show="true")
+	c-collapse(title="基础属性", :value="true")
 		c-control(label="位置")
 			template(slot="right")
 				c-input(
@@ -19,18 +19,29 @@
 			template(slot="right")
 				c-select(v-model="editor.screen.screenWidgetsLays[editor.current.widget.widgetId].scene")
 					c-select-option(:value="0" label="主场景")
-					c-select-option(:value="key", v-for="(item, key) in editor.sceneObj", :key="key" :label="item.name")
+					c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 					c-select-option(:value="-1" label="回收站") 
 		c-control(label="缩放比例")
 			template(slot="right")
 				c-input(v-model="scale" append="%")
+		c-control(label="组件版本")
+			template(slot="right")
+				c-select(
+					placeholder="非组件市场组件无版本管理"
+					:disabled="!editor.current.widget.widgetMarket"
+					v-model="editor.current.widget.widgetBase.version")
+					c-select-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i" :label="item.widgetVersion")
 </template>
 <script lang="ts">
 import func from './func.mx'
 
 export default {
-	name: 'FuncBase',
 	mixins: [func],
+	data() {
+		return {
+			versionList: [],
+		}
+	},
 	computed: {
 		scale: {
 			get() {
@@ -44,6 +55,13 @@ export default {
 				}
 			},
 		},
+	},
+	mounted() {
+		console.log(this.editor.config.api.widgetVersionList)
+		// const res = await getVersionList({
+		// 	widgetType: this.editor.current.widget.type,
+		// })
+		// this.versionList = res
 	},
 }
 </script>

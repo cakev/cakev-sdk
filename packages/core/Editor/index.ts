@@ -1,7 +1,6 @@
 ﻿import Ruler from '@/core/ui/Ruler'
 import { uuid } from '@cakev/util'
-import Agent from '@/core/Editor/agent'
-import WidgetTask from '@/core/Widget/task'
+import Agent from '@/core/Editor/base'
 
 export default class Editor extends Agent {
 	init(res?: any): any {
@@ -64,30 +63,8 @@ export default class Editor extends Agent {
 			? this.currentSceneWidget[this.currentSceneWidget.length - 1].zIndex - 1
 			: 10
 	}
-	/* 删除多个组件 */
-	deleteWidgets(): void {
-		this.currentWidgetList.map(item => {
-			this.screen.screenWidgetsLays[item].scene = -1
-		})
-		this.current.unSelectWidget()
-		this.screen.screenWidgets = { ...this.screen.screenWidgets }
-	}
-	/* 更新大屏组件配置 */
-	updateWidgetConfig(id: string, localConfigValue: any, customConfig: any): any {
-		return this.screen.updateWidgetConfig(id, localConfigValue, customConfig)
-	}
 
 	/* ---------------------------------------------------Scene---------------------------------------------------*/
-	/* 更新场景名称 */
-	setSceneName(name: string): void {
-		this.scene.setSceneName(this.current.currentSceneIndex, name)
-	}
-	/* 创建场景 */
-	createScene(): void {
-		const name = uuid()
-		this.scene.createScene(name)
-		this.current.selectSceneIndex(name)
-	}
 	/* 删除场景 */
 	destroyScene(): void {
 		if (this.current.currentSceneIndex !== 0) {
@@ -106,32 +83,13 @@ export default class Editor extends Agent {
 		}
 		this.screen.screenWidgets = { ...this.screen.screenWidgets }
 	}
-
-	/* 获取大屏组件配置——根据zIndex排序 */
-	get sortByZIndexWidgetsList(): any {
-		const list = []
-		for (const key in this.screen.screenWidgetsLays) {
-			const widget = this.screen.screenWidgets[this.screen.screenWidgetsLays[key].id]
-			if (this.screen.screenWidgetsLays[key].scene === this.current.currentSceneIndex) {
-				list.push(widget)
-			}
-		}
-		list.sort((a, b) => {
-			return b.widgetLayout.zIndex - a.widgetLayout.zIndex - 1
-		})
-		return list
-	}
+	
 	get rulerStyle(): any {
 		return {
 			transform: `translate3d(${this.current.offsetX}px, ${this.current.offsetY}px, 0) scale(${this.current.zoom})`,
-			width: `${this.width + 18 * 2}px`,
-			height: `${this.height + 18 * 2}px`,
+			width: `${this.screen.screenWidth + 18 * 2}px`,
+			height: `${this.screen.screenHeight + 18 * 2}px`,
 		}
-	}
-	screenSizeChange({ width, height }: any = {}): void {
-		if (width) this.screen.screenWidth = width
-		if (height) this.screen.screenHeight = height
-		this.resetZoom()
 	}
 	/* 清除当前场景的组件 */
 	clearWidgetByCurrentScene(): void {
@@ -151,89 +109,5 @@ export default class Editor extends Agent {
 		}
 		this.screen.screenWidgets = { ...this.screen.screenWidgets }
 		this.screen.screenWidgetsLays = { ...this.screen.screenWidgetsLays }
-	}
-
-	/**
-	 * @description 预置事件初始化
-	 */
-	setCustomEventConfig(id: string, val): void {
-		if (val && val.length) {
-			const target = this.screen.screenWidgets[id]
-			target.customEventsConfig = val
-		}
-	}
-
-	/**
-	 * @description 触发事件初始化
-	 */
-	eventTypesSetting(id: string, eventTypes: { key: string; label: string }[]) {
-		if (eventTypes && eventTypes.length) {
-			const target = this.screen.screenWidgets[id]
-			target.eventTypes = eventTypes
-			const obj = {}
-			eventTypes.forEach(item => {
-				if (!obj[item['key']]) obj[item['key']] = []
-			})
-			if (!target.events) {
-				target.events = JSON.parse(JSON.stringify(obj))
-			} else {
-				target.events = JSON.parse(JSON.stringify({ ...obj, ...target.events }))
-			}
-		}
-	}
-	
-	/* 添加到选中组件集合 */
-	selectWidget(widget: WidgetTask) {
-		this.current.selectWidget(widget)
-		if (this.currentWidgetList.length > 1) {
-			this.updateCurrentWidgetListConfig()
-		}
-	}
-
-	updateCurrentWidgetListConfig(): void {
-		let minLeft = null,
-			maxLeft = null,
-			width = 0,
-			height = 0,
-			minTop = null,
-			maxTop = null
-		this.currentWidgetList.map(item => {
-			const m = this.screen.screenWidgets[item]
-			if (minLeft === null) {
-				minLeft = Number(m.widgetLayout.left)
-			}
-			if (maxLeft === null) {
-				maxLeft = Number(m.widgetLayout.left)
-				width = Number(m.widgetLayout.width)
-			}
-			if (minTop === null) {
-				minTop = Number(m.widgetLayout.top)
-			}
-			if (maxTop === null) {
-				maxTop = Number(m.widgetLayout.top)
-				height = Number(m.widgetLayout.height)
-			}
-			if (minLeft > Number(m.widgetLayout.left)) {
-				minLeft = m.widgetLayout.left
-			}
-			if (Number(maxLeft) + Number(width) < Number(m.widgetLayout.left) + Number(m.widgetLayout.width)) {
-				maxLeft = m.widgetLayout.left
-				width = m.widgetLayout.width
-			}
-			if (minTop > Number(m.widgetLayout.top)) {
-				minTop = m.widgetLayout.top
-			}
-			if (Number(maxTop) + Number(height) < Number(m.widgetLayout.top) + Number(m.widgetLayout.height)) {
-				maxTop = m.widgetLayout.top
-				height = m.widgetLayout.height
-			}
-		})
-		this.selectWidgetList({
-			left: minLeft,
-			top: minTop,
-			width: Number(width) + (Number(maxLeft) - Number(minLeft)),
-			height: Number(height) + (Number(maxTop) - Number(minTop)),
-			z: this.currentMaxZIndex,
-		})
 	}
 }

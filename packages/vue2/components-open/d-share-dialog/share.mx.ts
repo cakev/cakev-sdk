@@ -1,4 +1,4 @@
-import { copyText } from '../../utils/index'
+import { copyText } from '@cakev/util'
 import { screenShareUpdate, screenShareDetail } from '../../api/screenShare.api.js'
 import Editor from '@/core/Editor'
 function fixZero(n) {
@@ -47,7 +47,7 @@ export default {
 			event.returnValue = keyCode >= 48 && keyCode <= 57
 		},
 		handleCopy() {
-			copyText(this.shareUrl)
+			copyText(this.shareUrl,()=>console.log('复制成功！'),()=>console.log('复制失败！'))
 		},
 		async closeShare() {
 			await screenShareUpdate({

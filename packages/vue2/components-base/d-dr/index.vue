@@ -7,7 +7,7 @@
 	@click="elementEnable",
 	@mousedown="elementDown",
 	@touchstart="elementTouchDown")
-	template(v-if="editor.currentWidgetList.length === 1")
+	template(v-if="editor.current.currentWidgetList.length === 1")
 		.dr-handle(
 			v-for="handle in actualHandles",
 			:key="handle",
@@ -15,7 +15,7 @@
 			:style="{ display: enabled ? 'block' : 'none', transform: `scale(${returnRatio})` }",
 			@mousedown.stop.prevent="handleDown(handle, $event)",
 			@touchstart.stop.prevent="handleTouchDown(handle, $event)")
-	d-dr-kuang(v-if="editor.currentWidgetList.length === 1")
+	d-dr-kuang(v-if="editor.current.currentWidgetList.length === 1")
 	.dr-tip-top.pos-a(v-if="tipShow", :style="{ top: `-${top}px`, height: `${top}px`, borderWidth: `${returnRatio}px` }")
 		span.pos-a(
 			:style="{ fontSize: `${14 * returnRatio}px`, right: `${5 * returnRatio}px`, bottom: `${30 * returnRatio}px` }") {{ left }}
@@ -31,7 +31,7 @@
 		v-if="editor.current.currentEventDisabled")
 </template>
 <script lang="ts">
-import { addEvent, removeEvent } from './dom'
+import { on, off } from '@cakev/util'
 import dDrKuang from '../d-dr-kuang/index.vue'
 import Editor from '@/core/Editor'
 
@@ -120,7 +120,7 @@ export default {
 			resizing: false,
 			dragging: false,
 			brotherNodes: [],
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	created(): void {
@@ -129,22 +129,22 @@ export default {
 	mounted(): void {
 		this.rawRight = -this.rawWidth - this.rawLeft
 		this.rawBottom = -this.rawHeight - this.rawTop
-		addEvent(document.getElementById('ruler-content'), 'mousedown', this.deselect)
-		addEvent(document.documentElement, 'touchend touchcancel', this.deselect)
+		on(document.getElementById('ruler-content'), 'mousedown', this.deselect)
+		on(document.documentElement, 'touchend touchcancel', this.deselect)
 	},
 	beforeDestroy(): void {
-		removeEvent(document.getElementById('ruler-content'), 'mousedown', this.deselect)
-		removeEvent(document.documentElement, 'touchstart', this.handleUp)
-		removeEvent(document.documentElement, 'mousemove', this.move)
-		removeEvent(document.documentElement, 'touchmove', this.move)
-		removeEvent(document.documentElement, 'mouseup', this.handleUp)
-		removeEvent(document.documentElement, 'touchend touchcancel', this.deselect)
+		off(document.getElementById('ruler-content'), 'mousedown', this.deselect)
+		off(document.documentElement, 'touchstart', this.handleUp)
+		off(document.documentElement, 'mousemove', this.move)
+		off(document.documentElement, 'touchmove', this.move)
+		off(document.documentElement, 'mouseup', this.handleUp)
+		off(document.documentElement, 'touchend touchcancel', this.deselect)
 	},
 	methods: {
 		showRightMenu(e: MouseEvent, widget: any): void {
 			e.preventDefault()
-			this.editor.unSelectWidget()
-			this.editor.selectWidget(widget)
+			this.editor.current.unSelectWidget()
+			this.editor.current.selectWidget(widget)
 			const rightMenu = document.getElementById('widget-right-menu')
 			rightMenu.classList.add('active')
 			if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
@@ -181,7 +181,7 @@ export default {
 			const target = e.target || e.srcElement
 			if (this.$el.contains(target)) {
 				if (this.draggable) {
-					this.editor.widgetMove = true
+					this.editor.current.widgetMove = true
 					this.dragging = true
 				}
 
@@ -201,8 +201,8 @@ export default {
 				this.mouseClickPosition.top = this.top
 				this.mouseClickPosition.bottom = this.bottom
 
-				addEvent(document.documentElement, 'mousemove', this.move)
-				addEvent(document.documentElement, 'mouseup', this.handleUp)
+				on(document.documentElement, 'mousemove', this.move)
+				on(document.documentElement, 'mouseup', this.handleUp)
 			}
 		},
 		// 取消
@@ -215,7 +215,7 @@ export default {
 					this.$emit('deactivated')
 					this.$emit('update:active', false)
 				}
-				removeEvent(document.documentElement, 'mousemove', this.handleMove)
+				off(document.documentElement, 'mousemove', this.handleMove)
 			}
 			this.resetBoundsAndMouseState()
 		},
@@ -241,8 +241,8 @@ export default {
 			this.mouseClickPosition.right = this.right
 			this.mouseClickPosition.top = this.top
 			this.mouseClickPosition.bottom = this.bottom
-			addEvent(document.documentElement, 'mousemove', this.handleMove)
-			addEvent(document.documentElement, 'mouseup', this.handleUp)
+			on(document.documentElement, 'mousemove', this.handleMove)
+			on(document.documentElement, 'mouseup', this.handleUp)
 		},
 		// 移动
 		move(e): void {
@@ -318,7 +318,7 @@ export default {
 				this.$emit('dragstop', this.left, this.top)
 			}
 			this.resetBoundsAndMouseState()
-			removeEvent(document.documentElement, 'mousemove', this.handleMove)
+			off(document.documentElement, 'mousemove', this.handleMove)
 		},
 		// 检测对齐元素
 		snapCheck(): void {
@@ -447,8 +447,8 @@ export default {
 				this.dragging &&
 				this.top > 0 &&
 				this.left > 0 &&
-				this.top < this.editor.height &&
-				this.left < this.editor.width
+				this.top < this.editor.screen.screenHeight &&
+				this.left < this.editor.screen.screenWidth
 			)
 		},
 		style(): any {

@@ -1,21 +1,18 @@
 <template lang="pug">
-widget-normal
-	span.hello-world {{ cake_data }}
+p.hello-world {{  cake_data  }}
 </template>
 <script lang="ts">
-import { widgetMixin, widgetNormal } from '@'
-
 export default {
-	mixins: [widgetMixin],
-	components: { widgetNormal },
+	props: ['cake_data'],
 	mounted() {
 		console.log('111')
-	}
+	},
 }
 </script>
 <style lang="scss" scoped>
 .hello-world {
 	color: #fff;
 	line-height: 32px;
+	text-align: center;
 }
 </style>

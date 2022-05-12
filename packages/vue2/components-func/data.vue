@@ -1,6 +1,6 @@
 <template lang="pug">
 .d-manage-modal-control-data
-	c-collapse(title="数据请求", :show="true")
+	c-collapse(title="数据请求", :value="true")
 		c-control(label="数据类型")
 			template(slot="right")
 				c-select(v-model="apiType", :style="{ width: '208px' }")

@@ -1,7 +1,6 @@
 import { Method } from 'axios'
 
 export default class WidgetTask {
-	widgetId = ''
 	widgetLayout = {
 		width: 300,
 		height: 200,
@@ -9,10 +8,11 @@ export default class WidgetTask {
 		top: 0,
 		scale: 1,
 	}
-	widgetIs = ''
-	widgetType = 'normal'
-	widgetAvatar = ''
-	widgetMarket = false
+	widgetBase = {
+		name: '未知组件',
+		version: '',
+		locked: false,
+	}
 	widgetApi = {
 		url: '',
 		method: 'GET' as Method,
@@ -24,41 +24,42 @@ export default class WidgetTask {
 		processEnable: false,
 		processBody: '',
 	}
-	widgetBase = {
-		name: '未知组件',
-		version: '',
-		locked: false,
-	}
 	widgetConfig = {}
 	widgetAnimation = {
 		transitionEnable: true,
 		enter: 'fadeIn',
-		duration: 600,
+		duration: 1000,
 		delay: 0,
 	}
-	// events = {}
-	constructor({
-		widgetId,
-		widgetLayout,
-		widgetIs,
-		widgetType,
-		widgetAvatar,
-		widgetMarket,
-		widgetApi,
-		widgetBase,
-		widgetConfig,
-	}) {
-		// this.eventTypes = eventTypes
-		// this.events = events
-		// this.widgetMarket = widgetMarket
-		this.widgetId = widgetId
-		this.widgetLayout = widgetLayout
-		this.widgetIs = widgetIs
-		this.widgetType = widgetType
-		this.widgetAvatar = widgetAvatar
-		this.widgetMarket = widgetMarket
-		this.widgetApi = widgetApi
-		this.widgetBase = widgetBase
-		this.widgetConfig = widgetConfig
+	widgetType = 'normal'
+	widgetIs: null | string = null
+	widgetTypeId = ''
+	widgetAvatar = ''
+	widgetId = ''
+	widgetMarket = false
+
+	constructor(obj) {
+		const {
+			widgetLayout,
+			widgetBase,
+			widgetApi,
+			widgetType,
+			widgetConfig,
+			widgetIs,
+			widgetMarket,
+			widgetTypeId,
+			widgetAvatar,
+			widgetId,
+		} = obj
+		if (widgetId) this.widgetId = widgetId
+		if (widgetAvatar) this.widgetAvatar = widgetAvatar
+		if (widgetType) this.widgetType = widgetType
+		if (widgetTypeId) this.widgetTypeId = widgetTypeId
+		if (widgetIs) this.widgetIs = widgetIs
+		this.widgetMarket = !!widgetMarket
+		if (widgetBase) this.widgetBase = { ...this.widgetBase, ...widgetBase }
+		if (widgetLayout) this.widgetLayout = { ...this.widgetLayout, ...widgetLayout }
+		if (widgetApi) this.widgetApi = { ...this.widgetApi, ...widgetApi }
+		if (widgetConfig) this.widgetConfig = { ...this.widgetConfig, ...widgetConfig }
 	}
 }

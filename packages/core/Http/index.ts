@@ -2,7 +2,7 @@ import Task from './task'
 import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 import HttpTask from './task'
-import { usePath, useProcess } from '@/vue2/utils'
+import { usePath, useProcess } from '@cakev/util'
 
 export default class Http extends Factory<Http> {
 	limit = 1

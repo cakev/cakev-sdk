@@ -1,6 +1,6 @@
-import widgetConf from '@/core/Widget/conf'
+import { WidgetTask } from '@/index'
 
-export default new widgetConf({
+export default new WidgetTask({
 	widgetLayout: {
 		width: 500,
 		height: 500,
@@ -24,6 +24,9 @@ export default new widgetConf({
 			{ name: 'Berlin', 月份: 'Jul.', 月均降雨量: 37.4 },
 			{ name: 'Berlin', 月份: 'Aug.', 月均降雨量: 42.4 },
 		]),
+	},
+	widgetBase: {
+		name: '柱形图',
 	},
 	widgetTypeId: '示例一',
 	widgetIs: 'hello-line',

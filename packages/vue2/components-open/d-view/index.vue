@@ -1,13 +1,13 @@
 <template lang="pug">
 #screen(ref="canvas-wrapper", :style="editor.screen.screenStyle")
 	d-scene(:zIndex="1")
-		cakev-widget(
+		c-widget(
 			v-for="lay in sceneWidgets(0)",
 			:lay="lay",
 			:key="lay.widgetId",
 			:children="lay.children",
 			readonly,)
-		cakev-widget(
+		c-widget(
 			v-for="lay in editor.current.currentSceneIndex === 0 ? [] : sceneWidgets(editor.current.currentSceneIndex)",
 			:lay="lay",
 			:key="lay.widgetId",
@@ -18,28 +18,24 @@
 		:key="sceneId",
 		:sceneId="sceneId",
 		:zIndex="index + 2")
-		cakev-widget(
+		c-widget(
 			v-for="lay in sceneWidgets(sceneId)",
 			:lay="lay",
 			:key="lay.widgetId",
 			:children="lay.children",
 			readonly)
 	slot(v-if="editor.marketComponentLoading", name="loading")
-		load-mask(:show="true") 加载中...
+		c-loading(:show="true")
 </template>
 <script>
-import loadMask from '../load-mask/index.vue'
 import dScene from '../../components-base/d-scene/index.vue'
 import Editor from '@/core/Editor'
-import { getQueryString } from '@cakev/util'
-import { loadJs, loadCss } from '@/core/utils'
-import { linkList } from '@/vue2/api/screen.api'
+import { getQueryString, on, off } from '@cakev/util'
 
 export default {
 	name: 'd-view',
 	components: {
 		dScene,
-		loadMask,
 	},
 	data() {
 		return {
@@ -68,7 +64,7 @@ export default {
 				default:
 					this.currentLayoutMode = 'full-size'
 			}
-			document.getElementById('screen').style.transform = this.editor.changeLayoutMode(this.currentLayoutMode)
+			document.getElementById('screen').style.transform = this.editor.screen.changeLayoutMode(this.currentLayoutMode)
 		},
 		init(e) {
 			if (
@@ -86,35 +82,12 @@ export default {
 				this.layoutModeChange()
 			}
 		},
-		async loadExtraLink() {
-			const res = await linkList({ screenId: this.$route.params.id })
-			if (!res.length) return
-			const arr = []
-			for (let i = 0; i < res.length; i++) {
-				if (res[i].linkType === 'javascript' || res[i].linkType === 'iconfont') {
-					arr.push(loadJs(res[i].linkUrl, res[i].linkUrl))
-				} else if (res[i].linkType === 'css') {
-					arr.push(loadCss(res[i].linkUrl, res[i].linkUrl))
-				}
-			}
-			await Promise.all(arr)
-		},
 	},
 	beforeDestroy() {
-		document.documentElement.removeEventListener('keydown', this.init)
+		off(document, 'keydown', this.init)
 	},
 	mounted() {
-		document.documentElement.addEventListener('keydown', this.init)
-	},
-	async created() {
-		await this.loadExtraLink()
+		on(document, 'keydown', this.init)
 	},
 }
 </script>
-<style lang="scss" scoped>
-::v-deep {
-	.load-mask {
-		position: fixed !important;
-	}
-}
-</style>

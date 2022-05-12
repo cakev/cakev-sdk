@@ -5,25 +5,25 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 		label 开启分享
 		c-switch(v-model="openShare", :style="{ marginLeft: '10px' }")
 	.fn-flex.flex-row(:style="{ marginBottom: '10px' }", v-if="openShare")
-		label.ivu-btn.d-detail-share-button(
+		c-button.d-detail-share-button(
 			:style="{ borderRadius: '2px 0 0 2px' }",
-			:class="{ 'ivu-btn-primary': shareType === 'ALL' }",
+			:type="shareType === 'ALL'?'primary': ''"
 			@click="shareSubmit('ALL')") 不限制
-		label.ivu-btn.d-detail-share-button(
-			:class="{ 'ivu-btn-primary': shareType === 'PASSWORD' }",
+		c-button.d-detail-share-button(
+			:type="shareType === 'PASSWORD'?'primary': ''"
 			@click="shareSubmit('PASSWORD')") 加密分享
-		label.ivu-btn.d-detail-share-button(
+		c-button.d-detail-share-button(
+			:type="shareType === 'TIME'?'primary': ''"
 			:style="{ borderRadius: '0 2px 2px 0' }",
-			:class="{ 'ivu-btn-primary': shareType === 'TIME' }",
 			@click="shareSubmit('TIME')") 时效分享
 	.fn-flex.flex-row(:style="{ marginBottom: '10px', alignItems: 'center' }")
-		i-input(
+		c-input(
 			v-show="shareType === 'PASSWORD'",
 			:style="{ width: '150px' }",
 			@on-change="shareSubmit('PASSWORD')",
 			v-model="sharePassword")
 			span(slot="prepend") 密钥
-		i-input(
+		c-input(
 			v-show="shareType === 'TIME'",
 			:style="{ width: '150px' }",
 			@on-change="shareSubmit('TIME')",
@@ -41,13 +41,12 @@ i-modal.check-modal(v-model="modalShow", :footer-hide="true")
 			v-model="shareUrl")
 </template>
 <script>
-import { Modal, Button } from 'view-design'
+import { Modal } from 'view-design'
 import shareMx from './share.mx'
 
 export default {
 	name: 'DShareDialog',
 	components: {
-		'i-button': Button,
 		'i-modal': Modal,
 	},
 	mixins: [shareMx],

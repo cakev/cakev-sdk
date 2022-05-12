@@ -7,7 +7,7 @@ dr(
 	:draggable="widgetEditable(widget)",
 	:resizable="widgetEditable(widget)",
 	:scale="widget.widgetLayout.scale",
-	:active="editor.currentWidgetList.includes(lay.widgetId) && widgetEditable(widget)",
+	:active="editor.current.currentWidgetList.includes(lay.widgetId) && widgetEditable(widget)",
 	:w="widget.widgetLayout.width",
 	:h="widget.widgetLayout.height",
 	:x="widget.widgetLayout.left",
@@ -22,9 +22,7 @@ dr(
 	@dragstop="onDragStop",
 	@on-click="handleClick($event, widget)",
 	@contextmenu.native.stop="showRightMenu($event, widget)")
-	cakev-widget(
-		:lay="lay",
-		:children="editor.screen.screenWidgetsLays[lay.widgetId].children")
+	c-widget(:lay="lay",)
 </template>
 <script lang="ts">
 import dr from '@/vue2/components-base/d-dr/index.vue'
@@ -40,7 +38,7 @@ export default {
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	props: {
@@ -63,16 +61,16 @@ export default {
 	methods: {
 		handleClick(e, widget): void {
 			if (e.shiftKey) {
-				this.editor.selectWidget(widget)
+				this.editor.current.selectWidget(widget)
 			} else {
-				this.editor.unSelectWidget()
-				this.editor.selectWidget(widget)
+				this.editor.current.unSelectWidget()
+				this.editor.current.selectWidget(widget)
 			}
 		},
 		showRightMenu(e: MouseEvent, widget: any): void {
 			e.preventDefault()
-			this.editor.unSelectWidget()
-			this.editor.selectWidget(widget)
+			this.editor.current.unSelectWidget()
+			this.editor.current.selectWidget(widget)
 			const rightMenu = document.getElementById('widget-right-menu')
 			rightMenu.classList.add('active')
 			if (e.clientY + rightMenu.scrollHeight > window.innerHeight) {
@@ -89,7 +87,7 @@ export default {
 				this.editor.current.widget.widgetLayout.left = left
 				this.editor.current.widget.widgetLayout.top = top
 				this.onGroupDragStop(
-					this.editor.screen.screenWidgetsLays[this.editor.currentWidgetList[0]],
+					this.editor.screen.screenWidgetsLays[this.editor.current.currentWidgetList[0]],
 					diffLeft,
 					diffTop,
 				)
