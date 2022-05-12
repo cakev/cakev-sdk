@@ -22,8 +22,9 @@
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
-import {clickOutside} from '@cakev/util'
+import { clickOutside } from '@cakev/util'
 import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
+import { CModal } from '@cakev/ui'
 
 export default {
 	name: 'right-menu',
@@ -63,7 +64,7 @@ export default {
 		deleteWidget(): void {
 			const widgetId = this.editor.current.currentWidgetList[0]
 			if (this.editor.currentSceneIndex === -1) {
-				this.$Modal.confirm({
+				CModal.confirm({
 					title: '是否删除当前组件？',
 					content: '该组件将永久消失！',
 					onOk: () => {
@@ -76,7 +77,7 @@ export default {
 					},
 				})
 			} else {
-				this.$Modal.confirm({
+				CModal.confirm({
 					title: '是否删除当前组件？',
 					content: '该组件将自动进入回收站！',
 					onOk: () => {

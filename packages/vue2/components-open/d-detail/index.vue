@@ -18,6 +18,7 @@
 import { downloadFile } from '@cakev/util'
 import Editor from '@/core/Editor'
 import left from './left.vue'
+import { CModal, CNotice } from '@cakev/ui'
 
 export default {
 	name: 'd-detail',
@@ -40,12 +41,14 @@ export default {
 		preview() {
 			const scene = this.editor.screen.screenMainScene ? `&scene=${this.editor.screen.screenMainScene}` : ''
 			this.editor.screenCache.add('previewData', this.editor.screen).then(() => {
-				window.open(`${location.origin}/detail/preview?layoutMode=${this.editor.screen.screenLayoutMode}${scene}`)
+				window.open(
+					`${location.origin}/detail/preview?layoutMode=${this.editor.screen.screenLayoutMode}${scene}`,
+				)
 			})
 		},
 		handleExport() {
 			const fileName = this.editor.screen.screenName
-			this.$Modal.confirm({
+			CModal.confirm({
 				title: `导出文件：${fileName}.json`,
 				content: '可用于看板数据备份、迁移。',
 				onOk: () => {
@@ -67,21 +70,18 @@ export default {
 				} catch (e) {
 					console.error(e)
 					this.loading = false
-					this.$Message.error('配置文件识别失败')
+					CNotice.info({ content: '配置文件识别失败' })
 				}
 			}
 			reader.onerror = () => {
 				this.loading = false
-				this.$Message.error('配置文件识别失败')
+				CNotice.info({ content: '配置文件识别失败' })
 			}
 			reader.readAsText(file)
 		},
 	},
 	beforeDestroy() {
 		this.editor.clear()
-	},
-	mounted() {
-		this.editor.init()
 	},
 }
 </script>

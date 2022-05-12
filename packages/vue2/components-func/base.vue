@@ -33,13 +33,14 @@
 					c-select-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i" :label="item.widgetVersion")
 </template>
 <script lang="ts">
-import func from './func.mx'
+
+import Editor from '@/core/Editor';
 
 export default {
-	mixins: [func],
 	data() {
 		return {
 			versionList: [],
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	computed: {

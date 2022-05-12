@@ -46,14 +46,18 @@
 					v-model="editor.current.widget.widgetApi.autoFetchDuration")
 </template>
 <script lang="ts">
-import func from '@/vue2/components-func/func.mx'
 import DataEvent from '@/vue2/components-right/data-event/index.vue'
+import Editor from '@/core/Editor'
 
 export default {
 	name: 'func-data',
-	mixins: [func],
 	components: {
 		DataEvent,
+	},
+	data() {
+		return {
+			editor: Editor.Instance() as Editor,
+		}
 	},
 	methods: {
 		updateData(val: any): void {

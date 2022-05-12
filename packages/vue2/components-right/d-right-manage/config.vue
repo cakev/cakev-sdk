@@ -48,19 +48,17 @@
 				c-select-option(:value="0" label="主场景")
 				c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 </template>
-<script>
-import func from '@/vue2/components-func/func.mx'
+<script lang="ts">
 import html2canvas from 'html2canvas'
 import dUpload from '@/vue2/components-right/d-upload/index.vue'
 import Editor from '@/core/Editor'
-import { file } from '@/vue2/api/upload.api'
+import { CNotice } from '@cakev/ui'
 
 export default {
 	name: 'func-config',
 	components: {
 		dUpload,
 	},
-	mixins: [func],
 	data() {
 		return {
 			backGroundFormData: {
@@ -70,7 +68,7 @@ export default {
 				library: 'screenAvatar',
 			},
 			screenAvatarLoading: false,
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	computed: {
@@ -117,7 +115,7 @@ export default {
 				.catch(e => {
 					console.warnning(e)
 					this.screenAvatarLoading = false
-					this.$Message.error('截屏创建失败')
+					CNotice.error({ content: '截屏创建失败' })
 				})
 		},
 
@@ -129,11 +127,11 @@ export default {
 			const data = new FormData()
 			data.append('file', blob, name)
 			data.append('library', 'screenAvatar')
-			file(data)
-				.then(data => {
-					resolve(data)
-				})
-				.catch(reject)
+			// file(data)
+			// 	.then(data => {
+			// 		resolve(data)
+			// 	})
+			// 	.catch(reject)
 		},
 
 		/**
@@ -162,7 +160,7 @@ export default {
 							}
 						} catch (e) {
 							if (e.message.indexOf('Tainted canvases') > -1) {
-								this.$Message.warning('外部素材可能导致截屏异常')
+								CNotice.error({content:'外部素材可能导致截屏异常'})
 							}
 							reject(e)
 						}

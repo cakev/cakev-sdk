@@ -61,13 +61,6 @@ module.exports = {
 			args[0]['process.env'].version = JSON.stringify(pkg.version)
 			return args
 		})
-		config.module.rule('vue').use('iview').loader('iview-loader').options({ prefix: false })
-		config.module
-			.rule('view-design')
-			.test(/view-design.src.*?js$/)
-			.use('babel')
-			.loader('babel-loader')
-			.end()
 		if (isProduction) {
 			config.plugins.delete('prefetch')
 			config.plugins.delete('prefetch')

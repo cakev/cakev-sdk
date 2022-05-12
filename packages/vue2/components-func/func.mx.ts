@@ -1,14 +1,6 @@
-import {
-	Upload,
-	Modal,
-} from 'view-design'
 import Editor from '@/core/Editor'
 
 export default {
-	components: {
-		'i-upload': Upload,
-		'i-modal': Modal,
-	},
 	data() {
 		return {
 			editor: Editor.Instance() as Editor,
@@ -48,25 +40,6 @@ export default {
 			if (!this.fixedConfig.prop) return null
 			const props = this.fixedConfig.prop.split('.')
 			return props.reverse()[0]
-		},
-	},
-	methods: {
-		getItemValue(keyString) {
-			let res = this.editor.current.widget
-			const props = keyString.split('.')
-			props.forEach(v => {
-				res = res[v]
-			})
-			return res
-		},
-		getItemObj(keyString) {
-			let res = this.editor.current.widget
-			const props = keyString.split('.')
-			props.length = props.length - 1
-			props.forEach(v => {
-				res = res[v]
-			})
-			return res
 		},
 	},
 }

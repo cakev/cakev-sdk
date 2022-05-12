@@ -54,22 +54,20 @@
 			filterable,
 			placeholder="场景过度动画",
 			v-model="editor.current.widget.events[eventType][activeIndex].animate")
-			c-select-option(:value="k", v-for="(k, i) in animates", :key="i") {{ k }}
+			c-select-option(:value="k", v-for="(k, i) in editor.config.animations", :key="i") {{ k }}
 </template>
 <script lang="ts">
-import func from '@/vue2/components-func/func.mx'
-import { animates } from '@/vue2/components-func/config.js'
+import Editor from '@/core/Editor'
 
 export default {
 	name: 'func-data',
-	mixins: [func],
 	props: {
 		activeIndex: {},
 		eventType: {},
 	},
 	data() {
 		return {
-			animates: animates,
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	computed: {

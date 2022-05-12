@@ -42,19 +42,14 @@
 			@click="handleRemove")
 </template>
 <script>
-import { baseURL } from '@/vue2/api/request.js'
-import { Upload, Icon, Progress } from 'view-design'
+// import { Upload, Icon, Progress } from 'view-design'
+import { CNotice } from '@cakev/ui'
 
 export default {
 	name: 'd-upload',
-	components: {
-		'i-upload': Upload,
-		'i-icon': Icon,
-		'i-progress': Progress,
-	},
 	props: {
 		action: {
-			default: `${baseURL}/upload/file`,
+			default: `/upload/file`,
 		},
 		data: {},
 		accept: {},
@@ -91,7 +86,7 @@ export default {
 		handleBeforeUpload(file) {
 			if (this.type === 'img') {
 				if (file.size > 1024 * 1024) {
-					this.$Message.error('图片大小不能超过1M')
+					CNotice.error({ content: '图片大小不能超过1M' })
 					return false
 				}
 			}

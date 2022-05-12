@@ -10,6 +10,7 @@ import IndexDB from '@/core/IndexDB'
 
 const db = new IndexDB()
 const rulerContainerId = `drag-content-${+new Date()}`
+
 export default class EditorBase extends Factory<EditorBase> {
 	screen: ScreenTask = ScreenTask.Instance()
 	current: Current = Current.Instance({
@@ -19,10 +20,10 @@ export default class EditorBase extends Factory<EditorBase> {
 	config: Config = Config.Instance()
 	local: Local = Local.Instance()
 	screenCache: ScreenCache = ScreenCache.Instance(db)
-	ruler: Ruler | null=null
+	ruler: Ruler | null = null
 	rulerContainerId = rulerContainerId
 	/* 大屏ID */
-	screenId=''
+	screenId = ''
 	/* 大屏状态 inEdit  在编辑器中  inPreview 在预览中 */
 	editorStatus = 'inPreview'
 	/* 组件加载 */
@@ -48,18 +49,6 @@ export default class EditorBase extends Factory<EditorBase> {
 	selectRightSettingIndex(index: number): void {
 		this.current.currentRightSettingIndex = index
 	}
-	// get activeWidgetId(): string {
-	// 	return this.current.activeWidgetId
-	// }
-	// set activeWidgetId(val: string) {
-	// 	this.current.activeWidgetId = val
-	// }
-	// get activeSceneId(): number | string {
-	// 	return this.current.activeSceneId
-	// }
-	// set activeSceneId(val: number | string) {
-	// 	this.current.activeSceneId = val
-	// }
 	/* 当前场景 */
 	get currentSceneIndex(): string | number {
 		return this.current.currentSceneIndex

@@ -11,18 +11,22 @@ div
 			item-card(:activeIndex="dataDefault.activeIndex", :eventType="item['key']")
 </template>
 <script lang="ts">
-import func from '@/vue2/components-func/func.mx'
 import ItemCard from './item-card.vue'
+import Editor from '@/core/Editor'
 
 export default {
 	name: 'data-event',
-	mixins: [func],
 	components: {
 		ItemCard,
 	},
+	data() {
+		return {
+			editor: Editor.Instance() as Editor,
+		}
+	},
 	methods: {
 		handleAddClick(eventType: string): void {
-			this.editor.current.current.widget.events[eventType].push({
+			this.editor.current.widget.events[eventType].push({
 				ids: [],
 				id: '',
 				animate: '',

@@ -115,85 +115,13 @@ body {
 	transition: opacity 0.5s;
 }
 
-.ivu-modal-content {
-	background-color: #2d2f38;
-}
-
-.ivu-modal-header {
-	padding: 16px 0 0 0;
-	text-align: center;
-	border: none;
-}
-
-.ivu-modal-header-inner {
-	color: var(--white);
-}
-
-.ivu-modal-close {
-	.ivu-icon {
-		color: var(--white);
-	}
-
-	&:hover {
-		.ivu-icon {
-			color: var(--themeColor);
-		}
-	}
-}
-
-.ivu-modal-confirm-head-title {
-	color: var(--white);
-}
-
-.ivu-modal-footer {
-	border: none;
-}
-
-.ivu-modal-mask {
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-.ivu-modal-body {
-	color: var(--white);
-
-	.ivu-form-item-label {
-		color: var(--white);
-	}
-
-	.ivu-radio-group-button {
-		display: block;
-	}
-
-	&::-webkit-scrollbar {
-		width: 4px;
-		height: 1px;
-		transition: all 0.3s;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background: rgba(83, 83, 83, 0);
-		border-radius: 10px;
-		transition: all 0.3s;
-	}
-
-	&::-webkit-scrollbar-track {
-		background: rgba(237, 237, 237, 0);
-		border-radius: 10px;
-		transition: all 0.3s;
-	}
-
-	&:hover {
-		&::-webkit-scrollbar-thumb {
-			background: rgba(83, 83, 83, 1);
-		}
-
-		&::-webkit-scrollbar-track {
-			background: rgba(237, 237, 237, 1);
-		}
-	}
-}
-
 .ivu-tooltip-rel {
 	display: flex;
 	align-items: center;
+}
+
+
+.c-drawer-right {
+	top: 60px!important;
+	height: calc(100vh - 60px) !important;
 }

@@ -7,7 +7,7 @@
 			@icon-append-click="editScene = false"
 			v-model="editor.screen.screenScene[editor.currentSceneIndex].name", 
 			v-if="editScene")
-		c-select(v-model="editor.current.currentSceneIndex", v-if="!editScene", @change="changeSceneIndex")
+		c-select(v-model="editor.current.currentSceneIndex", v-if="!editScene")
 			c-select-option(:value="0" label="主场景")
 			c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 			c-select-option(:value="-1" label="回收站") 
@@ -29,6 +29,7 @@
 import ItemCard from './item-card.vue'
 import draggable from 'vuedraggable'
 import Editor from '@/core/Editor'
+import { CModal } from '@cakev/ui'
 
 export default {
 	name: 'd-left-scene',
@@ -43,9 +44,6 @@ export default {
 		}
 	},
 	methods: {
-		changeSceneIndex(index: string | number): void {
-			this.editor.current.selectSceneIndex(index)
-		},
 		handleEdit(): void {
 			this.editScene = true
 		},
@@ -54,42 +52,37 @@ export default {
 			this.editor.current.selectSceneIndex(index)
 		},
 		handleDestroy(): void {
-			this.$Modal.confirm({
+			CModal.confirm({
 				title: '是否删除当前场景？',
 				content: '该场景未删除的组件将自动进入回收站！',
 				onOk: () => {
-					this.editor.clearWidgetByCurrentScene()
+					this.editor.screen.destroySceneWidgets(this.editor.currentSceneIndex)
 					this.editor.screen.destroyScene(this.editor.currentSceneIndex)
 					this.editor.current.selectSceneIndex(-1)
+					this.editor.current.unSelectWidget()
 				},
 			})
 		},
 		handleClear(): void {
-			if (this.editor.currentSceneIndex === -1) {
-				this.$Modal.confirm({
-					title: '是否清空回收站？',
-					content: '回收站的组件将被清空！',
-					onOk: () => {
-						this.editor.clearWidgetByCurrentScene()
-					},
-				})
-			} else {
-				this.$Modal.confirm({
-					title: '是否清空当前场景？',
-					content: '删除的组件将自动进入回收站！',
-					onOk: () => {
-						this.editor.clearWidgetByCurrentScene()
-					},
-				})
-			}
+			const title = this.editor.currentSceneIndex === -1 ? '是否清空当前场景？' : '是否清空回收站？'
+			const content =
+				this.editor.currentSceneIndex === -1 ? '删除的组件将自动进入回收站！' : '回收站的组件将被清空！'
+			CModal.confirm({
+				title,
+				content,
+				onOk: () => {
+					this.editor.screen.destroySceneWidgets(this.editor.currentSceneIndex)
+					this.editor.current.unSelectWidget()
+				},
+			})
 		},
 		sceneWidgetDragEnd(e): void {
 			const oldLay =
-				this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.oldIndex].widgetId]
+				this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e['moved']['oldIndex']]['widgetId']]
 			const newLay =
-				this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e.moved.newIndex].widgetId]
+				this.editor.screen.screenWidgetsLays[this.editor.currentSceneWidget[e['moved']['newIndex']]['widgetId']]
 			if (oldLay.zIndex === newLay.zIndex) {
-				if (e.moved.newIndex > e.moved.oldIndex) {
+				if (e['moved']['newIndex'] > e['moved']['oldIndex']) {
 					newLay.zIndex++
 				} else {
 					oldLay.zIndex++

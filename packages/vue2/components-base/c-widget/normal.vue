@@ -1,6 +1,5 @@
 <script lang="ts">
 import Editor from '@/core/Editor'
-import { use } from '@/vue2/api/marketComponent.api'
 import WidgetTask from '../../../core/Widget/task'
 
 export default {
@@ -19,9 +18,6 @@ export default {
 			editor: Editor.Instance() as Editor,
 		}
 	},
-	beforeDestroy(): void {
-		this.editor.http.abortOne(this.widget.widgetId)
-	},
 	methods: {
 		request() {
 			if (!this.widget.widgetApi.url) return
@@ -35,25 +31,25 @@ export default {
 			const version = this.widget.widgetBase.version
 			const widgetIs = this.widget.widgetIs
 			if (!this.editor.widgetLoaded[`${widgetIs}${version}`]) {
-				use({
-					widgetType: widgetIs,
-					widgetVersion: version,
-				})
-					.then(res => {
-						const script = document.createElement('script')
-						script.onload = () => {
-							this.editor.updateWidgetLoaded(`${widgetIs}${version}`)
-						}
-						if (res) {
-							script.src = res.componentJsUrl
-							document.head.appendChild(script)
-						} else {
-							console.error(`${widgetIs}${version}加载组件失败`)
-						}
-					})
-					.catch(() => {
-						console.error(`${widgetIs}${version}加载组件失败`)
-					})
+				// use({
+				// 	widgetType: widgetIs,
+				// 	widgetVersion: version,
+				// })
+				// 	.then(res => {
+				// 		const script = document.createElement('script')
+				// 		script.onload = () => {
+				// 			this.editor.updateWidgetLoaded(`${widgetIs}${version}`)
+				// 		}
+				// 		if (res) {
+				// 			script.src = res.componentJsUrl
+				// 			document.head.appendChild(script)
+				// 		} else {
+				// 			console.error(`${widgetIs}${version}加载组件失败`)
+				// 		}
+				// 	})
+				// 	.catch(() => {
+				// 		console.error(`${widgetIs}${version}加载组件失败`)
+				// 	})
 			}
 		},
 	},

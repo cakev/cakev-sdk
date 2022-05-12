@@ -1,9 +1,8 @@
 ﻿import { getQueryString, uuid } from '@cakev/util'
 import Factory from '@/core/Base/factory'
 import WidgetTask from '@/core/Widget/task'
-import LayTask from '@/core/Lay/task'
-import SceneTask from '@/core/Scene/task'
-import Task from '../Scene/task'
+import LayTask from './lay'
+import SceneTask from './scene'
 
 export default class ScreenTask extends Factory<ScreenTask> {
 	screenId = '' // 大屏ID
@@ -136,17 +135,35 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	// 创建场景
 	createScene(): string {
 		const name = uuid()
-		const scene = new Task(name)
+		const scene = new SceneTask(name)
 		this.screenScene = { ...this.screenScene, [name]: scene }
 		return name
 	}
 	/* 删除场景 */
 	destroyScene(index: number | string): void {
-		console.log(index)
 		delete this.screenScene[index]
 		this.screenScene = { ...this.screenScene }
 	}
-	
+	// 删除场景中组件 场景中组件 移入回收站
+	destroySceneWidgets(index: number | string): void {
+		if (index === -1) {
+			for (const key in this.screenWidgetsLays) {
+				if (this.screenWidgetsLays[key].scene === -1) {
+					delete this.screenWidgets[key]
+					delete this.screenWidgetsLays[key]
+				}
+			}
+		} else {
+			for (const key in this.screenWidgetsLays) {
+				if (this.screenWidgetsLays[key].scene === index) {
+					this.screenWidgetsLays[key].scene = -1
+				}
+			}
+		}
+		this.screenWidgetsLays = { ...this.screenWidgetsLays }
+		this.screenWidgets = { ...this.screenWidgets }
+	}
+
 	/* 添加组件 */
 	createWidget({
 		offsetX,
