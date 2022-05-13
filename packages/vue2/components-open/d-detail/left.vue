@@ -1,7 +1,7 @@
 <template lang="pug">
 .d-detail-left.fn-flex
 	.d-detail-title.fn-flex.pointer(:title="editor.screen.screenName", @click="editName = true")
-		c-input(width="152px" v-model="editor.screen.screenName", v-if="editName", @blur="editName = false", :autofocus="true")
+		c-input(width="238px" v-model="editor.screen.screenName", v-if="editName", @blur="editName = false", :autofocus="true")
 		span.fn-flex.ellipsis(v-else) {{ editor.screen.screenName }}
 	widget
 </template>
@@ -25,18 +25,16 @@ export default {
 <style lang="scss" scoped>
 .d-detail-title {
 	align-items: center;
-	margin-right: auto;
-	font-size: 15px;
-	color: var(--text-tab);
-	margin-left: 20px;
+	margin: 0 20px;
 	span {
 		align-items: center;
-		width: 152px;
+		width: 238px;
 		height: 30px;
-		padding: 0 8px;
-
+		padding: 4px 8px;
+		border: 1px solid transparent;
+		border-radius: var(--panelBorderRadius);
 		&:hover {
-			background-color: #30333d;
+			border: 1px solid var(--contentBorderColor);
 		}
 	}
 }

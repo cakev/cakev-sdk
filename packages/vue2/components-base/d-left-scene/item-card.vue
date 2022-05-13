@@ -55,33 +55,19 @@ export default {
 <style lang="scss" scoped>
 .d-left-scene-list-li {
 	margin: 10px 0;
-	font-size: 12px;
-	border: 1px solid #393b4a;
-
+	border: 1px solid var(--contentBorderColor);
+	transition: all 0.3s;
 	.parent {
 		padding: 10px;
 	}
 
-	h3,
-	p {
-		font-size: 12px;
-		font-weight: normal;
-	}
-
-	h2 {
-		font-size: 14px;
-		font-weight: normal;
-		color: #fff;
-	}
-
 	&.active {
-		color: var(--white);
 		background-color: var(--themeColor);
-		border-color: var(--themeColor);
 	}
 
 	&:hover {
-		border-color: var(--themeColor);
+		background-color: var(--contentBorderColor);
+		box-shadow: var(--panelBoxshowColor);
 	}
 }
 

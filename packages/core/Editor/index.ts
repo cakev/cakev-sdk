@@ -1,5 +1,4 @@
-﻿import Ruler from '@/core/ui/Ruler'
-import Agent from '@/core/Editor/base'
+﻿import Agent from '@/core/Editor/base'
 
 export default class Editor extends Agent {
 	init(res?: any): any {
@@ -20,29 +19,22 @@ export default class Editor extends Agent {
 	/* 放大画布 */
 	zoomIn(step = 2): void {
 		this.current.zoomIn(step)
-		this.ruler.draw({
-			zoom: this.current.zoom,
-		})
 	}
 	/* 缩小画布 */
 	zoomOut(step = 2): void {
 		this.current.zoomOut(step)
-		this.ruler.draw({
-			zoom: this.current.zoom,
-		})
 	}
 	/* 画布还原最佳比例 */
 	resetZoom(): void {
 		if (this.editorStatus === 'inEdit') {
-			if (!this.ruler) this.ruler = new Ruler(this.rulerContainerId)
-			this.ruler.resetZoom({
-				screenHeight: this.screen.screenHeight,
-				screenWidth: this.screen.screenWidth,
-			})
-			this.current.resetZoom({
-				screenHeight: this.screen.screenHeight,
-				screenWidth: this.screen.screenWidth,
-			})
+			// this.ruler.resetZoom({
+			// 	screenHeight: this.screen.screenHeight,
+			// 	screenWidth: this.screen.screenWidth,
+			// })
+			// this.current.resetZoom({
+			// 	screenHeight: this.screen.screenHeight,
+			// 	screenWidth: this.screen.screenWidth,
+			// })
 		}
 	}
 	get currentSceneWidget() {

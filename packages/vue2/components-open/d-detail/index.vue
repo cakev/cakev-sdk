@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-detail.fn-flex(v-if="show")
+header.d-detail.fn-flex(v-if="show")
 	left
 	input#originFile.fn-hide(type="file", accept="application/json", @change="handleFile")
 	ul.d-detail-right.fn-flex
@@ -95,7 +95,6 @@ export default {
 		justify-content: center;
 		height: 100%;
 		padding: 0 15px;
-		color: var(--text-tab);
 
 		span {
 			margin-top: 4px;
@@ -113,7 +112,7 @@ export default {
 				width: 4px;
 				height: 4px;
 				content: '';
-				background-color: var(--primary-color);
+				background-color: var(--themeColor);
 				border-radius: 50%;
 			}
 		}
@@ -129,11 +128,7 @@ export default {
 	width: 100%;
 	min-width: 1088px;
 	height: 60px;
-	color: var(--text-tab);
-	background: var(--background-2);
-
-	/deep/ button {
-		margin-left: 10px;
-	}
+	background: var(--panelBgColor);
+	border-bottom: 1px solid #323232;
 }
 </style>

@@ -4,7 +4,6 @@ import Current from '@/core/Current'
 import Http from '@/core/Http'
 import Config from '@/core/Config'
 import Local from '@/core/Local'
-import Ruler from '@/core/ui/Ruler'
 import ScreenCache from '@/core/IndexDB/screenCache'
 import IndexDB from '@/core/IndexDB'
 
@@ -20,7 +19,6 @@ export default class EditorBase extends Factory<EditorBase> {
 	config: Config = Config.Instance()
 	local: Local = Local.Instance()
 	screenCache: ScreenCache = ScreenCache.Instance(db)
-	ruler: Ruler | null = null
 	rulerContainerId = rulerContainerId
 	/* 大屏ID */
 	screenId = ''
@@ -38,17 +36,7 @@ export default class EditorBase extends Factory<EditorBase> {
 	updateEditorStatus(status: string): void {
 		this.editorStatus = status
 	}
-
-	createGuide(num: string | number, type: string): void {
-		this.ruler.createGuide(num, type)
-	}
-	clearGuides(): void {
-		this.ruler.clearGuides()
-	}
 	/* ---------------------------------------------------Current---------------------------------------------------*/
-	selectRightSettingIndex(index: number): void {
-		this.current.currentRightSettingIndex = index
-	}
 	/* 当前场景 */
 	get currentSceneIndex(): string | number {
 		return this.current.currentSceneIndex

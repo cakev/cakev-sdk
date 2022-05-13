@@ -20,7 +20,6 @@ export default class Current extends Factory<Current> {
 	currentWidgetList: string[] = [] // 当前选中组件-多组件
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
-	currentRightSettingIndex = 0
 
 	constructor(obj: any) {
 		super()
@@ -30,7 +29,6 @@ export default class Current extends Factory<Current> {
 	clear(): void {
 		this.contentMove = false
 		this.widgetMove = false
-		this.currentRightSettingIndex = 0
 		this.sceneAnimate = ''
 		this.widget = null
 		this.currentSceneIndex = 0

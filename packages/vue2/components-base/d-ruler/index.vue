@@ -143,10 +143,6 @@ export default {
 				this.editor.current.offsetX += this.contentScrollLeft
 				this.contentScrollTop = Math.ceil(clientY - this.startY)
 				this.editor.current.offsetY += this.contentScrollTop
-				this.editor.ruler.draw({
-					offsetY: this.editor.current.offsetY,
-					offsetX: this.editor.current.offsetX,
-				})
 				this.startX = clientX
 				this.startY = clientY
 			}
@@ -179,11 +175,6 @@ export default {
 					this.editor.current.offsetY += e.wheelDelta > 0 ? 10 : -10
 				}
 			}
-			this.editor.ruler.draw({
-				offsetY: this.editor.current.offsetY,
-				offsetX: this.editor.current.offsetX,
-				zoom: this.editor.zoom,
-			})
 		},
 
 		keyup() {

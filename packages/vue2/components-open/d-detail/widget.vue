@@ -67,11 +67,11 @@ export default {
 	left: 0;
 	height: 100%;
 	padding: 0;
-	background-color: #191c21;
+	background-color: var(--middleBgColor);
 }
 
 .d-left-widget-top {
-	background-color: #22242b;
+	background-color:  var(--middleBgColor);
 
 	li {
 		flex-direction: column;
@@ -81,12 +81,11 @@ export default {
 		min-width: 0;
 		height: 60px;
 		line-height: 1.3;
-		color: rgb(188, 201, 212);
 		cursor: pointer;
 
 		&:hover,
 		&.active {
-			background: var(--background-4);
+			//background: var(--background-4);
 		}
 	}
 
@@ -113,7 +112,6 @@ export default {
 	top: 60px;
 	width: 402px;
 	max-height: 400px;
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.57);
 
 	ul {
 		overflow-y: auto;
@@ -125,7 +123,6 @@ export default {
 	}
 
 	li {
-		color: rgb(188, 201, 212);
 		.d-left-widget-bottom-title {
 			align-items: center;
 			justify-content: center;
@@ -135,7 +132,7 @@ export default {
 		&:hover,
 		&.active {
 			color: var(--text-3);
-			background-color: var(--primary-color);
+			background-color: var(--themeColor);
 		}
 	}
 

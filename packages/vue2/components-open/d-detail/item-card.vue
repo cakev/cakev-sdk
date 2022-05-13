@@ -63,7 +63,6 @@ export default {
 
 	h2 {
 		padding: 0 5px;
-		font-size: 12px;
 		line-height: 22px;
 		color: #bfbfbf;
 		white-space: nowrap;

@@ -26,7 +26,7 @@
 				v-if="editor.screen.screenBackGroundColor")
 	c-control(label="背景图", title="支持jpg，png，gif")
 		template(slot="right")
-			d-upload(v-model="editor.screen.screenBackGroundImage", :data="backGroundFormData")
+			c-upload-img(v-model="editor.screen.screenBackGroundImage")
 	c-control(label="适配模式")
 		template(slot="right")
 			c-select(v-model="editor.screen.screenLayoutMode")
@@ -35,13 +35,7 @@
 				c-select-option(value="full-height" label="100%高度") 
 	c-control(label="封面", title="支持jpg，png，gif")
 		template(slot="right")
-			d-upload(v-model="editor.screen.screenAvatar", :data="screenAvatarFormData")
-	c-control
-		template(slot="right")
-			c-button(
-				type="primary"
-				@click="screenAvatar",
-				:loading="screenAvatarLoading") 截屏
+			c-upload-img(v-model="editor.screen.screenAvatar")
 	c-control(label="首场景")
 		template(slot="right")
 			c-select(filterable, v-model="editor.screen.screenMainScene")
@@ -49,24 +43,12 @@
 				c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 </template>
 <script lang="ts">
-import html2canvas from 'html2canvas'
-import dUpload from '@/vue2/components-right/d-upload/index.vue'
 import Editor from '@/core/Editor'
-import { CNotice } from '@cakev/ui'
 
 export default {
 	name: 'func-config',
-	components: {
-		dUpload,
-	},
 	data() {
 		return {
-			backGroundFormData: {
-				library: 'componentBackGround',
-			},
-			screenAvatarFormData: {
-				library: 'screenAvatar',
-			},
 			screenAvatarLoading: false,
 			editor: Editor.Instance() as Editor,
 		}
@@ -102,93 +84,7 @@ export default {
 		heightChange(value) {
 			this.editor.screen.screenHeight = +value
 			this.editor.resetZoom()
-		},
-		async screenAvatar() {
-			this.screenAvatarLoading = true
-			this.capture({
-				selector: '#screen',
-			})
-				.then(res => {
-					this.screenAvatarLoading = false
-					this.editor.screen.screenAvatar = res.url
-				})
-				.catch(e => {
-					console.warnning(e)
-					this.screenAvatarLoading = false
-					CNotice.error({ content: '截屏创建失败' })
-				})
-		},
-
-		/**
-		 * 快照上传
-		 */
-		upload(blob, resolve, reject) {
-			const name = `screenShot-${Date.now()}.jpg`
-			const data = new FormData()
-			data.append('file', blob, name)
-			data.append('library', 'screenAvatar')
-			// file(data)
-			// 	.then(data => {
-			// 		resolve(data)
-			// 	})
-			// 	.catch(reject)
-		},
-
-		/**
-		 * 请求创建快照
-		 */
-		capture({ selector, returnSource = false, options = {} }) {
-			return new Promise((resolve, reject) => {
-				html2canvas(document.querySelector(selector), {
-					allowTaint: true,
-					scale: 1,
-					useCORS: true,
-					...options,
-				})
-					.then(canvas => {
-						try {
-							if (!returnSource) {
-								canvas.toBlob(
-									blob => {
-										this.upload(blob, resolve, reject)
-									},
-									'image/jpeg',
-									0.9,
-								)
-							} else {
-								resolve(canvas.toDataURL('image/jpeg', 0.9))
-							}
-						} catch (e) {
-							if (e.message.indexOf('Tainted canvases') > -1) {
-								CNotice.error({content:'外部素材可能导致截屏异常'})
-							}
-							reject(e)
-						}
-					})
-					.catch(error => {
-						reject(error)
-					})
-			})
-		},
-
-		saveSnapshot() {
-			const nodes = document.querySelectorAll('.widget-part')
-			nodes.forEach(node => {
-				html2canvas(node, {
-					allowTaint: true,
-					scale: 1,
-					useCORS: true,
-					backgroundColor: 'transparent',
-				}).then(canvas => {
-					const link = document.createElement('a')
-					link.href = canvas.toDataURL()
-					link.setAttribute('download', 'screenAvatar.png')
-					link.style.display = 'none'
-					document.body.appendChild(link)
-					link.click()
-				})
-			})
-		},
+		}
 	},
 }
 </script>

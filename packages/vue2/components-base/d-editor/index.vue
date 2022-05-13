@@ -145,7 +145,9 @@ export default {
 
 .d-editor {
 	min-width: 500px;
-	background-color: #313239;
+	background-color: var(--contentBgColor);
+	border-left: 2px solid var(--panelBorderColor);
+	border-right: 2px solid var(--panelBorderColor);
 
 	&.fullscreen {
 		top: 0 !important;

@@ -1,6 +1,22 @@
 <template lang="pug">
 .d-manage-modal-control-base
-	c-collapse(title="基础属性", :value="true")
+	c-collapse(label="基础属性", :value="true")
+		c-control(label="组件名")
+			template(slot="right")
+				c-input.widget-name(
+					v-model="editor.current.widget.widgetBase.name")
+		c-control(label="组件ID")
+			template(slot="right")
+				c-input.widget-name(
+					v-model="editor.current.widget.widgetId" :disabled="true")
+		c-control(label="组件版本")
+			template(slot="right")
+				c-select(
+					placeholder="非组件市场组件无版本管理"
+					:disabled="!editor.current.widget.widgetMarket"
+					v-model="editor.current.widget.widgetBase.version")
+					c-select-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i" :label="item.widgetVersion")
+	c-collapse(label="样式属性", :value="true")
 		c-control(label="位置")
 			template(slot="right")
 				c-input(
@@ -24,17 +40,9 @@
 		c-control(label="缩放比例")
 			template(slot="right")
 				c-input(v-model="scale" append="%")
-		c-control(label="组件版本")
-			template(slot="right")
-				c-select(
-					placeholder="非组件市场组件无版本管理"
-					:disabled="!editor.current.widget.widgetMarket"
-					v-model="editor.current.widget.widgetBase.version")
-					c-select-option(:value="item.widgetVersion", v-for="(item, i) in versionList", :key="i" :label="item.widgetVersion")
 </template>
 <script lang="ts">
-
-import Editor from '@/core/Editor';
+import Editor from '@/core/Editor'
 
 export default {
 	data() {

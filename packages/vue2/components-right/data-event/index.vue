@@ -2,7 +2,7 @@
 div
 	c-collapse(
 		type="list"
-		:title="item.label",
+		:label="item.label",
 		@add-click="handleAddClick(item['key'])",
 		v-for="item in editor.current.widget.eventTypes",
 		:list="editor.current.widget.events[item['key']]",

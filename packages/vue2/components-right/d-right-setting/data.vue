@@ -1,6 +1,6 @@
 <template lang="pug">
 .d-manage-modal-control-data
-	c-collapse(title="数据请求", :value="true")
+	c-collapse(label="数据请求", :value="true")
 		c-control(label="数据类型")
 			template(slot="right")
 				c-select(v-model="apiType", :style="{ width: '208px' }")
@@ -26,7 +26,7 @@
 				c-code(lang="json", v-model="editor.current.widget.widgetApi.data")
 	c-collapse(
 		type="eye"
-		title="数据过滤器",
+		label="数据过滤器",
 		:enable="editor.current.widget.widgetApi.processEnable",
 		@open-click="editor.current.widget.widgetApi.processEnable = true",
 		@close-click="editor.current.widget.widgetApi.processEnable = false")
@@ -35,7 +35,7 @@
 				c-code(v-model="editor.current.widget.widgetApi.processBody")
 	c-collapse(
 		type="eye"
-		title="自动更新",
+		label="自动更新",
 		:enable="editor.current.widget.widgetApi.autoFetchEnable",
 		@open-click="editor.current.widget.widgetApi.autoFetchEnable = true",
 		@close-click="editor.current.widget.widgetApi.autoFetchEnable = false")
@@ -50,7 +50,6 @@ import DataEvent from '@/vue2/components-right/data-event/index.vue'
 import Editor from '@/core/Editor'
 
 export default {
-	name: 'func-data',
 	components: {
 		DataEvent,
 	},

@@ -38,7 +38,8 @@ export default {
 	top: 88px;
 	right: 338px;
 	width: 46px;
-	background: #22242b;
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+	background-color: var(--panelBgColor);
+	border-radius: var(--panelBorderRadius);
+	box-shadow: var(--panelBoxshowColor);
 }
 </style>

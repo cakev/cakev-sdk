@@ -2,7 +2,7 @@
 .d-manage-modal-control-data
 	c-collapse(
 		type="eye"
-		title="入场动画",
+		label="入场动画",
 		:value="true",
 		@open-click="editor.current.widget.widgetAnimation.transitionEnable = true",
 		@close-click="editor.current.widget.widgetAnimation.transitionEnable = false",

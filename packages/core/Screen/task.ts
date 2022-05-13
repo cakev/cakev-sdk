@@ -15,7 +15,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	screenLayoutMode = 'full-size' // 大屏适配方式 full-size 充满页面 full-width 100%宽度 full-height 100%高度
 	screenWidth = 1920 // 大屏宽度
 	screenHeight = 1080 // 大屏高度
-	screenBackGroundColor = 'rgba(24, 27, 36,1)' // 大屏背景颜色
+	screenBackGroundColor = 'rgb(11,11,11)' // 大屏背景颜色
 	screenBackGroundImage = '' // 大屏背景图片
 	screenMainScene: string | number = 0 // 大屏首屏场景
 	screenDomain = ''

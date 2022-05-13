@@ -114,7 +114,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .right-menu {
-	font-size: 12px;
 	color: #bfbfbf;
 	text-align: left;
 	pointer-events: none;

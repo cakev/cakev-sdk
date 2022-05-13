@@ -47,9 +47,7 @@ export default {
 	justify-content: space-between;
 	height: 32px;
 	padding: 0 10px 0 22px;
-	color: var(--text-1);
-	background: var(--background-3);
-	border-top: 1px solid #0d0e10;
+	background: var(--panelBgColor);
 }
 
 .d-footer-bar-box {
@@ -63,7 +61,7 @@ export default {
 	line-height: 30px;
 	cursor: pointer;
 	user-select: none;
-
+	
 	.d-footer-bar-text {
 		opacity: 0.5;
 	}

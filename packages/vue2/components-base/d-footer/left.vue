@@ -1,5 +1,5 @@
 <template lang="pug">
-.fn-flex.flex-row.pos-r
+c-row.pos-r
 	.d-footer-bar.fn-flex.pointer
 		.d-footer-bar-text(@click.stop="viewModal = !viewModal") 视图调整
 	ul.d-footer-view-modal.pos-a(v-show="viewModal", v-click-outside="hideView")
@@ -85,7 +85,7 @@ export default {
 	line-height: 30px;
 	cursor: pointer;
 	user-select: none;
-
+	
 	&:hover {
 		.d-footer-bar-text {
 			color: var(--text-3);
