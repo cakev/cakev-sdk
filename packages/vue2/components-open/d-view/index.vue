@@ -40,7 +40,7 @@ export default {
 	data() {
 		return {
 			editor: Editor.Instance(),
-			currentLayoutMode: getQueryString('widgetLayoutMode'),
+			currentLayoutMode: getQueryString('layoutMode'),
 		}
 	},
 	computed: {

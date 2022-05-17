@@ -32,8 +32,6 @@ export default {
 			contentScrollTop : 0,
 			/* 是否按下了 空格 键，之后按下了左键 */
 			contentDrag : false,
-			/* 框移动 */
-			kuangMove : false
 		}
 	},
 	computed:{
@@ -58,41 +56,6 @@ export default {
 				this.editor.current.widgetMove = false
 				return
 			}
-			if (this.kuangMove) {
-				document.getElementById('d-kuang').style.display = 'none'
-				this.kuangMove = false
-				const diffX = (this.editor.screen.screenWidth * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetX
-				const diffY = (this.editor.screen.screenHeight * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetY
-				const endPointerX = (e.layerX - diffX) / this.editor.zoom
-				const endPointerY = (e.layerY - diffY) / this.editor.zoom
-				if (this.startPointerX === endPointerX || this.startPointerY === endPointerY) return
-				const minPointerX = Math.min(this.startPointerX, endPointerX)
-				const minPointerY = Math.min(this.startPointerY, endPointerY)
-				const maxPointerX = Math.max(this.startPointerX, endPointerX)
-				const maxPointerY = Math.max(this.startPointerY, endPointerY)
-				this.editor.current.unSelectWidgetList()
-				Object.values(this.editor.screen.screenWidgets).forEach((v) => {
-					// 只能框选当前场景下的组件
-					if (this.editor.screen.screenWidgetsLays[v.id].scene === this.editor.currentSceneIndex) {
-						const widgetStartX = Number(v.layout.left)
-						const widgetStartY = Number(v.layout.top)
-						const widgetEndX = Number(v.layout.left) + Number(v.layout.width)
-						const widgetEndY = Number(v.layout.top) + Number(v.layout.height)
-						if (
-							minPointerX < widgetStartX &&
-							widgetStartX < maxPointerX &&
-							minPointerY < widgetStartY &&
-							widgetStartY < maxPointerY &&
-							minPointerX < widgetEndX &&
-							widgetEndX < maxPointerX &&
-							minPointerY < widgetEndY &&
-							widgetEndY < maxPointerY
-						) {
-							this.editor.current.selectWidget(v)
-						}
-					}
-				})
-			}
 		},
 
 		mouseDown(e) {
@@ -115,19 +78,6 @@ export default {
 				const rightMenu = document.getElementById('widget-right-menu')
 				rightMenu.classList.remove('active')
 			}
-			if (!this.editor.current.contentMove && !this.editor.current.widgetMove && !e.shiftKey) {
-				this.kuangMove = true
-				let kuang = document.getElementById('d-kuang')
-				if (!kuang) {
-					kuang = document.createElement('div')
-					kuang.style.cssText =
-						'position: absolute;width: 0;height: 0;margin: 0;padding: 0;border: 1px solid rgb(36, 145, 247);background-color: rgba(0, 132, 255, 0.15);z-index: 1000;opacity: 0.6;display: none;pointer-events: none;'
-					kuang.id = 'd-kuang'
-					document.body.appendChild(kuang)
-				}
-				kuang.style.left = this.startX + 'px'
-				kuang.style.top = this.startY + 'px'
-			}
 		},
 
 		mouseMove(e) {
@@ -145,17 +95,6 @@ export default {
 				this.editor.current.offsetY += this.contentScrollTop
 				this.startX = clientX
 				this.startY = clientY
-			}
-			if (this.kuangMove) {
-				e.stopPropagation()
-				const _x = e.clientX
-				const _y = e.clientY
-				const selDiv = document.getElementById('d-kuang')
-				selDiv.style.display = 'block'
-				selDiv.style.left = Math.min(_x, this.startX) + 'px'
-				selDiv.style.top = Math.min(_y, this.startY) + 'px'
-				selDiv.style.width = Math.abs(_x - this.startX) + 'px'
-				selDiv.style.height = Math.abs(_y - this.startY) + 'px'
 			}
 		},
 		/* 滚动画布 */

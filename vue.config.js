@@ -53,7 +53,7 @@ module.exports = {
 		config.resolve.extensions = ['.js', '.vue', '.json', '.ts', '.tsx']
 		if (process.env.VUE_APP_BUILD_MODE === 'NPM') {
 			// config.externals = [{}]
-		} 
+		}
 	},
 	chainWebpack: config => {
 		config.resolve.alias.set('@', resolve('packages'))

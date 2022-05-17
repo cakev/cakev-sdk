@@ -39,11 +39,10 @@ export default {
 	},
 	methods: {
 		preview() {
-			const scene = this.editor.screen.screenMainScene ? `&scene=${this.editor.screen.screenMainScene}` : ''
+			const scene = this.editor.screen.screenMainScene
+			const screenLayoutMode = this.editor.screen.screenLayoutMode
 			this.editor.screenCache.add('previewData', this.editor.screen).then(() => {
-				window.open(
-					`${location.origin}/detail/preview?layoutMode=${this.editor.screen.screenLayoutMode}${scene}`,
-				)
+				window.open(`${location.origin}#/preview?layoutMode=${screenLayoutMode}&scene=${scene}`)
 			})
 		},
 		handleExport() {
@@ -59,16 +58,16 @@ export default {
 				cancelText: '取消',
 			})
 		},
-		handleFile(e) {
-			const file = e.target.files[0]
-			const reader = new FileReader()
-			reader.onload = e => {
+		handleFile(event) {
+			const file = event.target.files[0]
+			const reader: FileReader = new FileReader()
+			reader.onload = (e: any) => {
 				try {
 					this.loading = true
 					this.editor.init(JSON.parse(e.target.result))
-					// this.loading = false
-				} catch (e) {
-					console.error(e)
+					this.loading = false
+				} catch (error) {
+					console.error(error)
 					this.loading = false
 					CNotice.info({ content: '配置文件识别失败' })
 				}

@@ -6,6 +6,7 @@ export default class Config extends Factory<Config> {
 		widgetVersionList: '',
 		widgetLoad: '',
 		fileUpload: '',
+		previewUrl: '/preview',
 	}
 
 	animations = [

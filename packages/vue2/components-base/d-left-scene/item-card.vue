@@ -61,13 +61,13 @@ export default {
 		padding: 10px;
 	}
 
-	&.active {
-		background-color: var(--themeColor);
-	}
-
 	&:hover {
 		background-color: var(--contentBorderColor);
 		box-shadow: var(--panelBoxshowColor);
+	}
+
+	&.active {
+		background-color: var(--themeColor);
 	}
 }
 

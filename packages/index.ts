@@ -23,7 +23,7 @@ const sdk = {
 	version,
 	install,
 	...components,
-	Editor,
+	Editor: Editor.Instance(),
 	WidgetTask,
 }
 
