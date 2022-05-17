@@ -1,6 +1,6 @@
 {
 	"name": "@cakev/sdk",
-	"version": "0.0.1-beta.2",
+	"version": "0.0.1-beta.3",
 	"scripts": {
 		"serve": "vue-cli-service --mode local serve",
 		"build": "vue-cli-service build --mode build --target lib packages/index.ts",
