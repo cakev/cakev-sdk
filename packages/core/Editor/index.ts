@@ -1,4 +1,4 @@
-﻿import Agent from '@/core/Editor/base'
+﻿import Agent from '../Editor/base'
 
 export default class Editor extends Agent {
 	init(res?: any): any {

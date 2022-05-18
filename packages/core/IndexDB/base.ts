@@ -1,8 +1,8 @@
-import Factory from '@/core/Base/factory'
-import IndexDB from '@/core/IndexDB'
+import Factory from '../Base/factory'
+import IndexDB from '../IndexDB'
 
 export default class BaseCache extends Factory<BaseCache> {
-	db: IndexDB | null // indexDB 实例
+	db: IndexDB // indexDB 实例
 
 	constructor(db: IndexDB) {
 		super()

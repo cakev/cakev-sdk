@@ -1,11 +1,11 @@
-import Factory from '@/core/Base/factory'
-import ScreenTask from '@/core/Screen/task'
-import Current from '@/core/Current'
-import Http from '@/core/Http'
-import Config from '@/core/Config'
-import Local from '@/core/Local'
-import ScreenCache from '@/core/IndexDB/screenCache'
-import IndexDB from '@/core/IndexDB'
+import Factory from '../Base/factory'
+import ScreenTask from '../Screen/task'
+import Current from '../Current'
+import Http from '../Http'
+import Config from '../Config'
+import Local from '../Local'
+import ScreenCache from '../IndexDB/screenCache'
+import IndexDB from '../IndexDB'
 
 const db = new IndexDB()
 const rulerContainerId = `drag-content-${+new Date()}`

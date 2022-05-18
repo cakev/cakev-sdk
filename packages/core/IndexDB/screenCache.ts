@@ -1,4 +1,4 @@
-import Base from '@/core/IndexDB/base'
+import Base from '../IndexDB/base'
 
 export default class ScreenCache extends Base {
 	async add(name: string, value: any): Promise<any> {

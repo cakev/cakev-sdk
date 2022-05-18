@@ -1,4 +1,4 @@
-import Factory from '@/core/Base/factory'
+import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 
 interface widgetType {

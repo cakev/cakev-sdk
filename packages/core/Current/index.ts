@@ -1,5 +1,5 @@
-import Factory from '@/core/Base/factory'
-import WidgetTask from '@/core/Widget/task'
+import Factory from '../Base/factory'
+import WidgetTask from '../Widget/task'
 
 export default class Current extends Factory<Current> {
 	rulerContainerId: string

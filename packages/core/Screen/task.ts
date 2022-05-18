@@ -1,6 +1,6 @@
 ﻿import { getQueryString, uuid } from '@cakev/util'
-import Factory from '@/core/Base/factory'
-import WidgetTask from '@/core/Widget/task'
+import Factory from '../Base/factory'
+import WidgetTask from '../Widget/task'
 import LayTask from './lay'
 import SceneTask from './scene'
 
