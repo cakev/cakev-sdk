@@ -82,11 +82,6 @@ export default {
 		height: 60px;
 		line-height: 1.3;
 		cursor: pointer;
-
-		&:hover,
-		&.active {
-			//background: var(--background-4);
-		}
 	}
 
 	p {
@@ -100,7 +95,7 @@ export default {
 	align-items: baseline;
 	padding: 10px;
 	overflow-y: auto;
-	background: var(--background-4);
+	background: #2d2f38;
 	border: 1px solid rgba(36, 38, 46, 0.4);
 
 	&::-webkit-scrollbar {
@@ -115,7 +110,7 @@ export default {
 
 	ul {
 		overflow-y: auto;
-		background: var(--background-2);
+		background: #22242b;
 
 		&::-webkit-scrollbar {
 			display: none;
@@ -131,7 +126,7 @@ export default {
 		}
 		&:hover,
 		&.active {
-			color: var(--text-3);
+			color: #fff;
 			background-color: var(--themeColor);
 		}
 	}

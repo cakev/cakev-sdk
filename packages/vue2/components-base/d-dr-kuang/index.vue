@@ -65,7 +65,7 @@ export default {
 	.dr-line-bottom,
 	.dr-line-left,
 	.dr-line-right {
-		background-color: var(--themeColor_08);
+		background-color: rgba(18, 120, 246, 0.8);
 	}
 }
 
@@ -74,7 +74,7 @@ export default {
 	.dr-line-bottom,
 	.dr-line-left,
 	.dr-line-right {
-		background-color: var(--themeColor_04);
+		background-color: rgba(18, 120, 246, 0.4);
 	}
 
 	&::after {

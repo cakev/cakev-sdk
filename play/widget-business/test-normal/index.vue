@@ -40,12 +40,12 @@ export default {
 .h-title-1 {
 	align-items: center;
 	padding-bottom: 8px;
-	border-bottom: 1px solid var(--white_04);
+	border-bottom: 1px solid rgba(255,255,255,0.4);
 
 	h2 {
 		font-size: 24px;
 		font-weight: 600;
-		color: var(--white);
+		color: #fff;
 	}
 }
 </style>

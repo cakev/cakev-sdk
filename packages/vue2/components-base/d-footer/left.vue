@@ -61,8 +61,8 @@ export default {
 	bottom: 32px;
 	left: -4px;
 	width: 90px;
-	color: var(--text-1);
-	background: var(--background-4);
+	color: #bfbfbf;
+	background: #2d2f38;
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.57);
 
 	li {
@@ -88,7 +88,7 @@ export default {
 	
 	&:hover {
 		.d-footer-bar-text {
-			color: var(--text-3);
+			color: #fff;
 		}
 	}
 }
@@ -112,9 +112,9 @@ export default {
 	bottom: 32px;
 	left: -4px;
 	width: 295px;
-	color: var(--text-1);
+	color: #bfbfbf;
 	pointer-events: none;
-	background: var(--background-4);
+	background: #2d2f38;
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.57);
 }
 </style>

@@ -59,7 +59,7 @@ li {
 	min-width: 24px;
 	height: 24px;
 	padding: 0 5px;
-	background: var(--background-2);
+	background: #22242b;
 	border: 1px solid #393b4a;
 	border-radius: 2px;
 	box-shadow: 0 1px 3px 0 rgba(44, 46, 64, 0.82);

@@ -36,18 +36,18 @@
 }
 
 .dr-tip-top {
-	border-left: 1px dashed var(--white_04);
+	border-left: 1px dashed rgba(255,255,255,0.4);
 
 	span {
-		color: var(--white_04);
+		color: rgba(255,255,255,0.4);
 	}
 }
 
 .dr-tip-left {
-	border-top: 1px dashed var(--white_04);
+	border-top: 1px dashed rgba(255,255,255,0.4);
 
 	span {
-		color: var(--white_04);
+		color: rgba(255,255,255,0.4);
 	}
 }
 
@@ -57,7 +57,7 @@
 	box-sizing: border-box;
 	width: 4px;
 	height: 4px;
-	background: var(--white);
+	background: #fff;
 	border-radius: 4px;
 }
 

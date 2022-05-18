@@ -1,6 +1,5 @@
 import type { VueConstructor } from 'vue'
 
-import '@/vue2/scss/conf.scss'
 import '@/vue2/scss/index.scss'
 import '@/vue2/scss/animate.scss'
 

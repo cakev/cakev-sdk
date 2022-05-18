@@ -86,7 +86,7 @@ export default {
 	background: #282f3a;
 
 	&.active {
-		color: var(--white);
+		color: #fff;
 		background-color: var(--themeColor);
 		border-color: var(--themeColor);
 	}

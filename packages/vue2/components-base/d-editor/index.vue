@@ -130,7 +130,7 @@ export default {
 </style>
 <style lang="scss" scoped>
 .ref-line {
-	background-color: var(--lineRed);
+	background-color: #eb5648;
 }
 
 .v-line {
