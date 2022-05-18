@@ -48,3 +48,4 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+/types/
