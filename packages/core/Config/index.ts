@@ -6,8 +6,8 @@ export default class Config extends Factory<Config> {
 		widgetVersionList: '',
 		widgetLoad: '',
 		fileUpload: '',
-		previewUrl: '/preview',
 	}
+	previewUrl = '/preview'
 
 	animations = [
 		{ label: '渐隐渐显', value: 'fadeIn' },
@@ -21,8 +21,9 @@ export default class Config extends Factory<Config> {
 		{ label: '从右下至左上滑动', value: 'fadeInBottomRight' },
 	]
 
-	setConfig(option = { api: {}, head: [] }) {
+	setConfig(option = { api: {}, head: [], previewUrl: '' }) {
 		if (option.api) this.api = { ...this.api, ...option.api }
 		if (option.head) this.head = { ...this.head, ...option.head }
+		if (option.previewUrl) this.previewUrl = option.previewUrl
 	}
 }

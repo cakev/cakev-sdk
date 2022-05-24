@@ -38,14 +38,18 @@ export default {
 		}
 	},
 	mounted() {
-		this.editor.resetZoom()
+		this.editor.current.resetZoom({
+			screenHeight: this.editor.screen.screenHeight,
+			screenWidth: this.editor.screen.screenWidth,
+		})
 	},
 	methods: {
 		preview() {
 			const scene = this.editor.screen.screenMainScene
-			const screenLayoutMode = this.editor.screen.screenLayoutMode
 			this.editor.screenCache.add('previewData', this.editor.screen).then(() => {
-				window.open(`${location.origin}#/preview?layoutMode=${screenLayoutMode}&scene=${scene}`)
+				window.open(
+					`${location.origin}#${this.editor.config.previewUrl}?scene=${scene}`,
+				)
 			})
 		},
 		handleExport() {
@@ -83,7 +87,8 @@ export default {
 		},
 	},
 	beforeDestroy() {
-		this.editor.clear()
+		this.editor.screen.clear()
+		this.editor.current.clear()
 	},
 }
 </script>

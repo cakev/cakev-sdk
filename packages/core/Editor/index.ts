@@ -42,20 +42,6 @@ export default class Editor extends Factory<Editor> {
 		if (!this.inEdit) this.current.closeScene(id)
 	}
 
-	clear(): void {
-		this.screen.clear()
-		this.current.clear()
-	}
-	// 画布还原最佳比例
-	resetZoom(): void {
-		if (this.inEdit) {
-			this.current.resetZoom({
-				screenHeight: this.screen.screenHeight,
-				screenWidth: this.screen.screenWidth,
-			})
-		}
-	}
-
 	get currentSceneWidget() {
 		return Object.values(this.screen.screenWidgetsLays)
 			.filter(item => item.scene === this.current.currentSceneIndex)

@@ -47,9 +47,6 @@ export default {
 		}
 	},
 	methods:{
-		windowResize() {
-			this.editor.resetZoom()
-		},
 		mouseUp(e) {
 			if (this.contentDrag) {
 				this.contentDrag = false
@@ -155,13 +152,11 @@ export default {
 		},
 	},
 	beforeDestroy() {
-		off(window,'resize', this.windowResize)
 		off(document,'keydown', this.keydown)
 		off(document,'keyup', this.keyup)
 		off(document,'mouseup', this.mouseUp)
 	},
 	mounted() {
-		on(window,'resize', this.windowResize)
 		on(document,'keydown', this.keydown)
 		on(document,'keyup', this.keyup)
 		on(document,'mouseup', this.mouseUp)

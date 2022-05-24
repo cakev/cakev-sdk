@@ -71,7 +71,7 @@ export default {
 					const [width, height] = value.split('*')
 					this.editor.screen.screenWidth = +width
 					this.editor.screen.screenHeight = +height
-					this.editor.resetZoom()
+					this.editor.current.resetZoom()
 				}
 			},
 		},
