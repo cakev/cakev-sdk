@@ -1,12 +1,12 @@
 <template lang="pug">
-li.pointer.pos-r.d-left-scene-list-li(
+li.pointer.pos-r.c-scene-list-li(
 	:class="{ active: editor.current.currentWidgetId === lay.widgetId }",
 	@click.stop="handleClick"
 )
 	.parent.fn-flex
-		c-row.d-left-scene-left
+		c-row.c-scene-left
 			h2 {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
-		c-row.d-left-scene-right
+		c-row.c-scene-right
 			c-svg(v-if="lay.hide", :size="14", type="eye", @click="editor.screen.hideWidget(lay.widgetId)", @click.stop)
 			c-svg(
 				style="margin-left: 10px",
@@ -21,7 +21,7 @@ li.pointer.pos-r.d-left-scene-list-li(
 import Editor from '@/core/Editor'
 
 export default {
-	name: 'd-left-scene-item',
+	name: 'c-scene-item',
 	data() {
 		return {
 			editScene: false,
@@ -45,7 +45,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.d-left-scene-list-li {
+.c-scene-list-li {
 	margin: 10px 0;
 	border: 1px solid var(--contentBorderColor);
 	transition: all 0.3s;
@@ -63,11 +63,11 @@ export default {
 	}
 }
 
-.d-left-scene-left {
+.c-scene-left {
 	width: 150px;
 }
 
-.d-left-scene-right {
+.c-scene-right {
 	justify-content: center;
 	margin-left: auto;
 	font-weight: bold;

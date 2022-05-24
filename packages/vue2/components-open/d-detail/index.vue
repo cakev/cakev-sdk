@@ -37,6 +37,9 @@ export default {
 			loading: false,
 		}
 	},
+	mounted() {
+		this.editor.resetZoom()
+	},
 	methods: {
 		preview() {
 			const scene = this.editor.screen.screenMainScene
@@ -64,7 +67,7 @@ export default {
 			reader.onload = (e: any) => {
 				try {
 					this.loading = true
-					this.editor.init(JSON.parse(e.target.result))
+					this.editor.screen.init(JSON.parse(e.target.result))
 					this.loading = false
 				} catch (error) {
 					console.error(error)

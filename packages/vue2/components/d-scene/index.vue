@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:style="{ zIndex }", :class="currentAnimate", @animationend.self="animationend")
+.scene-container(:style="{ zIndex }", @animationend.self="animationend")
 	slot
 </template>
 <script lang="ts">
@@ -15,11 +15,6 @@ export default {
 		return {
 			editor: Editor.Instance(),
 		}
-	},
-	computed: {
-		currentAnimate(): string {
-			return 'scene-container'
-		},
 	},
 	methods: {
 		animationend(): void {
@@ -43,6 +38,7 @@ export default {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	pointer-events: none;
+	width: 100%;
+	height: 100%;
 }
 </style>

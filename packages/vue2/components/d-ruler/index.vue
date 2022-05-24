@@ -1,13 +1,12 @@
 <template lang="pug">
-.d-ruler-wrapper.pos-r(
-	:id="editor.rulerContainerId",
+.d-ruler-wrapper.pos-r#editor(
 	@mousedown="mouseDown",
 	@wheel="wheel",
 	@mousemove="mouseMove")
-	.content-body.pos-a(:style="editor.rulerStyle")
+	.content-body.pos-a(:style="rulerStyle")
 		slot
 		.content-body-tip.pos-a(
-			:style="{ fontSize: `${(1 / editor.zoom) * 12}px`, bottom: `-${(1 / editor.zoom) * 12 + 24}px` }")
+			:style="{ fontSize: `${(1 / editor.current.zoom) * 12}px`, bottom: `-${(1 / editor.current.zoom) * 12 + 24}px` }")
 			span 按住空格可拖动画布
 			label {{ editor.screen.screenWidth }}×{{ editor.screen.screenHeight }} {{ zoom }}
 </template>
@@ -36,8 +35,15 @@ export default {
 	},
 	computed:{
 		zoom() {
-			const zoom = this.editor.zoom
+			const zoom = this.editor.current.zoom
 			return `${~~(zoom * 100)}%`
+		},
+		rulerStyle(){
+			return {
+				transform: `translate3d(${this.editor.current.offsetX}px, ${this.editor.current.offsetY}px, 0) scale(${this.editor.current.zoom})`,
+				width: `${this.editor.screen.screenWidth + 18 * 2}px`,
+				height: `${this.editor.screen.screenHeight + 18 * 2}px`,
+			}
 		}
 	},
 	methods:{
@@ -48,7 +54,7 @@ export default {
 			if (this.contentDrag) {
 				this.contentDrag = false
 				if (this.editor.current.contentMove) {
-					document.getElementById(this.editor.rulerContainerId).style.cursor = 'grab'
+					document.getElementById('editor').style.cursor = 'grab'
 				}
 				return
 			}
@@ -63,13 +69,13 @@ export default {
 			if (e.buttons !== 1 || e.which !== 1) return
 			this.startX = e.clientX
 			this.startY = e.clientY
-			const diffX = (this.editor.screen.screenWidth * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetX
-			const diffY = (this.editor.screen.screenHeight * (1 - this.editor.zoom)) / 2 + this.editor.current.offsetY
-			this.startPointerX = (e.layerX - diffX) / this.editor.zoom
-			this.startPointerY = (e.layerY - diffY) / this.editor.zoom
+			const diffX = (this.editor.screen.screenWidth * (1 - this.editor.current.zoom)) / 2 + this.editor.current.offsetX
+			const diffY = (this.editor.screen.screenHeight * (1 - this.editor.current.zoom)) / 2 + this.editor.current.offsetY
+			this.startPointerX = (e.layerX - diffX) / this.editor.current.zoom
+			this.startPointerY = (e.layerY - diffY) / this.editor.current.zoom
 			if (this.editor.current.contentMove) {
 				this.contentDrag = true
-				document.getElementById(this.editor.rulerContainerId).style.cursor = 'grabbing'
+				document.getElementById('editor').style.cursor = 'grabbing'
 			}
 			if (!this.editor.current.widgetMove && !e.shiftKey) {
 				this.editor.current.unSelectWidget()
@@ -103,9 +109,9 @@ export default {
 				e.preventDefault()
 				e.stopPropagation()
 				if (e.wheelDelta > 0) {
-					this.editor.zoomIn()
+					this.editor.current.zoomIn()
 				} else {
-					this.editor.zoomOut()
+					this.editor.current.zoomOut()
 				}
 			} else {
 				if (e.shiftKey) {
@@ -118,7 +124,7 @@ export default {
 
 		keyup() {
 			this.editor.current.contentMove = false
-			document.getElementById(this.editor.rulerContainerId).style.cursor = 'auto'
+			document.getElementById('editor').style.cursor = 'auto'
 			// if (e.keyCode === 8 || e.keyCode === 46) {
 			// delete 键 删除
 			// }
@@ -137,14 +143,14 @@ export default {
 				e.preventDefault()
 			}
 			if (e.keyCode === 189) {
-				this.editor.zoomOut()
+				this.editor.current.zoomOut()
 			}
 			if (e.keyCode === 187) {
-				this.editor.zoomIn()
+				this.editor.current.zoomIn()
 			}
 			if (e.keyCode === 32 && !this.editor.current.contentMove) {
 				this.editor.current.contentMove = true
-				document.getElementById(this.editor.rulerContainerId).style.cursor = 'grab'
+				document.getElementById('editor').style.cursor = 'grab'
 			}
 		},
 	},

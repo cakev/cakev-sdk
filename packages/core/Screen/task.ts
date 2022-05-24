@@ -1,4 +1,4 @@
-﻿import { getQueryString, uuid } from '@cakev/util'
+﻿import { uuid } from '@cakev/util'
 import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 import LayTask from './lay'
@@ -55,7 +55,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		}
 	}
 
-	init(res: ScreenTask): ScreenTask {
+	init(res: ScreenTask): void {
 		this.screenId = res.screenId
 		this.screenName = res.screenName
 		this.screenAvatar = res.screenAvatar
@@ -69,16 +69,15 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		this.screenWidgets = res.screenWidgets
 		this.screenWidgetsLays = res.screenWidgetsLays
 		this.screenScene = res.screenScene
-		return this
 	}
 
-	changeLayoutMode(value: string | null): string {
+	get screenTransformStyle(): string {
 		let scaleX = 0,
 			scaleY = 1,
 			actualScaleRatio = 1,
 			scale = ''
 		const { clientWidth, clientHeight } = document.body
-		switch (value) {
+		switch (this.screenLayoutMode) {
 			case 'full-size':
 				scaleX = clientWidth / this.screenWidth
 				scaleY = clientHeight / this.screenHeight
@@ -90,7 +89,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 				actualScaleRatio = clientHeight / this.screenHeight
 				break
 		}
-		if (value === 'full-size') {
+		if (this.screenLayoutMode === 'full-size') {
 			scale = `${scaleX},${scaleY}`
 		} else {
 			scale = `${actualScaleRatio}`
@@ -116,20 +115,6 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		if (grayscale || opacity || contrast || brightness || saturate || hueRotate)
 			return { filter: `${grayscale} ${opacity} ${contrast} ${brightness} ${saturate} ${hueRotate}` }
 		return {}
-	}
-
-	/* 大屏样式 */
-	get screenStyle() {
-		const layoutMode = getQueryString('layoutMode')
-		return {
-			width: `${this.screenWidth}px`,
-			height: `${this.screenHeight}px`,
-			backgroundColor: this.screenBackGroundColor,
-			backgroundImage: `url(${this.screenBackGroundImage})`,
-			overflow: 'hidden',
-			transform: this.changeLayoutMode(layoutMode),
-			...this.screenFilterStyle,
-		}
 	}
 
 	// 创建场景

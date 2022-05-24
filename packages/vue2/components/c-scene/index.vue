@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-left-scene.pos-a.fn-flex.flex-column(:style="{ width: `${editor.current.xRoomL2}px` }")
+.c-scene.pos-a.fn-flex.flex-column(:style="{ width: `${editor.current.xRoomL2}px` }")
 	c-tabs(:value="1" :style="{height:'100%'}")
 		c-tab-pane(label="场景区" :value="1")
 			header.fn-flex.flex-row
@@ -12,17 +12,17 @@
 					c-select-option(:value="0" label="主场景")
 					c-select-option(:value="key", v-for="(item, key) in editor.screen.screenScene", :key="key" :label="item.name")
 					c-select-option(:value="-1" label="回收站") 
-			ul.d-left-scene-list
+			ul.c-scene-list
 				draggable(:value="editor.currentSceneWidget", @change="sceneWidgetDragEnd")
 					transition-group
 						item-card(v-for="lay in editor.currentSceneWidget", :key="lay.widgetId", :lay="lay")
-			.d-left-scene-bottom.pos-a.fn-flex.flex-row
-				.d-left-scene-bottom-btn.text-center(@click="handleClear") 清空
-				.d-left-scene-bottom-btn.text-center(@click="handleCreate") 新增
-				.d-left-scene-bottom-btn.text-center(
+			.c-scene-bottom.pos-a.fn-flex.flex-row
+				.c-scene-bottom-btn.text-center(@click="handleClear") 清空
+				.c-scene-bottom-btn.text-center(@click="handleCreate") 新增
+				.c-scene-bottom-btn.text-center(
 					@click="handleEdit",
 					:class="{ disabled: editor.currentSceneIndex === 0 || editor.currentSceneIndex === -1 }") 编辑
-				.d-left-scene-bottom-btn.text-center(
+				.c-scene-bottom-btn.text-center(
 					@click="handleDestroy",
 					:class="{ disabled: editor.currentSceneIndex === 0 || editor.currentSceneIndex === -1}") 删除
 </template>
@@ -33,7 +33,7 @@ import Editor from '@/core/Editor'
 import { CModal } from '@cakev/ui'
 
 export default {
-	name: 'd-left-scene',
+	name: 'c-scene',
 	components: {
 		draggable,
 		ItemCard,
@@ -99,11 +99,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.d-left-scene-bottom {
+.c-scene-bottom {
 	width: 100%;
 	bottom: 0;
 	background-color: var(--middleBgColor);
-	.d-left-scene-bottom-btn {
+	.c-scene-bottom-btn {
 		flex: 1;
 		height: 32px;
 		line-height: 32px;
@@ -116,12 +116,12 @@ export default {
 	}
 }
 
-.d-left-scene-list {
+.c-scene-list {
 	flex: 1;
 	padding: 0 10px;
 }
 
-.d-left-scene {
+.c-scene {
 	height: 100%;
 	overflow: hidden;
 	background-color: var(--panelBgColor);

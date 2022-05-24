@@ -12,12 +12,12 @@ export default {
 	name: 'Kuang',
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	computed: {
 		returnRatio(): number {
-			return this.editor.zoom < 1 ? 1 / this.editor.zoom : 1
+			return this.editor.current.zoom < 1 ? 1 / this.editor.current.zoom : 1
 		},
 	},
 }

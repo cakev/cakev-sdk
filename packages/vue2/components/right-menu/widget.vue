@@ -23,7 +23,7 @@
 <script lang="ts">
 import Editor from '@/core/Editor'
 import { clickOutside } from '@cakev/util'
-import ItemCard from '@/vue2/components-base/right-menu/item-card.vue'
+import ItemCard from '@/vue2/components/right-menu/item-card.vue'
 import { CModal } from '@cakev/ui'
 
 export default {

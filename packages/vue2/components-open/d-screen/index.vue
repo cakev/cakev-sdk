@@ -1,7 +1,7 @@
 <template lang="pug">
 #d-screen.d-screen(:style="{ height: `calc(100vh - ${editor.current.yRoom}px)` }")
 	.d-editor-box.pos-r.fn-flex
-		d-left-scene
+		c-scene
 		d-editor
 		d-right-manage(v-if="!editor.current.currentWidgetId")
 		d-right-setting(v-if="editor.current.currentWidgetId")
@@ -10,17 +10,17 @@
 		c-loading(:show="true")
 </template>
 <script>
-import dLeftScene from '@/vue2/components-base/d-left-scene/index.vue'
-import dEditor from '@/vue2/components-base/d-editor/index.vue'
+import cScene from '@/vue2/components/c-scene/index.vue'
+import dEditor from '@/vue2/components/d-editor/index.vue'
 import dRightManage from '@/vue2/components-right/d-right-manage/index.vue'
 import dRightSetting from '@/vue2/components-right/d-right-setting/index.vue'
-import dSuspension from '@/vue2/components-base/d-suspension/index.vue'
+import dSuspension from '@/vue2/components/d-suspension/index.vue'
 import Editor from '@/core/Editor'
 
 export default {
 	name: 'd-screen',
 	components: {
-		dLeftScene,
+		cScene,
 		dRightManage,
 		dRightSetting,
 		dSuspension,

@@ -1,10 +1,3 @@
 <template lang="pug">
-div
-	d-detail
-	d-screen
+router-view
 </template>
-<script lang="ts">
-export default {
-	name: 'editor',
-}
-</script>

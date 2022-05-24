@@ -3,7 +3,7 @@ dr(
 	:key="lay.widgetId",
 	:ref="`widget_${lay.widgetId}`",
 	:id="lay.widgetId",
-	:scale-ratio="editor.zoom",
+	:scale-ratio="editor.current.zoom",
 	:draggable="widgetEditable(widget)",
 	:resizable="widgetEditable(widget)",
 	:scale="widget.widgetLayout.scale",
@@ -26,8 +26,8 @@ dr(
 	c-widget(:lay="lay")
 </template>
 <script lang="ts">
-import dr from '@/vue2/components-base/d-dr/index.vue'
-import dDrKuang from '@/vue2/components-base/d-dr-kuang/index.vue'
+import dr from '@/vue2/components/d-dr/index.vue'
+import dDrKuang from '@/vue2/components/d-dr-kuang/index.vue'
 import Editor from '@/core/Editor'
 import WidgetTask from '@/core/Widget/task'
 

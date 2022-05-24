@@ -20,7 +20,7 @@ c-row.pos-r
 </template>
 <script>
 import Editor from '@/core/Editor'
-import ItemCard from '@/vue2/components-base/d-footer/item-card.vue'
+import ItemCard from '@/vue2/components/d-footer/item-card.vue'
 import { hotKeys } from '@/vue2/utils'
 import { clickOutside } from '@cakev/util'
 

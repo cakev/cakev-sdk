@@ -2,7 +2,6 @@ import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 
 export default class Current extends Factory<Current> {
-	rulerContainerId: string
 	xRoomL2 = 238
 	xRoomR1 = 335
 	yRoom = 60
@@ -20,9 +19,8 @@ export default class Current extends Factory<Current> {
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
 
-	constructor(obj: any) {
+	constructor() {
 		super()
-		this.rulerContainerId = obj.rulerContainerId
 	}
 
 	clear(): void {
@@ -52,7 +50,7 @@ export default class Current extends Factory<Current> {
 	}
 	/* 画布还原最佳比例 */
 	resetZoom({ screenWidth, screenHeight }: any = {}): void {
-		const dom = document.getElementById(this.rulerContainerId) as HTMLElement
+		const dom = document.getElementById('editor') as HTMLElement
 		const rulerOffsetWidth = dom.offsetWidth - 18
 		let zoom = ~~((rulerOffsetWidth / screenWidth) * 100) / 100
 		if (zoom % 2 !== 0) zoom = zoom - 0.1

@@ -1,42 +1,61 @@
-﻿import Agent from '../Editor/base'
+﻿import ScreenTask from '../Screen/task'
+import Current from '../Current'
+import Http from '../Http'
+import Config from '../Config'
+import Local from '../Local'
+import ScreenCache from '../IndexDB/screenCache'
+import IndexDB from '../IndexDB'
+import Factory from '../Base/factory'
 
-export default class Editor extends Agent {
-	init(res?: any): any {
-		let screen
-		if (res) {
-			if (res.screenId) this.screenId = res.screenId
-			screen = this.screen.init(res)
-		}
-		this.resetZoom()
-		return { screen }
+const db = new IndexDB()
+
+export default class Editor extends Factory<Editor> {
+	screen: ScreenTask = ScreenTask.Instance()
+	current: Current = Current.Instance()
+	http: Http = Http.Instance()
+	config: Config = Config.Instance()
+	local: Local = Local.Instance()
+	screenCache: ScreenCache = ScreenCache.Instance(db)
+	inEdit = false
+	// 组件加载
+	marketComponentLoading = false
+	// 组件加载状态
+	widgetLoaded = {}
+	// 更新组件加载状态
+	updateWidgetLoaded(key: string): void {
+		this.widgetLoaded[key] = true
+	}
+	// 更新大屏状态
+	updateEditorStatus(status: boolean): void {
+		this.inEdit = status
+	}
+	// 当前场景
+	get currentSceneIndex(): string | number {
+		return this.current.currentSceneIndex
+	}
+	// 打开场景
+	openScene(id: string): void {
+		if (!this.inEdit) this.current.openScene(id)
+	}
+	// 关闭场景
+	closeScene(id: string): void {
+		if (!this.inEdit) this.current.closeScene(id)
 	}
 
 	clear(): void {
 		this.screen.clear()
 		this.current.clear()
 	}
-
-	/* 放大画布 */
-	zoomIn(step = 2): void {
-		this.current.zoomIn(step)
-	}
-	/* 缩小画布 */
-	zoomOut(step = 2): void {
-		this.current.zoomOut(step)
-	}
-	/* 画布还原最佳比例 */
+	// 画布还原最佳比例
 	resetZoom(): void {
 		if (this.inEdit) {
-			// this.ruler.resetZoom({
-			// 	screenHeight: this.screen.screenHeight,
-			// 	screenWidth: this.screen.screenWidth,
-			// })
-			// this.current.resetZoom({
-			// 	screenHeight: this.screen.screenHeight,
-			// 	screenWidth: this.screen.screenWidth,
-			// })
+			this.current.resetZoom({
+				screenHeight: this.screen.screenHeight,
+				screenWidth: this.screen.screenWidth,
+			})
 		}
 	}
+
 	get currentSceneWidget() {
 		return Object.values(this.screen.screenWidgetsLays)
 			.filter(item => item.scene === this.current.currentSceneIndex)
@@ -44,20 +63,14 @@ export default class Editor extends Agent {
 				return b.zIndex - a.zIndex - 1
 			})
 	}
+
 	get currentMaxZIndex(): number {
 		return this.currentSceneWidget.length ? this.currentSceneWidget[0].zIndex + 1 : 10
 	}
+
 	get currentMinZIndex(): number {
 		return this.currentSceneWidget.length
 			? this.currentSceneWidget[this.currentSceneWidget.length - 1].zIndex - 1
 			: 10
-	}
-	/* ---------------------------------------------------More---------------------------------------------------*/
-	get rulerStyle(): any {
-		return {
-			transform: `translate3d(${this.current.offsetX}px, ${this.current.offsetY}px, 0) scale(${this.current.zoom})`,
-			width: `${this.screen.screenWidth + 18 * 2}px`,
-			height: `${this.screen.screenHeight + 18 * 2}px`,
-		}
 	}
 }
