@@ -23,30 +23,24 @@ export default {
 			supportCSSTransform: true,
 		})
 		this.chart.data(this.cake_data)
-		this.chart.scale({
-			month: {
-				range: [0, 1],
-			},
-			temperature: {
-				nice: true,
-			},
+		this.chart.scale('月均降雨量', {
+			nice: true,
 		})
 		this.chart.tooltip({
-			showCrosshairs: true,
+			showMarkers: false,
 			shared: true,
 		})
-		this.chart.axis('temperature', {
-			label: {
-				formatter: val => {
-					return val + ' °C'
+		this.chart
+			.interval()
+			.position('月份*月均降雨量')
+			.color('name')
+			.adjust([
+				{
+					type: 'dodge',
+					marginRatio: 0,
 				},
-			},
-		})
-		this.chart.line().position('month*temperature').color('city').shape('smooth')
-		this.chart.point().position('month*temperature').color('city').shape('circle').style({
-			stroke: '#fff',
-			lineWidth: 1,
-		})
+			])
+		this.chart.interaction('element-highlight-by-x')
 		this.chart.render()
 	},
 }

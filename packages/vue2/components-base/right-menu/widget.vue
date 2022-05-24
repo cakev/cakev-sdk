@@ -37,32 +37,37 @@ export default {
 			editor: Editor.Instance() as Editor,
 		}
 	},
+	computed:{
+		widget(){
+			return this.editor.screen.screenWidgets[this.editor.current.currentWidgetId]
+		},	
+	},
 	methods: {
 		handleSync(): void {
-			const widgetId = this.editor.current.widget.widgetId
+			const widgetId = this.widget.widgetId
 			this.editor.current.unSelectWidget()
 			this.editor.screen.refreshWidget(widgetId)
 			this.hideRightMenu()
 		},
 		handleZIndexTop(): void {
-			const widgetId = this.editor.current.widget.widgetId
+			const widgetId = this.widget.widgetId
 			this.editor.screen.setWidgetZIndex(widgetId, this.editor.currentMaxZIndex)
 			this.hideRightMenu()
 		},
 		handleZIndexBottom(): void {
-			const widgetId = this.editor.current.widget.widgetId
+			const widgetId = this.widget.widgetId
 			this.editor.screen.setWidgetZIndex(widgetId, this.editor.currentMinZIndex)
 			this.hideRightMenu()
 		},
 		hideWidget(): void {
-			const widgetId = this.editor.current.widget.widgetId
+			const widgetId = this.widget.widgetId
 			this.hideRightMenu()
 			this.handleUnActive()
 			this.editor.current.unSelectWidget()
 			this.editor.screen.hideWidget(widgetId)
 		},
 		deleteWidget(): void {
-			const widgetId = this.editor.current.currentWidgetList[0]
+			const widgetId = this.widget.widgetId
 			if (this.editor.currentSceneIndex === -1) {
 				CModal.confirm({
 					title: '是否删除当前组件？',
@@ -92,7 +97,7 @@ export default {
 			}
 		},
 		copyWidget(): void {
-			const widgetId = this.editor.current.currentWidgetList[0]
+			const widgetId = this.widget.widgetId
 			this.editor.screen.copyWidget(widgetId)
 			this.handleUnActive()
 			this.hideRightMenu()
@@ -105,7 +110,7 @@ export default {
 			this.editor.current.unSelectWidget()
 		},
 		handleLock(): void {
-			const widgetId = this.editor.current.currentWidgetList[0]
+			const widgetId = this.widget.widgetId
 			this.editor.screen.lockWidget(widgetId)
 			this.hideRightMenu()
 		},

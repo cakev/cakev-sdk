@@ -1,24 +1,21 @@
 <template lang="pug">
 li.pointer.pos-r.d-left-scene-list-li(
-	:class="{ active: editor.current.currentWidgetList.includes(lay.widgetId) }",
-	@click.stop="handleClick")
+	:class="{ active: editor.current.currentWidgetId === lay.widgetId }",
+	@click.stop="handleClick"
+)
 	.parent.fn-flex
 		c-row.d-left-scene-left
 			h2 {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
 		c-row.d-left-scene-right
-			c-svg(
-				v-if="lay.hide",
-				:size="14"
-				type="eye",
-				@click="editor.screen.hideWidget(lay.widgetId)",
-				@click.stop)
+			c-svg(v-if="lay.hide", :size="14", type="eye", @click="editor.screen.hideWidget(lay.widgetId)", @click.stop)
 			c-svg(
 				style="margin-left: 10px",
-				:size="14"
+				:size="14",
 				v-if="editor.screen.screenWidgets[lay.widgetId].widgetBase.locked",
 				type="lock",
 				@click="editor.screen.lockWidget(lay.widgetId)",
-				@click.stop)
+				@click.stop
+			)
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
@@ -41,13 +38,8 @@ export default {
 		},
 	},
 	methods: {
-		handleClick(e): void {
-			if (e.shiftKey) {
-				this.editor.current.selectWidget(this.widget)
-			} else {
-				this.editor.current.unSelectWidget()
-				this.editor.current.selectWidget(this.widget)
-			}
+		handleClick(): void {
+			this.editor.current.selectWidget(this.widget)
 		},
 	},
 }

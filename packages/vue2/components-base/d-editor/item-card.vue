@@ -7,7 +7,7 @@ dr(
 	:draggable="widgetEditable(widget)",
 	:resizable="widgetEditable(widget)",
 	:scale="widget.widgetLayout.scale",
-	:active="editor.current.currentWidgetList.includes(lay.widgetId) && widgetEditable(widget)",
+	:active="editor.current.currentWidgetId === lay.widgetId && widgetEditable(widget)",
 	:w="widget.widgetLayout.width",
 	:h="widget.widgetLayout.height",
 	:x="widget.widgetLayout.left",
@@ -21,8 +21,9 @@ dr(
 	@refLineParams="params => getRefLineParams(params, widget)",
 	@dragstop="onDragStop",
 	@on-click="handleClick($event, widget)",
-	@contextmenu.native.stop="showRightMenu($event, widget)")
-	c-widget(:lay="lay",)
+	@contextmenu.native.stop="showRightMenu($event, widget)"
+)
+	c-widget(:lay="lay")
 </template>
 <script lang="ts">
 import dr from '@/vue2/components-base/d-dr/index.vue'
@@ -81,13 +82,13 @@ export default {
 			rightMenu.style.left = e.clientX + 'px'
 		},
 		onDragStop(left: number, top: number): void {
-			if (this.editor.current.widget) {
-				const diffLeft = left - this.editor.current.widget.widgetLayout.left
-				const diffTop = top - this.editor.current.widget.widgetLayout.top
-				this.editor.current.widget.widgetLayout.left = left
-				this.editor.current.widget.widgetLayout.top = top
+			if (this.editor.current.currentWidgetId) {
+				const diffLeft = left - this.widget.widgetLayout.left
+				const diffTop = top - this.widget.widgetLayout.top
+				this.widget.widgetLayout.left = left
+				this.widget.widgetLayout.top = top
 				this.onGroupDragStop(
-					this.editor.screen.screenWidgetsLays[this.editor.current.currentWidgetList[0]],
+					this.editor.screen.screenWidgetsLays[this.editor.current.currentWidgetId],
 					diffLeft,
 					diffTop,
 				)
@@ -106,9 +107,16 @@ export default {
 					}
 			}
 		},
-		onResizeStop(width: number, height: number): void {
-			this.editor.current.widget.widgetLayout.width = width
-			this.editor.current.widget.widgetLayout.height = height
+		onResizeStop(width: number, height: number, left, top): void {
+			this.widget.widgetLayout.width = width
+			this.widget.widgetLayout.height = height
+			this.widget.widgetLayout.left = left
+			this.widget.widgetLayout.top = top
+			this.editor.current.unSelectWidget()
+			this.editor.screen.refreshWidget(this.widget.widgetId)
+			setTimeout(() => {
+				this.editor.current.selectWidget(this.widget)
+			})
 		},
 		widgetEditable({ widgetBase }): boolean {
 			return !widgetBase.locked

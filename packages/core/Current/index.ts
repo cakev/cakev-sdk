@@ -16,8 +16,7 @@ export default class Current extends Factory<Current> {
 	zoomStep = 0.02 // 当前标尺zoom步长
 	offsetX = 0 // 当前位置x
 	offsetY = 0 // 当前位置y
-	widget: WidgetTask | null = null // 当前组件
-	currentWidgetList: string[] = [] // 当前选中组件-多组件
+	currentWidgetId: string | null = null // 当前组件
 	currentSceneIndex: number | string = 0 // 当前场景
 	currentCreateSceneList: Array<number | string> = [] // 当前打开的场景集合
 
@@ -30,9 +29,8 @@ export default class Current extends Factory<Current> {
 		this.contentMove = false
 		this.widgetMove = false
 		this.sceneAnimate = ''
-		this.widget = null
+		this.currentWidgetId = null
 		this.currentSceneIndex = 0
-		this.currentWidgetList = []
 		this.currentCreateSceneList = []
 	}
 
@@ -68,25 +66,11 @@ export default class Current extends Factory<Current> {
 	}
 	/* 选中组件 */
 	selectWidget(widget: WidgetTask): void {
-		if (this.currentWidgetList.includes(widget.widgetId)) {
-			this.currentWidgetList.splice(this.currentWidgetList.indexOf(widget.widgetId), 1)
-		} else {
-			this.currentWidgetList = [...this.currentWidgetList, widget.widgetId]
-		}
-		if (this.currentWidgetList.length == 1) {
-			this.widget = widget
-		} else {
-			this.widget = null
-		}
+		this.currentWidgetId = widget.widgetId
 	}
 	/* 取消选中组件 */
 	unSelectWidget(): void {
-		this.widget = null
-		this.currentWidgetList = []
-	}
-	/* 取消选中组件集合 */
-	unSelectWidgetList(): void {
-		this.currentWidgetList = []
+		this.currentWidgetId = null
 	}
 	/* 选中场景 */
 	selectSceneIndex(val: number | string): void {

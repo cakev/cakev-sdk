@@ -3,8 +3,8 @@
 	.d-editor-box.pos-r.fn-flex
 		d-left-scene
 		d-editor
-		d-right-manage(v-if="editor.current.currentWidgetList.length === 0")
-		d-right-setting(v-if="editor.current.currentWidgetList.length === 1")
+		d-right-manage(v-if="!editor.current.currentWidgetId")
+		d-right-setting(v-if="editor.current.currentWidgetId")
 		d-suspension
 	slot(v-if="editor.marketComponentLoading", name="loading")
 		c-loading(:show="true")

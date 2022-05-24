@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Editor from '@/core/Editor'
-import WidgetConf from '@/core/Widget/conf'
+import WidgetTask from '@/core/Widget/task'
 
 const editor: Editor = Editor.Instance()
 const widgetsContext = require.context('../widget-business', true, /\.(widget.ts)$/)
-const widgets: WidgetConf[] = []
+const widgets: WidgetTask[] = []
 
 widgetsContext.keys().forEach(name => {
 	const widget = widgetsContext(name).default
@@ -26,8 +26,8 @@ editor.local.setWidgetTypes([
 				widgetTypeId: '示例一',
 			},
 			{
-				widgetTypeName: '装饰图',
-				widgetTypeId: '装饰图',
+				widgetTypeName: '示例二',
+				widgetTypeId: '示例二',
 			},
 		],
 	},

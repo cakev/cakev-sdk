@@ -7,7 +7,7 @@
 	@click="elementEnable",
 	@mousedown="elementDown",
 	@touchstart="elementTouchDown")
-	template(v-if="editor.current.currentWidgetList.length === 1")
+	template(v-if="editor.current.currentWidgetId")
 		.dr-handle(
 			v-for="handle in actualHandles",
 			:key="handle",
@@ -15,7 +15,7 @@
 			:style="{ display: enabled ? 'block' : 'none', transform: `scale(${returnRatio})` }",
 			@mousedown.stop.prevent="handleDown(handle, $event)",
 			@touchstart.stop.prevent="handleTouchDown(handle, $event)")
-	d-dr-kuang(v-if="editor.current.currentWidgetList.length === 1")
+	d-dr-kuang(v-if="editor.current.currentWidgetId")
 	.dr-tip-top.pos-a(v-if="tipShow", :style="{ top: `-${top}px`, height: `${top}px`, borderWidth: `${returnRatio}px` }")
 		span.pos-a(
 			:style="{ fontSize: `${14 * returnRatio}px`, right: `${5 * returnRatio}px`, bottom: `${30 * returnRatio}px` }") {{ left }}
