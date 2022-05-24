@@ -118,7 +118,7 @@ export default {
 		off(document, 'fullscreenchange', this.fullscreenchange)
 	},
 	created() {
-		this.editor.updateEditorStatus('inEdit')
+		this.editor.updateEditorStatus(true)
 	},
 	mounted(): void {
 		on(document, 'fullscreenchange', this.fullscreenchange)

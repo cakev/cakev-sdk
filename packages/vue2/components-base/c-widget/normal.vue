@@ -136,9 +136,11 @@ export default {
 					width: `${this.widget.widgetLayout.width}px`,
 					height: `${this.widget.widgetLayout.height}px`,
 					zIndex: `${this.lay.zIndex}`,
-					transform: `translate3d(${this.widget.widgetLayout.left}px, ${this.widget.widgetLayout.top}px,0) ${
-						this.widget.widgetLayout.scale ? 'scale(' + this.widget.widgetLayout.scale + ')' : ''
-					}`,
+					transform: this.editor.inEdit
+						? ''
+						: `translate3d(${this.widget.widgetLayout.left}px, ${this.widget.widgetLayout.top}px,0) ${
+								this.widget.widgetLayout.scale ? 'scale(' + this.widget.widgetLayout.scale + ')' : ''
+						  }`,
 				},
 			},
 			[

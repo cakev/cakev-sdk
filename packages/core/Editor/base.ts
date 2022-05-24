@@ -23,7 +23,7 @@ export default class EditorBase extends Factory<EditorBase> {
 	/* 大屏ID */
 	screenId = ''
 	/* 大屏状态 inEdit  在编辑器中  inPreview 在预览中 */
-	editorStatus = 'inPreview'
+	inEdit = false
 	/* 组件加载 */
 	marketComponentLoading = false
 	/* 组件加载状态 */
@@ -33,8 +33,8 @@ export default class EditorBase extends Factory<EditorBase> {
 		this.widgetLoaded[key] = true
 	}
 	/* 更新大屏状态 */
-	updateEditorStatus(status: string): void {
-		this.editorStatus = status
+	updateEditorStatus(status: boolean): void {
+		this.inEdit = status
 	}
 	/* ---------------------------------------------------Current---------------------------------------------------*/
 	/* 当前场景 */
@@ -43,11 +43,11 @@ export default class EditorBase extends Factory<EditorBase> {
 	}
 	/* 打开场景 */
 	openScene(id: string): void {
-		if (this.editorStatus === 'inPreview') this.current.openScene(id)
+		if (!this.inEdit) this.current.openScene(id)
 	}
 	/* 关闭场景 */
 	closeScene(id: string): void {
-		if (this.editorStatus === 'inPreview') this.current.closeScene(id)
+		if (!this.inEdit) this.current.closeScene(id)
 	}
 	get zoom(): number {
 		return this.current.zoom

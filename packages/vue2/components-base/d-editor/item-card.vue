@@ -81,7 +81,7 @@ export default {
 			rightMenu.style.left = e.clientX + 'px'
 		},
 		onDragStop(left: number, top: number): void {
-			if (this.editor.currentWidget) {
+			if (this.editor.current.widget) {
 				const diffLeft = left - this.editor.current.widget.widgetLayout.left
 				const diffTop = top - this.editor.current.widget.widgetLayout.top
 				this.editor.current.widget.widgetLayout.left = left

@@ -26,7 +26,7 @@ export default class Editor extends Agent {
 	}
 	/* 画布还原最佳比例 */
 	resetZoom(): void {
-		if (this.editorStatus === 'inEdit') {
+		if (this.inEdit) {
 			// this.ruler.resetZoom({
 			// 	screenHeight: this.screen.screenHeight,
 			// 	screenWidth: this.screen.screenWidth,
