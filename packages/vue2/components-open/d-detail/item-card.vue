@@ -5,7 +5,7 @@
 		@dragstart="dragstart($event)",
 		@click="handleClick")
 		.d-widget-list-img.fn-flex(:style="{ backgroundImage: `url(${widget.widgetAvatar})` }")
-		h2.ellipsis.text-center(:title="widget.widgetBase.name") {{ widget.widgetBase.name }}
+		span.ellipsis.text-center(:title="widget.widgetBase.name") {{ widget.widgetBase.name }}
 </template>
 <script lang="ts">
 import Editor from '@/core/Editor'
@@ -61,7 +61,7 @@ export default {
 .d-widget-list-card {
 	width: 100%;
 
-	h2 {
+	span {
 		padding: 0 5px;
 		line-height: 22px;
 		color: #bfbfbf;
