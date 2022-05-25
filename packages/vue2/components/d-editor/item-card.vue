@@ -2,7 +2,6 @@
 dr(
 	:key="lay.widgetId",
 	:ref="`widget_${lay.widgetId}`",
-	:id="lay.widgetId",
 	:scale-ratio="editor.current.zoom",
 	:draggable="widgetEditable(widget)",
 	:resizable="widgetEditable(widget)",
