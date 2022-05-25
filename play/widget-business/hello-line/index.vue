@@ -1,11 +1,10 @@
 <template lang="pug">
-div(:id="id")
+div(:id="cake_widget.widgetId")
 </template>
 <script lang="ts">
 export default {
 	data() {
 		return {
-			id: `chart${Date.now()}`,
 			chart: null,
 		}
 	},
@@ -14,10 +13,10 @@ export default {
 			this.chart.changeData(val)
 		},
 	},
-	props: ['cake_data'],
+	props: ['cake_data', 'cake_widget'],
 	mounted(): void {
 		this.chart = new window.G2.Chart({
-			container: this.id,
+			container: this.cake_widget.widgetId,
 			autoFit: true,
 			height: 500,
 			supportCSSTransform: true,
