@@ -32,12 +32,12 @@
 				v-show="item.display",
 				:style="{ top: item.position, left: item.origin, width: item.lineLength }")
 	widget-right-menu
-	d-footer
+	c-footer
 </template>
 <script lang="ts">
 import widgetRightMenu from '../right-menu/widget.vue'
 import dRuler from '../d-ruler/index.vue'
-import dFooter from '../d-footer/index.vue'
+import cFooter from '../c-footer/index.vue'
 import ItemCard from './item-card.vue'
 import Editor from '@/core/Editor'
 import WidgetTask from '@/core/Widget/task'
@@ -48,7 +48,7 @@ export default {
 	components: {
 		ItemCard,
 		dRuler,
-		dFooter,
+		cFooter,
 		widgetRightMenu,
 	},
 	data() {

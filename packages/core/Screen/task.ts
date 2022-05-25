@@ -17,7 +17,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	screenHeight = 1080 // 大屏高度
 	screenBackGroundColor = 'rgb(11,11,11)' // 大屏背景颜色
 	screenBackGroundImage = '' // 大屏背景图片
-	screenMainScene: string | number = 0 // 大屏首屏场景
+	screenMainScene = '0' // 大屏首屏场景
 	screenDomain = ''
 	screenHeaders = '{"Content-Type":"application/json"}'
 	screenFilter = {
@@ -37,13 +37,15 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		this.screenScene = {}
 		this.screenLayoutMode = 'full-size'
 		this.screenName = '未命名'
+		this.screenDomain = ''
+		this.screenHeaders = '{"Content-Type":"application/json"}'
 		this.screenWidth = 1920
 		this.screenHeight = 1080
 		this.screenBackGroundColor = 'rgba(24, 27, 36,1)'
 		this.screenBackGroundImage = ''
 		this.screenAvatar = ''
 		this.screenVersion = ''
-		this.screenMainScene = 0
+		this.screenMainScene = '0'
 		this.screenFilter = {
 			enable: false,
 			grayscale: 0,

@@ -6,10 +6,11 @@ import '@/vue2/scss/animate.scss'
 import dDetail from './vue2/components-open/d-detail/index.vue'
 import dView from './vue2/components-open/d-view/index.vue'
 import dScreen from './vue2/components-open/d-screen/index.vue'
+import cWidget from './vue2/components/c-widget/normal.vue'
 import Editor from './core/Editor'
 import WidgetTask from './core/Widget/task'
 
-const components = [dDetail, dView, dScreen]
+const components = [dDetail, dView, dScreen, cWidget]
 const editor: Editor = Editor.Instance()
 const install = (Vue: VueConstructor, option?): void => {
 	if (option) editor.config.setConfig(option)
@@ -36,5 +37,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 	install(window.Vue)
 }
 
-export { version, dDetail, dView, dScreen, Editor, WidgetTask }
+export { version, dDetail, dView, dScreen, cWidget, Editor, WidgetTask }
 export default sdk

@@ -41,6 +41,13 @@ export default class Editor extends Factory<Editor> {
 	closeScene(id: string): void {
 		if (!this.inEdit) this.current.closeScene(id)
 	}
+	
+	resetZoom(): void {
+		this.current.resetZoom({
+			screenHeight: this.screen.screenHeight,
+			screenWidth: this.screen.screenWidth,
+		})
+	}
 
 	get currentSceneWidget() {
 		return Object.values(this.screen.screenWidgetsLays)

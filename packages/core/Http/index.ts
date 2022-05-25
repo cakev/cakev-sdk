@@ -2,7 +2,7 @@ import Task from './task'
 import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 import HttpTask from './task'
-import { usePath, useProcess } from '@cakev/util'
+import { usePath, useProcess, uuid } from '@cakev/util'
 
 export default class Http extends Factory<Http> {
 	limit = 1
@@ -32,9 +32,10 @@ export default class Http extends Factory<Http> {
 		)
 	}
 
-	pushOne(task: Task, id: string): void {
+	pushOne(task: Task, id?: string): void {
 		if (task.loopTime > 0) {
-			this.loopPool[id] = task
+			const i = id ? id : uuid()
+			this.loopPool[i] = task
 			this.startInterval()
 		}
 		this.push2Wait(task)

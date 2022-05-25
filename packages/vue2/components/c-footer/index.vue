@@ -1,13 +1,13 @@
 <template lang="pug">
-.d-footer.fn-flex.flex-row.pos-r.z-index-999
+.c-footer.fn-flex.flex-row.pos-r.z-index-999
 	left
-	.d-footer-bar.fn-flex(:style="{ marginLeft: 'auto' }")
+	.c-footer-bar.fn-flex(:style="{ marginLeft: 'auto' }")
 		c-tooltip(content="缩小" placement="top")
 			c-svg.pointer(:size="18", type="zoomOut", @click.native="() => editor.current.zoomOut()")
-	.d-footer-bar.fn-flex
+	.c-footer-bar.fn-flex
 		c-tooltip(content="放大" placement="top")
 			c-svg.pointer(:size="18", type="zoomIn", @click.native="() => editor.current.zoomIn()")
-	.d-footer-bar.fn-flex(:style="{ marginRight: '0' }")
+	.c-footer-bar.fn-flex(:style="{ marginRight: '0' }")
 		c-tooltip(:content="editor.current.fullscreen ? '退出全屏' : '全屏'" placement="top")
 			c-svg.pointer(
 				:type="editor.current.fullscreen ? 'unfullscreen' : 'fullscreen'",
@@ -20,7 +20,7 @@ import { hotKeys } from '@/vue2/utils'
 import left from './left.vue'
 
 export default {
-	name: 'd-footer',
+	name: 'c-footer',
 	components: {
 		left,
 	},
@@ -42,32 +42,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.d-footer {
+.c-footer {
 	align-items: center;
 	justify-content: space-between;
 	height: 32px;
 	padding: 0 10px 0 22px;
 	background: var(--panelBgColor);
+	font-size: var(--panelFontSize);
+	color: var(--panelFontColor);
 }
 
-.d-footer-bar-box {
+.c-footer-bar-box {
 	right: 0;
 	bottom: 15px;
 	user-select: none;
 }
 
-.d-footer-bar {
+.c-footer-bar {
 	padding: 0 10px;
 	line-height: 30px;
 	cursor: pointer;
 	user-select: none;
 	
-	.d-footer-bar-text {
+	.c-footer-bar-text {
 		opacity: 0.5;
 	}
 
 	&:hover {
-		.d-footer-bar-text {
+		.c-footer-bar-text {
 			opacity: 1;
 		}
 	}

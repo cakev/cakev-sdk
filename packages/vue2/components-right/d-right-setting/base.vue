@@ -69,7 +69,7 @@ export default {
 		}
 	},
 	mounted() {
-		console.log(this.editor.config.api.widgetVersionList)
+		// console.log(this.editor.config.api.widgetVersionList)
 		// const res = await getVersionList({
 		// 	widgetType: this.editor.current.widget.type,
 		// })

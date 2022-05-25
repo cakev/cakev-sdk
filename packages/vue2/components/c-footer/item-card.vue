@@ -1,10 +1,10 @@
 <template lang="pug">
 li.fn-flex.flex-row
-	label.d-footer-name {{ item.name }}
-	.d-footer-key-code.fn-flex.flex-row(v-for="child in item.key")
-		.d-footer-hot-key-text.fn-flex(v-if="child.type === 'text'") {{ child.value }}
-		.d-footer-hot-key-item(v-if="child.type === '+'") +
-		img.d-footer-hot-key-img(v-if="child.type === 'img'", :src="child.value")
+	label.c-footer-name {{ item.name }}
+	.c-footer-key-code.fn-flex.flex-row(v-for="child in item.key")
+		.c-footer-hot-key-text.fn-flex(v-if="child.type === 'text'") {{ child.value }}
+		.c-footer-hot-key-item(v-if="child.type === '+'") +
+		img.c-footer-hot-key-img(v-if="child.type === 'img'", :src="child.value")
 </template>
 <script lang="ts">
 export default {
@@ -28,32 +28,32 @@ li {
 	}
 }
 
-.d-footer-key-code {
+.c-footer-key-code {
 	&:last-child {
-		.d-footer-hot-key-text {
+		.c-footer-hot-key-text {
 			margin-right: 0;
 		}
 	}
 }
 
-.d-footer-name {
+.c-footer-name {
 	padding: 3px 10px;
 	margin-right: auto;
 	text-align: right;
 	letter-spacing: 0;
 }
 
-.d-footer-hot-key-img {
+.c-footer-hot-key-img {
 	margin-left: 6px;
 	width: 18px;
 	text-align: center;
 }
 
-.d-footer-hot-key-item {
+.c-footer-hot-key-item {
 	margin: 0 5px;
 }
 
-.d-footer-hot-key-text {
+.c-footer-hot-key-text {
 	align-items: center;
 	justify-content: center;
 	min-width: 24px;

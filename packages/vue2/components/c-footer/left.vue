@@ -1,26 +1,26 @@
 <template lang="pug">
 c-row.pos-r
-	.d-footer-bar.fn-flex.pointer
-		.d-footer-bar-text(@click.stop="viewModal = !viewModal") 视图调整
-	ul.d-footer-view-modal.pos-a(v-show="viewModal", v-click-outside="hideView")
+	.c-footer-bar.fn-flex.pointer
+		.c-footer-bar-text(@click.stop="viewModal = !viewModal") 视图调整
+	ul.c-footer-view-modal.pos-a(v-show="viewModal", v-click-outside="hideView")
 		li.fn-flex.pointer(@click="taggerXRoomL2")
 			span 场景区
 			c-svg.pointer(type="checkmark", :size="12" v-show="editor.current.xRoomL2 > 0")
 		li.fn-flex.pointer(@click="taggerXRoomR1")
 			span 设置区
 			c-svg.pointer(type="checkmark", :size="12" v-show="editor.current.xRoomR1 > 0")
-	.d-footer-bar.fn-flex
-		label.d-footer-hot-keys.fn-flex.flex-row
-			.d-footer-bar-text.pointer.ellipsis(@click="showHotKey = !showHotKey", v-click-outside="hideHotKey") 快捷键
-	.d-footer-bar.fn-flex
+	.c-footer-bar.fn-flex
+		label.c-footer-hot-keys.fn-flex.flex-row
+			.c-footer-bar-text.pointer.ellipsis(@click="showHotKey = !showHotKey", v-click-outside="hideHotKey") 快捷键
+	.c-footer-bar.fn-flex
 		label(:style="{ marginRight: '10px' }") {{ editor.current.currentEventDisabled ? '拖动模式' : '预览模式' }}
 		c-switch(v-model="editor.current.currentEventDisabled")
-	ul.d-footer-hot-key-list.pos-a(v-show="showHotKey")
+	ul.c-footer-hot-key-list.pos-a(v-show="showHotKey")
 		item-card(v-for="item in hotKeys", :key="item.name", :item="item")
 </template>
 <script>
 import Editor from '@/core/Editor'
-import ItemCard from '@/vue2/components/d-footer/item-card.vue'
+import ItemCard from '@/vue2/components/c-footer/item-card.vue'
 import { hotKeys } from '@/vue2/utils'
 import { clickOutside } from '@cakev/util'
 
@@ -57,7 +57,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.d-footer-view-modal {
+.c-footer-view-modal {
 	bottom: 32px;
 	left: -4px;
 	width: 90px;
@@ -79,7 +79,7 @@ export default {
 	}
 }
 
-.d-footer-bar {
+.c-footer-bar {
 	align-items: center;
 	padding: 0 10px;
 	line-height: 30px;
@@ -87,28 +87,28 @@ export default {
 	user-select: none;
 	
 	&:hover {
-		.d-footer-bar-text {
+		.c-footer-bar-text {
 			color: #fff;
 		}
 	}
 }
 
-.d-footer-hot-keys,
-.d-footer-info {
+.c-footer-hot-keys,
+.c-footer-info {
 	align-items: center;
 	justify-content: center;
 }
 
-.d-footer-info {
+.c-footer-info {
 	margin-left: 10px;
 }
 
-.d-footer-hot-keys {
+.c-footer-hot-keys {
 	width: 100%;
 	height: 100%;
 }
 
-.d-footer-hot-key-list {
+.c-footer-hot-key-list {
 	bottom: 32px;
 	left: -4px;
 	width: 295px;

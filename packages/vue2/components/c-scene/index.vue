@@ -125,6 +125,8 @@ export default {
 	height: 100%;
 	overflow: hidden;
 	background-color: var(--panelBgColor);
+	font-size: var(--panelFontSize);
+	color: var(--panelFontColor);
 	ul {
 		overflow-y: auto;
 	}

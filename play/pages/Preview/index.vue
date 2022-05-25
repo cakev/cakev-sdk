@@ -4,7 +4,7 @@ d-view
 <script lang="ts">
 import { Editor } from '@/index'
 export default {
-	name: 'editor',
+	name: 'preview',
 	data() {
 		return {
 			editor: Editor.Instance() as Editor,

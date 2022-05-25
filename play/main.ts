@@ -11,11 +11,7 @@ import './widget-business'
 import '@cakev/ui/dist/ui.css'
 
 Vue.use(CakeUi)
-Vue.use(CakeSDK, {
-	api: {
-		widgetVersionList: '/api/widgetVersion',
-	},
-})
+Vue.use(CakeSDK)
 Vue.config.productionTip = false
 
 new Vue({
