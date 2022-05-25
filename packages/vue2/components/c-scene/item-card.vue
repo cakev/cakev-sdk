@@ -5,7 +5,7 @@ li.pointer.pos-r.c-scene-list-li(
 )
 	.parent.fn-flex
 		c-row.c-scene-left
-			h2 {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
+			span {{ editor.screen.screenWidgets[lay.widgetId].widgetBase.name }}
 		c-row.c-scene-right
 			c-svg(v-if="lay.hide", :size="14", type="eye", @click="editor.screen.hideWidget(lay.widgetId)", @click.stop)
 			c-svg(
