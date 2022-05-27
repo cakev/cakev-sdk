@@ -35,6 +35,7 @@ export default {
 			shared: true,
 		})
 		this.chart.axis('temperature', {
+			grid: null,
 			label: {
 				formatter: val => {
 					return val + ' °C'

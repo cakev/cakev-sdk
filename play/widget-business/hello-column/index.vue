@@ -22,6 +22,7 @@ export default {
 			supportCSSTransform: true,
 		})
 		this.chart.data(this.cake_data)
+		this.chart.axis('月均降雨量', { grid: null })
 		this.chart.scale('月均降雨量', {
 			nice: true,
 		})

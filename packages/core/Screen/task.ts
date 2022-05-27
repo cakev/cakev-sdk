@@ -2,6 +2,7 @@
 import Factory from '../Base/factory'
 import WidgetTask from '../Widget/task'
 import LayTask from './lay'
+import HeadTask from './head'
 import SceneTask from './scene'
 
 export default class ScreenTask extends Factory<ScreenTask> {
@@ -30,6 +31,7 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		saturate: 0, // 饱和度
 		hueRotate: 0, // 色相
 	}
+	screenHead: HeadTask[] = [] // 大屏额外头部外链
 
 	clear(): void {
 		this.screenWidgets = {}
@@ -58,19 +60,22 @@ export default class ScreenTask extends Factory<ScreenTask> {
 	}
 
 	init(res: ScreenTask): void {
-		this.screenId = res.screenId
-		this.screenName = res.screenName
-		this.screenAvatar = res.screenAvatar
-		this.screenVersion = res.screenVersion
-		this.screenLayoutMode = res.screenLayoutMode || 'full-size'
-		this.screenWidth = res.screenWidth
-		this.screenHeight = res.screenHeight
-		this.screenBackGroundColor = res.screenBackGroundColor
-		this.screenBackGroundImage = res.screenBackGroundImage
-		this.screenMainScene = res.screenMainScene
-		this.screenWidgets = res.screenWidgets
-		this.screenWidgetsLays = res.screenWidgetsLays
-		this.screenScene = res.screenScene
+		this.loadHead(res.screenHead).then(()=>{
+			this.screenHead = res.screenHead
+			this.screenId = res.screenId
+			this.screenName = res.screenName
+			this.screenAvatar = res.screenAvatar
+			this.screenVersion = res.screenVersion
+			this.screenLayoutMode = res.screenLayoutMode || 'full-size'
+			this.screenWidth = res.screenWidth
+			this.screenHeight = res.screenHeight
+			this.screenBackGroundColor = res.screenBackGroundColor
+			this.screenBackGroundImage = res.screenBackGroundImage
+			this.screenMainScene = res.screenMainScene
+			this.screenWidgets = res.screenWidgets
+			this.screenWidgetsLays = res.screenWidgetsLays
+			this.screenScene = res.screenScene
+		})
 	}
 
 	get screenTransformStyle(): string {
@@ -117,6 +122,46 @@ export default class ScreenTask extends Factory<ScreenTask> {
 		if (grayscale || opacity || contrast || brightness || saturate || hueRotate)
 			return { filter: `${grayscale} ${opacity} ${contrast} ${brightness} ${saturate} ${hueRotate}` }
 		return {}
+	}
+
+	loadHead(screenHead) {
+		const p: Promise<void>[] = []
+		screenHead.forEach(item => {
+			if (item.type === 'script') {
+				p.push(
+					new Promise<void>(resolve => {
+						const dom = document.createElement('script')
+						dom.setAttribute('src', item.src)
+						dom.onload = () => {
+							resolve()
+						}
+						document.head.append(dom)
+					}),
+				)
+			}
+			if (item.type === 'link') {
+				p.push(
+					new Promise<void>(resolve => {
+						const dom = document.createElement('link')
+						dom.setAttribute('href', item.src)
+						dom.setAttribute('rel', 'stylesheet')
+						dom.onload = () => {
+							resolve()
+						}
+						document.head.append(dom)
+					}),
+				)
+			}
+		})
+		return Promise.all(p)
+	}
+
+	createHead(): void {
+		this.screenHead = [...this.screenHead, new HeadTask()]
+	}
+
+	destroyHead(index): void {
+		this.screenHead.splice(index, 1)
 	}
 
 	// 创建场景

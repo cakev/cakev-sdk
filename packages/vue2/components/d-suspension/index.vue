@@ -4,18 +4,18 @@
 		title="全局请求设置",
 		type="global",
 		@click="globalRequestConfigShow = true",
-		:active="editor.screen.screenDomain || editor.screen.screenHeaders")
-	globalRequestConfig(v-model="globalRequestConfigShow")
-	c-badge(
-		title="全局滤镜",
-		type="color",
-		@click="filterShow = true",
-		:active="editor.screen.screenFilter.enable")
-	global-filter(v-model="filterShow")
+		:active="editor.screen.screenDomain || editor.screen.screenHeaders"
+	)
+	global-request-config(v-model="globalRequestConfigShow")
+	c-badge(title="全局滤镜", type="color", @click="globalFilterShow = true", :active="editor.screen.screenFilter.enable")
+	global-filter(v-model="globalFilterShow")
+	c-badge(title="大屏外链", type="link", @click="globalLinkShow = true", :active="editor.screen.screenHead.length")
+	global-link(v-model="globalLinkShow")
 </template>
 <script lang="ts">
 import globalRequestConfig from './globalRequestConfig.vue'
 import globalFilter from './globalFilter.vue'
+import globalLink from './globalLink.vue'
 import Editor from '@/core/Editor'
 
 export default {
@@ -23,12 +23,14 @@ export default {
 	components: {
 		globalRequestConfig,
 		globalFilter,
+		globalLink,
 	},
 	data() {
 		return {
 			editor: Editor.Instance(),
 			globalRequestConfigShow: false,
-			filterShow: false,
+			globalFilterShow: false,
+			globalLinkShow: false,
 		}
 	},
 }

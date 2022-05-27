@@ -9,7 +9,7 @@
 	slot(v-if="editor.marketComponentLoading", name="loading")
 		c-loading(:show="true")
 </template>
-<script>
+<script lang="ts">
 import cScene from '@/vue2/components/c-scene/index.vue'
 import dEditor from '@/vue2/components/d-editor/index.vue'
 import dRightManage from '@/vue2/components-right/d-right-manage/index.vue'
@@ -28,7 +28,7 @@ export default {
 	},
 	data() {
 		return {
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 }

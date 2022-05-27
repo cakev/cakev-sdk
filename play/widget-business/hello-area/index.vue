@@ -21,6 +21,7 @@ export default {
 			height: 500,
 			supportCSSTransform: true,
 		})
+		this.chart.axis('value', { grid: null })
 		this.chart.data(this.cake_data)
 		this.chart.scale('year', {
 			type: 'linear',

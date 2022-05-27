@@ -12,7 +12,7 @@ c-drawer(title="全局请求设置", v-model="currentVal")
 			theme="idle_fingers",
 			height="200")
 </template>
-<script>
+<script lang="ts">
 import Editor from '@/core/Editor'
 const editor = require('vue2-ace-editor')
 
@@ -30,7 +30,7 @@ export default {
 	data(props) {
 		return {
 			currentVal: props.value,
-			editor: Editor.Instance(),
+			editor: Editor.Instance() as Editor,
 		}
 	},
 	watch: {
