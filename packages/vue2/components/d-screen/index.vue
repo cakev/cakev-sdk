@@ -42,6 +42,7 @@ export default {
 .d-screen {
 	width: 100%;
 	min-width: 1088px;
+	overflow: hidden;
 }
 
 #screen:-webkit-full-screen {
